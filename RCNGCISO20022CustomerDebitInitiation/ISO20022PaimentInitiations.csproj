@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A196320E-E322-4F3F-A7BA-FC5CA18A20C0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ISO20022CustomerDebitInitiationSerializableClasses</RootNamespace>
+    <AssemblyName>ISO20022CustomerDebitInitiationSerializableClasses</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DDInitiationSerializableClasses\AccountIdentification4Choice.cs" />
+    <Compile Include="DDInitiationSerializableClasses\AccountSchemeName1Choice.cs" />
+    <Compile Include="DDInitiationSerializableClasses\ActiveOrHistoricCurrencyAndAmount.cs" />
+    <Compile Include="DDInitiationSerializableClasses\AmendmentInformationDetails6.cs" />
+    <Compile Include="DDInitiationSerializableClasses\Authorisation1Choice.cs" />
+    <Compile Include="DDInitiationSerializableClasses\BranchAndFinancialInstitutionIdentification4.cs" />
+    <Compile Include="DDInitiationSerializableClasses\BranchData2.cs" />
+    <Compile Include="DDInitiationSerializableClasses\CashAccount16.cs" />
+    <Compile Include="DDInitiationSerializableClasses\CashAccountType2.cs" />
+    <Compile Include="DDInitiationSerializableClasses\CategoryPurpose1Choice.cs" />
+    <Compile Include="DDInitiationSerializableClasses\ClearingSystemIdentification2Choice.cs" />
+    <Compile Include="DDInitiationSerializableClasses\ClearingSystemMemberIdentification2.cs" />
+    <Compile Include="DDInitiationSerializableClasses\ContactDetails2.cs" />
+    <Compile Include="DDInitiationSerializableClasses\CreditorReferenceInformation2.cs" />
+    <Compile Include="DDInitiationSerializableClasses\CreditorReferenceType1Choice.cs" />
+    <Compile Include="DDInitiationSerializableClasses\CreditorReferenceType2.cs" />
+    <Compile Include="DDInitiationSerializableClasses\CustomerDirectDebitInitiationV02.cs" />
+    <Compile Include="DDInitiationSerializableClasses\DateAndPlaceOfBirth.cs" />
+    <Compile Include="DDInitiationSerializableClasses\DatePeriodDetails.cs" />
+    <Compile Include="DDInitiationSerializableClasses\DirectDebitTransaction6.cs" />
+    <Compile Include="DDInitiationSerializableClasses\DirectDebitTransactionInformation9.cs" />
+    <Compile Include="DDInitiationSerializableClasses\Document.cs" />
+    <Compile Include="DDInitiationSerializableClasses\DocumentAdjustment1.cs" />
+    <Compile Include="DDInitiationSerializableClasses\Enums.cs" />
+    <Compile Include="DDInitiationSerializableClasses\FinancialIdentificationSchemeName1Choice.cs" />
+    <Compile Include="DDInitiationSerializableClasses\FinancialInstitutionIdentification7.cs" />
+    <Compile Include="DDInitiationSerializableClasses\GenericAccountIdentification1.cs" />
+    <Compile Include="DDInitiationSerializableClasses\GenericFinancialIdentification1.cs" />
+    <Compile Include="DDInitiationSerializableClasses\GenericOrganisationIdentification1.cs" />
+    <Compile Include="DDInitiationSerializableClasses\GenericPersonIdentification1.cs" />
+    <Compile Include="DDInitiationSerializableClasses\GroupHeader39.cs" />
+    <Compile Include="DDInitiationSerializableClasses\LocalInstrument2Choice.cs" />
+    <Compile Include="DDInitiationSerializableClasses\MandateRelatedInformation6.cs" />
+    <Compile Include="DDInitiationSerializableClasses\NameAndAddress10.cs" />
+    <Compile Include="DDInitiationSerializableClasses\OrganisationIdentification4.cs" />
+    <Compile Include="DDInitiationSerializableClasses\OrganisationIdentificationSchemeName1Choice.cs" />
+    <Compile Include="DDInitiationSerializableClasses\Party6Choice.cs" />
+    <Compile Include="DDInitiationSerializableClasses\PartyIdentification32.cs" />
+    <Compile Include="DDInitiationSerializableClasses\PaymentIdentification1.cs" />
+    <Compile Include="DDInitiationSerializableClasses\PaymentInstructionInformation4.cs" />
+    <Compile Include="DDInitiationSerializableClasses\PaymentTypeInformation20.cs" />
+    <Compile Include="DDInitiationSerializableClasses\PersonIdentification5.cs" />
+    <Compile Include="DDInitiationSerializableClasses\PersonIdentificationSchemeName1Choice.cs" />
+    <Compile Include="DDInitiationSerializableClasses\PostalAddress6.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DDInitiationSerializableClasses\Purpose2Choice.cs" />
+    <Compile Include="DDInitiationSerializableClasses\ReferredDocumentInformation3.cs" />
+    <Compile Include="DDInitiationSerializableClasses\ReferredDocumentType1Choice.cs" />
+    <Compile Include="DDInitiationSerializableClasses\ReferredDocumentType2.cs" />
+    <Compile Include="DDInitiationSerializableClasses\RegulatoryAuthority2.cs" />
+    <Compile Include="DDInitiationSerializableClasses\RegulatoryReporting3.cs" />
+    <Compile Include="DDInitiationSerializableClasses\RemittanceAmount1.cs" />
+    <Compile Include="DDInitiationSerializableClasses\RemittanceInformation5.cs" />
+    <Compile Include="DDInitiationSerializableClasses\RemittanceLocation2.cs" />
+    <Compile Include="DDInitiationSerializableClasses\ServiceLevel8Choice.cs" />
+    <Compile Include="DDInitiationSerializableClasses\StructuredRegulatoryReporting3.cs" />
+    <Compile Include="DDInitiationSerializableClasses\StructuredRemittanceInformation7.cs" />
+    <Compile Include="DDInitiationSerializableClasses\TaxAmount1.cs" />
+    <Compile Include="DDInitiationSerializableClasses\TaxAuthorisation1.cs" />
+    <Compile Include="DDInitiationSerializableClasses\TaxInformation3.cs" />
+    <Compile Include="DDInitiationSerializableClasses\TaxParty1.cs" />
+    <Compile Include="DDInitiationSerializableClasses\TaxParty2.cs" />
+    <Compile Include="DDInitiationSerializableClasses\TaxPeriod1.cs" />
+    <Compile Include="DDInitiationSerializableClasses\TaxRecord1.cs" />
+    <Compile Include="DDInitiationSerializableClasses\TaxRecordDetails1.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
