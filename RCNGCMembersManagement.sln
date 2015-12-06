@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RCNGCMembersManagementAppLogic", "RCNGCMembersManagementAppLogic\RCNGCMembersManagementAppLogic.csproj", "{A2586E2D-F4A2-43EC-B332-DD46C73552B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RCNGCMembersManagementSpecFlowBDD", "RCNGCMembersManagementSpecFlowBDD\RCNGCMembersManagementSpecFlowBDD.csproj", "{72C018E9-CF07-4A9D-B30F-22CB247B1757}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A2586E2D-F4A2-43EC-B332-DD46C73552B5} = {A2586E2D-F4A2-43EC-B332-DD46C73552B5}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RCNGCMembersManagementUnitTests", "RCNGCMembersManagementUnitTests\RCNGCMembersManagementUnitTests.csproj", "{4FAE4A3E-9B52-4800-9C93-E715D8EB234A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A2586E2D-F4A2-43EC-B332-DD46C73552B5} = {A2586E2D-F4A2-43EC-B332-DD46C73552B5}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RCNGCMembersManagementMocks", "RCNGCMembersManagementMocks\RCNGCMembersManagementMocks.csproj", "{9E90AADF-FE10-4D21-8822-A2E4851E4A8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtensionMethods", "ExtensionMethods\ExtensionMethods.csproj", "{2914EDFC-362E-46D8-A354-CB4DEAEBA6BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtensionMethodsUnitTests", "ExtensionMethodsUnitTests\ExtensionMethodsUnitTests.csproj", "{109AE022-F234-481E-BE50-7C8BBA88A2B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RCNGCISO20022CustomerDebitInitiation", "RCNGCISO20022CustomerDebitInitiation\RCNGCISO20022CustomerDebitInitiation.csproj", "{A196320E-E322-4F3F-A7BA-FC5CA18A20C0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A2586E2D-F4A2-43EC-B332-DD46C73552B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2586E2D-F4A2-43EC-B332-DD46C73552B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2586E2D-F4A2-43EC-B332-DD46C73552B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2586E2D-F4A2-43EC-B332-DD46C73552B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72C018E9-CF07-4A9D-B30F-22CB247B1757}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72C018E9-CF07-4A9D-B30F-22CB247B1757}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72C018E9-CF07-4A9D-B30F-22CB247B1757}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72C018E9-CF07-4A9D-B30F-22CB247B1757}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FAE4A3E-9B52-4800-9C93-E715D8EB234A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FAE4A3E-9B52-4800-9C93-E715D8EB234A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FAE4A3E-9B52-4800-9C93-E715D8EB234A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FAE4A3E-9B52-4800-9C93-E715D8EB234A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E90AADF-FE10-4D21-8822-A2E4851E4A8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E90AADF-FE10-4D21-8822-A2E4851E4A8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E90AADF-FE10-4D21-8822-A2E4851E4A8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E90AADF-FE10-4D21-8822-A2E4851E4A8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2914EDFC-362E-46D8-A354-CB4DEAEBA6BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2914EDFC-362E-46D8-A354-CB4DEAEBA6BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2914EDFC-362E-46D8-A354-CB4DEAEBA6BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2914EDFC-362E-46D8-A354-CB4DEAEBA6BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{109AE022-F234-481E-BE50-7C8BBA88A2B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{109AE022-F234-481E-BE50-7C8BBA88A2B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{109AE022-F234-481E-BE50-7C8BBA88A2B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{109AE022-F234-481E-BE50-7C8BBA88A2B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A196320E-E322-4F3F-A7BA-FC5CA18A20C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A196320E-E322-4F3F-A7BA-FC5CA18A20C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A196320E-E322-4F3F-A7BA-FC5CA18A20C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A196320E-E322-4F3F-A7BA-FC5CA18A20C0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NDepend) = preSolution
+		Project = ".\RCNGCMembersManagement.ndproj"
+	EndGlobalSection
+EndGlobal

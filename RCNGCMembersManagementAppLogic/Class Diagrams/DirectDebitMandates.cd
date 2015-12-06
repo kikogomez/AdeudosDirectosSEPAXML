@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.DirectDebit.DirectDebitMandate">
+    <Position X="5.25" Y="1.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAWhAAQFACAEEAAUAAAAAAAAAAAIAAAAAAABoAABoAA=</HashCode>
+      <FileName>Billing\DirectDebit\DirectDebitMandate.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="billingDataManager" />
+      <Field Name="bankAccount" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="bankAccountHistory" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.DirectDebit.BankAccount">
+    <Position X="9.75" Y="2.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAIAEAAAAAAAAIAQgAAAAgQQAAIgAAMIAAAAACAAAAA=</HashCode>
+      <FileName>Billing\DirectDebit\BankAccount.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="bankAccountFields" />
+      <Field Name="ccc" />
+      <Field Name="iban" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.DirectDebit.BankAccountHistoricalData">
+    <Position X="14.25" Y="1" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAIAAAAAAAACAAAAAgAAAAAAAAAAAAAAAIgAA=</HashCode>
+      <FileName>Billing\DirectDebit\BankAccountHistoricalData.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="bankAccount" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.DirectDebit.BankAccountFields">
+    <Position X="13.75" Y="7.75" Width="3.25" />
+    <NestedTypes>
+      <Struct Name="RCNGCMembersManagementAppLogic.Billing.DirectDebit.BankAccountFields.FieldLenghts" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Billing\DirectDebit\BankAccountFields.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAABAAUABAAAAAQgAACACAAAJAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Billing\DirectDebit\BankAccountFields.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.DirectDebit.ClientAccountCodeCCC">
+    <Position X="10" Y="7.75" Width="3" />
+    <NestedTypes>
+      <Struct Name="RCNGCMembersManagementAppLogic.Billing.DirectDebit.ClientAccountCodeCCC.CCCFieldLenghts" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Billing\DirectDebit\ClientAccountCodeCCC.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Struct Name="RCNGCMembersManagementAppLogic.Billing.DirectDebit.ClientAccountCodeCCC.CCCCheckDigits" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Billing\DirectDebit\ClientAccountCodeCCC.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAABEAAAAAAAAAQQgAAEAAAABAhgACIAAgAAAABAABA=</HashCode>
+      <FileName>Billing\DirectDebit\ClientAccountCodeCCC.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.DirectDebit.InternationalAccountBankNumberIBAN">
+    <Position X="5.25" Y="7.75" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAMARAAAAAAgAAAIgAAAIAAAAAIAAAAA=</HashCode>
+      <FileName>Billing\DirectDebit\InternationalAccountBankNumberIBAN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.BillingDataManager">
+    <Position X="0.5" Y="1.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAABAAAAAAABAFAAAGUBABAAAAQQgAgQSJgEEA=</HashCode>
+      <FileName>Billing\BillingDataManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.MembersManaging.ClubMember">
+    <Position X="17.5" Y="1" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAEACAAAAAEIAIAQAQAAAIRAAACMAACgoIAFgiEBIAE=</HashCode>
+      <FileName>MembersManaging\ClubMember.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="directDebitmandates" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.DirectDebit.ISO7064CheckDigits">
+    <Position X="1.75" Y="8.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAEAAAIAAAAIAAAAIAABABAAAAAAABAAAA=</HashCode>
+      <FileName>Billing\DirectDebit\ISO7064CheckDigits.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.DirectDebit.BankAccountCheckNumbersCalculator">
+    <Position X="17.5" Y="8.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAEAAAAAABAAAAAAAAAQAAAAAQ=</HashCode>
+      <FileName>Billing\DirectDebit\BankAccountCheckNumbersCalculator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

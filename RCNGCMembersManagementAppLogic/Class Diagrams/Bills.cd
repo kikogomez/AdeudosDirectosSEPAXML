@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.PaymentMethod" Collapsed="true">
+    <Position X="3.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Billing\PaymentMethod.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.BankTransferPaymentMethod" Collapsed="true">
+    <Position X="1.25" Y="4.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAAAAQAAAAAAAAAIAAIA=</HashCode>
+      <FileName>Billing\BankTransferPaymentMethod.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.CashPaymentMethod" Collapsed="true">
+    <Position X="3.25" Y="5.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Billing\CashPaymentMethod.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.DirectDebit.DirectDebitPaymentMethod" Collapsed="true">
+    <Position X="5" Y="4.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAEAAAgAAAAAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>Billing\DirectDebit\DirectDebitPaymentMethod.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.Payment" Collapsed="true">
+    <Position X="1.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAEAAAABAAAAAAAAAAAAAAAAAQAAAAEAAQA=</HashCode>
+      <FileName>Billing\Payment.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="paymentMethod" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.MembersManaging.ClubMember" Collapsed="true">
+    <Position X="6" Y="3" Width="1.5" />
+    <AssociationLine Name="defaultPaymentMethod" Type="RCNGCMembersManagementAppLogic.Billing.PaymentMethod">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-0.135" Y="0.341" Height="0.182" Width="1.655" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="invoicesList" Type="RCNGCMembersManagementAppLogic.Billing.Invoice" FixedFromPoint="true">
+      <Path>
+        <Point X="6.562" Y="3" />
+        <Point X="6.562" Y="2.191" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAEACAAAAAEIAIAQAQAAAIRAAACMAACgoIAFgiEBIAE=</HashCode>
+      <FileName>MembersManaging\ClubMember.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="defaultPaymentMethod" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="invoicesList" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.BillsManager" Collapsed="true">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAIEAAAAAAAABAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>BillsManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.Invoice" Collapsed="true">
+    <Position X="6" Y="1.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="RCNGCMembersManagementAppLogic.Billing.Invoice.InvoicePaymentState" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Billing\Invoice.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>QBAgAAAEQIBgAAAUAAAIFEAhAAQAAAgEBQAAAAEAACA=</HashCode>
+      <FileName>Billing\Invoice.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="invoiceBills" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.Bill" Collapsed="true">
+    <Position X="3.5" Y="1.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="RCNGCMembersManagementAppLogic.Billing.Bill.BillPaymentResult" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Billing\Bill.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="RCNGCMembersManagementAppLogic.Billing.Bill.BillPaymentMethod" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Billing\Bill.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <AssociationLine Name="payment" Type="RCNGCMembersManagementAppLogic.Billing.Payment" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.125" Y="2.062" />
+        <Point X="4.125" Y="2.625" />
+        <Point X="2.781" Y="2.625" />
+        <Point X="2.781" Y="3" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="paymentAgreements" Type="RCNGCMembersManagementAppLogic.Billing.PaymentAgreement" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.5" Y="1.875" />
+        <Point X="3" Y="1.875" />
+        <Point X="3" Y="2.436" />
+        <Point X="1.938" Y="2.436" />
+        <Point X="1.938" Y="2.062" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.244" Y="0.164" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="renegotiationAgreement" Type="RCNGCMembersManagementAppLogic.Billing.PaymentAgreement" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.5" Y="1.66" />
+        <Point X="3.25" Y="1.66" />
+        <Point X="3.25" Y="1.25" />
+        <Point X="2" Y="1.25" />
+        <Point X="2" Y="1.5" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.846" Y="0.291" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAggQAAAiBBgACAQMMCCAAiAghYAgAAAAAAAABAAIAA=</HashCode>
+      <FileName>Billing\Bill.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="payment" />
+      <Field Name="renegotiationAgreement" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="paymentAgreements" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.PaymentAgreement" Collapsed="true">
+    <Position X="1.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAEAAAgAAAAQAAACkAE=</HashCode>
+      <FileName>Billing\PaymentAgreement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

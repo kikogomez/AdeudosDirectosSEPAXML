@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.BaseInvoice" Collapsed="true">
+    <Position X="4.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAABACAIAgIAYAACAAAAAAEAQAAAAAAJCA=</HashCode>
+      <FileName>Billing\BaseInvoice.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="customerData" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="invoiceDetail" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.AmendingInvoice" Collapsed="true">
+    <Position X="2.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAIAAAACAAAAJAAAAAAABAAAEAQAAAAAAAAA=</HashCode>
+      <FileName>Billing\AmendingInvoice.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.Invoice" Collapsed="true">
+    <Position X="4.75" Y="4.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="RCNGCMembersManagementAppLogic.Billing.Invoice.InvoicePaymentState" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Billing\Invoice.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>QBAgAAAEQIBgAAAUAAAIFEAhAAQAAAgEBQAAAAEAACA=</HashCode>
+      <FileName>Billing\Invoice.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="invoiceBills" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.ProFormaInvoice" Collapsed="true">
+    <Position X="7" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAFAAgEAQAAAAAAAAA=</HashCode>
+      <FileName>Billing\ProFormaInvoice.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.Transaction" Collapsed="true">
+    <Position X="4.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAEAiAAAAAgAAQAIAAIIYCAAKAQAAAAEgAAAAIABAA=</HashCode>
+      <FileName>Billing\Transaction.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="tax" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.Sale" Collapsed="true">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAgAAAAAAAAAAAAAAACAQAAAQAAAAAAIAAAA=</HashCode>
+      <FileName>Billing\Sale.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.ServiceCharge" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAACAQAAAQAEAAAAIAAAA=</HashCode>
+      <FileName>Billing\ServiceCharge.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.Tax" Collapsed="true">
+    <Position X="7" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAAABAAAAAAAABAAAA=</HashCode>
+      <FileName>Billing\Tax.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.InvoiceCustomerData" Collapsed="true">
+    <Position X="7" Y="3" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Billing\InvoiceCustomerData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.Billing.Bill" Collapsed="true">
+    <Position X="2.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAggQAAAiBBgACAQMMCCAAiAghYAgAAAAAAAABAAIAA=</HashCode>
+      <FileName>Billing\Bill.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.MembersManaging.ClubMember" Collapsed="true">
+    <Position X="4.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEACAAAAAEIAIAQAQAAAIRAAACMAACgoIAFgiEBIAE=</HashCode>
+      <FileName>MembersManaging\ClubMember.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="amendingInvoicesList" />
+      <Field Name="invoicesList" />
+      <Field Name="proFormaInvoicesList" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="RCNGCMembersManagementAppLogic.InvoicesManager" Collapsed="true">
+    <Position X="4.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABIAAAAAAABAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>InvoicesManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:iso:std:iso:20022:tech:xsd:pain.008.001.02">
+  <CstmrDrctDbtInitn>
+    <GrpHdr>
+      <MsgId>TestSEPARemitance0001</MsgId>
+      <CreDtTm>2013-10-28T11:45:54</CreDtTm>
+      <NbOfTxs>2</NbOfTxs>
+      <CtrlSum>237</CtrlSum>
+      <InitgPty>
+        <Nm>Real Club Náutico de Gran Canaria</Nm>
+        <Id>
+          <OrgId>
+            <Othr>
+              <Id>ES90777G35008770</Id>
+              <SchmeNm>
+                <Prtry>SEPA</Prtry>
+              </SchmeNm>
+            </Othr>
+          </OrgId>
+        </Id>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>201402101</PmtInfId>
+      <PmtMtd>DD</PmtMtd>
+      <BtchBookg>true</BtchBookg>
+      <NbOfTxs>2</NbOfTxs>
+      <CtrlSum>237</CtrlSum>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SEPA</Cd>
+        </SvcLvl>
+        <LclInstrm>
+          <Cd>COR1</Cd>
+        </LclInstrm>
+        <SeqTp>RCUR</SeqTp>
+        <CtgyPurp>
+          <Prtry>Mensualidad</Prtry>
+        </CtgyPurp>
+      </PmtTpInf>
+      <ReqdColltnDt>2014-02-01</ReqdColltnDt>
+      <Cdtr>
+        <Nm>Real Club Náutico de Gran Canaria</Nm>
+      </Cdtr>
+      <CdtrAcct>
+        <Id>
+          <IBAN>ES6812345678061234567890</IBAN>
+        </Id>
+      </CdtrAcct>
+      <CdtrAgt>
+        <FinInstnId>
+          <BIC>CASDESBBXXX</BIC>
+        </FinInstnId>
+      </CdtrAgt>
+      <ChrgBr>SLEV</ChrgBr>
+      <CdtrSchmeId>
+        <Id>
+          <OrgId>
+            <Othr>
+              <Id>ES90777G35008770</Id>
+              <SchmeNm>
+                <Prtry>SEPA</Prtry>
+              </SchmeNm>
+            </Othr>
+          </OrgId>
+        </Id>
+      </CdtrSchmeId>
+      <DrctDbtTxInf>
+        <PmtId>
+          <InstrId>InternalID2510201300099</InstrId>
+          <EndToEndId>InternalID2510201300099</EndToEndId>
+        </PmtId>
+        <InstdAmt Ccy="EUR">158</InstdAmt>
+        <DrctDbtTx>
+          <MndtRltdInf>
+            <MndtId>000001102345                       </MndtId>
+            <DtOfSgntr>2009-10-31</DtOfSgntr>
+            <AmdmntInd>true</AmdmntInd>
+            <AmdmntInfDtls>
+              <OrgnlMndtId>000001101111                       </OrgnlMndtId>
+              <OrgnlDbtrAcct>
+                <Id>
+                  <IBAN>ES1801000100761234567890</IBAN>
+                </Id>
+              </OrgnlDbtrAcct>
+            </AmdmntInfDtls>
+          </MndtRltdInf>
+        </DrctDbtTx>
+        <DbtrAgt>
+          <FinInstnId>
+            <BIC>CASDESBBXXX</BIC>
+          </FinInstnId>
+        </DbtrAgt>
+        <Dbtr>
+          <Nm>Pedro Piqueras</Nm>
+        </Dbtr>
+        <DbtrAcct>
+          <Id>
+            <IBAN>ES2101000100709999999999</IBAN>
+          </Id>
+        </DbtrAcct>
+        <RmtInf>
+          <Ustrd>Cuota Mensual Numerario Septiembre 2013</Ustrd>
+          <Ustrd>Cuota Mensual Numerario Octubre 2013</Ustrd>
+        </RmtInf>
+      </DrctDbtTxInf>
+      <DrctDbtTxInf>
+        <PmtId>
+          <InstrId>InternalID2510201300100</InstrId>
+          <EndToEndId>InternalID2510201300100</EndToEndId>
+        </PmtId>
+        <InstdAmt Ccy="EUR">79</InstdAmt>
+        <DrctDbtTx>
+          <MndtRltdInf>
+            <MndtId>000001102346                       </MndtId>
+            <DtOfSgntr>2009-10-31</DtOfSgntr>
+            <AmdmntInd>false</AmdmntInd>
+          </MndtRltdInf>
+        </DrctDbtTx>
+        <DbtrAgt>
+          <FinInstnId>
+            <BIC>BBVAESMMXXX</BIC>
+          </FinInstnId>
+        </DbtrAgt>
+        <Dbtr>
+          <Nm>Manuel Moreno</Nm>
+        </Dbtr>
+        <DbtrAcct>
+          <Id>
+            <IBAN>ES1801821234861234567890</IBAN>
+          </Id>
+        </DbtrAcct>
+        <RmtInf>
+          <Ustrd>Cuota Mensual Numerario Octubre 2013</Ustrd>
+        </RmtInf>
+      </DrctDbtTxInf>
+    </PmtInf>
+  </CstmrDrctDbtInitn>
+</Document>
