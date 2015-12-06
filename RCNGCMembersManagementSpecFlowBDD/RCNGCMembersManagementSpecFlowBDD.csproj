@@ -36,8 +36,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="TechTalk.SpecFlow">
+    <Reference Include="TechTalk.SpecFlow, Version=1.9.0.77, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
       <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <Choose>
@@ -126,7 +127,6 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ManageMembersBillingInformation.feature.cs</LastGenOutput>
     </None>
-    <None Include="packages.config" />
     <None Include="ManageAccountNumbers.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ManageAccountNumbers.feature.cs</LastGenOutput>
@@ -151,6 +151,7 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ManageInvoices.feature.cs</LastGenOutput>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExtensionMethods\ExtensionMethods.csproj">
