@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RCNGCMembersManagementAppLogic.XML;
 using RCNGCMembersManagementAppLogic.Billing.DirectDebit;
-using RCNGCISO20022CustomerDebitInitiation;
+using ISO20022CustomerDebitInitiation;
 using RCNGCMembersManagementUnitTests.DirectDebitPOCOClasses;
 using ExtensionMethods;
 

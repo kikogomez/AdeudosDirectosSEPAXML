@@ -1,4 +1,4 @@
-﻿namespace RCNGCISO20022CustomerDebitInitiation
+﻿namespace ISO20022CustomerDebitInitiation
 {
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RCNGCMembersManagementAppLogic.Billing;
 using RCNGCMembersManagementAppLogic.Billing.DirectDebit;
-using RCNGCISO20022CustomerDebitInitiation;
+using ISO20022CustomerDebitInitiation;
 using RCNGCMembersManagementAppLogic.XML;
 using ExtensionMethods;
 

@@ -1,4 +1,4 @@
-﻿namespace RCNGCISO20022CustomerDebitInitiation
+﻿namespace ISO20022CustomerDebitInitiation
 {
 /// <comentarios/>
     [System.SerializableAttribute()]

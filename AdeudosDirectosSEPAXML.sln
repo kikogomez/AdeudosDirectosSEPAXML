@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RCNGCMembersManagementAppLogic", "RCNGCMembersManagementAppLogic\RCNGCMembersManagementAppLogic.csproj", "{A2586E2D-F4A2-43EC-B332-DD46C73552B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RCNGCMembersManagementSpecFlowBDD", "RCNGCMembersManagementSpecFlowBDD\RCNGCMembersManagementSpecFlowBDD.csproj", "{72C018E9-CF07-4A9D-B30F-22CB247B1757}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdeudosDirectosSEPAXMLSpecFlowBDD", "RCNGCMembersManagementSpecFlowBDD\AdeudosDirectosSEPAXMLSpecFlowBDD.csproj", "{72C018E9-CF07-4A9D-B30F-22CB247B1757}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A2586E2D-F4A2-43EC-B332-DD46C73552B5} = {A2586E2D-F4A2-43EC-B332-DD46C73552B5}
 	EndProjectSection
@@ -19,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtensionMethods", "Extensi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtensionMethodsUnitTests", "ExtensionMethodsUnitTests\ExtensionMethodsUnitTests.csproj", "{109AE022-F234-481E-BE50-7C8BBA88A2B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RCNGCISO20022CustomerDebitInitiation", "RCNGCISO20022CustomerDebitInitiation\RCNGCISO20022CustomerDebitInitiation.csproj", "{A196320E-E322-4F3F-A7BA-FC5CA18A20C0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISO20022CustomerDebitInitiation", "RCNGCISO20022CustomerDebitInitiation\ISO20022CustomerDebitInitiation.csproj", "{A196320E-E322-4F3F-A7BA-FC5CA18A20C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
