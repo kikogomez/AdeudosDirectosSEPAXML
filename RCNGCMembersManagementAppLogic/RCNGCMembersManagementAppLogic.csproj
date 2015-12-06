@@ -94,7 +94,7 @@
       <Project>{2914edfc-362e-46d8-a354-cb4deaeba6bc}</Project>
       <Name>ExtensionMethods</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RCNGCISO20022CustomerDebitInitiation\ISO20022PaymentInitiations.csproj">
+    <ProjectReference Include="..\ISO20022PaymentInitiations\ISO20022PaymentInitiations.csproj">
       <Project>{a196320e-e322-4f3f-a7ba-fc5ca18a20c0}</Project>
       <Name>ISO20022PaymentInitiations</Name>
     </ProjectReference>
