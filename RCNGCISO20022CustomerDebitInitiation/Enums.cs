@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ISO20022CustomerDebitInitiation
+namespace ISO20022CustomerDebitInitiationSerializableClasses
 {
     /// <comentarios/>
     [System.SerializableAttribute()]

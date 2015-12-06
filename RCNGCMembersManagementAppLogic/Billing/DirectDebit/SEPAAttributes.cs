@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using ISO20022CustomerDebitInitiation;
+using ISO20022CustomerDebitInitiationSerializableClasses;
 
 namespace RCNGCMembersManagementAppLogic.Billing.DirectDebit
 {
