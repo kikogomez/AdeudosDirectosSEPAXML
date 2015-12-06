@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtensionMethods", "Extensi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtensionMethodsUnitTests", "ExtensionMethodsUnitTests\ExtensionMethodsUnitTests.csproj", "{109AE022-F234-481E-BE50-7C8BBA88A2B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISO20022PaimentInitiations", "RCNGCISO20022CustomerDebitInitiation\ISO20022PaimentInitiations.csproj", "{A196320E-E322-4F3F-A7BA-FC5CA18A20C0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISO20022PaymentInitiations", "RCNGCISO20022CustomerDebitInitiation\ISO20022PaymentInitiations.csproj", "{A196320E-E322-4F3F-A7BA-FC5CA18A20C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
