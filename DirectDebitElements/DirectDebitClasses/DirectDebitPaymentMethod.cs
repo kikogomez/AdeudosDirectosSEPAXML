@@ -2,7 +2,7 @@
 
 namespace DirectDebitElements
 {
-    class DirectDebitPaymentMethod: PaymentMethod
+    public class DirectDebitPaymentMethod: PaymentMethod
     {
         private DirectDebitMandate directDebitMandate;
         private string directDebitTransactionPaymentIdentification;
