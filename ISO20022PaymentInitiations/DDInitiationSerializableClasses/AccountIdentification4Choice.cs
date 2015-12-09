@@ -1,4 +1,4 @@
-﻿namespace ISO20022CustomerDebitInitiationSerializableClasses
+﻿namespace ISO20022PaymentInitiations.DDInitiationSerializableClasses
 {
     /// <comentarios/>
     [System.SerializableAttribute()]
@@ -9,7 +9,7 @@
 
         //Parameterless constructor for Serialization purposes
         private AccountIdentification4Choice() { }
-
+       
         public AccountIdentification4Choice(string iBAN)
         {
             this.itemField = iBAN;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using RCNGCMembersManagementAppLogic.Billing;
 using RCNGCMembersManagementAppLogic.Billing.DirectDebit;
-using ISO20022CustomerDebitInitiationSerializableClasses;
+using ISO20022PaymentInitiations.DDInitiationSerializableClasses;
 using RCNGCMembersManagementAppLogic.XML;
 using ExtensionMethods;
 

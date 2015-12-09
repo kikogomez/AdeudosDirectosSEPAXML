@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ISO20022CustomerDebitInitiationSerializableClasses
+namespace ISO20022PaymentInitiations.DDInitiationSerializableClasses
 {
     /// <comentarios/>
     [System.SerializableAttribute()]

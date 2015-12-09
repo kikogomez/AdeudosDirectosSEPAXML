@@ -1,4 +1,4 @@
-﻿namespace ISO20022CustomerDebitInitiationSerializableClasses
+﻿namespace ISO20022PaymentInitiations.DDInitiationSerializableClasses
 {
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
