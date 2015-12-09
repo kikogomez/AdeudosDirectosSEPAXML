@@ -27,7 +27,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISO20022PaymentInitiationsU
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMLSerializerValidator", "XMLSerializerValidator\XMLSerializerValidator.csproj", "{E080B83D-9A86-4C93-8B7F-4674A607CBC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMLSelializerValidatorUnitTests", "XMLSelializerValidatorUnitTests\XMLSelializerValidatorUnitTests.csproj", "{96B6B3FC-695B-4FB5-AB67-A5BF0F55B941}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMLSerializerValidatorUnitTests", "XMLSelializerValidatorUnitTests\XMLSerializerValidatorUnitTests.csproj", "{96B6B3FC-695B-4FB5-AB67-A5BF0F55B941}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
