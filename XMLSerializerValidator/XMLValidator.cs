@@ -4,7 +4,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
 
-namespace RCNGCMembersManagementAppLogic.XML
+namespace XMLSerializerValidator
 {
     public static class XMLValidator
     {

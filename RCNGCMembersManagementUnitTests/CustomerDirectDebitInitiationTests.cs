@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RCNGCMembersManagementAppLogic.XML;
+using XMLSerializerValidator;
 using RCNGCMembersManagementAppLogic.Billing.DirectDebit;
 using ISO20022PaymentInitiations.DDInitiationSerializableClasses;
 using RCNGCMembersManagementUnitTests.DirectDebitPOCOClasses;
@@ -667,7 +667,7 @@ namespace RCNGCMembersManagementUnitTests
         }
 
         [TestMethod]
-        public void Documet_Document_IsCorrectlyCreated()
+        public void Documet_CustomerDirectDebitInitiationDocument_IsCorrectlyCreated()
         {
             GroupHeader39 groupHeader = XMLSerializer.XMLDeserializeFromFile<GroupHeader39>(@"XML Test Files\GroupHeader.xml", "GrpHdr", xMLNamespace);
             PaymentInstructionInformation4 paymentInformation_PmtInf = XMLSerializer.XMLDeserializeFromFile<PaymentInstructionInformation4>(@"XML Test Files\PaymentInformation.xml", "PmtInf", xMLNamespace);

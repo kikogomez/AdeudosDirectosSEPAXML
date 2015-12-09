@@ -8,7 +8,7 @@ using RCNGCMembersManagementAppLogic.MembersManaging;
 using RCNGCMembersManagementAppLogic.Billing;
 using RCNGCMembersManagementAppLogic.Billing.DirectDebit;
 using RCNGCMembersManagementMocks;
-using RCNGCMembersManagementAppLogic.XML;
+using XMLSerializerValidator;
 
 namespace RCNGCMembersManagementSpecFlowBDD
 {

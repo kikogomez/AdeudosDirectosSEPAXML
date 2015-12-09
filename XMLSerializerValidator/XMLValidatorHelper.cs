@@ -1,7 +1,7 @@
 ﻿using System.Xml;
 using System.Xml.Schema;
 
-namespace RCNGCMembersManagementAppLogic.XML
+namespace XMLSerializerValidator
 {
     public static class XMLValidatorHelper
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RCNGCMembersManagementAppLogic.XML;
-using RCNGCMembersManagementUnitTests.XMLPOCOClasses;
+using XMLSerializerValidator;
+using XMLSerializerValidatorUnitTest.XMLPOCOClasses;
 using System.IO;
 using System.Xml;
 using ExtensionMethods;

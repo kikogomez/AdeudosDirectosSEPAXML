@@ -2,7 +2,7 @@
 using System.Xml.Serialization;
 using System.IO;
 
-namespace RCNGCMembersManagementAppLogic.XML
+namespace XMLSerializerValidator
 {
     public static class XMLSerializer
     {

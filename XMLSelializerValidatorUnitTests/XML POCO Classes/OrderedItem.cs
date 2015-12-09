@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace ISO20022PaymentInitiationsUnitTests.XMLPOCOClasses
+namespace XMLSerializerValidatorUnitTest.XMLPOCOClasses
 {
     public class OrderedItem
     {

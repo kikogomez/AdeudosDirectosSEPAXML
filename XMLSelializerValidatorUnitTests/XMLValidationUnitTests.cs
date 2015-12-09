@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Xml;
 using System.Xml.Schema;
-using RCNGCMembersManagementAppLogic.XML;
+using XMLSerializerValidator;
 
 namespace RCNGCMembersManagementUnitTests
 {
@@ -162,7 +162,7 @@ namespace RCNGCMembersManagementUnitTests
 </Document>";
 
             //Original valid pain.008.002.01 XSD File from ISO20022
-            string xSDFilePath = @"XSDFiles\pain.008.001.02.xsd";
+            string xSDFilePath = @"XSD Test Files\pain.008.001.02.xsd";
 
             string validatingErrors = XMLValidator.ValidateXMLStringThroughXSDFile(xMLString, xSDFilePath);
             Assert.AreEqual(String.Empty, validatingErrors);
@@ -173,10 +173,10 @@ namespace RCNGCMembersManagementUnitTests
         public void AnXMLFileIsWellValidatedThroughXSD()
         {
             //Original valid pain.008.001.02 XML file from ISO20022
-            string xMLFilePath = @"XMLFiles\pain.008.001.02.xml";
+            string xMLFilePath = @"XML Test Files\pain.008.001.02.xml";
 
             //Original valid pain.008.002.01 XSD File from ISO20022
-            string xSDFilePath = @"XSDFiles\pain.008.001.02.xsd";
+            string xSDFilePath = @"XSD Test Files\pain.008.001.02.xsd";
 
             string validatingErrors = XMLValidator.ValidateXMLFileThroughXSDFile(xMLFilePath, xSDFilePath);
             Assert.AreEqual(String.Empty, validatingErrors);
@@ -186,7 +186,7 @@ namespace RCNGCMembersManagementUnitTests
         [TestMethod]
         public void AnElementISCorrectlyAddedAsRootInXSD()
         {
-            string xSDFilePath = @"XSDFiles\pain.008.001.02.xsd"; //Original valid pain.008.002.01 XSD File from ISO20022
+            string xSDFilePath = @"XSD Test Files\pain.008.001.02.xsd"; //Original valid pain.008.002.01 XSD File from ISO20022
             string elementName = "GrpHdr";
             string elementType = "GroupHeader39";
             string xMLNamespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02";
@@ -202,7 +202,7 @@ namespace RCNGCMembersManagementUnitTests
         [TestMethod]
         public void ThisXMLNodeIsWellValidatedThrougModifiedXSD()
         {
-            string xSDFilePath = @"XSDFiles\pain.008.001.02.xsd"; //Original valid pain.008.002.01 XSD File from ISO20022
+            string xSDFilePath = @"XSD Test Files\pain.008.001.02.xsd"; //Original valid pain.008.002.01 XSD File from ISO20022
 
             string xMLNode = @"<?xml version=""1.0"" encoding=""UTF-8""?>
 <GrpHdr xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns=""urn:iso:std:iso:20022:tech:xsd:pain.008.001.02"">
@@ -241,7 +241,7 @@ namespace RCNGCMembersManagementUnitTests
         [TestMethod]
         public void ThisXMLStringDoesNotValidateBecauseInitgPtIsNotCompilantToXSD()
         {
-            string xSDFilePath = @"XSDFiles\pain.008.001.02.xsd"; //Original valid pain.008.002.01 XSD File from ISO20022
+            string xSDFilePath = @"XSD Test Files\pain.008.001.02.xsd"; //Original valid pain.008.002.01 XSD File from ISO20022
 
             string xMLNode = @"<?xml version=""1.0"" encoding=""UTF-8""?>
 <GrpHdr xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns=""urn:iso:std:iso:20022:tech:xsd:pain.008.001.02"">
@@ -280,7 +280,7 @@ namespace RCNGCMembersManagementUnitTests
         [TestMethod]
         public void ThisInternalXMLNodeIsWellValidatedThrougModifiedXSD()
         {
-            string xSDFilePath = @"XSDFiles\pain.008.001.02.xsd"; //Original valid pain.008.002.01 XSD File from ISO20022
+            string xSDFilePath = @"XSD Test Files\pain.008.001.02.xsd"; //Original valid pain.008.002.01 XSD File from ISO20022
 
             string xMLNode = @"<?xml version=""1.0"" encoding=""UTF-8""?>
 <InitgPty xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns=""urn:iso:std:iso:20022:tech:xsd:pain.008.001.02"">
@@ -313,7 +313,7 @@ namespace RCNGCMembersManagementUnitTests
         [TestMethod]
         public void ThisInternalXMLNodeUsingClassNameInsteadXMLTagIsWellValidatedThrougModifiedXSD()
         {
-            string xSDFilePath = @"XSDFiles\pain.008.001.02.xsd"; //Original valid pain.008.002.01 XSD File from ISO20022
+            string xSDFilePath = @"XSD Test Files\pain.008.001.02.xsd"; //Original valid pain.008.002.01 XSD File from ISO20022
 
             string xMLNode = @"<?xml version=""1.0"" encoding=""UTF-8""?>
 <PartyIdentification32 xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns=""urn:iso:std:iso:20022:tech:xsd:pain.008.001.02"">
@@ -346,7 +346,7 @@ namespace RCNGCMembersManagementUnitTests
         [TestMethod]
         public void ThisInternalXMLNodeUsingCustomRootTagInsteadDefinedXMLTagIsWellValidatedThrougModifiedXSD()
         {
-            string xSDFilePath = @"XSDFiles\pain.008.001.02.xsd"; //Original valid pain.008.002.01 XSD File from ISO20022
+            string xSDFilePath = @"XSD Test Files\pain.008.001.02.xsd"; //Original valid pain.008.002.01 XSD File from ISO20022
 
             string xMLNode = @"<?xml version=""1.0"" encoding=""UTF-8""?>
 <Pepe xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns=""urn:iso:std:iso:20022:tech:xsd:pain.008.001.02"">
@@ -379,7 +379,7 @@ namespace RCNGCMembersManagementUnitTests
         [TestMethod]
         public void ThisXMLStringDoesNotValidateBecauseNIsNotCompilantToXSD()
         {
-            string xSDFilePath = @"XSDFiles\pain.008.001.02.xsd"; //Original valid pain.008.002.01 XSD File from ISO20022
+            string xSDFilePath = @"XSD Test Files\pain.008.001.02.xsd"; //Original valid pain.008.002.01 XSD File from ISO20022
 
             string xMLNode = @"<?xml version=""1.0"" encoding=""UTF-8""?>
 <PartyIdentification32 xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns=""urn:iso:std:iso:20022:tech:xsd:pain.008.001.02"">
@@ -412,7 +412,7 @@ namespace RCNGCMembersManagementUnitTests
         [TestMethod]
         public void ThisSerializedInternalXMLNodeIsWellValidatedThrougModifiedXSD()
         {
-            string xSDFilePath = @"XSDFiles\pain.008.001.02.xsd"; //Original valid pain.008.002.01 XSD File from ISO20022
+            string xSDFilePath = @"XSD Test Files\pain.008.001.02.xsd"; //Original valid pain.008.002.01 XSD File from ISO20022
 
             string xMLNode = @"<?xml version=""1.0"" encoding=""utf-16""?>
 <PartyIdentification32 xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns=""urn:iso:std:iso:20022:tech:xsd:pain.008.001.02"">
@@ -444,7 +444,7 @@ namespace RCNGCMembersManagementUnitTests
         [TestMethod]
         public void ThisModifiedSerializedInternalXMLStringDoesNotValidateBecauseOrgIIsNotCompilantToXSD()
         {
-            string xSDFilePath = @"XSDFiles\pain.008.001.02.xsd"; //Original valid pain.008.002.01 XSD File from ISO20022
+            string xSDFilePath = @"XSD Test Files\pain.008.001.02.xsd"; //Original valid pain.008.002.01 XSD File from ISO20022
 
             string xMLNode = @"<?xml version=""1.0"" encoding=""utf-16""?>
 <PartyIdentification32 xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns=""urn:iso:std:iso:20022:tech:xsd:pain.008.001.02"">
@@ -477,7 +477,7 @@ namespace RCNGCMembersManagementUnitTests
         [ExpectedException(typeof(XmlException))]
         public void ThisXMLStringIsDoesNotValidateBecauseSomeElementClosingTagAreMissing()
         {
-            string xSDFilePath = @"XSDFiles\pain.008.001.02.xsd"; //Original valid pain.008.002.01 XSD File from ISO20022
+            string xSDFilePath = @"XSD Test Files\pain.008.001.02.xsd"; //Original valid pain.008.002.01 XSD File from ISO20022
 
             string xMLNode = @"<?xml version=""1.0"" encoding=""UTF-8""?>
 <GrpHdr xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns=""urn:iso:std:iso:20022:tech:xsd:pain.008.001.02"">
@@ -516,7 +516,7 @@ namespace RCNGCMembersManagementUnitTests
         [ExpectedException(typeof(XmlException))]
         public void ThisXMLStringIsDoesNotValidateBecauseSomeElementTagAreErroneous()
         {
-            string xSDFilePath = @"XSDFiles\pain.008.001.02.xsd"; //Original valid pain.008.002.01 XSD File from ISO20022
+            string xSDFilePath = @"XSD Test Files\pain.008.001.02.xsd"; //Original valid pain.008.002.01 XSD File from ISO20022
 
             string xMLNode = @"<?xml version=""1.0"" encoding=""UTF-8""?>
 <GrpHdr xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns=""urn:iso:std:iso:20022:tech:xsd:pain.008.001.02"">
@@ -556,7 +556,7 @@ namespace RCNGCMembersManagementUnitTests
         [ExpectedException(typeof(XmlException))]
         public void TheXMLValidationEventHandlerWorksOK()
         {
-            string xSDFilePath = @"XML Test Files\wrongXSDFile.xsd";
+            string xSDFilePath = @"XSD Test Files\wrongXSDFile.xsd";
             try
             {
                 XmlSchema xmlSchema = XmlSchema.Read(new StreamReader(xSDFilePath), XMLValidationEventHandler);
