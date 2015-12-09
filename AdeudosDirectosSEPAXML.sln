@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferencesAndTools", "Refer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferencesAndToolsUnitTests", "ReferencesAndToolsUnitTests\ReferencesAndToolsUnitTests.csproj", "{0D0834CB-5B3F-40FF-8933-E39148C777E9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DirectDebitElements", "DirectDebitElements\DirectDebitElements.csproj", "{61CE6A05-FA54-4002-B4CF-515B34CAAAB2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{0D0834CB-5B3F-40FF-8933-E39148C777E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D0834CB-5B3F-40FF-8933-E39148C777E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D0834CB-5B3F-40FF-8933-E39148C777E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61CE6A05-FA54-4002-B4CF-515B34CAAAB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61CE6A05-FA54-4002-B4CF-515B34CAAAB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61CE6A05-FA54-4002-B4CF-515B34CAAAB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61CE6A05-FA54-4002-B4CF-515B34CAAAB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
