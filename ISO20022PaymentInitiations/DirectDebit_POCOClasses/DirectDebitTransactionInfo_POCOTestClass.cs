@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace ISO20022PaymentInitiationsUnitTests.DirectDebitPOCOClasses
+namespace ISO20022PaymentInitiations.DirectDebitPOCOClasses
 {
-    public class DirectDebitTransactionInfo_POCOTestClass
+    public class DirectDebitTransactionInfo_POCOClass
     {
         string debtorName;
         string txInternalId;
@@ -14,7 +14,7 @@ namespace ISO20022PaymentInitiationsUnitTests.DirectDebitPOCOClasses
         string previousMandateID;
         string previuosIBAN;
 
-        public DirectDebitTransactionInfo_POCOTestClass(
+        public DirectDebitTransactionInfo_POCOClass(
             string debtorName,
             string txInternalId,
             string[] remitanceInformation,

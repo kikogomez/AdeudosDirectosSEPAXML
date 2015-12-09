@@ -54,9 +54,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CustomerDirectDebitInitiationTests.cs" />
-    <Compile Include="Direct Debit POCO Classes\CreditorAgent_POCOTestClass.cs" />
-    <Compile Include="Direct Debit POCO Classes\Creditor_POCOTestClass.cs" />
-    <Compile Include="Direct Debit POCO Classes\DirectDebitTransactionInfo_POCOTestClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -78,37 +75,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="XML Test Files\DirectDebitTransactionInfo.xml">
+    <Content Include="XML Test Files\pain.008.001.02\DirectDebitTransactionInfo.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="XML Test Files\DirectDebitTransactionInfo2.xml">
+    <Content Include="XML Test Files\pain.008.001.02\DirectDebitTransactionInfo2.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="XML Test Files\Document.xml">
+    <Content Include="XML Test Files\pain.008.001.02\Document.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="XML Test Files\GroupHeader.xml">
+    <Content Include="XML Test Files\pain.008.001.02\GroupHeader.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="XML Test Files\InitiatingParty.xml">
+    <Content Include="XML Test Files\pain.008.001.02\InitiatingParty.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="XML Test Files\OrderedItem.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="XML Test Files\PaymentInformation.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="XMLFiles\pain.002.001.03_1.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="XMLFiles\pain.002.001.03_2.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="XMLFiles\pain.007.001.02.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="XMLFiles\pain.008.001.02.xml">
+    <Content Include="XML Test Files\pain.008.001.02\PaymentInformation.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="XMLFiles\SpanishBankCodes.xml">
@@ -116,10 +98,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="XML Test Files\wrongXSDFile.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="XSDFiles\pain.002.001.03.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -84,6 +84,9 @@
     <Compile Include="DDInitiationSerializableClasses\PersonIdentification5.cs" />
     <Compile Include="DDInitiationSerializableClasses\PersonIdentificationSchemeName1Choice.cs" />
     <Compile Include="DDInitiationSerializableClasses\PostalAddress6.cs" />
+    <Compile Include="DirectDebit_POCOClasses\CreditorAgent_POCOTestClass.cs" />
+    <Compile Include="DirectDebit_POCOClasses\Creditor_POCOClass.cs" />
+    <Compile Include="DirectDebit_POCOClasses\DirectDebitTransactionInfo_POCOTestClass.cs" />
     <Compile Include="SEPAAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DDInitiationSerializableClasses\Purpose2Choice.cs" />
@@ -136,9 +139,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DirectDebitClasses\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

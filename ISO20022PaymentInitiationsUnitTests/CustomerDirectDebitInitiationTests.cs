@@ -1,24 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using XMLSerializerValidator;
 using ISO20022PaymentInitiations;
-using ReferencesAndTools;
+using ISO20022PaymentInitiations.DirectDebitPOCOClasses;
 using ISO20022PaymentInitiations.DDInitiationSerializableClasses;
-using ISO20022PaymentInitiationsUnitTests.DirectDebitPOCOClasses;
+using ReferencesAndTools;
 using ExtensionMethods;
+using XMLSerializerValidator;
 
 namespace ISO20022PaymentInitiationsUnitTests
 {
     [TestClass]
     public class CustomerDirectDebitInitiationTests
     {
-        static Creditor_POCOTestClass creditor;
-        static CreditorAgent_POCOTestClass creditorAgent;
+        static Creditor_POCOClass creditor;
+        static CreditorAgent_POCOClass creditorAgent;
         static BankCodes bankCodes;
-        static DirectDebitTransactionInfo_POCOTestClass directDebitMandateInfo1;
-        static DirectDebitTransactionInfo_POCOTestClass directDebitMandateInfo2;
-        static List<DirectDebitTransactionInfo_POCOTestClass> directDebitMandateInfoList;
+        static DirectDebitTransactionInfo_POCOClass directDebitMandateInfo1;
+        static DirectDebitTransactionInfo_POCOClass directDebitMandateInfo2;
+        static List<DirectDebitTransactionInfo_POCOClass> directDebitMandateInfoList;
         static string xMLNamespace;
         static string xSDFilePath;
 
@@ -27,12 +27,12 @@ namespace ISO20022PaymentInitiationsUnitTests
         {
             SEPAAttributes sEPAAttributes = new SEPAAttributes();
             bankCodes = new BankCodes(@"XMLFiles\SpanishBankCodes.xml", BankCodes.BankCodesFileFormat.XML);
-            creditor = new Creditor_POCOTestClass(
+            creditor = new Creditor_POCOClass(
                 "Real Club Náutico de Gran Canaria",
                 sEPAAttributes.AT02CreditorIdentifier("ES", "G35008770", "777"),
                 sEPAAttributes.AT07IBAN_Spanish("12345678061234567890"));
-            creditorAgent = new CreditorAgent_POCOTestClass(bankCodes.BankDictionaryByLocalBankCode["3183"].BankBIC);
-            directDebitMandateInfo1 = new DirectDebitTransactionInfo_POCOTestClass(
+            creditorAgent = new CreditorAgent_POCOClass(bankCodes.BankDictionaryByLocalBankCode["3183"].BankBIC);
+            directDebitMandateInfo1 = new DirectDebitTransactionInfo_POCOClass(
                 "Pedro Piqueras",
                 "InternalID2510201300099",
                 new string[] { "Cuota Mensual Numerario Septiembre 2013", "Cuota Mensual Numerario Octubre 2013" },
@@ -43,7 +43,7 @@ namespace ISO20022PaymentInitiationsUnitTests
                 sEPAAttributes.AT01MandateReference("000001101111"),
                 sEPAAttributes.AT07IBAN_Spanish("01000100761234567890"));
 
-            directDebitMandateInfo2 = new DirectDebitTransactionInfo_POCOTestClass(
+            directDebitMandateInfo2 = new DirectDebitTransactionInfo_POCOClass(
                 "Manuel Moreno",
                 "InternalID2510201300100",
                 new string[] { "Cuota Mensual Numerario Octubre 2013" },
@@ -54,7 +54,7 @@ namespace ISO20022PaymentInitiationsUnitTests
                 null,
                 null);
 
-            directDebitMandateInfoList = new List<DirectDebitTransactionInfo_POCOTestClass>() { directDebitMandateInfo1, directDebitMandateInfo2 };
+            directDebitMandateInfoList = new List<DirectDebitTransactionInfo_POCOClass>() { directDebitMandateInfo1, directDebitMandateInfo2 };
 
             xMLNamespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02";
             xSDFilePath = @"XSDFiles\pain.008.001.02.xsd";
@@ -162,7 +162,7 @@ namespace ISO20022PaymentInitiationsUnitTests
         [TestMethod]
         public void InitiationPartyElement_InitPty_IsCorrectlyDeserialized()
         {
-            PartyIdentification32 initiatingParty = XMLSerializer.XMLDeserializeFromFile<PartyIdentification32>(@"XML Test Files\InitiatingParty.xml", "InitgPty", xMLNamespace);
+            PartyIdentification32 initiatingParty = XMLSerializer.XMLDeserializeFromFile<PartyIdentification32>(@"XML Test Files\pain.008.001.02\InitiatingParty.xml", "InitgPty", xMLNamespace);
             Assert.AreEqual("Real Club Náutico de Gran Canaria", initiatingParty.Nm);
             OrganisationIdentification4 orgId = (OrganisationIdentification4)initiatingParty.Id.Item;
             string genericOrganisationInformationId = orgId.Othr[0].Id;
@@ -172,7 +172,7 @@ namespace ISO20022PaymentInitiationsUnitTests
         [TestMethod]
         public void GroupHeader_GrpHdr_IsCorrectlyCreated()
         {
-            PartyIdentification32 initiationParty_initgPty = XMLSerializer.XMLDeserializeFromFile<PartyIdentification32>(@"XML Test Files\InitiatingParty.xml", "InitgPty", xMLNamespace);
+            PartyIdentification32 initiationParty_initgPty = XMLSerializer.XMLDeserializeFromFile<PartyIdentification32>(@"XML Test Files\pain.008.001.02\InitiatingParty.xml", "InitgPty", xMLNamespace);
 
             Authorisation1Choice[] authorisation_authstn = new Authorisation1Choice[] { null };
 
@@ -198,7 +198,7 @@ namespace ISO20022PaymentInitiationsUnitTests
         [TestMethod]
         public void GroupHeader_GrpHdr_IsCorrectlyDeserialized()
         {
-            GroupHeader39 groupHeader = XMLSerializer.XMLDeserializeFromFile<GroupHeader39>(@"XML Test Files\GroupHeader.xml", "GrpHdr", xMLNamespace);
+            GroupHeader39 groupHeader = XMLSerializer.XMLDeserializeFromFile<GroupHeader39>(@"XML Test Files\pain.008.001.02\GroupHeader.xml", "GrpHdr", xMLNamespace);
             Assert.AreEqual("TestSEPARemitance0001", groupHeader.MsgId);
             string deserializedDateToISO0861DateString = groupHeader.CreDtTm.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
             Assert.AreEqual("2013-10-28T11:45:54", deserializedDateToISO0861DateString);
@@ -502,7 +502,7 @@ namespace ISO20022PaymentInitiationsUnitTests
         [TestMethod]
         public void DirectDebitTransactionInfo_DrctDbtTxInf_IsCorrectlyDeserialized()
         {
-            DirectDebitTransactionInformation9 deserializedDirectDebitTransactionInfo = XMLSerializer.XMLDeserializeFromFile<DirectDebitTransactionInformation9>(@"XML Test Files\DirectDebitTransactionInfo.xml", "DrctDbtTxInf", xMLNamespace);
+            DirectDebitTransactionInformation9 deserializedDirectDebitTransactionInfo = XMLSerializer.XMLDeserializeFromFile<DirectDebitTransactionInformation9>(@"XML Test Files\pain.008.001.02\DirectDebitTransactionInfo.xml", "DrctDbtTxInf", xMLNamespace);
             Assert.AreEqual("InternalID2510201300099", deserializedDirectDebitTransactionInfo.PmtId.InstrId);
             Assert.AreEqual("InternalID2510201300099", deserializedDirectDebitTransactionInfo.PmtId.EndToEndId);
             Assert.AreEqual("EUR", deserializedDirectDebitTransactionInfo.InstdAmt.Ccy);
@@ -523,7 +523,7 @@ namespace ISO20022PaymentInitiationsUnitTests
         [TestMethod]
         public void DirectDebitTransactionInfo2_DrctDbtTxInf_IsCorrectlyDeserialized()
         {
-            DirectDebitTransactionInformation9 deserializedDirectDebitTransactionInfo = XMLSerializer.XMLDeserializeFromFile<DirectDebitTransactionInformation9>(@"XML Test Files\DirectDebitTransactionInfo2.xml", "DrctDbtTxInf", xMLNamespace);
+            DirectDebitTransactionInformation9 deserializedDirectDebitTransactionInfo = XMLSerializer.XMLDeserializeFromFile<DirectDebitTransactionInformation9>(@"XML Test Files\pain.008.001.02\DirectDebitTransactionInfo2.xml", "DrctDbtTxInf", xMLNamespace);
             Assert.AreEqual("InternalID2510201300100", deserializedDirectDebitTransactionInfo.PmtId.InstrId);
             Assert.AreEqual("InternalID2510201300100", deserializedDirectDebitTransactionInfo.PmtId.EndToEndId);
             Assert.AreEqual("EUR", deserializedDirectDebitTransactionInfo.InstdAmt.Ccy);
@@ -592,8 +592,8 @@ namespace ISO20022PaymentInitiationsUnitTests
             PartyIdentification32 creditorSchemeIdentification_CdtrSchemeId = new PartyIdentification32(
                 null, null, organisationOrPrivateIdentification_id, null, null);
 
-            DirectDebitTransactionInformation9 deserializedDirectDebitTransactionInfo1 = XMLSerializer.XMLDeserializeFromFile<DirectDebitTransactionInformation9>(@"XML Test Files\DirectDebitTransactionInfo.xml", "DrctDbtTxInf", xMLNamespace);
-            DirectDebitTransactionInformation9 deserializedDirectDebitTransactionInfo2 = XMLSerializer.XMLDeserializeFromFile<DirectDebitTransactionInformation9>(@"XML Test Files\DirectDebitTransactionInfo2.xml", "DrctDbtTxInf", xMLNamespace);
+            DirectDebitTransactionInformation9 deserializedDirectDebitTransactionInfo1 = XMLSerializer.XMLDeserializeFromFile<DirectDebitTransactionInformation9>(@"XML Test Files\pain.008.001.02\DirectDebitTransactionInfo.xml", "DrctDbtTxInf", xMLNamespace);
+            DirectDebitTransactionInformation9 deserializedDirectDebitTransactionInfo2 = XMLSerializer.XMLDeserializeFromFile<DirectDebitTransactionInformation9>(@"XML Test Files\pain.008.001.02\DirectDebitTransactionInfo2.xml", "DrctDbtTxInf", xMLNamespace);
             DirectDebitTransactionInformation9[] directDebitTransactionInfoCollection =
                 new DirectDebitTransactionInformation9[] { deserializedDirectDebitTransactionInfo1, deserializedDirectDebitTransactionInfo2 };
 
@@ -629,7 +629,7 @@ namespace ISO20022PaymentInitiationsUnitTests
         [TestMethod]
         public void PaymentInformation_PmtInf_IsCorrectlyDeserialized()
         {
-            PaymentInstructionInformation4 paymentInformation_PmtInf = XMLSerializer.XMLDeserializeFromFile<PaymentInstructionInformation4>(@"XML Test Files\PaymentInformation.xml", "PmtInf", xMLNamespace);
+            PaymentInstructionInformation4 paymentInformation_PmtInf = XMLSerializer.XMLDeserializeFromFile<PaymentInstructionInformation4>(@"XML Test Files\pain.008.001.02\PaymentInformation.xml", "PmtInf", xMLNamespace);
             Assert.AreEqual("201402101", paymentInformation_PmtInf.PmtInfId);
             Assert.AreEqual(PaymentMethod2Code.DD, paymentInformation_PmtInf.PmtMtd);
             Assert.AreEqual(true, paymentInformation_PmtInf.BtchBookg);
@@ -655,11 +655,11 @@ namespace ISO20022PaymentInitiationsUnitTests
         [TestMethod]
         public void CustomerDirectDebitInitiationV02_CstmrDrctDbtInitn_IsCorrectlyCreated()
         {
-            GroupHeader39 groupHeader = XMLSerializer.XMLDeserializeFromFile<GroupHeader39>(@"XML Test Files\GroupHeader.xml", "GrpHdr", xMLNamespace);
-            PaymentInstructionInformation4 paymentInformation_PmtInf = XMLSerializer.XMLDeserializeFromFile<PaymentInstructionInformation4>(@"XML Test Files\PaymentInformation.xml", "PmtInf", xMLNamespace);
+            GroupHeader39 groupHeader = XMLSerializer.XMLDeserializeFromFile<GroupHeader39>(@"XML Test Files\pain.008.001.02\GroupHeader.xml", "GrpHdr", xMLNamespace);
+            PaymentInstructionInformation4 paymentInformation_PmtInf = XMLSerializer.XMLDeserializeFromFile<PaymentInstructionInformation4>(@"XML Test Files\pain.008.001.02\PaymentInformation.xml", "PmtInf", xMLNamespace);
             CustomerDirectDebitInitiationV02 customerDebitInitiationV02_CstmrDrctDbtInitn = new CustomerDirectDebitInitiationV02(
                 groupHeader,                                                                //<GrpHdr>
-                new PaymentInstructionInformation4[] { paymentInformation_PmtInf });          //<PmtInf>
+                new PaymentInstructionInformation4[] { paymentInformation_PmtInf });        //<PmtInf>
 
             string xmlString = XMLSerializer.XMLSerializeToString<CustomerDirectDebitInitiationV02>(customerDebitInitiationV02_CstmrDrctDbtInitn, "CstmrDrctDbtInitn", xMLNamespace);
             string validatingErrors = XMLValidator.ValidateXMLNodeThroughModifiedXSD(
@@ -670,8 +670,8 @@ namespace ISO20022PaymentInitiationsUnitTests
         [TestMethod]
         public void Documet_CustomerDirectDebitInitiationDocument_IsCorrectlyCreated()
         {
-            GroupHeader39 groupHeader = XMLSerializer.XMLDeserializeFromFile<GroupHeader39>(@"XML Test Files\GroupHeader.xml", "GrpHdr", xMLNamespace);
-            PaymentInstructionInformation4 paymentInformation_PmtInf = XMLSerializer.XMLDeserializeFromFile<PaymentInstructionInformation4>(@"XML Test Files\PaymentInformation.xml", "PmtInf", xMLNamespace);
+            GroupHeader39 groupHeader = XMLSerializer.XMLDeserializeFromFile<GroupHeader39>(@"XML Test Files\pain.008.001.02\GroupHeader.xml", "GrpHdr", xMLNamespace);
+            PaymentInstructionInformation4 paymentInformation_PmtInf = XMLSerializer.XMLDeserializeFromFile<PaymentInstructionInformation4>(@"XML Test Files\pain.008.001.02\PaymentInformation.xml", "PmtInf", xMLNamespace);
             CustomerDirectDebitInitiationV02 customerDebitInitiationV02_Document = new CustomerDirectDebitInitiationV02(
                 groupHeader, new PaymentInstructionInformation4[] { paymentInformation_PmtInf });
 

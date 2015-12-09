@@ -1,12 +1,12 @@
-﻿namespace ISO20022PaymentInitiationsUnitTests.DirectDebitPOCOClasses
+﻿namespace ISO20022PaymentInitiations.DirectDebitPOCOClasses
 {
-    public class Creditor_POCOTestClass
+    public class Creditor_POCOClass
     {
         string name;
         string identification;
         string iBAN;
 
-        public Creditor_POCOTestClass(string name, string identification, string iBAN)
+        public Creditor_POCOClass(string name, string identification, string iBAN)
         {
             this.name = name;
             this.identification = identification;
