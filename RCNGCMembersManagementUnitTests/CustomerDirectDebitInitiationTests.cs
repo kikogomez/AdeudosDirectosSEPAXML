@@ -674,9 +674,9 @@ namespace RCNGCMembersManagementUnitTests
             CustomerDirectDebitInitiationV02 customerDebitInitiationV02_Document = new CustomerDirectDebitInitiationV02(
                 groupHeader, new PaymentInstructionInformation4[] { paymentInformation_PmtInf });
 
-            Document document_Document = new Document(customerDebitInitiationV02_Document);
+            CustomerDirectDebitInitiationDocument document_Document = new CustomerDirectDebitInitiationDocument(customerDebitInitiationV02_Document);
 
-            string xmlString = XMLSerializer.XMLSerializeToString<Document>(document_Document, "Document", xMLNamespace);
+            string xmlString = XMLSerializer.XMLSerializeToString<CustomerDirectDebitInitiationDocument>(document_Document, "Document", xMLNamespace);
             string validatingErrors = XMLValidator.ValidateXMLStringThroughXSDFile(xmlString, xSDFilePath);
             Assert.AreEqual("", validatingErrors);
         }

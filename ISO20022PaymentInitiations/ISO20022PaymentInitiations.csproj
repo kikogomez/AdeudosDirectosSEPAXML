@@ -60,7 +60,7 @@
     <Compile Include="DDInitiationSerializableClasses\DatePeriodDetails.cs" />
     <Compile Include="DDInitiationSerializableClasses\DirectDebitTransaction6.cs" />
     <Compile Include="DDInitiationSerializableClasses\DirectDebitTransactionInformation9.cs" />
-    <Compile Include="DDInitiationSerializableClasses\Document.cs" />
+    <Compile Include="DDInitiationSerializableClasses\CustomerDirectDebitInitiationDocument.cs" />
     <Compile Include="DDInitiationSerializableClasses\DocumentAdjustment1.cs" />
     <Compile Include="DDInitiationSerializableClasses\Enums.cs" />
     <Compile Include="DDInitiationSerializableClasses\FinancialIdentificationSchemeName1Choice.cs" />

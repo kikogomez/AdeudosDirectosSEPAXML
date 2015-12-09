@@ -51,10 +51,10 @@ namespace RCNGCMembersManagementAppLogic
                 groupHeader_GrpHdr,                     //<GrpHdr>
                 paymentInformation_PmtInf_Array);       //<PmtInf>
 
-            Document document_Document = new Document(customerDebitInitiationV02_Document);
+            CustomerDirectDebitInitiationDocument document_Document = new CustomerDirectDebitInitiationDocument(customerDebitInitiationV02_Document);
 
             string xMLNamespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02";
-            string xmlString = XMLSerializer.XMLSerializeToString<Document>(document_Document, "Document", xMLNamespace);
+            string xmlString = XMLSerializer.XMLSerializeToString<CustomerDirectDebitInitiationDocument>(document_Document, "Document", xMLNamespace);
             return xmlString;
         }
 

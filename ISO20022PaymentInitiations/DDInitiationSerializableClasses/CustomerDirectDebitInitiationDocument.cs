@@ -3,14 +3,14 @@
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02", IsNullable = false)]
-    public class Document
+    public class CustomerDirectDebitInitiationDocument
     {
         private CustomerDirectDebitInitiationV02 cstmrDrctDbtInitnField;
 
         //Parameterless constructor for Serialization purpose
-        private Document() { }
+        private CustomerDirectDebitInitiationDocument() { }
 
-        public Document(CustomerDirectDebitInitiationV02 customerDirectDebitInitiation)
+        public CustomerDirectDebitInitiationDocument(CustomerDirectDebitInitiationV02 customerDirectDebitInitiation)
         {
             this.cstmrDrctDbtInitnField = customerDirectDebitInitiation;
         }
