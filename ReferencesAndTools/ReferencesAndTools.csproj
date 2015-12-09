@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BankAccountCheckNumbersCalculator.cs" />
     <Compile Include="BankCode.cs" />
     <Compile Include="BankCodes.cs" />
     <Compile Include="ISO7064CheckDigits.cs" />
@@ -55,6 +56,11 @@
     <Content Include="XMLFiles\SpanishBankCodes.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CSVFiles\SpanishBankCodes.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

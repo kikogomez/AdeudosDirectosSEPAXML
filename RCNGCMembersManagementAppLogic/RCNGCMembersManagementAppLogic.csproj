@@ -45,7 +45,6 @@
     <Compile Include="Billing\BankTransferPaymentMethod.cs" />
     <Compile Include="Billing\CashPaymentMethod.cs" />
     <Compile Include="Billing\DirectDebit\BankAccount.cs" />
-    <Compile Include="Billing\DirectDebit\BankAccountCheckNumbersCalculator.cs" />
     <Compile Include="Billing\BaseInvoice.cs" />
     <Compile Include="Billing\Bill.cs" />
     <Compile Include="Billing\BillingDataManager.cs" />
@@ -81,7 +80,6 @@
     <Compile Include="Billing\Transaction.cs" />
     <Compile Include="ClubServices\ClubService.cs" />
     <Compile Include="ClubStore\Product.cs" />
-    <Compile Include="Billing\DirectDebit\ISO7064CheckDigits.cs" />
     <Compile Include="MembersManaging\ClubMember.cs" />
     <Compile Include="MembersManaging\ClubMemberDataManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -95,6 +93,10 @@
     <ProjectReference Include="..\ISO20022PaymentInitiations\ISO20022PaymentInitiations.csproj">
       <Project>{a196320e-e322-4f3f-a7ba-fc5ca18a20c0}</Project>
       <Name>ISO20022PaymentInitiations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReferencesAndTools\ReferencesAndTools.csproj">
+      <Project>{5fed753a-7a36-4a4a-8b4d-c9ba3d577840}</Project>
+      <Name>ReferencesAndTools</Name>
     </ProjectReference>
     <ProjectReference Include="..\XMLSerializerValidator\XMLSerializerValidator.csproj">
       <Project>{e080b83d-9a86-4c93-8b7f-4674a607cbc9}</Project>

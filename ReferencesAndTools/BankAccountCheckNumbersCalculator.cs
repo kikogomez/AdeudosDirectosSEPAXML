@@ -1,6 +1,6 @@
-﻿namespace RCNGCMembersManagementAppLogic.Billing.DirectDebit
+﻿namespace ReferencesAndTools
 {
-    static class BankAccountCheckNumbersCalculator
+    public static class BankAccountCheckNumbersCalculator
     {
         public static string CalculateCCCCheckDigit(string tenDigitsLongInt)
         {

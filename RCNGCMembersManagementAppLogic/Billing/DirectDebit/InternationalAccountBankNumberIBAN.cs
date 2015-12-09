@@ -1,4 +1,6 @@
-﻿namespace RCNGCMembersManagementAppLogic.Billing.DirectDebit
+﻿using ReferencesAndTools;
+
+namespace RCNGCMembersManagementAppLogic.Billing.DirectDebit
 {
     public class InternationalAccountBankNumberIBAN
     {
