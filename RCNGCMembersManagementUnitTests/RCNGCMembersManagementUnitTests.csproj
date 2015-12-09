@@ -67,7 +67,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="InvoiceUnitTests.cs" />
     <Compile Include="BillUnitTests.cs" />
-    <Compile Include="SEPAAttributesTest.cs" />
     <Compile Include="ServiceUnitTests.cs" />
     <Compile Include="TaxTestUnits.cs" />
     <Compile Include="TransactionUnitTests.cs" />

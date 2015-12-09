@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RCNGCMembersManagementAppLogic.Billing.DirectDebit;
+using ISO20022PaymentInitiations;
 using ISO20022PaymentInitiations.DDInitiationSerializableClasses;
 
 namespace RCNGCMembersManagementUnitTests
