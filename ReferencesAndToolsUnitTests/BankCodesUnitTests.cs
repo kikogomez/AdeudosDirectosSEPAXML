@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RCNGCMembersManagementAppLogic.Billing.DirectDebit;
+using ReferencesAndTools;
 
-namespace RCNGCMembersManagementUnitTests
+namespace ReferencesAndToolsUnitTests
 {
     [TestClass]
     public class BankCodesUnitTests

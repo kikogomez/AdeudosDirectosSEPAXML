@@ -55,17 +55,14 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BankAccountUnitTests.cs" />
-    <Compile Include="BankCodesUnitTests.cs" />
     <Compile Include="ClubMemberUnitTests.cs" />
     <Compile Include="CreditorTests.cs" />
-    <Compile Include="CustomerDirectDebitInitiationTests.cs" />
     <Compile Include="Direct Debit POCO Classes\Creditor_POCOTestClass.cs" />
     <Compile Include="Direct Debit POCO Classes\CreditorAgent_POCOTestClass.cs" />
     <Compile Include="Direct Debit POCO Classes\DirectDebitTransactionInfo_POCOTestClass.cs" />
     <Compile Include="DirectDebitRemmitanceUnitTest.cs" />
     <Compile Include="DirectDebitUnitTests.cs" />
     <Compile Include="InvoicesManagerUnitTests.cs" />
-    <Compile Include="ISO7064UnitTests.cs" />
     <Compile Include="ProductUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="InvoiceUnitTests.cs" />

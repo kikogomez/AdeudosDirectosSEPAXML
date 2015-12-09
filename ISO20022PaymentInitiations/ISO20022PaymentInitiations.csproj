@@ -84,6 +84,7 @@
     <Compile Include="DDInitiationSerializableClasses\PersonIdentification5.cs" />
     <Compile Include="DDInitiationSerializableClasses\PersonIdentificationSchemeName1Choice.cs" />
     <Compile Include="DDInitiationSerializableClasses\PostalAddress6.cs" />
+    <Compile Include="SEPAAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DDInitiationSerializableClasses\Purpose2Choice.cs" />
     <Compile Include="DDInitiationSerializableClasses\ReferredDocumentInformation3.cs" />
@@ -107,6 +108,10 @@
     <Compile Include="DDInitiationSerializableClasses\TaxRecordDetails1.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ReferencesAndTools\ReferencesAndTools.csproj">
+      <Project>{5fed753a-7a36-4a4a-8b4d-c9ba3d577840}</Project>
+      <Name>ReferencesAndTools</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XMLSerializerValidator\XMLSerializerValidator.csproj">
       <Project>{e080b83d-9a86-4c93-8b7f-4674a607cbc9}</Project>
       <Name>XMLSerializerValidator</Name>
@@ -125,6 +130,14 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="XMLFiles\SpanishBankCodes.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DirectDebitClasses\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

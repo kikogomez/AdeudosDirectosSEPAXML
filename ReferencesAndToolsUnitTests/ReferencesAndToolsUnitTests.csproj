@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{59F33257-1BF7-4C44-B81F-AF084BEFC9D8}</ProjectGuid>
+    <ProjectGuid>{0D0834CB-5B3F-40FF-8933-E39148C777E9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ISO20022PaymentInitiationsUnitTests</RootNamespace>
-    <AssemblyName>ISO20022PaymentInitiationsUnitTests</AssemblyName>
+    <RootNamespace>ReferencesAndToolsUnitTests</RootNamespace>
+    <AssemblyName>ReferencesAndToolsUnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -36,9 +36,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.XML" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -53,83 +50,18 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="CustomerDirectDebitInitiationTests.cs" />
-    <Compile Include="Direct Debit POCO Classes\CreditorAgent_POCOTestClass.cs" />
-    <Compile Include="Direct Debit POCO Classes\Creditor_POCOTestClass.cs" />
-    <Compile Include="Direct Debit POCO Classes\DirectDebitTransactionInfo_POCOTestClass.cs" />
+    <Compile Include="BankCodesUnitTests.cs" />
+    <Compile Include="ISO7064UnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ExtensionMethods\ExtensionMethods.csproj">
-      <Project>{2914edfc-362e-46d8-a354-cb4deaeba6bc}</Project>
-      <Name>ExtensionMethods</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ISO20022PaymentInitiations\ISO20022PaymentInitiations.csproj">
-      <Project>{a196320e-e322-4f3f-a7ba-fc5ca18a20c0}</Project>
-      <Name>ISO20022PaymentInitiations</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ReferencesAndTools\ReferencesAndTools.csproj">
       <Project>{5fed753a-7a36-4a4a-8b4d-c9ba3d577840}</Project>
       <Name>ReferencesAndTools</Name>
     </ProjectReference>
-    <ProjectReference Include="..\XMLSerializerValidator\XMLSerializerValidator.csproj">
-      <Project>{e080b83d-9a86-4c93-8b7f-4674a607cbc9}</Project>
-      <Name>XMLSerializerValidator</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="XML Test Files\DirectDebitTransactionInfo.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="XML Test Files\DirectDebitTransactionInfo2.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="XML Test Files\Document.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="XML Test Files\GroupHeader.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="XML Test Files\InitiatingParty.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="XML Test Files\OrderedItem.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="XML Test Files\PaymentInformation.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="XMLFiles\pain.002.001.03_1.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="XMLFiles\pain.002.001.03_2.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="XMLFiles\pain.007.001.02.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="XMLFiles\pain.008.001.02.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="XMLFiles\SpanishBankCodes.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="XML Test Files\wrongXSDFile.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="XSDFiles\pain.002.001.03.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="XSDFiles\pain.007.001.02.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="XSDFiles\pain.008.001.02.xsd">
-      <SubType>Designer</SubType>
+    <None Include="CSVFiles\SpanishBankCodes.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

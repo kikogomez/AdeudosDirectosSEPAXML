@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using XMLSerializerValidator;
-using RCNGCMembersManagementAppLogic.Billing.DirectDebit;
+using ISO20022PaymentInitiations;
+using ReferencesAndTools;
 using ISO20022PaymentInitiations.DDInitiationSerializableClasses;
-using RCNGCMembersManagementUnitTests.DirectDebitPOCOClasses;
+using ISO20022PaymentInitiationsUnitTests.DirectDebitPOCOClasses;
 using ExtensionMethods;
 
-namespace RCNGCMembersManagementUnitTests
+namespace ISO20022PaymentInitiationsUnitTests
 {
     [TestClass]
     public class CustomerDirectDebitInitiationTests
