@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-16"?>
+<InitgPty xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:iso:std:iso:20022:tech:xsd:pain.008.001.02">
+  <Nm>Real Club Náutico de Gran Canaria</Nm>
+  <Id>
+    <OrgId>
+      <Othr>
+        <Id>ES90777G35008770</Id>
+        <SchmeNm>
+          <Prtry>SEPA</Prtry>
+        </SchmeNm>
+      </Othr>
+    </OrgId>
+  </Id>
+</InitgPty>
