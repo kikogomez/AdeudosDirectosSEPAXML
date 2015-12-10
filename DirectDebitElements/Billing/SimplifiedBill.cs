@@ -11,10 +11,7 @@ namespace Billing
         DateTime issueDate;
         DateTime dueDate;
         PaymentMethod assignedPaymentMethod;
-        //Dictionary<DateTime,PaymentAgreement> paymentAgreements;
-        //PaymentAgreement renegotiationAgreement;
-        //Payment payment;
-        //BillPaymentResult paymentResult;
+        BillPaymentResult paymentResult;
 
         public SimplifiedBill(string billID, string description, decimal amount, DateTime issueDate, DateTime dueDate)
             : this(billID, description, amount, issueDate, dueDate, null) { }
@@ -29,9 +26,8 @@ namespace Billing
             this.amount = amount;
             this.issueDate = issueDate;
             this.dueDate = dueDate.Date;
-            //this.paymentResult = (int)BillPaymentResult.ToCollect;
+            this.paymentResult = (int)BillPaymentResult.ToCollect;
             this.assignedPaymentMethod = paymentMethod;
-            //this.paymentAgreements = new Dictionary<DateTime, PaymentAgreement>();
         }
 
         public enum BillPaymentResult { ToCollect, Paid, Unpaid, CancelledOut, Renegotiated, Failed };
@@ -69,84 +65,9 @@ namespace Billing
             set { assignedPaymentMethod = value; }
         }
 
-        //public Dictionary<DateTime, PaymentAgreement> PaymentAgreements
-        //{
-        //    get { return paymentAgreements; }
-        //}
-
-        //public PaymentAgreement RenegotiationAgreement
-        //{
-        //    get { return renegotiationAgreement; }
-        //}
-
-        //public Payment Payment
-        //{
-        //    get { return payment; }
-        //}
-
-        //public BillPaymentResult PaymentResult
-        //{
-        //    get { return paymentResult; }
-        //}
-
-        //public void PayBill(Payment payment)
-        //{
-        //    if (this.amount != payment.PaymentAmount)
-        //        throw new System.ArgumentException("Only payments for the bill total amount are accepted", "payment");
-        //    this.payment = payment;
-        //    paymentResult = BillPaymentResult.Paid;
-        //}
-
-        //public void CancelBill()
-        //{
-        //    paymentResult = BillPaymentResult.CancelledOut;
-        //}
-
-        //public void RenegotiateBill(PaymentAgreement renegotiationAgreement)
-        //{
-        //    paymentResult = BillPaymentResult.Renegotiated;
-        //    this.renegotiationAgreement = renegotiationAgreement;
-        //}
-
-        //public void AssignAgreement(PaymentAgreement paymentAgreement)
-        //{
-        //    this.paymentAgreements.Add(paymentAgreement.AgreementDate.Date, paymentAgreement);
-        //}
-
-        //public void AssignPaymentMethod(PaymentMethod paymentMethod)
-        //{
-        //    this.AssignedPaymentMethod = paymentMethod;
-        //}
-
-        //public void CheckDueDate(DateTime today)
-        //{
-        //    if (today > dueDate && paymentResult == BillPaymentResult.ToCollect) SetBillAsUnpaid();
-        //}
-
-        //public void RenewDueDate(DateTime newDueDate, DateTime todayDate)
-        //{
-        //    this.dueDate = newDueDate;
-        //    if (todayDate < newDueDate && paymentResult == SimplifiedBill.BillPaymentResult.Unpaid) SetBillAsToCollect();
-        //}
-
-        //private void SetBillAsUnpaid()
-        //{
-        //    paymentResult = BillPaymentResult.Unpaid;
-        //    CancellAnyAgreementsActiveForBill();
-        //}
-
-        //private void SetBillAsToCollect()
-        //{
-        //    paymentResult = BillPaymentResult.ToCollect;
-        //}
-
-        //private void CancellAnyAgreementsActiveForBill()
-        //{
-        //    foreach (PaymentAgreement paymentAgreement in paymentAgreements.Values)
-        //    {
-        //        if (paymentAgreement.PaymentAgreementActualStatus == PaymentAgreement.PaymentAgreementStatus.Active)
-        //            paymentAgreement.PaymentAgreementActualStatus = PaymentAgreement.PaymentAgreementStatus.NotAcomplished;
-        //    }
-        //}
+        public BillPaymentResult PaymentResult
+        {
+            get { return paymentResult; }
+        }
     }
 }
