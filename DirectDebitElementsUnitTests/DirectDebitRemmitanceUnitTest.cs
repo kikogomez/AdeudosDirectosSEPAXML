@@ -62,6 +62,7 @@ namespace DirectDebitElementsUnitTests
 
                 ClubMember_POCOTestClass clubMember = clubMembers[bill.clubMemberID];
                 SimplifiedBill bills = new SimplifiedBill(
+                    bill.billID,
                     bill.transactionDescription,
                     bill.Amount,
                     DateTime.Today,

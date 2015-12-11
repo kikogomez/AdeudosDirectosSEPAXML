@@ -16,11 +16,10 @@ namespace Billing
         public SimplifiedBill(string billID, string description, decimal amount, DateTime issueDate, DateTime dueDate)
             : this(billID, description, amount, issueDate, dueDate, null) { }
 
-        public SimplifiedBill(string description, decimal amount, DateTime issueDate, DateTime dueDate)
-            : this(null, description, amount, issueDate, dueDate, null) { }
-
         public SimplifiedBill(string billID, string description, decimal amount, DateTime issueDate, DateTime dueDate, PaymentMethod paymentMethod)
         {
+            if (billID==null || billID=="") throw new ArgumentException();
+
             this.billID = billID;
             this.description = description;
             this.amount = amount;

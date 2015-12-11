@@ -79,6 +79,7 @@ namespace DirectDebitElementsUnitTests
         private void InitializeMemberInstance(string givenName, string firstSurname, string secondSurname)
         {
             InitializePersonalData(givenName, firstSurname, secondSurname);
+            InitializeBillingData();
         }
 
         private void InitializePersonalData(string givenName, string firstSurname, string secondSurname)
@@ -88,6 +89,14 @@ namespace DirectDebitElementsUnitTests
             this.name = givenName.Trim();
             this.firstSurname = firstSurname.Trim();
             this.secondSurname = (secondSurname ?? "").Trim();
+        }
+
+        private void InitializeBillingData()
+        {
+            this.defaultPaymentMethod = new CashPaymentMethod();
+            directDebitmandates = new Dictionary<int, DirectDebitMandate>();
+            simplifiedBills = new Dictionary<string, SimplifiedBill>();
+
         }
     }
 }

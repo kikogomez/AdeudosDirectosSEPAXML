@@ -30,14 +30,6 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        public void BillIDCanBeNullForLaterInitializationWhenAssignedToInvoices()
-        {
-            SimplifiedBill bill = new SimplifiedBill("An easy to pay bill", 1, DateTime.Now, DateTime.Now.AddYears(10));
-            Assert.IsNull(bill.BillID);
-        }
-
-
-        [TestMethod]
         public void ByDefaultABillIsGeneratedWithoutAPaymentMethod()
         {
             SimplifiedBill bill = new SimplifiedBill("MMM201300015/001","An easy to pay bill", 1, DateTime.Now, DateTime.Now.AddYears(10));
