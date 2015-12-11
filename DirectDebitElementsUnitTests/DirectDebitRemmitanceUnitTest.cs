@@ -5,11 +5,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DirectDebitElements;
 using Billing;
 using ReferencesAndTools;
-//using RCNGCMembersManagementMocks;
-//using RCNGCMembersManagementAppLogic;
-//using RCNGCMembersManagementAppLogic.Billing;
-//using RCNGCMembersManagementAppLogic.Billing.DirectDebit;
-//using RCNGCMembersManagementAppLogic.MembersManaging;
 
 namespace DirectDebitElementsUnitTests
 {
@@ -21,16 +16,10 @@ namespace DirectDebitElementsUnitTests
         static CreditorAgent creditorAgent;
         static DirectDebitInitiationContract directDebitInitiationContract;
         static BankCodes spanishBankCodes;
-        //static InvoicesManager invoicesManager;
 
         [ClassInitialize]
         public static void ClassInit(TestContext context)
         {
-            //BillingSequenceNumbersMock invoiceDataManagerMock = new BillingSequenceNumbersMock();
-            //BillingDataManager.Instance.SetBillingSequenceNumberCollaborator(invoiceDataManagerMock);
-            //BillingDataManager.Instance.InvoiceSequenceNumber=5000;
-            //invoicesManager = new InvoicesManager();
-
             clubMembers = new Dictionary<string, ClubMember_POCOTestClass>()
             {
                 {"00001", new ClubMember_POCOTestClass("00001", "Francisco", "Gómez-Caldito", "Viseas")},
@@ -70,20 +59,14 @@ namespace DirectDebitElementsUnitTests
 
             foreach (var bill in billsList)
             {
-                //List<Transaction> transaction = new List<Transaction>()
-                //{
-                //    new Transaction(bill.transactionDescription,1,bill.Amount,new Tax("NoTAX",0),0)
-                //};
+
                 ClubMember_POCOTestClass clubMember = clubMembers[bill.clubMemberID];
-                SimplifiedBill simplifiedBill = new SimplifiedBill(
+                SimplifiedBill bills = new SimplifiedBill(
                     bill.transactionDescription,
                     bill.Amount,
                     DateTime.Today,
                     DateTime.Today.AddMonths(1));
-                clubMember.AddSimplifiedBill(simplifiedBill);
-                //InvoiceCustomerData invoiceCustomerData = new InvoiceCustomerData(clubMember);
-                //Invoice invoice = new Invoice(invoiceCustomerData, transaction, new DateTime(2013, 11, 11));
-                //invoicesManager.AddInvoiceToClubMember(invoice, clubMember);
+                clubMember.AddSimplifiedBill(bills);
             }
 
             spanishBankCodes = new BankCodes(@"XMLFiles\SpanishBankCodes.xml", BankCodes.BankCodesFileFormat.XML);
@@ -120,14 +103,14 @@ namespace DirectDebitElementsUnitTests
         public void ADirectDebitTransactionIsCorrectlyCreated()
         {
             ClubMember_POCOTestClass clubMember = clubMembers["00002"];
-            List<SimplifiedBill> simplifiedBills = clubMember.SimplifiedBills.Values.ToList();
+            List<SimplifiedBill> bills = clubMember.SimplifiedBills.Values.ToList();
             DirectDebitMandate directDebitMandate = clubMembers["00002"].DirectDebitmandates.ElementAt(0).Value;
             int internalDirectDebitReferenceNumber = directDebitMandate.InternalReferenceNumber;
             BankAccount debtorAccount = directDebitMandate.BankAccount;
             string accountHolderName = directDebitMandate.AccountHolderName; 
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
-            DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(simplifiedBills, internalDirectDebitReferenceNumber, debtorAccount, accountHolderName, mandateSignatureDate);
-            Assert.AreEqual(simplifiedBills, directDebitTransaction.BillsInTransaction);
+            DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(bills, internalDirectDebitReferenceNumber, debtorAccount, accountHolderName, mandateSignatureDate);
+            Assert.AreEqual(bills, directDebitTransaction.BillsInTransaction);
             Assert.AreEqual(internalDirectDebitReferenceNumber, directDebitTransaction.InternalDirectDebitReferenceNumber);
             Assert.AreEqual(debtorAccount, directDebitTransaction.DebtorAccount);
             Assert.AreEqual((decimal)158, directDebitTransaction.Amount);
@@ -138,8 +121,7 @@ namespace DirectDebitElementsUnitTests
         public void WhenAddingAnotherBillToADirectDebitTransactionTheAmmountAndNumberOfBillsAreCorrectlyUpdated()
         {
             ClubMember_POCOTestClass clubMember = clubMembers["00002"];
-            //Invoice firstInvoice = clubMember.InvoicesList.Values.ElementAt(0);
-            List<Bill> bills = new List<Bill>() { firstInvoice.Bills.Values.ElementAt(0) };
+            List<SimplifiedBill> bills = new List<SimplifiedBill> { clubMember.SimplifiedBills.ElementAt(0).Value };
             DirectDebitMandate directDebitMandate = clubMembers["00002"].DirectDebitmandates.ElementAt(0).Value;
             int internalDirectDebitReferenceNumber = directDebitMandate.InternalReferenceNumber;
             BankAccount debtorAccount = directDebitMandate.BankAccount;
@@ -148,8 +130,7 @@ namespace DirectDebitElementsUnitTests
             DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(bills, internalDirectDebitReferenceNumber, debtorAccount, accountHolderName, mandateSignatureDate);
             Assert.AreEqual((decimal)79, directDebitTransaction.Amount);
             Assert.AreEqual(1, directDebitTransaction.NumberOfBills);
-            Invoice secondInvoice = clubMember.InvoicesList.Values.ElementAt(1);
-            Bill bill = secondInvoice.Bills.ElementAt(0).Value;
+            SimplifiedBill bill = clubMember.SimplifiedBills.ElementAt(1).Value;
             directDebitTransaction.AddBill(bill);
             Assert.AreEqual((decimal)158, directDebitTransaction.Amount);
             Assert.AreEqual(2, directDebitTransaction.NumberOfBills);
@@ -169,9 +150,8 @@ namespace DirectDebitElementsUnitTests
             string localInstrument = "COR1";
             DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment = new DirectDebitTransactionsGroupPayment(localInstrument);
 
-            ClubMember clubMember = clubMembers["00002"];
-            Invoice firstInvoice = clubMember.InvoicesList.Values.ElementAt(0);
-            List<Bill> bills = new List<Bill>() { firstInvoice.Bills.Values.ElementAt(0) };
+            ClubMember_POCOTestClass clubMember = clubMembers["00002"];
+            List<SimplifiedBill> bills = new List<SimplifiedBill> { clubMember.SimplifiedBills.ElementAt(0).Value };
             DirectDebitMandate directDebitMandate = clubMembers["00002"].DirectDebitmandates.ElementAt(0).Value;
             int internalDirectDebitReferenceNumber = directDebitMandate.InternalReferenceNumber;
             BankAccount debtorAccount = directDebitMandate.BankAccount;
@@ -208,9 +188,8 @@ namespace DirectDebitElementsUnitTests
         public void TheInstructionIDOfADirectDebitTransactionIsWellGenerated() 
         {
             int sequenceNumber = 1;
-            ClubMember clubMember = clubMembers["00002"];
-            Invoice firstInvoice = clubMember.InvoicesList.Values.ElementAt(0);
-            List<Bill> bills = new List<Bill>() { firstInvoice.Bills.Values.ElementAt(0) };
+            ClubMember_POCOTestClass clubMember = clubMembers["00002"];
+            List<SimplifiedBill> bills = new List<SimplifiedBill> { clubMember.SimplifiedBills.ElementAt(0).Value };
             DirectDebitMandate directDebitMandate = clubMembers["00002"].DirectDebitmandates.ElementAt(0).Value;
             int internalDirectDebitReferenceNumber = directDebitMandate.InternalReferenceNumber;
             BankAccount debtorAccount = directDebitMandate.BankAccount;
@@ -224,9 +203,8 @@ namespace DirectDebitElementsUnitTests
         [TestMethod]
         public void TheMandateIDOfADirectDebitIsWellGenerated() 
         {
-            ClubMember clubMember = clubMembers["00002"];
-            Invoice firstInvoice = clubMember.InvoicesList.Values.ElementAt(0);
-            List<Bill> bills = new List<Bill>() { firstInvoice.Bills.Values.ElementAt(0) };
+            ClubMember_POCOTestClass clubMember = clubMembers["00002"];
+            List<SimplifiedBill> bills = new List<SimplifiedBill> { clubMember.SimplifiedBills.ElementAt(0).Value };
             DirectDebitMandate directDebitMandate = clubMembers["00002"].DirectDebitmandates.ElementAt(0).Value;
             int internalDirectDebitReferenceNumber = directDebitMandate.InternalReferenceNumber;
             BankAccount debtorAccount = directDebitMandate.BankAccount;
