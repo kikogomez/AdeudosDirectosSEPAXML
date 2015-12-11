@@ -1,8 +1,9 @@
 ﻿using TechTalk.SpecFlow;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RCNGCMembersManagementAppLogic.Billing.DirectDebit;
+using DirectDebitElements;
+using ReferencesAndTools;
 
-namespace RCNGCMembersManagementSpecFlowBDD
+namespace AdeudosDirectosSEPAXMLSpecFlowBDD
 {
     [Binding, Scope(Feature = "Manage Creditor Info")]
     public class ManageCreditorInfoFeatureSteps

@@ -19,20 +19,20 @@ namespace RCNGCMembersManagementSpecFlowBDD
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute()]
-    public partial class ManageMembersBillingInformationFeature
+    public partial class ManageDebtorsBillingInformationFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "ManageMembersBillingInformation.feature"
+#line 1 "ManageDebtorsBillingInformation.feature"
 #line hidden
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.ClassInitializeAttribute()]
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Manage Members Billing Information", "In order be able to bill my club members\nAs a administrative assistant\nI want to " +
-                    "manage my members billing registered data", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Manage Debtors Billing Information", "In order be able to bill my debtors\nAs a administrative assistant\nI want to manag" +
+                    "e my debtors billing registered data", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -47,9 +47,9 @@ namespace RCNGCMembersManagementSpecFlowBDD
         public virtual void TestInitialize()
         {
             if (((TechTalk.SpecFlow.FeatureContext.Current != null) 
-                        && (TechTalk.SpecFlow.FeatureContext.Current.FeatureInfo.Title != "Manage Members Billing Information")))
+                        && (TechTalk.SpecFlow.FeatureContext.Current.FeatureInfo.Title != "Manage Debtors Billing Information")))
             {
-                RCNGCMembersManagementSpecFlowBDD.ManageMembersBillingInformationFeature.FeatureSetup(null);
+                RCNGCMembersManagementSpecFlowBDD.ManageDebtorsBillingInformationFeature.FeatureSetup(null);
             }
         }
         
@@ -74,7 +74,7 @@ namespace RCNGCMembersManagementSpecFlowBDD
 #line 6
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                        "MemberID",
+                        "DebtorID",
                         "Name",
                         "FirstSurname",
                         "SecondSurname"});
@@ -84,7 +84,7 @@ namespace RCNGCMembersManagementSpecFlowBDD
                         "Gomez-Caldito",
                         "Viseas"});
 #line 8
- testRunner.Given("A Club Member", ((string)(null)), table1, "Given ");
+ testRunner.Given("A debtor", ((string)(null)), table1, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                         "DirectDebitInternalReferenceNumber",
@@ -114,7 +114,7 @@ namespace RCNGCMembersManagementSpecFlowBDD
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("I can change the member default payment method")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Manage Members Billing Information")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Manage Debtors Billing Information")]
         public virtual void ICanChangeTheMemberDefaultPaymentMethod()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I can change the member default payment method", ((string[])(null)));
@@ -123,9 +123,9 @@ this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
 #line 23
- testRunner.Given("I have a member", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I have a debtor", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 24
- testRunner.And("The member has associated cash as payment method", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("The debtor has associated cash as payment method", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 25
  testRunner.When("I set direct debit as new payment method", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 26
@@ -135,48 +135,44 @@ this.FeatureBackground();
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("I can assign a new direct debit mandate to a member")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Manage Members Billing Information")]
-        public virtual void ICanAssignANewDirectDebitMandateToAMember()
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("I can assign a new direct debit mandate to a debtor")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Manage Debtors Billing Information")]
+        public virtual void ICanAssignANewDirectDebitMandateToADebtor()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I can assign a new direct debit mandate to a member", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I can assign a new direct debit mandate to a debtor", ((string[])(null)));
 #line 28
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
 #line 29
- testRunner.Given("I have a member", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I have a debtor", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 30
- testRunner.And("The direct debit reference sequence number is 5000", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.When("I add a new direct debit mandate to the debtor", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 31
- testRunner.When("I add a new direct debit mandate to the member", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 32
  testRunner.Then("The new direct debit mandate is correctly assigned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 33
- testRunner.And("The new direct debit reference sequence number is 5001", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("I can change the account number associated to a direct debit")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Manage Members Billing Information")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Manage Debtors Billing Information")]
         public virtual void ICanChangeTheAccountNumberAssociatedToADirectDebit()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I can change the account number associated to a direct debit", ((string[])(null)));
-#line 35
+#line 33
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
+#line 34
+ testRunner.Given("I have a debtor", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 35
+ testRunner.And("I have a direct debit associated to the debtor", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 36
- testRunner.Given("I have a member", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 37
- testRunner.And("I have a direct debit associated to the member", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 38
  testRunner.When("I change the account number of the direct debit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 39
+#line 37
  testRunner.Then("The account number is correctly changed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 40
+#line 38
  testRunner.And("The old account number is stored in the account numbers history", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();

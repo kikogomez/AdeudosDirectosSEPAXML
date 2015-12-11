@@ -3,39 +3,41 @@ using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RCNGCMembersManagementAppLogic;
-using RCNGCMembersManagementAppLogic.MembersManaging;
-using RCNGCMembersManagementAppLogic.Billing;
-using RCNGCMembersManagementAppLogic.Billing.DirectDebit;
-using RCNGCMembersManagementMocks;
+using Billing;
+using DirectDebitElements;
+using ReferencesAndTools;
+//using RCNGCDebtorsManagementAppLogic;
+//using RCNGCDebtorsManagementAppLogic.DebtorsManaging;
+//using RCNGCDebtorsManagementAppLogic.Billing;
+//using RCNGCDebtorsManagementAppLogic.Billing.DirectDebit;
+//using RCNGCDebtorsManagementMocks;
 using XMLSerializerValidator;
 
-namespace RCNGCMembersManagementSpecFlowBDD
+namespace AdeudosDirectosSEPAXMLSpecFlowBDD
 {
     [Binding, Scope(Feature = "Generating Direct Debit Remmitances")]
     public class GeneratingDirectDebitRemmitancesFeatureSteps
     {
-        private readonly MembersManagementContextData membersManagementContextData;
-        private readonly InvoiceContextData invoiceContextData;
-        private InvoicesManager invoicesManager;
+        private readonly DebtorsManagementContextData membersManagementContextData;
+        //private readonly InvoiceContextData invoiceContextData;
+        //private InvoicesManager invoicesManager;
         private DirectDebitRemittancesManager directDebitRemittancesManager;
 
         public GeneratingDirectDebitRemmitancesFeatureSteps(
-            MembersManagementContextData membersManagementContextData,
-            InvoiceContextData invoiceContextData)
+            DebtorsManagementContextData membersManagementContextData) //,InvoiceContextData invoiceContextData)
         {
             this.membersManagementContextData = membersManagementContextData;
-            this.invoiceContextData = invoiceContextData;
-            invoicesManager = new InvoicesManager();
+            //this.invoiceContextData = invoiceContextData;
+            //invoicesManager = new InvoicesManager();
             directDebitRemittancesManager = new DirectDebitRemittancesManager();
         }
 
-        [BeforeScenario]
-        public void InitializeSequenceNumbersManagers()
-        {
-            BillingSequenceNumbersMock billingSequenceNumbersMock = new BillingSequenceNumbersMock();
-            invoiceContextData.billDataManager.SetBillingSequenceNumberCollaborator(billingSequenceNumbersMock);
-        }
+        //[BeforeScenario]
+        //public void InitializeSequenceNumbersManagers()
+        //{
+        //    BillingSequenceNumbersMock billingSequenceNumbersMock = new BillingSequenceNumbersMock();
+        //    invoiceContextData.billDataManager.SetBillingSequenceNumberCollaborator(billingSequenceNumbersMock);
+        //}
 
         [Given(@"My Direct Debit Initiation Contract is")]
         public void GivenMyDirectDebitInitiationContractIs(Table contractTable)
@@ -58,17 +60,17 @@ namespace RCNGCMembersManagementSpecFlowBDD
             ScenarioContext.Current.Add("DirectDebitInitiationContract", directDebitContract);
         }
         
-        [Given(@"These Club Members")]
-        public void GivenTheseClubMembers(Table membersTable)
+        [Given(@"These debtors")]
+        public void GivenTheseDebtors(Table membersTable)
         {
-            Dictionary<string, ClubMember> membersCollection = new Dictionary<string, ClubMember>();
+            Dictionary<string, Debtor> debtorsCollection = new Dictionary<string, Debtor>();
             Dictionary<string, string> bICDictionary = new Dictionary<string, string>();
             foreach (var row in membersTable.Rows)
             {
                 BankAccount memberAccount = new BankAccount(new ClientAccountCodeCCC((string)row["Account"]));
                 bICDictionary.Add(memberAccount.BankAccountFieldCodes.BankCode, row["BIC"]);
-                ClubMember clubMember = new ClubMember(
-                    row["MemberID"],
+                Debtor debtor = new Debtor(
+                    row["DebtorID"],
                     row["Name"],
                     row["FirstSurname"],
                     row["SecondSurname"]);
@@ -78,31 +80,33 @@ namespace RCNGCMembersManagementSpecFlowBDD
                     directDebitReferenceNumber,
                     mandateCreationDate,
                     memberAccount,
-                    clubMember.FullName);
-                clubMember.AddDirectDebitMandate(directDebitMandate);
-                membersCollection.Add(clubMember.MemberID, clubMember);
+                    debtor.FullName);
+                debtor.AddDirectDebitMandate(directDebitMandate);
+                debtorsCollection.Add(debtor.DebtorID, debtor);
             }
             ScenarioContext.Current.Add("BICDictionary", bICDictionary);
-            ScenarioContext.Current.Add("Members", membersCollection);
+            ScenarioContext.Current.Add("Debtors", debtorsCollection);
         }
         
         [Given(@"These bills")]
         public void GivenTheseBills(Table billsTable)
         {
-            invoiceContextData.billDataManager.InvoiceSequenceNumber = 5000;
-            Dictionary<string, ClubMember> membersCollection = (Dictionary<string, ClubMember>)ScenarioContext.Current["Members"];
+            //invoiceContextData.billDataManager.InvoiceSequenceNumber = 5000;
+            Dictionary<string, Debtor> membersCollection = (Dictionary<string, Debtor>)ScenarioContext.Current["Debtors"];
             foreach (var row in billsTable.Rows)
             {
+                string billID = row["TransactionConcept"] + "/01";
                 string description = row["TransactionConcept"];
                 double amount = double.Parse(row["Amount"]);
-                List<Transaction> transaction = new List<Transaction>()
-                {
-                    new Transaction(description,1,amount,new Tax("NoTAX",0),0)
-                };
-                ClubMember clubMember = membersCollection[row["MemberID"]];
-                InvoiceCustomerData invoiceCustomerData = new InvoiceCustomerData(clubMember);
-                Invoice invoice = new Invoice(invoiceCustomerData, transaction, new DateTime(2013, 11, 11));
-                invoicesManager.AddInvoiceToClubMember(invoice, clubMember);
+                SimplifiedBill bill = new SimplifiedBill(billID, description, (decimal) amount, DateTime.Today, DateTime.Today.AddMonths(1));
+                //List<Transaction> transaction = new List<Transaction>()
+                //{
+                //    new Transaction(description,1,amount,new Tax("NoTAX",0),0)
+                //};
+                //Debtor debtor = membersCollection[row["MemberID"]];
+                //InvoiceCustomerData invoiceCustomerData = new InvoiceCustomerData(debtor);
+                //Invoice invoice = new Invoice(invoiceCustomerData, transaction, new DateTime(2013, 11, 11));
+                //invoicesManager.AddInvoiceToDebtor(invoice, debtor);
             }
         }
         
@@ -163,15 +167,15 @@ namespace RCNGCMembersManagementSpecFlowBDD
         [Given(@"I have a member")]
         public void GivenIHaveAMember()
         {
-            ClubMember clubMember = ((Dictionary<string, ClubMember>)ScenarioContext.Current["Members"])["00001"];
-            ScenarioContext.Current.Add("Member", clubMember);
+            Debtor debtor = ((Dictionary<string, Debtor>)ScenarioContext.Current["Debtors"])["00001"];
+            ScenarioContext.Current.Add("Member", debtor);
         }
 
         [Given(@"The member has a bill")]
         public void GivenTheMemberHasABill()
         {
-            ClubMember clubMember = (ClubMember)ScenarioContext.Current["Member"];
-            Invoice invoice = clubMember.InvoicesList.Values.ElementAt(0);
+            Debtor debtor = (Debtor)ScenarioContext.Current["Member"];
+            Invoice invoice = debtor.InvoicesList.Values.ElementAt(0);
             Bill bill = invoice.Bills.Values.ElementAt(0);
             ScenarioContext.Current.Add("Bill", bill);
         }
@@ -179,8 +183,8 @@ namespace RCNGCMembersManagementSpecFlowBDD
         [Given(@"The member has a Direct Debit Mandate")]
         public void GivenTheMemberHasADirectDebitMandate()
         {
-            ClubMember clubMember = (ClubMember)ScenarioContext.Current["Member"];
-            DirectDebitMandate directDebitmandate = clubMember.DirectDebitmandates.Values.ElementAt(0);
+            Debtor debtor = (Debtor)ScenarioContext.Current["Member"];
+            DirectDebitMandate directDebitmandate = debtor.DirectDebitmandates.Values.ElementAt(0);
             ScenarioContext.Current.Add("DirectDebitMandate", directDebitmandate);
         }
 
@@ -207,9 +211,9 @@ namespace RCNGCMembersManagementSpecFlowBDD
         [Given(@"I have a direct debit with (.*) bill and amount of (.*)")]
         public void GivenIHaveADirectDebitWithBillAndAmountOf(int numberOfBills, decimal amount)
         {
-            ClubMember clubMember = ((Dictionary<string, ClubMember>)ScenarioContext.Current["Members"])["00002"];
-            DirectDebitMandate directDebitmandate = clubMember.DirectDebitmandates.Values.ElementAt(0);
-            Invoice invoice = clubMember.InvoicesList.Values.ElementAt(0);
+            Debtor debtor = ((Dictionary<string, Debtor>)ScenarioContext.Current["Debtors"])["00002"];
+            DirectDebitMandate directDebitmandate = debtor.DirectDebitmandates.Values.ElementAt(0);
+            Invoice invoice = debtor.InvoicesList.Values.ElementAt(0);
             Bill bill = invoice.Bills.Values.ElementAt(0);
             DirectDebitTransaction directDebitTransaction = directDebitRemittancesManager.CreateANewDirectDebitTransactionFromAGroupOfBills(
                 directDebitmandate,
@@ -222,8 +226,8 @@ namespace RCNGCMembersManagementSpecFlowBDD
         [When(@"I add a new bill with amount of (.*)")]
         public void WhenIAddANewBillWithAmountOf(decimal amount)
         {
-            ClubMember clubMember = ((Dictionary<string, ClubMember>)ScenarioContext.Current["Members"])["00002"];
-            Invoice invoice = clubMember.InvoicesList.Values.ElementAt(1);
+            Debtor debtor = ((Dictionary<string, Debtor>)ScenarioContext.Current["Debtors"])["00002"];
+            Invoice invoice = debtor.InvoicesList.Values.ElementAt(1);
             Bill bill = invoice.Bills.Values.ElementAt(0);
             DirectDebitTransaction directDebitTransaction = (DirectDebitTransaction)ScenarioContext.Current["DirectDebitTransaction"];
             directDebitRemittancesManager.AddBilllToExistingDirectDebitTransaction(directDebitTransaction, bill);
@@ -266,9 +270,9 @@ namespace RCNGCMembersManagementSpecFlowBDD
         [Given(@"I have a group of payments with (.*) direct debit transaction and amount of (.*)")]
         public void GivenIHaveAGroupOfPaymentsWithDirectDebitTransactionAndAmountOf(int numberOfDirectDebitTransactions, decimal amount)
         {
-            ClubMember clubMember = ((Dictionary<string, ClubMember>)ScenarioContext.Current["Members"])["00001"];
-            DirectDebitMandate directDebitmandate = clubMember.DirectDebitmandates.Values.ElementAt(0);
-            Invoice invoice = clubMember.InvoicesList.Values.ElementAt(0);
+            Debtor debtor = ((Dictionary<string, Debtor>)ScenarioContext.Current["Debtors"])["00001"];
+            DirectDebitMandate directDebitmandate = debtor.DirectDebitmandates.Values.ElementAt(0);
+            Invoice invoice = debtor.InvoicesList.Values.ElementAt(0);
             Bill bill = invoice.Bills.Values.ElementAt(0);
             DirectDebitTransaction directDebitTransaction = directDebitRemittancesManager.CreateANewDirectDebitTransactionFromAGroupOfBills(
                 directDebitmandate,
@@ -284,9 +288,9 @@ namespace RCNGCMembersManagementSpecFlowBDD
         [When(@"I add a new direct debit transaction with amount of (.*)")]
         public void WhenIAddANewDirectDebitTransactionWithAmountOf(decimal amount)
         {
-            ClubMember clubMember = ((Dictionary<string, ClubMember>)ScenarioContext.Current["Members"])["00002"];
-            DirectDebitMandate directDebitmandate = clubMember.DirectDebitmandates.Values.ElementAt(0);
-            Invoice invoice = clubMember.InvoicesList.Values.ElementAt(0);
+            Debtor debtor = ((Dictionary<string, Debtor>)ScenarioContext.Current["Debtors"])["00002"];
+            DirectDebitMandate directDebitmandate = debtor.DirectDebitmandates.Values.ElementAt(0);
+            Invoice invoice = debtor.InvoicesList.Values.ElementAt(0);
             Bill bill = invoice.Bills.Values.ElementAt(0);
             DirectDebitTransaction directDebitTransaction = directDebitRemittancesManager.CreateANewDirectDebitTransactionFromAGroupOfBills(
                 directDebitmandate,
@@ -334,16 +338,16 @@ namespace RCNGCMembersManagementSpecFlowBDD
             DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment =
                 directDebitRemittancesManager.CreateANewGroupOfDirectDebitTransactions("COR1");
             
-            List<ClubMember> clubMembers = ((Dictionary<string, ClubMember>)ScenarioContext.Current["Members"]).Values.ToList();
+            List<Debtor> debtors = ((Dictionary<string, Debtor>)ScenarioContext.Current["Debtors"]).Values.ToList();
             int transactionsCounter = 0;
-            foreach (ClubMember clubMember in clubMembers)
+            foreach (Debtor debtor in debtors)
             {
-                DirectDebitMandate directDebitmandate = clubMember.DirectDebitmandates.Values.ElementAt(0);
+                DirectDebitMandate directDebitmandate = debtor.DirectDebitmandates.Values.ElementAt(0);
                 DirectDebitTransaction directDebitTransaction = directDebitRemittancesManager.CreateANewEmptyDirectDebitTransaction(directDebitmandate);
                 transactionsCounter++;
                 directDebitTransaction.GenerateDirectDebitTransactionInternalReference(transactionsCounter);
                 directDebitTransaction.GenerateMandateID(directDebitInitiationContract.CreditorBussinessCode);
-                foreach (Invoice invoice in clubMember.InvoicesList.Values)
+                foreach (Invoice invoice in debtor.InvoicesList.Values)
                 {
                     Bill bill = invoice.Bills.Values.ElementAt(0);
                     directDebitRemittancesManager.AddBilllToExistingDirectDebitTransaction(directDebitTransaction, bill);

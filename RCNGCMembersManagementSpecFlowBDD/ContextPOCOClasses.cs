@@ -1,31 +1,33 @@
 ﻿using System.Collections.Generic;
-using RCNGCMembersManagementAppLogic.MembersManaging;
-using RCNGCMembersManagementAppLogic.ClubServices;
-using RCNGCMembersManagementAppLogic.ClubStore;
-using RCNGCMembersManagementAppLogic.Billing;
-using RCNGCMembersManagementAppLogic.Billing.DirectDebit;
+using Billing;
+using DirectDebitElements;
+//using RCNGCMembersManagementAppLogic.MembersManaging;
+//using RCNGCMembersManagementAppLogic.ClubServices;
+//using RCNGCMembersManagementAppLogic.ClubStore;
+//using RCNGCMembersManagementAppLogic.Billing;
+//using RCNGCMembersManagementAppLogic.Billing.DirectDebit;
 
-namespace RCNGCMembersManagementSpecFlowBDD
+namespace AdeudosDirectosSEPAXMLSpecFlowBDD
 {
-    public class MembersManagementContextData
+    public class DebtorsManagementContextData
     {
-        public ClubMember clubMember;
+        public Debtor debtor;
         public string givenName;
         public string firstSurname;
         public string secondSurname;
-        public ClubMemberDataManager clubMemberDataManager = ClubMemberDataManager.Instance;
+        //public ClubMemberDataManager clubMemberDataManager = ClubMemberDataManager.Instance;
     }
 
-    public class InvoiceContextData
-    {
-        public Dictionary<string, Tax> taxesDictionary;
-        public Dictionary<string, ClubService> servicesDictionary;
-        public Dictionary<string, Product> productsDictionary;
-        public List<Transaction> tansactionsList;
-        public string lastInvoiceID;
-        public string lastProFormaInvoiceID;
-        public BillingDataManager billDataManager = BillingDataManager.Instance;
-    }
+    //public class InvoiceContextData
+    //{
+    //    public Dictionary<string, Tax> taxesDictionary;
+    //    public Dictionary<string, ClubService> servicesDictionary;
+    //    public Dictionary<string, Product> productsDictionary;
+    //    public List<Transaction> tansactionsList;
+    //    public string lastInvoiceID;
+    //    public string lastProFormaInvoiceID;
+    //    public BillingDataManager billDataManager = BillingDataManager.Instance;
+    //}
 
     public class BankAccountContextData
     {
@@ -41,6 +43,6 @@ namespace RCNGCMembersManagementSpecFlowBDD
     {
         public Dictionary<int, DirectDebitMandate> directDebitMandates;
         public Dictionary<string, BankAccount> bankAccounts;
-        public BillingDataManager billDataManager;
+        //public BillingDataManager billDataManager;
     }
 }

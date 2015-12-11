@@ -31,8 +31,8 @@ namespace RCNGCMembersManagementSpecFlowBDD
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Generating Direct Debit Remmitances", "In order to charge the bills to my club members\nAs an administrative assistant\nI " +
-                    "want to generate direct debit remitances to bank", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Generating Direct Debit Remmitances", "In order to charge the bills to my debtors\nAs an administrative assistant\nI want " +
+                    "to generate direct debit remitances to bank", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -93,7 +93,7 @@ namespace RCNGCMembersManagementSpecFlowBDD
  testRunner.Given("My Direct Debit Initiation Contract is", ((string)(null)), table1, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
-                        "MemberID",
+                        "DebtorID",
                         "Name",
                         "FirstSurname",
                         "SecondSurname",
@@ -117,10 +117,10 @@ namespace RCNGCMembersManagementSpecFlowBDD
                         "21001111301111111111",
                         "CAIXESBBXXX"});
 #line 12
- testRunner.Given("These Club Members", ((string)(null)), table2, "Given ");
+ testRunner.Given("These debtors", ((string)(null)), table2, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
-                        "MemberID",
+                        "DebtorID",
                         "TransactionConcept",
                         "Amount"});
             table3.AddRow(new string[] {

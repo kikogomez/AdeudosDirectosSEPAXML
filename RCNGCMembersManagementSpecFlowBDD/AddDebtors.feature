@@ -1,7 +1,7 @@
-﻿Feature: Add members
-	In order to manage the club members
+﻿Feature: Add debtors
+	In order to manage the debtors
 	As a administrative assistant
-	I want to add new members to the system
+	I want to add new debtors to the system
 
 Scenario Outline: Second surname is optional but given name and first surname are mandatory
 	Given These names <GivenName>, <FirstSurname>, <SecondSurname> 
@@ -19,13 +19,4 @@ Scenarios:
 | ""          | ""              | "Viseas"      | "invalid" |
 | ""          | ""              | ""            | "invalid" |
 
-Scenario: The members ID are consecutive
-	Given The current memberID sequence number is 2
-	When I add a new member
-	Then The current memberID sequence number is 3
-
-Scenario: Up to 99999 members
-	Given The current memberID sequence number is 100000
-	When I add a new member
-	Then The new member is not created
 

@@ -1,8 +1,8 @@
 ﻿using TechTalk.SpecFlow;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RCNGCMembersManagementAppLogic.Billing.DirectDebit;
+using DirectDebitElements;
 
-namespace RCNGCMembersManagementSpecFlowBDD
+namespace AdeudosDirectosSEPAXMLSpecFlowBDD
 {
     [Binding, Scope(Feature = "Manage account numbers")]
     class ManageAccountNumbersFeatureSteps
