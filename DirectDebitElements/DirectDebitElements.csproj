@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Billing\CashPaymentMethod.cs" />
+    <Compile Include="Billing\Debtor.cs" />
     <Compile Include="Billing\DirectDebitPaymentMethod.cs" />
     <Compile Include="Billing\SimplifiedBill.cs" />
     <Compile Include="Billing\PaymentMethod.cs" />

@@ -52,8 +52,7 @@
   <ItemGroup>
     <Compile Include="BankAccountUnitTests.cs" />
     <Compile Include="DirectDebitRemmitanceUnitTest.cs" />
-    <Compile Include="DirectDebit_POCOClasses\ClubMember_POCOTestClassUnitTests.cs" />
-    <Compile Include="DirectDebit_POCOClasses\ClubMember_POCOTestClass.cs" />
+    <Compile Include="DebtorUnitTests.cs" />
     <Compile Include="SimplifiedBillUnitTests.cs" />
     <Compile Include="CreditorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

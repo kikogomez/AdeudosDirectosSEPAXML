@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using DirectDebitElements;
-using Billing;
 
-namespace DirectDebitElementsUnitTests
+namespace Billing
 {
-    public class ClubMember_POCOTestClass
+    public class Debtor
     {
-        string memberID;
+        string debtorID;
         string name;
         string firstSurname;
         string secondSurname;
@@ -15,15 +14,15 @@ namespace DirectDebitElementsUnitTests
         Dictionary<int, DirectDebitMandate> directDebitmandates;
         Dictionary<string, SimplifiedBill> simplifiedBills;
 
-        public ClubMember_POCOTestClass(string memberID, string givenName, string firstSurname, string secondSurname)
+        public Debtor(string memberID, string givenName, string firstSurname, string secondSurname)
         {
-            InitializeMemberInstance(givenName, firstSurname, secondSurname);
-            this.memberID = memberID;
+            InitializeDebtorInstance(givenName, firstSurname, secondSurname);
+            this.debtorID = memberID;
         }
 
-        public string MemberID
+        public string DebtorID
         {
-            get { return memberID; }
+            get { return debtorID; }
         }
 
         public string Name
@@ -93,7 +92,7 @@ namespace DirectDebitElementsUnitTests
             return (name + " " + firstSurname + " " + (secondSurname ?? "")).Trim();
         }
 
-        private void InitializeMemberInstance(string givenName, string firstSurname, string secondSurname)
+        private void InitializeDebtorInstance(string givenName, string firstSurname, string secondSurname)
         {
             InitializePersonalData(givenName, firstSurname, secondSurname);
             InitializeBillingData();
@@ -101,8 +100,8 @@ namespace DirectDebitElementsUnitTests
 
         private void InitializePersonalData(string givenName, string firstSurname, string secondSurname)
         {
-            if ((givenName ?? "").Trim() == "") throw new ArgumentException("Club Member name cannot be empty", "name");
-            if ((firstSurname ?? "").Trim() == "") throw new ArgumentException("Club Member first surname cannot be empty", "firstSurname");
+            if ((givenName ?? "").Trim() == "") throw new ArgumentException("Debtor name cannot be empty", "name");
+            if ((firstSurname ?? "").Trim() == "") throw new ArgumentException("Debtor first surname cannot be empty", "firstSurname");
             this.name = givenName.Trim();
             this.firstSurname = firstSurname.Trim();
             this.secondSurname = (secondSurname ?? "").Trim();
