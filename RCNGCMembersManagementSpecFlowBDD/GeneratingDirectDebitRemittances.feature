@@ -31,9 +31,9 @@ Scenario: Create an empty group of direct debit payments
 	Then An empty group of direct debit payments using "COR1" is generated
 
 Scenario: Create a Direct Debit Transaction from a bill as specified by a member direct debit mandate
-	Given I have a member
-	And The member has a bill
-	And The member has a Direct Debit Mandate
+	Given I have a debtor
+	And The debtor has a bill
+	And The debtor has a Direct Debit Mandate
 	When I generate Direct Debit Transaction
 	Then The direct debit transaction is correctly created
 

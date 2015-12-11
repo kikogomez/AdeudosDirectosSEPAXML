@@ -92,18 +92,20 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
         public void GivenTheseBills(Table billsTable)
         {
             //invoiceContextData.billDataManager.InvoiceSequenceNumber = 5000;
-            Dictionary<string, Debtor> membersCollection = (Dictionary<string, Debtor>)ScenarioContext.Current["Debtors"];
+            Dictionary<string, Debtor> debtorsCollection = (Dictionary<string, Debtor>)ScenarioContext.Current["Debtors"];
             foreach (var row in billsTable.Rows)
             {
                 string billID = row["TransactionConcept"] + "/01";
                 string description = row["TransactionConcept"];
                 double amount = double.Parse(row["Amount"]);
                 SimplifiedBill bill = new SimplifiedBill(billID, description, (decimal) amount, DateTime.Today, DateTime.Today.AddMonths(1));
+                Debtor debtor = debtorsCollection[row["DebtorID"]];
+                debtor.AddSimplifiedBill(bill);
                 //List<Transaction> transaction = new List<Transaction>()
                 //{
                 //    new Transaction(description,1,amount,new Tax("NoTAX",0),0)
                 //};
-                //Debtor debtor = membersCollection[row["MemberID"]];
+                //Debtor debtor = debtorsCollection[row["MemberID"]];
                 //InvoiceCustomerData invoiceCustomerData = new InvoiceCustomerData(debtor);
                 //Invoice invoice = new Invoice(invoiceCustomerData, transaction, new DateTime(2013, 11, 11));
                 //invoicesManager.AddInvoiceToDebtor(invoice, debtor);
@@ -164,17 +166,33 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             Assert.AreEqual(0, directDebitTransactionsGroupPayment.NumberOfDirectDebitTransactions);
         }
 
-        [Given(@"I have a member")]
+        [Given(@"I have a debtor")]
         public void GivenIHaveAMember()
         {
             Debtor debtor = ((Dictionary<string, Debtor>)ScenarioContext.Current["Debtors"])["00001"];
-            ScenarioContext.Current.Add("Member", debtor);
+            ScenarioContext.Current.Add("Debtor", debtor);
         }
 
-        [Given(@"The member has a bill")]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        [Given(@"The debtor has a bill")]
         public void GivenTheMemberHasABill()
         {
-            Debtor debtor = (Debtor)ScenarioContext.Current["Member"];
+            Debtor debtor = (Debtor)ScenarioContext.Current["Debtor"];
             Invoice invoice = debtor.InvoicesList.Values.ElementAt(0);
             Bill bill = invoice.Bills.Values.ElementAt(0);
             ScenarioContext.Current.Add("Bill", bill);
@@ -183,7 +201,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
         [Given(@"The member has a Direct Debit Mandate")]
         public void GivenTheMemberHasADirectDebitMandate()
         {
-            Debtor debtor = (Debtor)ScenarioContext.Current["Member"];
+            Debtor debtor = (Debtor)ScenarioContext.Current["Debtor"];
             DirectDebitMandate directDebitmandate = debtor.DirectDebitmandates.Values.ElementAt(0);
             ScenarioContext.Current.Add("DirectDebitMandate", directDebitmandate);
         }
