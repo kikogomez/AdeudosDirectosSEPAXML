@@ -53,6 +53,7 @@
     <Compile Include="BankAccountUnitTests.cs" />
     <Compile Include="DirectDebitRemmitanceUnitTest.cs" />
     <Compile Include="DebtorUnitTests.cs" />
+    <Compile Include="DirectDebitMandateUnitTests.cs" />
     <Compile Include="SimplifiedBillUnitTests.cs" />
     <Compile Include="CreditorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

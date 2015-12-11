@@ -17,8 +17,6 @@ namespace DirectDebitElements
 
         public DirectDebitMandate(int internalReferenceNumber, DateTime directDebitMandateCreationDate, BankAccount bankAccount, string accountHolderName)
         {
-            //this.billingDataManager = BillingDataManager.Instance;
-
             this.status = DirectDebitmandateStatus.Active;
             this.directDebitMandateCreationDate = directDebitMandateCreationDate;
             this.bankAccount = bankAccount;
@@ -26,14 +24,7 @@ namespace DirectDebitElements
             this.bankAccountActivationDate = directDebitMandateCreationDate;
             bankAccountHistory = new Dictionary<DateTime, BankAccountHistoricalData>();
             this.internalReferenceNumber = internalReferenceNumber;
-            //SetInternalReferenceNumber(internalReferenceNumber);
         }
-
-        //public DirectDebitMandate(DateTime directDebitMandateCreationDate, BankAccount bankAccount, string accountHolderName)
-        //    : this(1, directDebitMandateCreationDate, bankAccount, accountHolderName)
-        //{
-        //    GetInternalReferenceSequenceNumber();
-        //}
 
         public enum DirectDebitmandateStatus { Active, Inactive }
 
