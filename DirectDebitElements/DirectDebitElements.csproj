@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Billing\CashPaymentMethod.cs" />
+    <Compile Include="Billing\DirectDebitPaymentMethod.cs" />
     <Compile Include="Billing\SimplifiedBill.cs" />
     <Compile Include="Billing\PaymentMethod.cs" />
     <Compile Include="DirectDebitClasses\BankAccount.cs" />
@@ -51,7 +52,6 @@
     <Compile Include="DirectDebitClasses\CreditorAgent.cs" />
     <Compile Include="DirectDebitClasses\DirectDebitInitiationContract.cs" />
     <Compile Include="DirectDebitClasses\DirectDebitMandate.cs" />
-    <Compile Include="DirectDebitClasses\DirectDebitPaymentMethod.cs" />
     <Compile Include="DirectDebitClasses\DirectDebitRemittance.cs" />
     <Compile Include="DirectDebitClasses\DirectDebitTransaction.cs" />
     <Compile Include="DirectDebitClasses\DirectDebitTransactionsGroupPayment.cs" />

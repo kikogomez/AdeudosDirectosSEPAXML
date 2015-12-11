@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Billing;
 using DirectDebitElements;
+using ExtensionMethods;
 
 namespace DirectDebitElementsUnitTests
 {
@@ -23,10 +24,54 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
         public void ABillShouldHaveABillID()
         {
-            SimplifiedBill bill = new SimplifiedBill("MMM201300015/001", "An easy to pay bill", 1, DateTime.Now, DateTime.Now.AddYears(10));
-            Assert.AreEqual("MMM201300015/001", bill.BillID);
+            try
+            {
+                SimplifiedBill bill = new SimplifiedBill(null, "An easy to pay bill", 1, DateTime.Now, DateTime.Now.AddYears(10));
+            }
+
+            catch (System.ArgumentException e)
+            {
+                Assert.AreEqual("El ID del recibo no puede ser nulo", e.GetMessageWithoutParamName());
+                Assert.AreEqual("billID", e.ParamName);
+                throw e;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void ABillIDCantBeEnEmptyString()
+        {
+            try
+            {
+                SimplifiedBill bill = new SimplifiedBill("", "An easy to pay bill", 1, DateTime.Now, DateTime.Now.AddYears(10));
+            }
+
+            catch (System.ArgumentException e)
+            {
+                Assert.AreEqual("El ID del recibo no puede ser una cadena vacía o espacios", e.GetMessageWithoutParamName());
+                Assert.AreEqual("billID", e.ParamName);
+                throw e;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void ABillIDCantBeSpaces()
+        {
+            try
+            {
+                SimplifiedBill bill = new SimplifiedBill("   ", "An easy to pay bill", 1, DateTime.Now, DateTime.Now.AddYears(10));
+            }
+
+            catch (System.ArgumentException e)
+            {
+                Assert.AreEqual("El ID del recibo no puede ser una cadena vacía o espacios", e.GetMessageWithoutParamName());
+                Assert.AreEqual("billID", e.ParamName);
+                throw e;
+            }
         }
 
         [TestMethod]

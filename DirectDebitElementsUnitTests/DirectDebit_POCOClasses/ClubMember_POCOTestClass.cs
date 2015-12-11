@@ -63,12 +63,29 @@ namespace DirectDebitElementsUnitTests
 
         public void AddDirectDebitMandate(DirectDebitMandate directDebitMandate)
         {
+            if (DirectDebitmandates.ContainsKey(directDebitMandate.InternalReferenceNumber))
+            {
+                directDebitmandates.Remove(directDebitMandate.InternalReferenceNumber);
+            }
             directDebitmandates.Add(directDebitMandate.InternalReferenceNumber, directDebitMandate);
         }
 
         public void AddSimplifiedBill(SimplifiedBill simplifiedBill)
         {
+            if(SimplifiedBills.ContainsKey(simplifiedBill.BillID))
+            {
+                throw new ArgumentException("The billID already exists", "billID");
+            }
             simplifiedBills.Add(simplifiedBill.BillID, simplifiedBill);
+        }
+
+        public void SetDefaultPaymentMethod(PaymentMethod paymentMethod)
+        {
+            this.defaultPaymentMethod = paymentMethod;
+            if (paymentMethod.GetType() == typeof(DirectDebitPaymentMethod))
+            {
+                AddDirectDebitMandate(((DirectDebitPaymentMethod)paymentMethod).DirectDebitMandate);
+            }
         }
 
         private string GetFullname()
@@ -96,7 +113,6 @@ namespace DirectDebitElementsUnitTests
             this.defaultPaymentMethod = new CashPaymentMethod();
             directDebitmandates = new Dictionary<int, DirectDebitMandate>();
             simplifiedBills = new Dictionary<string, SimplifiedBill>();
-
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using Billing;
+﻿using DirectDebitElements;
 
-namespace DirectDebitElements
+namespace Billing
 {
     public class DirectDebitPaymentMethod: PaymentMethod
     {

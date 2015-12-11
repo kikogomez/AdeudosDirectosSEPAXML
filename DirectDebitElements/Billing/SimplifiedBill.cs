@@ -18,7 +18,7 @@ namespace Billing
 
         public SimplifiedBill(string billID, string description, decimal amount, DateTime issueDate, DateTime dueDate, PaymentMethod paymentMethod)
         {
-            if (billID==null || billID=="") throw new ArgumentException();
+            CheckBillIdValidity(billID);
 
             this.billID = billID;
             this.description = description;
@@ -67,6 +67,12 @@ namespace Billing
         public BillPaymentResult PaymentResult
         {
             get { return paymentResult; }
+        }
+
+        private void CheckBillIdValidity(string billID)
+        {
+            if (billID == null) throw new ArgumentException("El ID del recibo no puede ser nulo","billID");
+            if (billID.Trim() == "") throw new ArgumentException("El ID del recibo no puede ser una cadena vacía o espacios", "billID");
         }
     }
 }
