@@ -142,7 +142,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             Assert.AreEqual(directDebitInitiationContract, directDebitRemmitance.DirectDebitInitiationContract);
         }
 
-        [Given(@"I have a will send the payments using ""(.*)"" local instrument")]
+        [Given(@"I will send the payments using ""(.*)"" local instrument")]
         public void GivenIHaveAWillSendThePaymentsUsingLocalInstrument(string localInstrument)
         {
             ScenarioContext.Current.Add("LocalInstrument", localInstrument);
@@ -154,14 +154,14 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             string localInstrument = (string)ScenarioContext.Current["LocalInstrument"];
             DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment =
                 directDebitRemittancesManager.CreateANewGroupOfDirectDebitTransactions(localInstrument);
-            ScenarioContext.Current.Add("DirectDebitTransactionsGroupPayment", directDebitTransactionsGroupPayment);
+            ScenarioContext.Current.Add("EmptyDirectDebitTransactionsGroupPayment", directDebitTransactionsGroupPayment);
         }
 
         [Then(@"An empty group of direct debit payments using ""(.*)"" is generated")]
         public void ThenAnEmptyGroupOfDirectDebitPaymentsUsingIsGenerated(string localInstrument)
         {
             DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment =
-                (DirectDebitTransactionsGroupPayment)ScenarioContext.Current["DirectDebitTransactionsGroupPayment"];
+                (DirectDebitTransactionsGroupPayment)ScenarioContext.Current["EmptyDirectDebitTransactionsGroupPayment"];
             Assert.AreEqual(localInstrument, directDebitTransactionsGroupPayment.LocalInstrument);
             Assert.AreEqual(0, directDebitTransactionsGroupPayment.NumberOfDirectDebitTransactions);
         }
@@ -173,32 +173,15 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             ScenarioContext.Current.Add("Debtor", debtor);
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         [Given(@"The debtor has a bill")]
         public void GivenTheMemberHasABill()
         {
             Debtor debtor = (Debtor)ScenarioContext.Current["Debtor"];
-            Invoice invoice = debtor.InvoicesList.Values.ElementAt(0);
-            Bill bill = invoice.Bills.Values.ElementAt(0);
+            SimplifiedBill bill = debtor.SimplifiedBills.Values.ElementAt(0);
             ScenarioContext.Current.Add("Bill", bill);
         }
 
-        [Given(@"The member has a Direct Debit Mandate")]
+        [Given(@"The debtor has a Direct Debit Mandate")]
         public void GivenTheMemberHasADirectDebitMandate()
         {
             Debtor debtor = (Debtor)ScenarioContext.Current["Debtor"];
@@ -209,18 +192,18 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
         [When(@"I generate Direct Debit Transaction")]
         public void WhenIGenerateDirectDebitTransaction()
         {
-            Bill bill = (Bill)ScenarioContext.Current["Bill"];
+            SimplifiedBill bill = (SimplifiedBill)ScenarioContext.Current["Bill"];
             DirectDebitMandate directDebitmandate = (DirectDebitMandate)ScenarioContext.Current["DirectDebitMandate"];
             DirectDebitTransaction directDebitTransaction = directDebitRemittancesManager.CreateANewDirectDebitTransactionFromAGroupOfBills(
                 directDebitmandate,
-                new List<Bill>() { bill });
+                new List<SimplifiedBill>() { bill });
             ScenarioContext.Current.Add("DirectDebitTransaction", directDebitTransaction);
         }
 
         [Then(@"The direct debit transaction is correctly created")]
         public void ThenTheDirectDebitTransactionIsCorrectlyCreated()
         {
-            Bill bill = (Bill)ScenarioContext.Current["Bill"];
+            SimplifiedBill bill = (SimplifiedBill)ScenarioContext.Current["Bill"];
             DirectDebitTransaction directDebitTransaction = (DirectDebitTransaction)ScenarioContext.Current["DirectDebitTransaction"];
             Assert.AreEqual(1, directDebitTransaction.BillsInTransaction.Count);
             Assert.AreEqual(bill.Amount, directDebitTransaction.Amount);
@@ -231,11 +214,10 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
         {
             Debtor debtor = ((Dictionary<string, Debtor>)ScenarioContext.Current["Debtors"])["00002"];
             DirectDebitMandate directDebitmandate = debtor.DirectDebitmandates.Values.ElementAt(0);
-            Invoice invoice = debtor.InvoicesList.Values.ElementAt(0);
-            Bill bill = invoice.Bills.Values.ElementAt(0);
+            SimplifiedBill bill = new SimplifiedBill("0001", "Recibo 1", amount, DateTime.Today, DateTime.Today.AddMonths(1));
             DirectDebitTransaction directDebitTransaction = directDebitRemittancesManager.CreateANewDirectDebitTransactionFromAGroupOfBills(
                 directDebitmandate,
-                new List<Bill>() { bill });
+                new List<SimplifiedBill>() { bill });
             Assert.AreEqual(numberOfBills, directDebitTransaction.NumberOfBills);
             Assert.AreEqual(amount, directDebitTransaction.Amount);
             ScenarioContext.Current.Add("DirectDebitTransaction", directDebitTransaction);
@@ -245,8 +227,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
         public void WhenIAddANewBillWithAmountOf(decimal amount)
         {
             Debtor debtor = ((Dictionary<string, Debtor>)ScenarioContext.Current["Debtors"])["00002"];
-            Invoice invoice = debtor.InvoicesList.Values.ElementAt(1);
-            Bill bill = invoice.Bills.Values.ElementAt(0);
+            SimplifiedBill bill = new SimplifiedBill("0002", "Recibo 2", amount, DateTime.Today, DateTime.Today.AddMonths(2));
             DirectDebitTransaction directDebitTransaction = (DirectDebitTransaction)ScenarioContext.Current["DirectDebitTransaction"];
             directDebitRemittancesManager.AddBilllToExistingDirectDebitTransaction(directDebitTransaction, bill);
         }
@@ -290,11 +271,10 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
         {
             Debtor debtor = ((Dictionary<string, Debtor>)ScenarioContext.Current["Debtors"])["00001"];
             DirectDebitMandate directDebitmandate = debtor.DirectDebitmandates.Values.ElementAt(0);
-            Invoice invoice = debtor.InvoicesList.Values.ElementAt(0);
-            Bill bill = invoice.Bills.Values.ElementAt(0);
+            SimplifiedBill bill = new SimplifiedBill("0001", "Recibo 1", amount, DateTime.Today, DateTime.Today.AddMonths(1));
             DirectDebitTransaction directDebitTransaction = directDebitRemittancesManager.CreateANewDirectDebitTransactionFromAGroupOfBills(
                 directDebitmandate,
-                new List<Bill>() { bill });
+                new List<SimplifiedBill>() { bill });
             DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment =
                 directDebitRemittancesManager.CreateANewGroupOfDirectDebitTransactions("COR1");
             directDebitRemittancesManager.AddDirectDebitTransactionToGroupPayment(directDebitTransaction, directDebitTransactionsGroupPayment);
@@ -308,11 +288,13 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
         {
             Debtor debtor = ((Dictionary<string, Debtor>)ScenarioContext.Current["Debtors"])["00002"];
             DirectDebitMandate directDebitmandate = debtor.DirectDebitmandates.Values.ElementAt(0);
-            Invoice invoice = debtor.InvoicesList.Values.ElementAt(0);
-            Bill bill = invoice.Bills.Values.ElementAt(0);
+            //Invoice invoice = debtor.InvoicesList.Values.ElementAt(0);
+            //Bill bill = invoice.Bills.Values.ElementAt(0);
+            //DirectDebitMandate directDebitmandate = debtor.DirectDebitmandates.Values.ElementAt(0);
+            SimplifiedBill bill = new SimplifiedBill("0002", "Recibo 2", amount, DateTime.Today, DateTime.Today.AddMonths(2));
             DirectDebitTransaction directDebitTransaction = directDebitRemittancesManager.CreateANewDirectDebitTransactionFromAGroupOfBills(
                 directDebitmandate,
-                new List<Bill>() { bill });
+                new List<SimplifiedBill>() { bill });
             Assert.AreEqual(amount, directDebitTransaction.Amount);
             DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment =
                 (DirectDebitTransactionsGroupPayment)ScenarioContext.Current["DirectDebitTransactionsGroupPayment"];
@@ -322,8 +304,8 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
         [Given(@"I have an empty direct debit remmitance")]
         public void GivenIHaveAnEmptyDirectDebitRemmitance()
         {
-            DateTime creationDate = new DateTime(2013, 11, 11);
-            DateTime requestedCollectionDate = new DateTime(2013, 11, 12);
+            DateTime creationDate = DateTime.Today;
+            DateTime requestedCollectionDate = DateTime.Today.AddDays(3);
             DirectDebitInitiationContract directDebitInitiationContract = (DirectDebitInitiationContract)ScenarioContext.Current["DirectDebitInitiationContract"];
             DirectDebitRemittance directDebitRemmitance = directDebitRemittancesManager.CreateADirectDebitRemmitance(creationDate, requestedCollectionDate, directDebitInitiationContract);
             ScenarioContext.Current.Add("DirectDebitRemittance", directDebitRemmitance);
@@ -365,11 +347,15 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
                 transactionsCounter++;
                 directDebitTransaction.GenerateDirectDebitTransactionInternalReference(transactionsCounter);
                 directDebitTransaction.GenerateMandateID(directDebitInitiationContract.CreditorBussinessCode);
-                foreach (Invoice invoice in debtor.InvoicesList.Values)
+                foreach (SimplifiedBill bill in debtor.SimplifiedBills.Values)
                 {
-                    Bill bill = invoice.Bills.Values.ElementAt(0);
                     directDebitRemittancesManager.AddBilllToExistingDirectDebitTransaction(directDebitTransaction, bill);
                 }
+                //foreach (Invoice invoice in debtor.InvoicesList.Values)
+                //{
+                //    Bill bill = invoice.Bills.Values.ElementAt(0);
+                //    directDebitRemittancesManager.AddBilllToExistingDirectDebitTransaction(directDebitTransaction, bill);
+                //}
                 directDebitRemittancesManager.AddDirectDebitTransactionToGroupPayment(
                     directDebitTransaction, directDebitTransactionsGroupPayment);
             }

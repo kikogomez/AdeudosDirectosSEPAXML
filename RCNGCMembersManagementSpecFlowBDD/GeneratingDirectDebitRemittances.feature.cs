@@ -171,7 +171,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
 #line 29
- testRunner.Given("I have a will send the payments using \"COR1\" local instrument", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I will send the payments using \"COR1\" local instrument", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 30
  testRunner.When("I generate an empty group of direct debit payments", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 31
@@ -217,11 +217,11 @@ this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
 #line 41
- testRunner.Given("I have a direct debit with 1 bill and amount of 79", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I have a direct debit with 1 bill and amount of 80", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 42
  testRunner.When("I add a new bill with amount of 79", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 43
- testRunner.Then("The direct debit transaction is updated with 2 bills and amount of 158", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("The direct debit transaction is updated with 2 bills and amount of 159", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -259,11 +259,11 @@ this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
 #line 52
- testRunner.Given("I have a group of payments with 1 direct debit transaction and amount of 79", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I have a group of payments with 1 direct debit transaction and amount of 50", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 53
  testRunner.When("I add a new direct debit transaction with amount of 79", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 54
- testRunner.Then("The group of payments is updated with 2 direct debit and total amount of 158", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("The group of payments is updated with 2 direct debit and total amount of 129", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
