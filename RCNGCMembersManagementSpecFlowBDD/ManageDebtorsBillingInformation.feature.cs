@@ -113,11 +113,11 @@ namespace RCNGCMembersManagementSpecFlowBDD
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("I can change the member default payment method")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("I can assign a new direct debit mandate to a debtor")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Manage Debtors Billing Information")]
-        public virtual void ICanChangeTheMemberDefaultPaymentMethod()
+        public virtual void ICanAssignANewDirectDebitMandateToADebtor()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I can change the member default payment method", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I can assign a new direct debit mandate to a debtor", ((string[])(null)));
 #line 22
 this.ScenarioSetup(scenarioInfo);
 #line 6
@@ -125,31 +125,31 @@ this.FeatureBackground();
 #line 23
  testRunner.Given("I have a debtor", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 24
- testRunner.And("The debtor has associated cash as payment method", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.When("I add a new direct debit mandate to the debtor", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 25
- testRunner.When("I set direct debit as new payment method", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 26
- testRunner.Then("The new payment method is correctly updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("The new direct debit mandate is correctly assigned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("I can assign a new direct debit mandate to a debtor")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("I can change the member default payment method")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Manage Debtors Billing Information")]
-        public virtual void ICanAssignANewDirectDebitMandateToADebtor()
+        public virtual void ICanChangeTheMemberDefaultPaymentMethod()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I can assign a new direct debit mandate to a debtor", ((string[])(null)));
-#line 28
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I can change the member default payment method", ((string[])(null)));
+#line 27
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 29
+#line 28
  testRunner.Given("I have a debtor", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 29
+ testRunner.And("The debtor has associated cash as payment method", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 30
- testRunner.When("I add a new direct debit mandate to the debtor", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I set direct debit as new payment method", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 31
- testRunner.Then("The new direct debit mandate is correctly assigned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("The new payment method is correctly updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

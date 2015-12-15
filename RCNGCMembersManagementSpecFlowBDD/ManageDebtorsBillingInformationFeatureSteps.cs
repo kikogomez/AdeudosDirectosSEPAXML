@@ -24,7 +24,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
         [Given(@"A debtor")]
         public void GivenAClubMember(Table clientsTable)
         {
-            membersManagementContextData.debtor = new Debtor(clientsTable.Rows[0]["MemberID"], clientsTable.Rows[0]["Name"], clientsTable.Rows[0]["FirstSurname"], clientsTable.Rows[0]["SecondSurname"]);
+            membersManagementContextData.debtor = new Debtor(clientsTable.Rows[0]["DebtorID"], clientsTable.Rows[0]["Name"], clientsTable.Rows[0]["FirstSurname"], clientsTable.Rows[0]["SecondSurname"]);
         }
         
         [Given(@"These Direct Debit Mandates")]
@@ -61,6 +61,23 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             ScenarioContext.Current.Add("Debtor1", membersManagementContextData.debtor);
         }
 
+        [When(@"I add a new direct debit mandate to the debtor")]
+        public void WhenIAddANewDirectDebitMandateToTheMember()
+        {
+            Debtor debtor = (Debtor)ScenarioContext.Current["Debtor1"];
+            DirectDebitMandate directDebitMandate = directDebitContextData.directDebitMandates[2345];
+            ScenarioContext.Current.Add("DirectDebitMandate", directDebitMandate);
+            debtor.AddDirectDebitMandate(directDebitMandate);
+        }
+
+        [Then(@"The new direct debit mandate is correctly assigned")]
+        public void ThenTheNewDirectDebitMandateIsCorrectlyAssigned()
+        {
+            Debtor debtor = (Debtor)ScenarioContext.Current["Debtor1"];
+            DirectDebitMandate directDebitMandate = (DirectDebitMandate)ScenarioContext.Current["DirectDebitMandate"];
+            Assert.AreEqual(directDebitMandate, debtor.DirectDebitmandates[2345]);
+        }
+
         [Given(@"The debtor has associated cash as payment method")]
         public void GivenTheDebtorHasAssociatedCashAsPaymentMethod()
         {
@@ -87,24 +104,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             Assert.AreEqual(directDebitPaymentMethod, (DirectDebitPaymentMethod)debtor.DefaultPaymentMethod);
         }
        
-        [When(@"I add a new direct debit mandate to the debtor")]
-        public void WhenIAddANewDirectDebitMandateToTheMember()
-        {
-            Debtor debtor = (Debtor)ScenarioContext.Current["Debtor1"];
-            DateTime creationDate = new DateTime(2013, 11, 11);
-            BankAccount bankAccount = directDebitContextData.bankAccounts["ES6812345678061234567890"];
-            DirectDebitMandate directDebitMandate = new DirectDebitMandate(100, creationDate, bankAccount, debtor.FullName);
-            ScenarioContext.Current.Add("DirectDebitMandate", directDebitMandate);
-            debtor.AddDirectDebitMandate(directDebitMandate);
-        }
 
-        [Then(@"The new direct debit mandate is correctly assigned")]
-        public void ThenTheNewDirectDebitMandateIsCorrectlyAssigned()
-        {
-            Debtor clubMember = (Debtor)ScenarioContext.Current["Debtor1"];
-            DirectDebitMandate directDebitMandate = (DirectDebitMandate)ScenarioContext.Current["DirectDebitMandate"];
-            Assert.AreEqual(directDebitMandate, clubMember.DirectDebitmandates[5000]);
-        }
 
         [Given(@"I have a direct debit associated to the debtor")]
         public void GivenIHaveADirectDebitAssociatedToTheMember()

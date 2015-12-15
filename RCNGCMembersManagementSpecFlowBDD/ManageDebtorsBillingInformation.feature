@@ -19,16 +19,16 @@ Background:
 	| ES6812345678061234567890 |
 	| ES3011112222003333333333 |
 
+Scenario: I can assign a new direct debit mandate to a debtor
+	Given I have a debtor
+	When I add a new direct debit mandate to the debtor
+	Then The new direct debit mandate is correctly assigned
+
 Scenario: I can change the member default payment method
 	Given I have a debtor
 	And The debtor has associated cash as payment method
 	When I set direct debit as new payment method
 	Then The new payment method is correctly updated
-
-Scenario: I can assign a new direct debit mandate to a debtor
-	Given I have a debtor
-	When I add a new direct debit mandate to the debtor
-	Then The new direct debit mandate is correctly assigned
 
 Scenario: I can change the account number associated to a direct debit
 	Given I have a debtor
