@@ -135,14 +135,6 @@
       <Project>{2914edfc-362e-46d8-a354-cb4deaeba6bc}</Project>
       <Name>ExtensionMethods</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RCNGCMembersManagementAppLogic\RCNGCMembersManagementAppLogic.csproj">
-      <Project>{a2586e2d-f4a2-43ec-b332-dd46c73552b5}</Project>
-      <Name>RCNGCMembersManagementAppLogic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RCNGCMembersManagementMocks\RCNGCMembersManagementMocks.csproj">
-      <Project>{9e90aadf-fe10-4d21-8822-a2e4851e4a8d}</Project>
-      <Name>RCNGCMembersManagementMocks</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ReferencesAndTools\ReferencesAndTools.csproj">
       <Project>{5fed753a-7a36-4a4a-8b4d-c9ba3d577840}</Project>
       <Name>ReferencesAndTools</Name>

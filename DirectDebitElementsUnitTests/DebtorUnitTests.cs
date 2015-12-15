@@ -62,7 +62,7 @@ namespace DirectDebitElementsUnitTests
             {
                 Assert.AreEqual("Debtor name cannot be empty", exception.GetMessageWithoutParamName());
                 Assert.AreEqual("name", exception.ParamName);
-                throw exception;
+                throw;
             }
         }
 
@@ -78,7 +78,7 @@ namespace DirectDebitElementsUnitTests
             {
                 Assert.AreEqual("Debtor name cannot be empty", exception.GetMessageWithoutParamName());
                 Assert.AreEqual("name", exception.ParamName);
-                throw exception;
+                throw;
             }
         }
 
@@ -94,7 +94,7 @@ namespace DirectDebitElementsUnitTests
             {
                 Assert.AreEqual("Debtor name cannot be empty", exception.GetMessageWithoutParamName());
                 Assert.AreEqual("name", exception.ParamName);
-                throw exception;
+                throw;
             }
         }
 
@@ -110,7 +110,7 @@ namespace DirectDebitElementsUnitTests
             {
                 Assert.AreEqual("Debtor first surname cannot be empty", exception.GetMessageWithoutParamName());
                 Assert.AreEqual("firstSurname", exception.ParamName);
-                throw exception;
+                throw;
             }
         }
 
@@ -126,7 +126,7 @@ namespace DirectDebitElementsUnitTests
             {
                 Assert.AreEqual("Debtor first surname cannot be empty", exception.GetMessageWithoutParamName());
                 Assert.AreEqual("firstSurname", exception.ParamName);
-                throw exception;
+                throw;
             }
         }
 
@@ -142,7 +142,7 @@ namespace DirectDebitElementsUnitTests
             {
                 Assert.AreEqual("Debtor first surname cannot be empty", exception.GetMessageWithoutParamName());
                 Assert.AreEqual("firstSurname", exception.ParamName);
-                throw exception;
+                throw;
             }
         }
 
@@ -255,7 +255,7 @@ namespace DirectDebitElementsUnitTests
             {
                 Assert.AreEqual("The billID already exists", exception.GetMessageWithoutParamName());
                 Assert.AreEqual("billID", exception.ParamName);
-                throw exception;
+                throw;
             }
         }
     }

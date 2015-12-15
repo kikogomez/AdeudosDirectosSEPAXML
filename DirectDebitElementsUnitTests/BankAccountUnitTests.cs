@@ -348,7 +348,7 @@ namespace DirectDebitElementsUnitTests
             catch (System.ArgumentException e)
             {
                 Assert.AreEqual("banco", e.ParamName);
-                throw e;
+                throw;
             }
         }
 
@@ -365,7 +365,7 @@ namespace DirectDebitElementsUnitTests
             catch (System.ArgumentException e)
             {
                 Assert.AreEqual("sucursal", e.ParamName);
-                throw e;
+                throw;
             }
         }
 
@@ -382,7 +382,7 @@ namespace DirectDebitElementsUnitTests
             catch (System.ArgumentException e)
             {
                 Assert.AreEqual("dígito de control", e.ParamName);
-                throw e;
+                throw;
             }
         }
 
@@ -399,7 +399,7 @@ namespace DirectDebitElementsUnitTests
             catch (System.ArgumentException e)
             {
                 Assert.AreEqual("número de cuenta", e.ParamName);
-                throw e;
+                throw;
             }
         }
 
@@ -417,7 +417,7 @@ namespace DirectDebitElementsUnitTests
             catch (System.ArgumentException e)
             {
                 Assert.AreEqual("sucursal", e.ParamName);
-                throw e;
+                throw;
             }
         }
 

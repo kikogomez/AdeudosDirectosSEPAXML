@@ -36,7 +36,7 @@ namespace DirectDebitElementsUnitTests
             {
                 Assert.AreEqual("El ID del recibo no puede ser nulo", e.GetMessageWithoutParamName());
                 Assert.AreEqual("billID", e.ParamName);
-                throw e;
+                throw;
             }
         }
 
@@ -53,7 +53,7 @@ namespace DirectDebitElementsUnitTests
             {
                 Assert.AreEqual("El ID del recibo no puede ser una cadena vacía o espacios", e.GetMessageWithoutParamName());
                 Assert.AreEqual("billID", e.ParamName);
-                throw e;
+                throw;
             }
         }
 
@@ -70,7 +70,7 @@ namespace DirectDebitElementsUnitTests
             {
                 Assert.AreEqual("El ID del recibo no puede ser una cadena vacía o espacios", e.GetMessageWithoutParamName());
                 Assert.AreEqual("billID", e.ParamName);
-                throw e;
+                throw;
             }
         }
 

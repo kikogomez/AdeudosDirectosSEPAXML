@@ -121,7 +121,7 @@ namespace DirectDebitElementsUnitTests
             catch (ArgumentException exception)
             {
                 Assert.AreEqual("The new account must be from the same Creditor Agent", exception.GetMessageWithoutParamName());
-                throw exception;
+                throw;
             }
         }
 

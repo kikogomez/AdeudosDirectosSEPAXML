@@ -564,7 +564,7 @@ namespace RCNGCMembersManagementUnitTests
             catch (System.Xml.XmlException e)
             {
                 Assert.IsNotNull(e);
-                throw e;
+                throw;
             }
         }
 

@@ -36,14 +36,15 @@ namespace XMLSerializerValidator
             XmlSchema xmlSchema = XmlSchema.Read(new StreamReader(xsdFilePath), XMLValidationEventHandler);
             XMLValidatorHelper.AddElementToSchema(xmlSchema, elementName, elementType, xmlNamespace);
             XDocument stringToTest;
-            try
-            {
-                stringToTest = XDocument.Load(new StringReader(stringXML));
-            }
-            catch (XmlException e)
-            {
-                throw e;
-            }
+            stringToTest = XDocument.Load(new StringReader(stringXML));
+            //try
+            //{
+            //    stringToTest = XDocument.Load(new StringReader(stringXML));
+            //}
+            //catch (XmlException e)
+            //{
+            //    throw e;
+            //}
             return ValidateXMLThroughSchema(stringToTest, xmlSchema);
         }
 
