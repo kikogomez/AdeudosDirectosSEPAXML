@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RCNGCMembersManagementAppLogic", "RCNGCMembersManagementAppLogic\RCNGCMembersManagementAppLogic.csproj", "{A2586E2D-F4A2-43EC-B332-DD46C73552B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdeudosDirectosSEPAXMLSpecFlowBDD", "RCNGCMembersManagementSpecFlowBDD\AdeudosDirectosSEPAXMLSpecFlowBDD.csproj", "{72C018E9-CF07-4A9D-B30F-22CB247B1757}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdeudosDirectosSEPAXMLSpecFlowBDD", "AdeudosDirectosSEPAXMLSpecFlowBDD\AdeudosDirectosSEPAXMLSpecFlowBDD.csproj", "{72C018E9-CF07-4A9D-B30F-22CB247B1757}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A2586E2D-F4A2-43EC-B332-DD46C73552B5} = {A2586E2D-F4A2-43EC-B332-DD46C73552B5}
 	EndProjectSection

@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace RCNGCMembersManagementSpecFlowBDD
+namespace AdeudosDirectosSEPAXMLSpecFlowBDD
 {
     using TechTalk.SpecFlow;
     
@@ -49,7 +49,7 @@ namespace RCNGCMembersManagementSpecFlowBDD
             if (((TechTalk.SpecFlow.FeatureContext.Current != null) 
                         && (TechTalk.SpecFlow.FeatureContext.Current.FeatureInfo.Title != "Add debtors")))
             {
-                RCNGCMembersManagementSpecFlowBDD.AddDebtorsFeature.FeatureSetup(null);
+                AdeudosDirectosSEPAXMLSpecFlowBDD.AddDebtorsFeature.FeatureSetup(null);
             }
         }
         
