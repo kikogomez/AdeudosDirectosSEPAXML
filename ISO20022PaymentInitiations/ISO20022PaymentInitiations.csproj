@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CPStatusReportSerializableClasses\Enums.cs" />
     <Compile Include="DDInitiationSerializableClasses\AccountIdentification4Choice.cs" />
     <Compile Include="DDInitiationSerializableClasses\AccountSchemeName1Choice.cs" />
     <Compile Include="DDInitiationSerializableClasses\ActiveOrHistoricCurrencyAndAmount.cs" />
