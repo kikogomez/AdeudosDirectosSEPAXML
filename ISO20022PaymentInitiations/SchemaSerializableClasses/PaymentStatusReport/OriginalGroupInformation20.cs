@@ -1,41 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ISO20022PaymentInitiations.SchemaSerializableClasses.PaymentStatusReport
+﻿namespace ISO20022PaymentInitiations.SchemaSerializableClasses.PaymentStatusReport
 {
     /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.81.0")]
+
     [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03")]
-    public partial class OriginalGroupInformation20
+    public class OriginalGroupInformation20
     {
-
         private string orgnlMsgIdField;
-
         private string orgnlMsgNmIdField;
-
         private System.DateTime orgnlCreDtTmField;
-
         private bool orgnlCreDtTmFieldSpecified;
-
         private string orgnlNbOfTxsField;
-
         private decimal orgnlCtrlSumField;
-
         private bool orgnlCtrlSumFieldSpecified;
-
         private TransactionGroupStatus3Code grpStsField;
-
         private bool grpStsFieldSpecified;
-
         private StatusReasonInformation8[] stsRsnInfField;
-
         private NumberOfTransactionsPerStatus3[] nbOfTxsPerStsField;
+
+        //Parameterless constructor for Serialization purpose
+        public OriginalGroupInformation20()
+        { }
+
+        public OriginalGroupInformation20(
+            string originalMessageIdentification,
+            string originalMessageNameIdentification,
+            System.DateTime originalCreationDateTime,
+            bool originalCreationDateTimeSpecified,
+            string originalNumberOfTransactions,
+            decimal originalControlSum,
+            bool originalControlSumSpecified,
+            TransactionGroupStatus3Code groupStatus,
+            bool groupStatusSpecified,
+            StatusReasonInformation8[] statusReasonInformation,
+            NumberOfTransactionsPerStatus3[] numberOfTransactionsPerStatus)
+        {
+            this.orgnlMsgIdField = originalMessageIdentification;
+            this.orgnlMsgNmIdField = originalMessageNameIdentification;
+            this.orgnlCreDtTmField = originalCreationDateTime;
+            this.orgnlCreDtTmFieldSpecified = originalCreationDateTimeSpecified;
+            this.orgnlNbOfTxsField = originalNumberOfTransactions;
+            this.orgnlCtrlSumField = originalControlSum;
+            this.orgnlCtrlSumFieldSpecified = originalControlSumSpecified;
+            this.grpStsField = groupStatus;
+            this.grpStsFieldSpecified = groupStatusSpecified;
+            this.stsRsnInfField = (StatusReasonInformation8[])statusReasonInformation.Clone();
+            this.nbOfTxsPerStsField = (NumberOfTransactionsPerStatus3[])numberOfTransactionsPerStatus.Clone();
+        }
 
         /// <comentarios/>
         public string OrgnlMsgId

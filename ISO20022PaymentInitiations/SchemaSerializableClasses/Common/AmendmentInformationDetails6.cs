@@ -4,7 +4,7 @@ namespace   ISO20022PaymentInitiations.SchemaSerializableClasses
 {
     /// <comentarios/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
     public class AmendmentInformationDetails6
     {
         private string orgnlMndtIdField;

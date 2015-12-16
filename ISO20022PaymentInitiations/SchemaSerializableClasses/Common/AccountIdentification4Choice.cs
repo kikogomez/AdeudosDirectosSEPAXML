@@ -2,7 +2,7 @@
 {
     /// <comentarios/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
+    //[System.Xml.Serialization.XmlType(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
     public class AccountIdentification4Choice
     {
         private object itemField;

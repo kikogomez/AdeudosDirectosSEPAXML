@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace   ISO20022PaymentInitiations.SchemaSerializableClasses
+﻿namespace   ISO20022PaymentInitiations.SchemaSerializableClasses
 {
     /// <comentarios/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
     public enum AddressType2Code
     {
 
@@ -34,7 +28,7 @@ namespace   ISO20022PaymentInitiations.SchemaSerializableClasses
     /// Authorisation Code
     /// Specifies the authorisation, in a coded form
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
     public enum Authorisation1Code
     {
 
@@ -53,7 +47,7 @@ namespace   ISO20022PaymentInitiations.SchemaSerializableClasses
 
     /// Account type, in a coded form
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
     public enum CashAccountType4Code
     {
 
@@ -108,7 +102,7 @@ namespace   ISO20022PaymentInitiations.SchemaSerializableClasses
 
     /// Specifies the clearing channel to be used to process the payment instruction.
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03")]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03")]
     public enum ClearingChannel2Code
     {
 
@@ -128,7 +122,7 @@ namespace   ISO20022PaymentInitiations.SchemaSerializableClasses
     /// Credit or Debit code
     /// Specifies whether the adjustment must be substracted or added to the total amount
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
     public enum CreditDebitCode
     {
 
@@ -141,7 +135,7 @@ namespace   ISO20022PaymentInitiations.SchemaSerializableClasses
 
     /// Specifies which party/parties will bear the charges associated with the processing of the payment transaction
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
     public enum ChargeBearerType1Code
     {
 
@@ -161,7 +155,7 @@ namespace   ISO20022PaymentInitiations.SchemaSerializableClasses
     /// Document Type
     /// Type of creditor reference, in a coded form.
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
     public enum DocumentType3Code
     {
 
@@ -186,7 +180,7 @@ namespace   ISO20022PaymentInitiations.SchemaSerializableClasses
 
     /// Document Type
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
     public enum DocumentType5Code
     {
 
@@ -238,7 +232,7 @@ namespace   ISO20022PaymentInitiations.SchemaSerializableClasses
 
     /// Regularity with which direct debit instructions are to be created and processed
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
     public enum Frequency1Code
     {
 
@@ -269,7 +263,7 @@ namespace   ISO20022PaymentInitiations.SchemaSerializableClasses
 
     /// Choice option: Coded ("Cd") or Propietary("Prtry")
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02", IncludeInSchema = false)]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02", IncludeInSchema = false)]
     public enum ItemChoiceType
     {
 
@@ -282,7 +276,7 @@ namespace   ISO20022PaymentInitiations.SchemaSerializableClasses
 
     /// Name Prefix (address)
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
     public enum NamePrefix1Code
     {
 
@@ -301,7 +295,7 @@ namespace   ISO20022PaymentInitiations.SchemaSerializableClasses
 
     /// Specifies the means of payment that will be used to move the amount of money
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
     public enum PaymentMethod2Code
     {
 
@@ -311,7 +305,7 @@ namespace   ISO20022PaymentInitiations.SchemaSerializableClasses
 
     /// Specifies the means of payment that will be used to move the amount of money.
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03")]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03")]
     public enum PaymentMethod4Code
     {
 
@@ -330,7 +324,7 @@ namespace   ISO20022PaymentInitiations.SchemaSerializableClasses
 
     /// Indicator of the urgency or order of importance that the instructing party would like the instructed party to apply to the processing of the instruction.
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
     public enum Priority2Code
     {
 
@@ -344,7 +338,7 @@ namespace   ISO20022PaymentInitiations.SchemaSerializableClasses
     /// <comentarios/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
     public enum RegulatoryReportingType1Code
     {
 
@@ -361,7 +355,7 @@ namespace   ISO20022PaymentInitiations.SchemaSerializableClasses
     /// <comentarios/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
     public enum RemittanceLocationMethod2Code
     {
 
@@ -386,7 +380,7 @@ namespace   ISO20022PaymentInitiations.SchemaSerializableClasses
 
     /// Identifies the direct debit sequence, such as first, recurrent, final or one-off.
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
     public enum SequenceType1Code
     {
         /// First
@@ -404,7 +398,7 @@ namespace   ISO20022PaymentInitiations.SchemaSerializableClasses
 
     /// Method used to settle the (batch of) payment instructions.
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03")]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03")]
     public enum SettlementMethod1Code
     {
 
@@ -424,7 +418,7 @@ namespace   ISO20022PaymentInitiations.SchemaSerializableClasses
     /// <comentarios/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02")]
     public enum TaxRecordPeriod1Code
     {
 
@@ -485,7 +479,7 @@ namespace   ISO20022PaymentInitiations.SchemaSerializableClasses
 
     /// Specifies the status of the payment information group.
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03")]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03")]
     public enum TransactionGroupStatus3Code
     {
 
@@ -519,7 +513,7 @@ namespace   ISO20022PaymentInitiations.SchemaSerializableClasses
 
     /// Specifies the status of a transaction, in a coded form
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03")]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03")]
     public enum TransactionIndividualStatus3Code
     {
 
