@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using ReferencesAndTools;
-using ISO20022PaymentInitiations.DDInitiationSerializableClasses;
+using   ISO20022PaymentInitiations.SchemaSerializableClasses.DDInitiation;
 
 namespace ISO20022PaymentInitiations
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ISO20022PaymentInitiations;
-using ISO20022PaymentInitiations.DDInitiationSerializableClasses;
+using ISO20022PaymentInitiations.SchemaSerializableClasses.DDInitiation;
 
 namespace RCNGCMembersManagementUnitTests
 {
