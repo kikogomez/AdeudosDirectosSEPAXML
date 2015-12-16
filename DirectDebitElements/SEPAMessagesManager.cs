@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ISO20022PaymentInitiations.SchemaSerializableClasses;
 using ISO20022PaymentInitiations.SchemaSerializableClasses.DDInitiation;
 using XMLSerializerValidator;
 using ExtensionMethods;

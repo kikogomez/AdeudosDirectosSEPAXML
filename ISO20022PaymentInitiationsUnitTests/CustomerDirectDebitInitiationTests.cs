@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ISO20022PaymentInitiations;
 using ISO20022PaymentInitiations.DirectDebitPOCOClasses;
+using ISO20022PaymentInitiations.SchemaSerializableClasses;
 using ISO20022PaymentInitiations.SchemaSerializableClasses.DDInitiation;
 using ReferencesAndTools;
 using ExtensionMethods;
