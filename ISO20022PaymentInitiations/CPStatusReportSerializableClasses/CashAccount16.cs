@@ -1,0 +1,78 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ISO20022PaymentInitiations.CPStatusReportSerializableClasses
+{
+    /// <comentarios/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.81.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03")]
+    public partial class CashAccount16
+    {
+
+        private AccountIdentification4Choice idField;
+
+        private CashAccountType2 tpField;
+
+        private string ccyField;
+
+        private string nmField;
+
+        /// <comentarios/>
+        public AccountIdentification4Choice Id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+
+        /// <comentarios/>
+        public CashAccountType2 Tp
+        {
+            get
+            {
+                return this.tpField;
+            }
+            set
+            {
+                this.tpField = value;
+            }
+        }
+
+        /// <comentarios/>
+        public string Ccy
+        {
+            get
+            {
+                return this.ccyField;
+            }
+            set
+            {
+                this.ccyField = value;
+            }
+        }
+
+        /// <comentarios/>
+        public string Nm
+        {
+            get
+            {
+                return this.nmField;
+            }
+            set
+            {
+                this.nmField = value;
+            }
+        }
+    }
+}
