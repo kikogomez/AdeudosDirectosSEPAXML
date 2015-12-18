@@ -1,69 +1,92 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ISO20022PaymentInitiations.SchemaSerializableClasses.PaymentStatusReport
+﻿namespace ISO20022PaymentInitiations.SchemaSerializableClasses.PaymentStatusReport
 {
     /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.81.0")]
     [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03")]
-    public partial class OriginalTransactionReference13
+    public class OriginalTransactionReference13
     {
-
         private ActiveOrHistoricCurrencyAndAmount intrBkSttlmAmtField;
-
         private AmountType3Choice amtField;
-
         private System.DateTime intrBkSttlmDtField;
-
         private bool intrBkSttlmDtFieldSpecified;
-
         private System.DateTime reqdColltnDtField;
-
         private bool reqdColltnDtFieldSpecified;
-
         private System.DateTime reqdExctnDtField;
-
         private bool reqdExctnDtFieldSpecified;
-
         private PartyIdentification32 cdtrSchmeIdField;
-
         private SettlementInformation13 sttlmInfField;
-
         private PaymentTypeInformation22 pmtTpInfField;
-
         private PaymentMethod4Code pmtMtdField;
-
         private bool pmtMtdFieldSpecified;
-
         private MandateRelatedInformation6 mndtRltdInfField;
-
         private RemittanceInformation5 rmtInfField;
-
         private PartyIdentification32 ultmtDbtrField;
-
         private PartyIdentification32 dbtrField;
-
         private CashAccount16 dbtrAcctField;
-
         private BranchAndFinancialInstitutionIdentification4 dbtrAgtField;
-
         private CashAccount16 dbtrAgtAcctField;
-
         private BranchAndFinancialInstitutionIdentification4 cdtrAgtField;
-
         private CashAccount16 cdtrAgtAcctField;
-
         private PartyIdentification32 cdtrField;
-
         private CashAccount16 cdtrAcctField;
-
         private PartyIdentification32 ultmtCdtrField;
+
+        //Parameterless constructor for Serialization purpose
+        public OriginalTransactionReference13() { }
+
+        public OriginalTransactionReference13(
+            ActiveOrHistoricCurrencyAndAmount interbankSettlementAmount,
+            AmountType3Choice amount, 
+            System.DateTime interbankSettlementDate,
+            bool interbankSettlementDateSpecified,
+            System.DateTime requestedCollectionDate,
+            bool requestedCollectionDateSpecified,
+            System.DateTime RequestedExecutionDate,
+            bool requestedExecutionDateSpecified,
+            PartyIdentification32 creditorSchemeIdentification,
+            SettlementInformation13 settlementInformation,
+            PaymentTypeInformation22 paymentTypeInformation,
+            PaymentMethod4Code paymentMethod,
+            bool paymentMethodSpecified,
+            MandateRelatedInformation6 mandateRelatedInformation,
+            RemittanceInformation5 remittanceInformation,
+            PartyIdentification32 ultimateDebtor,
+            PartyIdentification32 debtor,
+            CashAccount16 debtorAccount,
+            BranchAndFinancialInstitutionIdentification4 debtorAgent,
+            CashAccount16 debtorAgentAccount,
+            BranchAndFinancialInstitutionIdentification4 creditorAgent,
+            CashAccount16 creditorAgentAccount,
+            PartyIdentification32 creditor,
+            CashAccount16 creditorAccount,
+            PartyIdentification32 ultimateCreditor)
+        {
+            this.intrBkSttlmAmtField = interbankSettlementAmount;
+            this.amtField = amount;
+            this.intrBkSttlmDtField = interbankSettlementDate;
+            this.intrBkSttlmDtFieldSpecified = interbankSettlementDateSpecified;
+            this.reqdColltnDtField = requestedCollectionDate;
+            this.reqdColltnDtFieldSpecified = requestedCollectionDateSpecified;
+            this.reqdExctnDtField = RequestedExecutionDate;
+            this.reqdExctnDtFieldSpecified = requestedExecutionDateSpecified;
+            this.cdtrSchmeIdField = creditorSchemeIdentification;
+            this.sttlmInfField = settlementInformation;
+            this.pmtTpInfField = paymentTypeInformation;
+            this.pmtMtdField = paymentMethod;
+            this.pmtMtdFieldSpecified = paymentMethodSpecified;
+            this.mndtRltdInfField = mandateRelatedInformation;
+            this.rmtInfField = remittanceInformation;
+            this.ultmtDbtrField = ultimateDebtor;
+            this.dbtrField = debtor;
+            this.dbtrAcctField = debtorAccount;
+            this.dbtrAgtField = debtorAgent;
+            this.dbtrAgtAcctField = debtorAgentAccount;
+            this.cdtrAgtField = creditorAgent;
+            this.cdtrAgtAcctField = creditorAgentAccount;
+            this.cdtrField = creditor;
+            this.cdtrAcctField = creditorAccount;
+            this.ultmtCdtrField = ultimateCreditor;
+        }
 
         /// <comentarios/>
         public ActiveOrHistoricCurrencyAndAmount IntrBkSttlmAmt
