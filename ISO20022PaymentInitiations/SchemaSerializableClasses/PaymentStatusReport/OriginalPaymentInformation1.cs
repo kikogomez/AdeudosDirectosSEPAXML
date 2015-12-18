@@ -1,37 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ISO20022PaymentInitiations.SchemaSerializableClasses.PaymentStatusReport
+﻿namespace ISO20022PaymentInitiations.SchemaSerializableClasses.PaymentStatusReport
 {
     /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.81.0")]
     [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03")]
-    public partial class OriginalPaymentInformation1
+    public class OriginalPaymentInformation1
     {
-
         private string orgnlPmtInfIdField;
-
         private string orgnlNbOfTxsField;
-
         private decimal orgnlCtrlSumField;
-
         private bool orgnlCtrlSumFieldSpecified;
-
         private TransactionGroupStatus3Code pmtInfStsField;
-
         private bool pmtInfStsFieldSpecified;
-
         private StatusReasonInformation8[] stsRsnInfField;
-
         private NumberOfTransactionsPerStatus3[] nbOfTxsPerStsField;
-
         private PaymentTransactionInformation25[] txInfAndStsField;
+
+        //Parameterless constructor for Serialization purpose
+        public OriginalPaymentInformation1() { }
+
+        public OriginalPaymentInformation1(
+            string originalPaymentInformationIdentification,
+            string originalNumberOfTransactions,
+            decimal originalControlSum,
+            bool originalControlSumSpecified,
+            TransactionGroupStatus3Code paymentInformationStatus,
+            bool paymentInformationStatusSpecified,
+            StatusReasonInformation8[] statusReasonInformation,
+            NumberOfTransactionsPerStatus3[] numberOfTransactionsPerStatus,
+            PaymentTransactionInformation25[] transactionInformationAndStatus)
+        {
+            this.orgnlPmtInfIdField = originalPaymentInformationIdentification;
+            this.orgnlNbOfTxsField = originalNumberOfTransactions;
+            this.orgnlCtrlSumField = originalControlSum;
+            this.orgnlCtrlSumFieldSpecified = originalControlSumSpecified;
+            this.pmtInfStsField = paymentInformationStatus;
+            this.pmtInfStsFieldSpecified = paymentInformationStatusSpecified;
+            this.stsRsnInfField = (StatusReasonInformation8[])statusReasonInformation.Clone();
+            this.nbOfTxsPerStsField = (NumberOfTransactionsPerStatus3[])numberOfTransactionsPerStatus.Clone();
+            this.txInfAndStsField = (PaymentTransactionInformation25[])transactionInformationAndStatus.Clone();
+        }
 
         /// <comentarios/>
         public string OrgnlPmtInfId

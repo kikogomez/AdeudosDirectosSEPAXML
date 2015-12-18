@@ -9,6 +9,7 @@
         private OriginalGroupInformation20 orgnlGrpInfAndStsField;
         private OriginalPaymentInformation1[] orgnlPmtInfAndStsField;
 
+        //Parameterless constructor for Serialization purpose
         public CustomerPaymentStatusReportV03() { }
 
         public CustomerPaymentStatusReportV03(

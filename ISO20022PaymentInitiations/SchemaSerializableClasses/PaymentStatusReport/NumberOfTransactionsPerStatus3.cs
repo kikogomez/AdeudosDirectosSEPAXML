@@ -10,6 +10,7 @@
         private decimal dtldCtrlSumField;
         private bool dtldCtrlSumFieldSpecified;
 
+        //Parameterless constructor for Serialization purpose
         public NumberOfTransactionsPerStatus3() { }
 
         public NumberOfTransactionsPerStatus3(
