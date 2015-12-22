@@ -1,37 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ISO20022PaymentInitiations.SchemaSerializableClasses.PaymentStatusReport
+﻿namespace ISO20022PaymentInitiations.SchemaSerializableClasses.PaymentStatusReport
 {
     /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.81.0")]
     [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03")]
-    public partial class PaymentTypeInformation22
+    public class PaymentTypeInformation22
     {
-
         private Priority2Code instrPrtyField;
-
         private bool instrPrtyFieldSpecified;
-
         private ClearingChannel2Code clrChanlField;
-
         private bool clrChanlFieldSpecified;
-
         private ServiceLevel8Choice svcLvlField;
-
         private LocalInstrument2Choice lclInstrmField;
-
         private SequenceType1Code seqTpField;
-
         private bool seqTpFieldSpecified;
-
         private CategoryPurpose1Choice ctgyPurpField;
+
+
 
         /// <comentarios/>
         public Priority2Code InstrPrty

@@ -1,43 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ISO20022PaymentInitiations.SchemaSerializableClasses.PaymentStatusReport
+﻿namespace ISO20022PaymentInitiations.SchemaSerializableClasses.PaymentStatusReport
 {
     /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.81.0")]
     [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03")]
-    public partial class PaymentTransactionInformation25
+    public class PaymentTransactionInformation25
     {
-
         private string stsIdField;
-
         private string orgnlInstrIdField;
-
         private string orgnlEndToEndIdField;
-
         private TransactionIndividualStatus3Code txStsField;
-
         private bool txStsFieldSpecified;
-
         private StatusReasonInformation8[] stsRsnInfField;
-
         private ChargesInformation5[] chrgsInfField;
-
         private System.DateTime accptncDtTmField;
-
         private bool accptncDtTmFieldSpecified;
-
         private string acctSvcrRefField;
-
         private string clrSysRefField;
-
         private OriginalTransactionReference13 orgnlTxRefField;
+
+        //Parameterless constructor for Serialization purposes
+        public PaymentTransactionInformation25() { }
+
+        public PaymentTransactionInformation25(
+            string statusIdentification,
+            string originalInstructionIdentification,
+            string originalEndToEndIdentification,
+            TransactionIndividualStatus3Code transactionStatus,
+            bool transactionStatusSpecified,
+            StatusReasonInformation8[] statusReasonInformation,
+            ChargesInformation5[] chargesInformation,
+            System.DateTime acceptanceDateTime,
+            bool acceptanceDateTimeSpecified,
+            string accountServicerReference,
+            string clearingSystemReference,
+            OriginalTransactionReference13 originalTransactionReference)
+        {
+            this.stsIdField = statusIdentification;
+            this.orgnlInstrIdField = originalInstructionIdentification;
+            this.orgnlEndToEndIdField = originalEndToEndIdentification;
+            this.txStsField = transactionStatus;
+            this.txStsFieldSpecified = transactionStatusSpecified;
+            this.stsRsnInfField = (StatusReasonInformation8[])statusReasonInformation.Clone();
+            this.chrgsInfField = (ChargesInformation5[])chargesInformation.Clone();
+            this.accptncDtTmField = acceptanceDateTime;
+            this.accptncDtTmFieldSpecified = acceptanceDateTimeSpecified;
+            this.acctSvcrRefField = accountServicerReference;
+            this.clrSysRefField = clearingSystemReference;
+            this.orgnlTxRefField = originalTransactionReference;
+    }
+
+
 
         /// <comentarios/>
         public string StsId
