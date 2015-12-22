@@ -1,23 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ISO20022PaymentInitiations.SchemaSerializableClasses.PaymentStatusReport
+﻿namespace ISO20022PaymentInitiations.SchemaSerializableClasses.PaymentStatusReport
 {
     /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.81.0")]
     [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03")]
-    public partial class StatusReason6Choice
+    public class StatusReason6Choice
     {
-
         private string itemField;
-
         private ItemChoiceType itemElementNameField;
+
+        //Parameterless constructor for Serialization purposes
+        public StatusReason6Choice() { }
+
+        public StatusReason6Choice(
+            string statusReason,
+            ItemChoiceType codedOrPropietary)
+        {
+            this.itemField = statusReason;
+            this.itemElementNameField = codedOrPropietary;
+        }
 
         /// <comentarios/>
         [System.Xml.Serialization.XmlElementAttribute("Cd", typeof(string))]

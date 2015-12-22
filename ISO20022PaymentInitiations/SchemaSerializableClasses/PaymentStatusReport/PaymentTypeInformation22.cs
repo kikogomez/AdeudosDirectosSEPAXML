@@ -15,6 +15,30 @@
         private bool seqTpFieldSpecified;
         private CategoryPurpose1Choice ctgyPurpField;
 
+        //Parameterless constructor for Serialization purposes
+        public PaymentTypeInformation22() { }
+
+        public PaymentTypeInformation22(
+            Priority2Code instructionPriority,
+            bool instructionPrioritySpecified,
+            ClearingChannel2Code clearingChannel,
+            bool clearingChannelSpecified,
+            ServiceLevel8Choice serviceLevel,
+            LocalInstrument2Choice localInstrument,
+            SequenceType1Code sequenceType,
+            bool sequenceTypeSpecified,
+            CategoryPurpose1Choice categoryPurpose)
+        {
+            this.instrPrtyField = instructionPriority;
+            this.instrPrtyFieldSpecified = instructionPrioritySpecified;
+            this.clrChanlField = clearingChannel;
+            this.clrChanlFieldSpecified = clearingChannelSpecified;
+            this.svcLvlField = serviceLevel;
+            this.lclInstrmField = localInstrument;
+            this.seqTpField = sequenceType;
+            this.seqTpFieldSpecified = sequenceTypeSpecified;
+            this.ctgyPurpField = categoryPurpose;
+    }
 
 
         /// <comentarios/>

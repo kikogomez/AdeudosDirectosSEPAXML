@@ -1,37 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ISO20022PaymentInitiations.SchemaSerializableClasses.PaymentStatusReport
+﻿namespace ISO20022PaymentInitiations.SchemaSerializableClasses.PaymentStatusReport
 {
     /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.81.0")]
     [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03")]
-    public partial class SettlementInformation13
+    public class SettlementInformation13
     {
-
         private SettlementMethod1Code sttlmMtdField;
-
         private CashAccount16 sttlmAcctField;
-
         private ClearingSystemIdentification3Choice clrSysField;
-
         private BranchAndFinancialInstitutionIdentification4 instgRmbrsmntAgtField;
-
         private CashAccount16 instgRmbrsmntAgtAcctField;
-
         private BranchAndFinancialInstitutionIdentification4 instdRmbrsmntAgtField;
-
         private CashAccount16 instdRmbrsmntAgtAcctField;
-
         private BranchAndFinancialInstitutionIdentification4 thrdRmbrsmntAgtField;
-
         private CashAccount16 thrdRmbrsmntAgtAcctField;
+
+        //Parameterless constructor for Serialization purposes
+        public SettlementInformation13() { }
+
+        public SettlementInformation13(
+            SettlementMethod1Code settlementMethod,
+            CashAccount16 settlementAccount,
+            ClearingSystemIdentification3Choice clearingSystem,
+            BranchAndFinancialInstitutionIdentification4 instructingReimbursementAgent,
+            CashAccount16 instructingReimbursementAgentAccount,
+            BranchAndFinancialInstitutionIdentification4 instructedReimbursementAgent,
+            CashAccount16 instructedReimbursementAgentAccount,
+            BranchAndFinancialInstitutionIdentification4 thirdReimbursementAgent,
+            CashAccount16 thirdReimbursementAgentAccount
+            )
+        {
+            this.sttlmMtdField = settlementMethod;
+            this.sttlmAcctField = settlementAccount;
+            this.clrSysField = clearingSystem;
+            this.instgRmbrsmntAgtField = instructingReimbursementAgent;
+            this.instgRmbrsmntAgtAcctField = instructingReimbursementAgentAccount;
+            this.instdRmbrsmntAgtField = instructedReimbursementAgent;
+            this.instdRmbrsmntAgtAcctField = instructedReimbursementAgentAccount;
+            this.thrdRmbrsmntAgtField = thirdReimbursementAgent;
+            this.thrdRmbrsmntAgtAcctField = thirdReimbursementAgentAccount;
+
+    }
 
         /// <comentarios/>
         public SettlementMethod1Code SttlmMtd
