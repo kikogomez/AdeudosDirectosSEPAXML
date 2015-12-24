@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<OrgnlGrpInfAndSts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:iso:std:iso:20022:tech:xsd:pain.002.001.03">
+  <OrgnlMsgId>2012-07-18DEV0801009310G12345678100</OrgnlMsgId>
+  <OrgnlMsgNmId>NOTPROVIDED</OrgnlMsgNmId>
+  <OrgnlNbOfTxs>3</OrgnlNbOfTxs>
+  <OrgnlCtrlSum>220.00</OrgnlCtrlSum>
+</OrgnlGrpInfAndSts>
