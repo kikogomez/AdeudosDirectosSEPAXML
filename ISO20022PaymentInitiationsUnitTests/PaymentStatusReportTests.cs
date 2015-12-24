@@ -52,7 +52,7 @@ namespace ISO20022PaymentInitiationsUnitTests
         [TestMethod]
         public void OriginalGroupInformationAndStatusElement_OrgnlGrpInfAndSts_IsCorrectlyDeserialized()
         {
-            OriginalGroupInformation20 originalGroupInformation = XMLSerializer.XMLDeserializeFromFile<OriginalGroupInformation20>(@"XML Test Files\pain.002.001.03\OriginalGroupInformationAndStatus.xml", "InitgPty", xMLNamespace);
+            OriginalGroupInformation20 originalGroupInformation = XMLSerializer.XMLDeserializeFromFile<OriginalGroupInformation20>(@"XML Test Files\pain.002.001.03\OriginalGroupInformationAndStatus.xml", "OrgnlGrpInfAndSts", xMLNamespace);
             Assert.AreEqual("2012-07-18DEV0801009310G12345678100", originalGroupInformation.OrgnlMsgId);
             Assert.AreEqual("NOTPROVIDED", originalGroupInformation.OrgnlMsgNmId);
             Assert.AreEqual(3, originalGroupInformation.OrgnlNbOfTxs);

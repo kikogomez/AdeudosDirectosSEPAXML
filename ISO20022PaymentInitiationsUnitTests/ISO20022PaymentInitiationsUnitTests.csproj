@@ -79,10 +79,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="XML Test Files\pain.002.001.03\LaCaixa_pain00200103_Example1.xml" />
-    <Content Include="XML Test Files\pain.002.001.03\OriginalGroupInformationAndStatus.xml" />
-    <Content Include="XML Test Files\pain.002.001.03\pain.002.001.03_1.xml" />
-    <Content Include="XML Test Files\pain.002.001.03\pain.002.001.03_2.xml" />
+    <Content Include="XML Test Files\pain.002.001.03\LaCaixa_pain00200103_Example1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="XML Test Files\pain.002.001.03\OriginalGroupInformationAndStatus.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="XML Test Files\pain.002.001.03\pain.002.001.03_1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="XML Test Files\pain.002.001.03\pain.002.001.03_2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="XML Test Files\pain.008.001.02\DirectDebitTransactionInfo.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
