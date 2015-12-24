@@ -55,7 +55,7 @@ namespace ISO20022PaymentInitiationsUnitTests
             OriginalGroupInformation20 originalGroupInformation = XMLSerializer.XMLDeserializeFromFile<OriginalGroupInformation20>(@"XML Test Files\pain.002.001.03\OriginalGroupInformationAndStatus.xml", "OrgnlGrpInfAndSts", xMLNamespace);
             Assert.AreEqual("2012-07-18DEV0801009310G12345678100", originalGroupInformation.OrgnlMsgId);
             Assert.AreEqual("NOTPROVIDED", originalGroupInformation.OrgnlMsgNmId);
-            Assert.AreEqual(3, originalGroupInformation.OrgnlNbOfTxs);
+            Assert.AreEqual("3", originalGroupInformation.OrgnlNbOfTxs);
             Assert.AreEqual(220, originalGroupInformation.OrgnlCtrlSum);
             //PartyIdentification32 initiatingParty = XMLSerializer.XMLDeserializeFromFile<PartyIdentification32>(@"XML Test Files\pain.002.001.03\OriginalGroupInformationAndStatus.xml", "InitgPty", xMLNamespace);
             //Assert.AreEqual("Real Club Náutico de Gran Canaria", initiatingParty.Nm);
