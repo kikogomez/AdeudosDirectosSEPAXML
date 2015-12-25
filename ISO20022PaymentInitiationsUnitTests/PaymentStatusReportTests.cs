@@ -1,4 +1,5 @@
-﻿using ISO20022PaymentInitiations;
+﻿using System;
+using ISO20022PaymentInitiations;
 using ISO20022PaymentInitiations.SchemaSerializableClasses;
 using ISO20022PaymentInitiations.SchemaSerializableClasses.PaymentStatusReport;
 using XMLSerializerValidator;
@@ -74,31 +75,54 @@ namespace ISO20022PaymentInitiationsUnitTests
         public void OriginalTransactionReference_OrgnlTxRef_IsCorrectlyDeserialized()
         {
             OriginalTransactionReference13 originalTransactionReference = XMLSerializer.XMLDeserializeFromFile<OriginalTransactionReference13>(@"XML Test Files\pain.002.001.03\OriginalTransactionReference.xml", "OrgnlTxRef", xMLNamespace);
+
             decimal amount = ((ActiveOrHistoricCurrencyAndAmount)originalTransactionReference.Amt.Item).Value;
-            System.DateTime collectionDate = originalTransactionReference.ReqdColltnDt;
+            DateTime collectionDate = originalTransactionReference.ReqdColltnDt;
             bool collectionDateSpecified = originalTransactionReference.ReqdColltnDtSpecified;
             string creditorID = ((PersonIdentification5)originalTransactionReference.CdtrSchmeId.Id.Item).Othr[0].Id;
-            PersonIdentificationSchemeName1Choice creditorSchemeNameType = ((PersonIdentification5)originalTransactionReference.CdtrSchmeId.Id.Item).Othr[0].SchmeNm;
             string creditorShemeName = ((PersonIdentification5)originalTransactionReference.CdtrSchmeId.Id.Item).Othr[0].SchmeNm.Item;
             string paymentTypeInformation_ServiceLevel = originalTransactionReference.PmtTpInf.SvcLvl.Item;
             string paymentTypeInformation_LocaInstrument = originalTransactionReference.PmtTpInf.LclInstrm.Item;
             SequenceType1Code paymentTypeInformation_SequenceType = originalTransactionReference.PmtTpInf.SeqTp;
-
-            //string devolReason = originalTransactionReference.StsRsnInf[0].Rsn.Item;
+            string mandateRelatedInformation_MandateID = originalTransactionReference.MndtRltdInf.MndtId;
+            DateTime mandateRelatedInformation_DateOfSignature = originalTransactionReference.MndtRltdInf.DtOfSgntr;
+            bool mandateRelatedInformation_DateOfSignatureSpecified = originalTransactionReference.MndtRltdInf.DtOfSgntrSpecified;
+            string remmitanceInformation = originalTransactionReference.RmtInf.Ustrd[0];
+            string debtor_Name = originalTransactionReference.Dbtr.Nm;
+            string debtor_PostalAddress_Country = originalTransactionReference.Dbtr.PstlAdr.Ctry;
+            string debtor_PostalAddres_AddressLine = originalTransactionReference.Dbtr.PstlAdr.AdrLine[0];
+            string debtorAccount = (string)originalTransactionReference.DbtrAcct.Id.Item;
+            string debtorAgentBIC = originalTransactionReference.DbtrAgt.FinInstnId.BIC;
+            string creditorAgentBIC = originalTransactionReference.CdtrAgt.FinInstnId.BIC;
+            string creditor_Name = originalTransactionReference.Cdtr.Nm;
+            string creditor_PostalAddress_Country = originalTransactionReference.Cdtr.PstlAdr.Ctry;
+            string creditor_PostalAddress_AddressLine = originalTransactionReference.Cdtr.PstlAdr.AdrLine[0];
+            string creditorAccount = (string)originalTransactionReference.CdtrAcct.Id.Item;
 
             Assert.AreEqual(100, amount);
-            System.DateTime expectedDate = System.DateTime.Parse("2012-07-16");
-            Assert.AreEqual(expectedDate, collectionDate);
+            DateTime expectedCollectionDate = System.DateTime.Parse("2012-07-16");
+            Assert.AreEqual(expectedCollectionDate, collectionDate);
             Assert.IsTrue(collectionDateSpecified);
             Assert.AreEqual("ES29000G12345678", creditorID);
             Assert.AreEqual("SEPA", creditorShemeName);
             Assert.AreEqual("SEPA", paymentTypeInformation_ServiceLevel);
             Assert.AreEqual("CORE", paymentTypeInformation_LocaInstrument);
-
-
-            //Assert.AreEqual("064869001000000107", originalTransactionReference.OrgnlInstrId);
-            //Assert.AreEqual("201207010001/01002", originalTransactionReference.OrgnlEndToEndId);
-            //Assert.AreEqual("MS02", devolReason);
+            Assert.AreEqual(SequenceType1Code.RCUR, paymentTypeInformation_SequenceType);
+            Assert.AreEqual("000001101000", mandateRelatedInformation_MandateID);
+            DateTime expectedDateOfSignature = DateTime.Parse("2011-09-27");
+            Assert.AreEqual(expectedDateOfSignature, mandateRelatedInformation_DateOfSignature);
+            Assert.IsTrue(mandateRelatedInformation_DateOfSignatureSpecified);
+            Assert.AreEqual("FACTURA NUM 7877", remmitanceInformation);
+            Assert.AreEqual("NURIA SAULER PORTAL", debtor_Name);
+            Assert.AreEqual("ES", debtor_PostalAddress_Country);
+            Assert.AreEqual("CALLE ANDRADE, 80  08013 BARCELONA", debtor_PostalAddres_AddressLine);
+            Assert.AreEqual("ES9821008701231234567890", debtorAccount);
+            Assert.AreEqual("CAIXESBBXXX", debtorAgentBIC);
+            Assert.AreEqual("CAIXESBBXXX", creditorAgentBIC);
+            Assert.AreEqual("NOMBRE ACREEDOR DE PRUEBAS", creditor_Name);
+            Assert.AreEqual("ES", creditor_PostalAddress_Country);
+            Assert.AreEqual("CALLE ROMA, 102 LUGO", creditor_PostalAddress_AddressLine);
+            Assert.AreEqual("ES0921009999961234567890", creditorAccount);
         }
     }
 }
