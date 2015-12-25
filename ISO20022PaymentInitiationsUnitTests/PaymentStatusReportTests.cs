@@ -57,11 +57,48 @@ namespace ISO20022PaymentInitiationsUnitTests
             Assert.AreEqual("NOTPROVIDED", originalGroupInformation.OrgnlMsgNmId);
             Assert.AreEqual("3", originalGroupInformation.OrgnlNbOfTxs);
             Assert.AreEqual(220, originalGroupInformation.OrgnlCtrlSum);
-            //PartyIdentification32 initiatingParty = XMLSerializer.XMLDeserializeFromFile<PartyIdentification32>(@"XML Test Files\pain.002.001.03\OriginalGroupInformationAndStatus.xml", "InitgPty", xMLNamespace);
-            //Assert.AreEqual("Real Club Náutico de Gran Canaria", initiatingParty.Nm);
-            //OrganisationIdentification4 orgId = (OrganisationIdentification4)initiatingParty.Id.Item;
-            //string genericOrganisationInformationId = orgId.Othr[0].Id;
-            //Assert.AreEqual("ES90777G35008770", genericOrganisationInformationId);
+        }
+
+        [TestMethod]
+        public void PaymentTransactionInformation_TxInfAndSts_IsCorrectlyDeserialized()
+        {
+            PaymentTransactionInformation25 paymentTransactionInformation = XMLSerializer.XMLDeserializeFromFile<PaymentTransactionInformation25>(@"XML Test Files\pain.002.001.03\PaymentTransactionInformation.xml", "TxInfAndSts", xMLNamespace);
+            string devolReason = paymentTransactionInformation.StsRsnInf[0].Rsn.Item;
+
+            Assert.AreEqual("064869001000000107", paymentTransactionInformation.OrgnlInstrId);
+            Assert.AreEqual("201207010001/01002", paymentTransactionInformation.OrgnlEndToEndId);
+            Assert.AreEqual("MS02", devolReason);
+        }
+
+        [TestMethod]
+        public void OriginalTransactionReference_OrgnlTxRef_IsCorrectlyDeserialized()
+        {
+            OriginalTransactionReference13 originalTransactionReference = XMLSerializer.XMLDeserializeFromFile<OriginalTransactionReference13>(@"XML Test Files\pain.002.001.03\OriginalTransactionReference.xml", "OrgnlTxRef", xMLNamespace);
+            decimal amount = ((ActiveOrHistoricCurrencyAndAmount)originalTransactionReference.Amt.Item).Value;
+            System.DateTime collectionDate = originalTransactionReference.ReqdColltnDt;
+            bool collectionDateSpecified = originalTransactionReference.ReqdColltnDtSpecified;
+            string creditorID = ((PersonIdentification5)originalTransactionReference.CdtrSchmeId.Id.Item).Othr[0].Id;
+            PersonIdentificationSchemeName1Choice creditorSchemeNameType = ((PersonIdentification5)originalTransactionReference.CdtrSchmeId.Id.Item).Othr[0].SchmeNm;
+            string creditorShemeName = ((PersonIdentification5)originalTransactionReference.CdtrSchmeId.Id.Item).Othr[0].SchmeNm.Item;
+            string paymentTypeInformation_ServiceLevel = originalTransactionReference.PmtTpInf.SvcLvl.Item;
+            string paymentTypeInformation_LocaInstrument = originalTransactionReference.PmtTpInf.LclInstrm.Item;
+            SequenceType1Code paymentTypeInformation_SequenceType = originalTransactionReference.PmtTpInf.SeqTp;
+
+            //string devolReason = originalTransactionReference.StsRsnInf[0].Rsn.Item;
+
+            Assert.AreEqual(100, amount);
+            System.DateTime expectedDate = System.DateTime.Parse("2012-07-16");
+            Assert.AreEqual(expectedDate, collectionDate);
+            Assert.IsTrue(collectionDateSpecified);
+            Assert.AreEqual("ES29000G12345678", creditorID);
+            Assert.AreEqual("SEPA", creditorShemeName);
+            Assert.AreEqual("SEPA", paymentTypeInformation_ServiceLevel);
+            Assert.AreEqual("CORE", paymentTypeInformation_LocaInstrument);
+
+
+            //Assert.AreEqual("064869001000000107", originalTransactionReference.OrgnlInstrId);
+            //Assert.AreEqual("201207010001/01002", originalTransactionReference.OrgnlEndToEndId);
+            //Assert.AreEqual("MS02", devolReason);
         }
     }
 }

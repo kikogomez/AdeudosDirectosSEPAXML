@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TxInfAndSts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:iso:std:iso:20022:tech:xsd:pain.002.001.03">
+  <OrgnlInstrId>064869001000000107</OrgnlInstrId>
+  <OrgnlEndToEndId>201207010001/01002</OrgnlEndToEndId>
+  <TxSts>RJCT</TxSts>
+  <StsRsnInf>
+    <Rsn>
+      <Cd>MS02</Cd>
+    </Rsn>
+  </StsRsnInf>
+  <OrgnlTxRef>
+    <Amt>
+      <InstdAmt Ccy="EUR">100.00</InstdAmt>
+    </Amt>
+    <ReqdColltnDt>2012-07-16</ReqdColltnDt>
+    <CdtrSchmeId>
+      <Id>
+        <PrvtId>
+          <Othr>
+            <Id>ES29000G12345678</Id>
+            <SchmeNm>
+              <Prtry>SEPA</Prtry>
+            </SchmeNm>
+          </Othr>
+        </PrvtId>
+      </Id>
+    </CdtrSchmeId>
+    <PmtTpInf>
+      <SvcLvl>
+        <Cd>SEPA</Cd>
+      </SvcLvl>
+      <LclInstrm>
+        <Cd>CORE</Cd>
+      </LclInstrm>
+      <SeqTp>RCUR</SeqTp>
+    </PmtTpInf>
+    <MndtRltdInf>
+      <MndtId>000001101000</MndtId>
+      <DtOfSgntr>2011-09-27</DtOfSgntr>
+    </MndtRltdInf>
+    <RmtInf>
+      <Ustrd>FACTURA NUM 7877</Ustrd>
+    </RmtInf>
+    <Dbtr>
+      <Nm>NURIA SAULER PORTAL</Nm>
+      <PstlAdr>
+        <Ctry>ES</Ctry>
+        <AdrLine>CALLE ANDRADE, 80  08013 BARCELONA</AdrLine>
+      </PstlAdr>
+    </Dbtr>
+    <DbtrAcct>
+      <Id>
+        <IBAN>ES9821008701231234567890</IBAN>
+      </Id>
+    </DbtrAcct>
+    <DbtrAgt>
+      <FinInstnId>
+        <BIC>CAIXESBBXXX</BIC>
+      </FinInstnId>
+    </DbtrAgt>
+    <CdtrAgt>
+      <FinInstnId>
+        <BIC>CAIXESBBXXX</BIC>
+      </FinInstnId>
+    </CdtrAgt>
+    <Cdtr>
+      <Nm>NOMBRE ACREEDOR DE PRUEBAS</Nm>
+      <PstlAdr>
+        <Ctry>ES</Ctry>
+        <AdrLine>CALLE ROMA, 102 LUGO</AdrLine>
+      </PstlAdr>
+    </Cdtr>
+    <CdtrAcct>
+      <Id>
+        <IBAN>ES0921009999961234567890</IBAN>
+      </Id>
+    </CdtrAcct>
+  </OrgnlTxRef>
+</TxInfAndSts>
