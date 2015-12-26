@@ -52,19 +52,6 @@ namespace ISO20022PaymentInitiationsUnitTests
         }
 
         [TestMethod]
-        public void MyXMLExampleFileIsWellValidatedThroughXSD()
-        {
-            //Original valid pain.008.001.02 XML file from ISO20022
-            string xMLFilePath = @"XML Test Files\pain.002.001.03\LaCaixa_pain00200103_Example1.xml";
-
-            //Original valid pain.008.002.01 XSD File from ISO20022
-            string xSDFilePath = @"XSDFiles\pain.002.001.03.xsd";
-
-            string validatingErrors = XMLValidator.ValidateXMLFileThroughXSDFile(xMLFilePath, xSDFilePath);
-            Assert.AreEqual(String.Empty, validatingErrors);
-        }
-
-        [TestMethod]
         public void ISO20020XMLExample1FileIsWellValidatedThroughXSD()
         {
             //Original valid pain.008.001.02 XML file from ISO20022
@@ -91,24 +78,16 @@ namespace ISO20022PaymentInitiationsUnitTests
         }
 
         [TestMethod]
-        public void OriginalGroupInformationAndStatusElement_OrgnlGrpInfAndSts_IsCorrectlyDeserialized()
+        public void LaCaixaXMLExampleFileIsWellValidatedThroughXSD()
         {
-            OriginalGroupInformation20 originalGroupInformation = XMLSerializer.XMLDeserializeFromFile<OriginalGroupInformation20>(@"XML Test Files\pain.002.001.03\OriginalGroupInformationAndStatus.xml", "OrgnlGrpInfAndSts", xMLNamespace);
-            Assert.AreEqual("2012-07-18DEV0801009310G12345678100", originalGroupInformation.OrgnlMsgId);
-            Assert.AreEqual("NOTPROVIDED", originalGroupInformation.OrgnlMsgNmId);
-            Assert.AreEqual("3", originalGroupInformation.OrgnlNbOfTxs);
-            Assert.AreEqual(220, originalGroupInformation.OrgnlCtrlSum);
-        }
+            //Original valid pain.008.001.02 XML file from ISO20022
+            string xMLFilePath = @"XML Test Files\pain.002.001.03\LaCaixa_pain00200103_Example1.xml";
 
-        [TestMethod]
-        public void PaymentTransactionInformation_TxInfAndSts_IsCorrectlyDeserialized()
-        {
-            PaymentTransactionInformation25 paymentTransactionInformation = XMLSerializer.XMLDeserializeFromFile<PaymentTransactionInformation25>(@"XML Test Files\pain.002.001.03\PaymentTransactionInformation.xml", "TxInfAndSts", xMLNamespace);
-            string devolReason = paymentTransactionInformation.StsRsnInf[0].Rsn.Item;
+            //Original valid pain.008.002.01 XSD File from ISO20022
+            string xSDFilePath = @"XSDFiles\pain.002.001.03.xsd";
 
-            Assert.AreEqual("064869001000000107", paymentTransactionInformation.OrgnlInstrId);
-            Assert.AreEqual("201207010001/01002", paymentTransactionInformation.OrgnlEndToEndId);
-            Assert.AreEqual("MS02", devolReason);
+            string validatingErrors = XMLValidator.ValidateXMLFileThroughXSDFile(xMLFilePath, xSDFilePath);
+            Assert.AreEqual(String.Empty, validatingErrors);
         }
 
         [TestMethod]
@@ -163,6 +142,58 @@ namespace ISO20022PaymentInitiationsUnitTests
             Assert.AreEqual("ES", creditor_PostalAddress_Country);
             Assert.AreEqual("CALLE ROMA, 102 LUGO", creditor_PostalAddress_AddressLine);
             Assert.AreEqual("ES0921009999961234567890", creditorAccount);
+        }
+
+        [TestMethod]
+        public void PaymentTransactionInformation_TxInfAndSts_IsCorrectlyDeserialized()
+        {
+            PaymentTransactionInformation25 paymentTransactionInformation = XMLSerializer.XMLDeserializeFromFile<PaymentTransactionInformation25>(@"XML Test Files\pain.002.001.03\PaymentTransactionInformation.xml", "TxInfAndSts", xMLNamespace);
+            string devolReason = paymentTransactionInformation.StsRsnInf[0].Rsn.Item;
+
+            Assert.AreEqual("064869001000000107", paymentTransactionInformation.OrgnlInstrId);
+            Assert.AreEqual("201207010001/01002", paymentTransactionInformation.OrgnlEndToEndId);
+            Assert.AreEqual("MS02", devolReason);
+        }
+
+        [TestMethod]
+        public void OriginalGroupInformationAndStatusElement_OrgnlGrpInfAndSts_IsCorrectlyDeserialized()
+        {
+            OriginalGroupInformation20 originalGroupInformation = XMLSerializer.XMLDeserializeFromFile<OriginalGroupInformation20>(@"XML Test Files\pain.002.001.03\OriginalGroupInformationAndStatus.xml", "OrgnlGrpInfAndSts", xMLNamespace);
+            Assert.AreEqual("2012-07-18DEV0801009310G12345678100", originalGroupInformation.OrgnlMsgId);
+            Assert.AreEqual("NOTPROVIDED", originalGroupInformation.OrgnlMsgNmId);
+            Assert.AreEqual("3", originalGroupInformation.OrgnlNbOfTxs);
+            Assert.AreEqual(220, originalGroupInformation.OrgnlCtrlSum);
+        }
+
+        [TestMethod]
+        public void GroupHeader_GrpHdr_IsCorrectlyDeserialized()
+        {
+            GroupHeader36 groupHeader = XMLSerializer.XMLDeserializeFromFile<GroupHeader36>(@"XML Test Files\pain.002.001.03\GroupHeader.xml", "GrpHdr", xMLNamespace);
+
+            string messageIdentification = groupHeader.MsgId;
+            DateTime creationDateTime = groupHeader.CreDtTm;
+            string initiatingParty_OrganisationIdentification_BIC = ((OrganisationIdentification4)groupHeader.InitgPty.Id.Item).BICOrBEI;
+
+            Assert.AreEqual("DATIR00112G12345678100", messageIdentification);
+            DateTime expectedCreationDatetime = DateTime.Parse("2012-07-18T06:00:01");
+            Assert.AreEqual(expectedCreationDatetime, creationDateTime);
+            Assert.AreEqual("CAIXESBBXXX", initiatingParty_OrganisationIdentification_BIC);
+        }
+
+        [TestMethod]
+        public void CustomerPaymentStatusReport_CstmrPmtStsRpt_IsCorrectlyDeserialized()
+        {
+            CustomerPaymentStatusReportV03 customerPaymentStatusReport = XMLSerializer.XMLDeserializeFromFile<CustomerPaymentStatusReportV03>(@"XML Test Files\pain.002.001.03\CustomerPaymentStatusReport.xml", "CstmrPmtStsRpt", xMLNamespace);
+
+            GroupHeader36 groupHeader = customerPaymentStatusReport.GrpHdr;
+            OriginalGroupInformation20 originalGroupInformation = customerPaymentStatusReport.OrgnlGrpInfAndSts;
+            OriginalPaymentInformation1[] originalPaymentInformation = customerPaymentStatusReport.OrgnlPmtInfAndSts;
+
+            Assert.AreEqual("DATIR00112G12345678100", groupHeader.MsgId);
+            Assert.AreEqual("2012-07-18DEV0801009310G12345678100", originalGroupInformation.OrgnlMsgId);
+            Assert.AreEqual(2, originalPaymentInformation.Length);
+            Assert.AreEqual("PRE201207010001", originalPaymentInformation[0].OrgnlPmtInfId);
+            Assert.AreEqual("PRE201205270001", originalPaymentInformation[1].OrgnlPmtInfId);
         }
     }
 }

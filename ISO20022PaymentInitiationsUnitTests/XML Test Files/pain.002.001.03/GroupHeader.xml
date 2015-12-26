@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<GrpHdr xmlns="urn:iso:std:iso:20022:tech:xsd:pain.002.001.03">
+  <MsgId>DATIR00112G12345678100</MsgId>
+  <CreDtTm>2012-07-18T06:00:01</CreDtTm>
+  <InitgPty>
+    <Id>
+      <OrgId>
+        <BICOrBEI>CAIXESBBXXX</BICOrBEI>
+      </OrgId>
+    </Id>
+  </InitgPty>
+</GrpHdr>

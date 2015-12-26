@@ -79,6 +79,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="XML Test Files\pain.002.001.03\CustomerPaymentStatusReport.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="XML Test Files\pain.002.001.03\GroupHeader.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="XML Test Files\pain.002.001.03\LaCaixa_pain00200103_Example1.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
