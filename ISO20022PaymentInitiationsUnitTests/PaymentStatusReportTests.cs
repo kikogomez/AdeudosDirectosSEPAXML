@@ -16,37 +16,6 @@ namespace ISO20022PaymentInitiationsUnitTests
         [ClassInitialize()]
         public static void ClassInit(TestContext context)
         {
-            //SEPAAttributes sEPAAttributes = new SEPAAttributes();
-            //bankCodes = new BankCodes(@"XMLFiles\SpanishBankCodes.xml", BankCodes.BankCodesFileFormat.XML);
-            //creditor = new Creditor_POCOClass(
-            //    "Real Club Náutico de Gran Canaria",
-            //    sEPAAttributes.AT02CreditorIdentifier("ES", "G35008770", "777"),
-            //    sEPAAttributes.AT07IBAN_Spanish("12345678061234567890"));
-            //creditorAgent = new CreditorAgent_POCOClass(bankCodes.BankDictionaryByLocalBankCode["3183"].BankBIC);
-            //directDebitMandateInfo1 = new DirectDebitTransactionInfo_POCOClass(
-            //    "Pedro Piqueras",
-            //    "InternalID2510201300099",
-            //    new string[] { "Cuota Mensual Numerario Septiembre 2013", "Cuota Mensual Numerario Octubre 2013" },
-            //    (double)158,
-            //    sEPAAttributes.AT01MandateReference("000001102345"),
-            //    sEPAAttributes.AT07IBAN_Spanish("01000100709999999999"),
-            //    sEPAAttributes.AT25DateOfMandateSigning_MigrationValue,
-            //    sEPAAttributes.AT01MandateReference("000001101111"),
-            //    sEPAAttributes.AT07IBAN_Spanish("01000100761234567890"));
-
-            //directDebitMandateInfo2 = new DirectDebitTransactionInfo_POCOClass(
-            //    "Manuel Moreno",
-            //    "InternalID2510201300100",
-            //    new string[] { "Cuota Mensual Numerario Octubre 2013" },
-            //    (double)79,
-            //    sEPAAttributes.AT01MandateReference("000001102346"),
-            //    sEPAAttributes.AT07IBAN_Spanish("01821234861234567890"),
-            //    sEPAAttributes.AT25DateOfMandateSigning_MigrationValue,
-            //    null,
-            //    null);
-
-            //directDebitMandateInfoList = new List<DirectDebitTransactionInfo_POCOClass>() { directDebitMandateInfo1, directDebitMandateInfo2 };
-
             xMLNamespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03";
             xSDFilePath = @"XSDFiles\pain.002.001.03.xsd";
         }
@@ -56,9 +25,6 @@ namespace ISO20022PaymentInitiationsUnitTests
         {
             //Original valid pain.008.001.02 XML file from ISO20022
             string xMLFilePath = @"XML Test Files\pain.002.001.03\pain.002.001.03_1.xml";
-
-            //Original valid pain.008.002.01 XSD File from ISO20022
-            string xSDFilePath = @"XSDFiles\pain.002.001.03.xsd";
 
             string validatingErrors = XMLValidator.ValidateXMLFileThroughXSDFile(xMLFilePath, xSDFilePath);
             Assert.AreEqual(String.Empty, validatingErrors);
@@ -80,7 +46,7 @@ namespace ISO20022PaymentInitiationsUnitTests
         [TestMethod]
         public void LaCaixaXMLExampleFileIsWellValidatedThroughXSD()
         {
-            //Original valid pain.008.001.02 XML file from ISO20022
+            //PaymentStatusReportexample file provided by creditor agent
             string xMLFilePath = @"XML Test Files\pain.002.001.03\LaCaixa_pain00200103_Example1.xml";
 
             //Original valid pain.008.002.01 XSD File from ISO20022
