@@ -195,5 +195,21 @@ namespace ISO20022PaymentInitiationsUnitTests
             Assert.AreEqual("PRE201207010001", originalPaymentInformation[0].OrgnlPmtInfId);
             Assert.AreEqual("PRE201205270001", originalPaymentInformation[1].OrgnlPmtInfId);
         }
+
+        [TestMethod]
+        public void CustomerPaymentStatusReportDocument_Document_IsCorrectlyDeserialized()
+        {
+            CustomerPaymentStatusReportDocument customerPaymentStatusReportDocument = XMLSerializer.XMLDeserializeFromFile<CustomerPaymentStatusReportDocument>(@"XML Test Files\pain.002.001.03\LaCaixa_pain00200103_Example1.xml", "Document", xMLNamespace);
+
+            GroupHeader36 groupHeader = customerPaymentStatusReportDocument.CstmrPmtStsRpt.GrpHdr;
+            OriginalGroupInformation20 originalGroupInformation = customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts;
+            OriginalPaymentInformation1[] originalPaymentInformation = customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlPmtInfAndSts;
+
+            Assert.AreEqual("DATIR00112G12345678100", groupHeader.MsgId);
+            Assert.AreEqual("2012-07-18DEV0801009310G12345678100", originalGroupInformation.OrgnlMsgId);
+            Assert.AreEqual(2, originalPaymentInformation.Length);
+            Assert.AreEqual("PRE201207010001", originalPaymentInformation[0].OrgnlPmtInfId);
+            Assert.AreEqual("PRE201205270001", originalPaymentInformation[1].OrgnlPmtInfId);
+        }
     }
 }
