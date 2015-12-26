@@ -10,6 +10,14 @@ namespace DirectDebitElements.DirectDebitClasses
 {
     public class PaymentStatusReport
     {
+        string messageID;
+        DateTime creationDateTime;
+        int numberOfTransactions;
+        decimal controlSum;
+
+        //Ahora 1 solo grupo de <OrgnlGrpInfAndSts>. Lo ponemos como variables independientes?
+        List<PaymentRemmitanceReject> paymentRemmitancesRejects; 
+
         public PaymentStatusReport() { }
 
         public PaymentStatusReport(string paymentStatusReportXMLMessage)

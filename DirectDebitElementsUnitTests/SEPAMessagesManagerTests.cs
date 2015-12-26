@@ -18,9 +18,7 @@ namespace DirectDebitElementsUnitTests
             string paymentStatusReportXMLStringMessage = fileReader.ReadToEnd();
 
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
-
-            //PaymentStatusReport paymentStatusReport = sepaMessagesManager.
-
+            PaymentStatusReport paymentStatusReport = sEPAMessagesManager.ReadISO20022PaymentStatusReportMessage(paymentStatusReportXMLStringMessage);
             Assert.Inconclusive();
         }
 

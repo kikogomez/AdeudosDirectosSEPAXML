@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ISO20022PaymentInitiations.SchemaSerializableClasses;
 using ISO20022PaymentInitiations.SchemaSerializableClasses.DDInitiation;
+using ISO20022PaymentInitiations.SchemaSerializableClasses.PaymentStatusReport;
 using XMLSerializerValidator;
 using ExtensionMethods;
 using DirectDebitElements.DirectDebitClasses;
@@ -58,6 +59,14 @@ namespace DirectDebitElements
 
         public PaymentStatusReport ReadISO20022PaymentStatusReportMessage(string paymentStatusReportXMLMessage)
         {
+            PaymentStatusReport paymentStatusReport;
+            string xMLNamespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03";
+            string rootElementName = "Document";
+            CustomerPaymentStatusReportDocument customerPaymentStatusReportDocument = XMLSerializer.XMLDeserializeFromString<CustomerPaymentStatusReportDocument>(paymentStatusReportXMLMessage,rootElementName, xMLNamespace);
+
+            //Ahora hay que cargar todos los elementos de paymentStatusReport con la clase deserializada
+            //Vamos desgranando las subclases del esquema sepa y vamos inicializando las clases de DirectDebit
+
             return null;
         }
 
