@@ -5,6 +5,7 @@ using ISO20022PaymentInitiations.SchemaSerializableClasses;
 using ISO20022PaymentInitiations.SchemaSerializableClasses.DDInitiation;
 using XMLSerializerValidator;
 using ExtensionMethods;
+using DirectDebitElements.DirectDebitClasses;
 
 namespace DirectDebitElements
 {
@@ -53,6 +54,11 @@ namespace DirectDebitElements
             string xMLNamespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02";
             string xmlString = XMLSerializer.XMLSerializeToString<CustomerDirectDebitInitiationDocument>(document_Document, "Document", xMLNamespace);
             return xmlString;
+        }
+
+        public PaymentStatusReport ReadISO20022PaymentStatusReportMessage(string paymentStatusReportXMLMessage)
+        {
+            return null;
         }
 
         private PartyIdentification32 GenerateInitiationParty_InitPty(
@@ -280,7 +286,6 @@ namespace DirectDebitElements
                 directDebitTransactionInfoCollection);      //<DrctDbtTxInf>
 
             return paymentInformation_PmtInf;
-
         }
     }
 }

@@ -85,17 +85,5 @@ namespace DirectDebitElements
         {
             this.status = DirectDebitmandateStatus.Active;
         }
-
-        //private void GetInternalReferenceSequenceNumber()
-        //{
-        //    internalReferenceNumber = (int)billingDataManager.DirectDebitSequenceNumber;
-        //    billingDataManager.DirectDebitSequenceNumber++;
-        //}
-
-        //private void SetInternalReferenceNumber(int internalReferenceNumber)
-        //{
-        //    billingDataManager.CheckIfDirectDebitSequenceNumberIsInRange((uint)internalReferenceNumber);
-        //    this.internalReferenceNumber = internalReferenceNumber;
-        //}
     }
 }

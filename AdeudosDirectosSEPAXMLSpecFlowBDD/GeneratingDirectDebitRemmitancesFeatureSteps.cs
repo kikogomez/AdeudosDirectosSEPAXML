@@ -6,11 +6,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Billing;
 using DirectDebitElements;
 using ReferencesAndTools;
-//using RCNGCDebtorsManagementAppLogic;
-//using RCNGCDebtorsManagementAppLogic.DebtorsManaging;
-//using RCNGCDebtorsManagementAppLogic.Billing;
-//using RCNGCDebtorsManagementAppLogic.Billing.DirectDebit;
-//using RCNGCDebtorsManagementMocks;
 using XMLSerializerValidator;
 
 namespace AdeudosDirectosSEPAXMLSpecFlowBDD
@@ -19,25 +14,14 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
     public class GeneratingDirectDebitRemmitancesFeatureSteps
     {
         private readonly DebtorsManagementContextData membersManagementContextData;
-        //private readonly InvoiceContextData invoiceContextData;
-        //private InvoicesManager invoicesManager;
         private DirectDebitRemittancesManager directDebitRemittancesManager;
 
         public GeneratingDirectDebitRemmitancesFeatureSteps(
-            DebtorsManagementContextData membersManagementContextData) //,InvoiceContextData invoiceContextData)
+            DebtorsManagementContextData membersManagementContextData)
         {
             this.membersManagementContextData = membersManagementContextData;
-            //this.invoiceContextData = invoiceContextData;
-            //invoicesManager = new InvoicesManager();
             directDebitRemittancesManager = new DirectDebitRemittancesManager();
         }
-
-        //[BeforeScenario]
-        //public void InitializeSequenceNumbersManagers()
-        //{
-        //    BillingSequenceNumbersMock billingSequenceNumbersMock = new BillingSequenceNumbersMock();
-        //    invoiceContextData.billDataManager.SetBillingSequenceNumberCollaborator(billingSequenceNumbersMock);
-        //}
 
         [Given(@"My Direct Debit Initiation Contract is")]
         public void GivenMyDirectDebitInitiationContractIs(Table contractTable)
@@ -101,14 +85,6 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
                 SimplifiedBill bill = new SimplifiedBill(billID, description, (decimal) amount, DateTime.Today, DateTime.Today.AddMonths(1));
                 Debtor debtor = debtorsCollection[row["DebtorID"]];
                 debtor.AddSimplifiedBill(bill);
-                //List<Transaction> transaction = new List<Transaction>()
-                //{
-                //    new Transaction(description,1,amount,new Tax("NoTAX",0),0)
-                //};
-                //Debtor debtor = debtorsCollection[row["MemberID"]];
-                //InvoiceCustomerData invoiceCustomerData = new InvoiceCustomerData(debtor);
-                //Invoice invoice = new Invoice(invoiceCustomerData, transaction, new DateTime(2013, 11, 11));
-                //invoicesManager.AddInvoiceToDebtor(invoice, debtor);
             }
         }
         

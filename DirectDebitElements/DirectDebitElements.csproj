@@ -55,9 +55,12 @@
     <Compile Include="DirectDebitClasses\DirectDebitMandate.cs" />
     <Compile Include="DirectDebitClasses\DirectDebitRemittance.cs" />
     <Compile Include="DirectDebitClasses\DirectDebitTransaction.cs" />
+    <Compile Include="DirectDebitClasses\DirectDebitTransactionReject.cs" />
     <Compile Include="DirectDebitClasses\DirectDebitTransactionsGroupPayment.cs" />
     <Compile Include="DirectDebitClasses\InternationalAccountBankNumberIBAN.cs" />
+    <Compile Include="DirectDebitClasses\PaymentStatusReport.cs" />
     <Compile Include="DirectDebitRemittancesManager.cs" />
+    <Compile Include="PaymentStatusReportManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SEPAMessagesManager.cs" />
   </ItemGroup>
