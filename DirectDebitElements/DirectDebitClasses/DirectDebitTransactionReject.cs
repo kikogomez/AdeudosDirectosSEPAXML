@@ -37,95 +37,37 @@ namespace DirectDebitElements.DirectDebitClasses
 
         public string OriginalTransactionIdentification
         {
-            get
-            {
-                return originalTransactionIdentification;
-            }
-
-            set
-            {
-                originalTransactionIdentification = value;
-            }
+            get { return originalTransactionIdentification; }
         }
 
         public string OriginalEndtoEndTransactionIdentification
         {
-            get
-            {
-                return originalEndtoEndTransactionIdentification;
-            }
-
-            set
-            {
-                originalEndtoEndTransactionIdentification = value;
-            }
+            get { return originalEndtoEndTransactionIdentification; }
         }
 
         public DateTime RequestedCollectionDate
         {
-            get
-            {
-                return requestedCollectionDate;
-            }
-
-            set
-            {
-                requestedCollectionDate = value;
-            }
+            get { return requestedCollectionDate; }
         }
 
         public decimal Amount
         {
-            get
-            {
-                return amount;
-            }
-
-            set
-            {
-                amount = value;
-            }
+            get { return amount; }
         }
 
         public string MandateID
         {
-            get
-            {
-                return mandateID;
-            }
-
-            set
-            {
-                mandateID = value;
-            }
+            get { return mandateID; }
         }
 
         public BankAccount DebtorAccount
         {
-            get
-            {
-                return debtorAccount;
-            }
-
-            set
-            {
-                debtorAccount = value;
-            }
+            get { return debtorAccount; }
         }
 
         public string RejectReason
         {
-            get
-            {
-                return rejectReason;
-            }
-
-            set
-            {
-                rejectReason = value;
-            }
+            get { return rejectReason; }
         }
-
-
     }
 }

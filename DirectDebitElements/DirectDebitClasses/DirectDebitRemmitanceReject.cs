@@ -13,52 +13,38 @@ namespace DirectDebitElements.DirectDebitClasses
         decimal controlSum;
         List<DirectDebitTransactionReject> directDebitTransactionRejects;
 
-        public DirectDebitRemmitanceReject(string originalDirectDebitRemmitanceMessageID, int numberOfTransactions, decimal controlSum, List<DirectDebitTransactionReject> paymentTransactionRejects)
+        public DirectDebitRemmitanceReject(string originalDirectDebitRemmitanceMessageID, int numberOfTransactions, decimal controlSum, List<DirectDebitTransactionReject> directDebitTransactionRejects)
         {
             this.originalDirectDebitRemmitanceMessageID = originalDirectDebitRemmitanceMessageID;
             this.numberOfTransactions = numberOfTransactions;
             this.controlSum = controlSum;
-            this.directDebitTransactionRejects = paymentTransactionRejects;
+            this.directDebitTransactionRejects = directDebitTransactionRejects;
         }
 
         public string OriginalDirectDebitRemmitanceMessageID
         {
-            get
-            {
-                return originalDirectDebitRemmitanceMessageID;
-            }
+            get { return originalDirectDebitRemmitanceMessageID; }
+
         }
 
         public int NumberOfTransactions
         {
-            get
-            {
-                return numberOfTransactions;
-            }
+            get { return numberOfTransactions; }
         }
 
         public decimal ControlSum
         {
-            get
-            {
-                return controlSum;
-            }
+            get { return controlSum; }
         }
 
         public List<DirectDebitTransactionReject> DirectDebitTransactionRejects
         {
-            get
-            {
-                return directDebitTransactionRejects;
-            }
+            get { return directDebitTransactionRejects; }
         }
 
         public List<string> OriginalEndtoEndTransactionIdentificationList
         {
-            get
-            {
-                return GetAllOriginalEndtoEndTransactionIdentifications();
-            }
+            get { return GetAllOriginalEndtoEndTransactionIdentifications(); }
         }
 
         public void AddDirectDebitTransactionReject(DirectDebitTransactionReject directDebitTransactionReject)
@@ -69,7 +55,8 @@ namespace DirectDebitElements.DirectDebitClasses
         }
         private List<string> GetAllOriginalEndtoEndTransactionIdentifications()
         {
-            return new List<string>();
+            List<string> originalEndtoEndTransactionIdentificationsList = directDebitTransactionRejects.Select(directDebitTransactionReject => directDebitTransactionReject.OriginalEndtoEndTransactionIdentification).ToList();
+            return originalEndtoEndTransactionIdentificationsList;
         }
     }
 }

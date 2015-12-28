@@ -59,8 +59,5 @@ namespace DirectDebitElements
             directDebitTransactionsCollection.Add(directDebitTransaction);
             UpdateNumberOfDirectDebitTransactionsAndAmount();
         }
-
-
-
     }
 }

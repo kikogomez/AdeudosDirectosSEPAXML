@@ -59,7 +59,6 @@ namespace DirectDebitElements
 
         public PaymentStatusReport ReadISO20022PaymentStatusReportMessage(string paymentStatusReportXMLMessage)
         {
-            PaymentStatusReport paymentStatusReport;
             string xMLNamespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03";
             string rootElementName = "Document";
             CustomerPaymentStatusReportDocument customerPaymentStatusReportDocument = XMLSerializer.XMLDeserializeFromString<CustomerPaymentStatusReportDocument>(paymentStatusReportXMLMessage,rootElementName, xMLNamespace);

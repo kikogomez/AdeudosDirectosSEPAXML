@@ -25,7 +25,7 @@ namespace DirectDebitElementsUnitTests
         [TestMethod]
         public void APaymentStatusReportIsCorrectlyInitializedFromA()
         {
-            string xMLFilePath = "";
+            //string xMLFilePath = "";
             Assert.Inconclusive();
         }
     }
