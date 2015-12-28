@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DirectDebitElements.DirectDebitClasses
 {
-    public class PaymentTransactionReject
+    public class DirectDebitTransactionReject
     {
         string originalTransactionIdentification;
         string originalEndtoEndTransactionIdentification;
@@ -17,7 +17,7 @@ namespace DirectDebitElements.DirectDebitClasses
         BankAccount debtorAccount;
         string rejectReason;
 
-        public PaymentTransactionReject(
+        public DirectDebitTransactionReject(
             string originalTransactionIdentification,
             string originalEndtoEndTransactionIdentification,
             DateTime requestedCollectionDate,

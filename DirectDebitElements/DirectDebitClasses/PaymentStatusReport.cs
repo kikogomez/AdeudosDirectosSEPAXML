@@ -16,7 +16,7 @@ namespace DirectDebitElements.DirectDebitClasses
         decimal controlSum;
 
         //Ahora 1 solo grupo de <OrgnlGrpInfAndSts>. Lo ponemos como variables independientes?
-        List<PaymentRemmitanceReject> paymentRemmitancesRejects; 
+        List<DirectDebitRemmitanceReject> paymentRemmitancesRejects; 
 
         public PaymentStatusReport() { }
 
