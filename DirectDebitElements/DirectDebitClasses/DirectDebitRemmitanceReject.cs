@@ -27,11 +27,6 @@ namespace DirectDebitElements.DirectDebitClasses
             {
                 return originalDirectDebitRemmitanceMessageID;
             }
-
-            set
-            {
-                originalDirectDebitRemmitanceMessageID = value;
-            }
         }
 
         public int NumberOfTransactions
@@ -39,11 +34,6 @@ namespace DirectDebitElements.DirectDebitClasses
             get
             {
                 return numberOfTransactions;
-            }
-
-            set
-            {
-                numberOfTransactions = value;
             }
         }
 
@@ -53,11 +43,6 @@ namespace DirectDebitElements.DirectDebitClasses
             {
                 return controlSum;
             }
-
-            set
-            {
-                controlSum = value;
-            }
         }
 
         public List<DirectDebitTransactionReject> DirectDebitTransactionRejects
@@ -66,13 +51,25 @@ namespace DirectDebitElements.DirectDebitClasses
             {
                 return directDebitTransactionRejects;
             }
+        }
 
-            set
+        public List<string> OriginalEndtoEndTransactionIdentificationList
+        {
+            get
             {
-                directDebitTransactionRejects = value;
+                return GetAllOriginalEndtoEndTransactionIdentifications();
             }
         }
 
-
+        public void AddDirectDebitTransactionReject(DirectDebitTransactionReject directDebitTransactionReject)
+        {
+            directDebitTransactionRejects.Add(directDebitTransactionReject);
+            numberOfTransactions++;
+            controlSum += directDebitTransactionReject.Amount;
+        }
+        private List<string> GetAllOriginalEndtoEndTransactionIdentifications()
+        {
+            return new List<string>();
+        }
     }
 }
