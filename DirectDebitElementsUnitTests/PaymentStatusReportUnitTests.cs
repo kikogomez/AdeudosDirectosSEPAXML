@@ -1,4 +1,6 @@
 ﻿using System;
+using DirectDebitElements;
+using DirectDebitElements.DirectDebitClasses;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DirectDebitElementsUnitTests
@@ -9,10 +11,33 @@ namespace DirectDebitElementsUnitTests
 
 
         [TestMethod]
-        public void ADirectDebitTransactionRejectIsCorrectlyCreated()
+        public void APaymentTransactionRejectIsCorrectlyCreated()
         {
-            string xMLFilePath = "";
-            Assert.Inconclusive();
+
+            string originalTransactionIdentification = "0123456789";
+            string originalEndtoEndTransactionIdentification = "2015120100124";
+            DateTime requestedCollectionDate = DateTime.Parse("2015-12-01");
+            decimal amount = 10;
+            string mandateID = "000001102564";
+            BankAccount debtorAccount = new BankAccount(new InternationalAccountBankNumberIBAN("ES6812345678061234567890"));
+            string rejectReason = "MS02";
+
+            PaymentTransactionReject paymentTransactionReject = new PaymentTransactionReject(
+                originalTransactionIdentification,
+                originalEndtoEndTransactionIdentification,
+                requestedCollectionDate,
+                amount,
+                mandateID,
+                debtorAccount,
+                rejectReason);
+
+            Assert.AreEqual(originalTransactionIdentification, paymentTransactionReject.OriginalTransactionIdentification);
+            Assert.AreEqual(originalEndtoEndTransactionIdentification, paymentTransactionReject.OriginalEndtoEndTransactionIdentification);
+            Assert.AreEqual(requestedCollectionDate, paymentTransactionReject.RequestedCollectionDate);
+            Assert.AreEqual(amount, paymentTransactionReject.Amount);
+            Assert.AreEqual(mandateID, paymentTransactionReject.MandateID);
+            Assert.AreEqual(debtorAccount, paymentTransactionReject.DebtorAccount);
+            Assert.AreEqual(rejectReason, paymentTransactionReject.RejectReason);
         }
 
         [TestMethod]

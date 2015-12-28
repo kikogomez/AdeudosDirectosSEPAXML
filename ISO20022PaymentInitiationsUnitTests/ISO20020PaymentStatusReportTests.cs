@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ISO20022PaymentInitiationsUnitTests
 {
     [TestClass]
-    public class PaymentStatusReportTests
+    public class ISO20020PaymentStatusReportTests
     {
         static string xMLNamespace;
         static string xSDFilePath;

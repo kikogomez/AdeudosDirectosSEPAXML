@@ -55,8 +55,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="CustomerDirectDebitInitiationTests.cs" />
-    <Compile Include="PaymentStatusReportTests.cs" />
+    <Compile Include="ISO20020CustomerDirectDebitInitiationTests.cs" />
+    <Compile Include="ISO20020PaymentStatusReportTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SEPAAttributesTest.cs" />
   </ItemGroup>

@@ -12,7 +12,7 @@ using XMLSerializerValidator;
 namespace ISO20022PaymentInitiationsUnitTests
 {
     [TestClass]
-    public class CustomerDirectDebitInitiationTests
+    public class ISO20020CustomerDirectDebitInitiationTests
     {
         static Creditor_POCOClass creditor;
         static CreditorAgent_POCOClass creditorAgent;
