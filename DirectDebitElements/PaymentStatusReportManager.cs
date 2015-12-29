@@ -10,10 +10,24 @@ namespace DirectDebitElements
     {
         public PaymentStatusReportManager() { }
 
-        //public DirectDebitRemittance CreateADirectDebitRemmitance(DateTime creationDateTime, DateTime requestedCollectionDate, DirectDebitInitiationContract directDebitInitiationContract)
+        //public DirectDebitRemittance CreateAPaymentStatusReport(DateTime creationDateTime, DateTime requestedCollectionDate, DirectDebitInitiationContract directDebitInitiationContract)
         //{
-        //    DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(creationDateTime, requestedCollectionDate, directDebitInitiationContract);
-        //    return directDebitRemmitance;
+        //    string messageID = "DATIR00112G12345678100";
+        //    DateTime messageCreationDateTime = DateTime.Parse("2012-07-18T06:00:01");
+        //    DateTime rejectAccountChargeDateTime = DateTime.Parse("2012-07-18");
+        //    int numberOfTransactions = directDebitRemmitanceReject1.NumberOfTransactions + directDebitRemmitanceReject2.NumberOfTransactions;
+        //    decimal controlSum = directDebitRemmitanceReject1.ControlSum + directDebitRemmitanceReject2.ControlSum;
+
+        //    PaymentStatusReport paymentStatusReport = new PaymentStatusReport(
+        //        messageID,
+        //        messageCreationDateTime,
+        //        rejectAccountChargeDateTime,
+        //        numberOfTransactions,
+        //        controlSum,
+        //        directDebitRemmitanceRejectsList);
+
+        //    //DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(creationDateTime, requestedCollectionDate, directDebitInitiationContract);
+        //    //return directDebitRemmitance;
         //}
 
         //public DirectDebitTransactionsGroupPayment CreateANewGroupOfDirectDebitTransactions(string localInstrument)
