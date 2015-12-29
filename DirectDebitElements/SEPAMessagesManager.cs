@@ -66,6 +66,23 @@ namespace DirectDebitElements
             //Ahora hay que cargar todos los elementos de paymentStatusReport con la clase deserializada
             //Vamos desgranando las subclases del esquema sepa y vamos inicializando las clases de DirectDebit
 
+            string paymentStatusReport_MessageID = customerPaymentStatusReportDocument.CstmrPmtStsRpt.GrpHdr.MsgId;
+            DateTime paymentStatusReport_MessageCreationDateTime = customerPaymentStatusReportDocument.CstmrPmtStsRpt.GrpHdr.CreDtTm;
+            DateTime paymentStatusReport_RejectAccountChargeDateTime = ExtractRejectAccountChargeDateTimeFrom_OrgnlGrpInfAndSts_OrgnlMsgId(customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlMsgId);
+            int paymentStatusReport_NumberOfTransactions = 0;
+            decimal paymentStatusReport_ControlSum = 0;
+            List<DirectDebitRemmitanceReject> directDebitRemmitanceRejectsList = new List<DirectDebitRemmitanceReject>();
+
+            PaymentStatusReport paymentStatusReport = new PaymentStatusReport(
+                paymentStatusReport_MessageID,
+                paymentStatusReport_MessageCreationDateTime,
+                paymentStatusReport_RejectAccountChargeDateTime,
+                paymentStatusReport_NumberOfTransactions,
+                paymentStatusReport_ControlSum,
+                directDebitRemmitanceRejectsList);
+
+
+
             //string messageID;
             //DateTime messageCreationDateTime;
             //DateTime rejectAccountChargeDateTime;   //This info is extracted from the OriginalMessageIdentification <OrignlMsgId>
@@ -301,6 +318,11 @@ namespace DirectDebitElements
                 directDebitTransactionInfoCollection);      //<DrctDbtTxInf>
 
             return paymentInformation_PmtInf;
+        }
+
+        private DateTime ExtractRejectAccountChargeDateTimeFrom_OrgnlGrpInfAndSts_OrgnlMsgId(string orgnlGrpInfAndSts_OrgnlMsgId)
+        {
+            return DateTime.Parse(orgnlGrpInfAndSts_OrgnlMsgId.Substring(0,10));
         }
     }
 }
