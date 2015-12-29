@@ -58,6 +58,7 @@
     <Compile Include="DirectDebitRemmitanceUnitTest.cs" />
     <Compile Include="DebtorUnitTests.cs" />
     <Compile Include="DirectDebitMandateUnitTests.cs" />
+    <Compile Include="PaymentStatusReportManagerTests.cs" />
     <Compile Include="PaymentStatusReportUnitTests.cs" />
     <Compile Include="SEPAMessagesManagerTests.cs" />
     <Compile Include="SimplifiedBillUnitTests.cs" />

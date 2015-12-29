@@ -10,25 +10,24 @@ namespace DirectDebitElements
     {
         public PaymentStatusReportManager() { }
 
-        //public DirectDebitRemittance CreateAPaymentStatusReport(DateTime creationDateTime, DateTime requestedCollectionDate, DirectDebitInitiationContract directDebitInitiationContract)
-        //{
-        //    string messageID = "DATIR00112G12345678100";
-        //    DateTime messageCreationDateTime = DateTime.Parse("2012-07-18T06:00:01");
-        //    DateTime rejectAccountChargeDateTime = DateTime.Parse("2012-07-18");
-        //    int numberOfTransactions = directDebitRemmitanceReject1.NumberOfTransactions + directDebitRemmitanceReject2.NumberOfTransactions;
-        //    decimal controlSum = directDebitRemmitanceReject1.ControlSum + directDebitRemmitanceReject2.ControlSum;
+        public PaymentStatusReport CreatePaymentStatusReport(
+            string messageID,
+            DateTime messageCreationDateTime,
+            DateTime rejectAccountChargeDateTime,
+            int numberOfTransactions,
+            decimal controlSum,
+            List<DirectDebitRemmitanceReject> directDebitRemmitanceRejectsList)
+        { 
+            PaymentStatusReport paymentStatusReport = new PaymentStatusReport(
+                messageID,
+                messageCreationDateTime,
+                rejectAccountChargeDateTime,
+                numberOfTransactions,
+                controlSum,
+                directDebitRemmitanceRejectsList);
 
-        //    PaymentStatusReport paymentStatusReport = new PaymentStatusReport(
-        //        messageID,
-        //        messageCreationDateTime,
-        //        rejectAccountChargeDateTime,
-        //        numberOfTransactions,
-        //        controlSum,
-        //        directDebitRemmitanceRejectsList);
-
-        //    //DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(creationDateTime, requestedCollectionDate, directDebitInitiationContract);
-        //    //return directDebitRemmitance;
-        //}
+            return paymentStatusReport;
+        }
 
         //public DirectDebitTransactionsGroupPayment CreateANewGroupOfDirectDebitTransactions(string localInstrument)
         //{
