@@ -66,6 +66,13 @@ namespace DirectDebitElements
             //Ahora hay que cargar todos los elementos de paymentStatusReport con la clase deserializada
             //Vamos desgranando las subclases del esquema sepa y vamos inicializando las clases de DirectDebit
 
+            //string messageID;
+            //DateTime messageCreationDateTime;
+            //DateTime rejectAccountChargeDateTime;   //This info is extracted from the OriginalMessageIdentification <OrignlMsgId>
+            //int numberOfTransactions;
+            //decimal controlSum;
+            //List<DirectDebitRemmitanceReject> directDebitRemmitanceRejects = new List<DirectDebitRemmitanceReject>();
+
             return null;
         }
 

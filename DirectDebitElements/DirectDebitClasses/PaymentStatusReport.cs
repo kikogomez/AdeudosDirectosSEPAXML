@@ -56,5 +56,12 @@ namespace DirectDebitElements.DirectDebitClasses
         {
             get { return directDebitRemmitanceRejects; }
         }
+
+        public void AddRemmitance(DirectDebitRemmitanceReject directDebitRemmitanceReject)
+        {
+            directDebitRemmitanceRejects.Add(directDebitRemmitanceReject);
+            numberOfTransactions += directDebitRemmitanceReject.NumberOfTransactions;
+            controlSum += directDebitRemmitanceReject.ControlSum;
+        }
     }
 }
