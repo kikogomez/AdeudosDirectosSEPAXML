@@ -54,7 +54,7 @@ namespace DirectDebitElementsUnitTests
 
             directDebitTransactionRejectsList2 =
                 new List<DirectDebitTransactionReject>()
-                { directDebitTransactionReject3, directDebitTransactionReject2 };
+                { directDebitTransactionReject3};
 
             originalDirectDebitRemmitance1MessageID = "PRE201512010001";
             originalDirectDebitRemmitance2MessageID = "PRE201511150001";
@@ -262,14 +262,15 @@ namespace DirectDebitElementsUnitTests
 
             paymentStatusReport.AddRemmitance(directDebitRemmitanceReject2);
 
-            List<DirectDebitRemmitanceReject> expectedDirectDebitRemmitanceRejectsList = new List<DirectDebitRemmitanceReject>();
+            List<DirectDebitRemmitanceReject> expectedDirectDebitRemmitanceRejectsList = new List<DirectDebitRemmitanceReject>()
+            {directDebitRemmitanceReject1, directDebitRemmitanceReject2 };
 
             Assert.AreEqual("DATIR00112G12345678100", paymentStatusReport.MessageID);
             Assert.AreEqual(messageCreationDateTime, paymentStatusReport.MessageCreationDateTime);
             Assert.AreEqual(rejectAccountChargeDateTime, paymentStatusReport.RejectAccountChargeDateTime);
             Assert.AreEqual(3, paymentStatusReport.NumberOfTransactions);
             Assert.AreEqual(230, paymentStatusReport.ControlSum);
-            CollectionAssert.AreEqual(directDebitRemmitanceRejectsList, paymentStatusReport.DirectDebitRemmitanceRejects);
+            CollectionAssert.AreEqual(expectedDirectDebitRemmitanceRejectsList, paymentStatusReport.DirectDebitRemmitanceRejects);
         }
 
 
