@@ -6,7 +6,6 @@ using ISO20022PaymentInitiations.SchemaSerializableClasses.DDInitiation;
 using ISO20022PaymentInitiations.SchemaSerializableClasses.PaymentStatusReport;
 using XMLSerializerValidator;
 using ExtensionMethods;
-using DirectDebitElements.DirectDebitClasses;
 
 namespace DirectDebitElements
 {

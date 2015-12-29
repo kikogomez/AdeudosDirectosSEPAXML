@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DirectDebitElements.DirectDebitClasses
+namespace DirectDebitElements
 {
     public class DirectDebitTransactionReject
     {

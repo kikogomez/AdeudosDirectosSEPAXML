@@ -3,7 +3,6 @@ using System.IO;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using DirectDebitElements;
-using DirectDebitElements.DirectDebitClasses;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DirectDebitElementsUnitTests
