@@ -25,6 +25,11 @@ namespace DirectDebitElements.DirectDebitClasses
             this.numberOfTransactions = numberOfTransactions;
             this.controlSum = controlSum;
             this.directDebitRemmitanceRejects = directDebitRemmitanceRejects;
+
+            foreach (DirectDebitRemmitanceReject directDebitRemmitanceReject in directDebitRemmitanceRejects)
+            {
+                SuscribeTo_AddedNewTransactionEvent(directDebitRemmitanceReject);
+            }
         }
 
         public string MessageID
@@ -62,6 +67,17 @@ namespace DirectDebitElements.DirectDebitClasses
             directDebitRemmitanceRejects.Add(directDebitRemmitanceReject);
             numberOfTransactions += directDebitRemmitanceReject.NumberOfTransactions;
             controlSum += directDebitRemmitanceReject.ControlSum;
+        }
+
+        private void SuscribeTo_AddedNewTransactionEvent(DirectDebitRemmitanceReject directDebitRemmitanceReject)
+        {
+            directDebitRemmitanceReject.AddedNewDirectDebitTransactionReject += AddDirectDebitTransactionRejectEventHandler;
+        }
+
+        private void AddDirectDebitTransactionRejectEventHandler(Object sender, decimal directDebitTransactionRejectAmount)
+        {
+            numberOfTransactions++;
+            controlSum += directDebitTransactionRejectAmount;
         }
     }
 }

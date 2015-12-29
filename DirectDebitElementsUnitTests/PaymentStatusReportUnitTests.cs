@@ -273,7 +273,62 @@ namespace DirectDebitElementsUnitTests
             CollectionAssert.AreEqual(expectedDirectDebitRemmitanceRejectsList, paymentStatusReport.DirectDebitRemmitanceRejects);
         }
 
+        [TestMethod]
+        public void IfIAddANewDirecDebitTransactionRejectTheTotalNumberOfTransactionsAndAmountOfAPaymentStatusReportIsUpdated()
+        {
+            //Creating payment status report
 
+            string originalDirectDebitRemmitanceMessageID = "PRE201207010001";
+            int remmitanceNumberOfTransactions = 1;
+            decimal remmitanceControlSum = 80;
+            DirectDebitTransactionReject directDebitTransactionReject = new DirectDebitTransactionReject(
+                "0123456788",
+                "2015120100124",
+                DateTime.Parse("2015-12-01"),
+                80,
+                "000001102564",
+                new BankAccount(new InternationalAccountBankNumberIBAN("ES6812345678061234567890")),
+                "MS02");
+            List<DirectDebitTransactionReject> directDebitTransactionRejectList = new List<DirectDebitTransactionReject>()
+            { directDebitTransactionReject };
 
+            DirectDebitRemmitanceReject directDebitRemmitanceReject = new DirectDebitRemmitanceReject(
+                originalDirectDebitRemmitanceMessageID,
+                remmitanceNumberOfTransactions,
+                remmitanceControlSum,
+                directDebitTransactionRejectList);
+
+            string paymentStatusReportMessageID = "DATIR00112G12345678100";
+            DateTime paymentStatusReportMessaceCreationDate = DateTime.Parse("2012-07-18T06:00:01");
+            DateTime paymentStatusReportRejectAccountChargeDateTime = DateTime.Parse("2012-07-18");
+            int paymentStatusReportNumberOfTransactions = 1;
+            decimal paymentStatusReportControlSum = 80;
+            List<DirectDebitRemmitanceReject> directDebitRemmitanceRejectsList = new List<DirectDebitRemmitanceReject>()
+            { directDebitRemmitanceReject };
+
+            PaymentStatusReport paymentStatusReport = new PaymentStatusReport(
+                paymentStatusReportMessageID,
+                paymentStatusReportMessaceCreationDate,
+                paymentStatusReportRejectAccountChargeDateTime,
+                paymentStatusReportNumberOfTransactions,
+                paymentStatusReportControlSum,
+                directDebitRemmitanceRejectsList);
+
+            //Adding new DirectDebitTransactionReject
+
+            DirectDebitTransactionReject newDirectDebitTransactionReject = new DirectDebitTransactionReject(
+                "0123456789",
+                "2015120100312",
+                DateTime.Parse("2015-12-01"),
+                70,
+                "00000110421",
+                new BankAccount(new InternationalAccountBankNumberIBAN("ES3011112222003333333333")),
+                "MS01");
+
+            paymentStatusReport.DirectDebitRemmitanceRejects[0].AddDirectDebitTransactionReject(newDirectDebitTransactionReject);
+
+            Assert.AreEqual(2, paymentStatusReport.NumberOfTransactions);
+            Assert.AreEqual(150, paymentStatusReport.ControlSum);
+        }
     }
 }

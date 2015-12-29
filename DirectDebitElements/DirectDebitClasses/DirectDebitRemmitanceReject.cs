@@ -8,6 +8,8 @@ namespace DirectDebitElements.DirectDebitClasses
 {
     public class DirectDebitRemmitanceReject
     {
+        public event EventHandler<decimal> AddedNewDirectDebitTransactionReject;
+
         string originalDirectDebitRemmitanceMessageID;
         int numberOfTransactions;
         decimal controlSum;
@@ -52,7 +54,17 @@ namespace DirectDebitElements.DirectDebitClasses
             directDebitTransactionRejects.Add(directDebitTransactionReject);
             numberOfTransactions++;
             controlSum += directDebitTransactionReject.Amount;
+            SignalANewDirectDebitTransactionRejectHasBeenAdded(directDebitTransactionReject);
         }
+
+        private void SignalANewDirectDebitTransactionRejectHasBeenAdded(DirectDebitTransactionReject directDebitTransactionReject)
+        {
+            if (AddedNewDirectDebitTransactionReject != null)
+            {
+                AddedNewDirectDebitTransactionReject(this, directDebitTransactionReject.Amount);
+            }
+        }
+
         private List<string> GetAllOriginalEndtoEndTransactionIdentifications()
         {
             List<string> originalEndtoEndTransactionIdentificationsList = directDebitTransactionRejects.Select(directDebitTransactionReject => directDebitTransactionReject.OriginalEndtoEndTransactionIdentification).ToList();
