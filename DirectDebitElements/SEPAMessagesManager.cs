@@ -81,6 +81,10 @@ namespace DirectDebitElements
                 paymentStatusReport_ControlSum,
                 directDebitRemmitanceRejectsList);
 
+            foreach (OriginalPaymentInformation1 originalPaymentInformation1 in customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlPmtInfAndSts)
+            {
+                directDebitRemmitanceRejectsList.Add(GetDirectDebitRemmitanceReject(originalPaymentInformation1));
+            }
 
 
             //string messageID;
@@ -323,6 +327,11 @@ namespace DirectDebitElements
         private DateTime ExtractRejectAccountChargeDateTimeFrom_OrgnlGrpInfAndSts_OrgnlMsgId(string orgnlGrpInfAndSts_OrgnlMsgId)
         {
             return DateTime.Parse(orgnlGrpInfAndSts_OrgnlMsgId.Substring(0,10));
+        }
+
+        private DirectDebitRemmitanceReject GetDirectDebitRemmitanceReject(OriginalPaymentInformation1 originalPaymentInformation1)
+        {
+            return null;
         }
     }
 }
