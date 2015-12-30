@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DirectDebitElements;
+using ExtensionMethods;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DirectDebitElementsUnitTests
@@ -116,6 +117,46 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual(150, directDebitRemmitanceReject.ControlSum);
             Assert.AreEqual("2015120100124", directDebitRemmitanceReject.DirectDebitTransactionRejects[0].OriginalEndtoEndTransactionIdentification);
             Assert.AreEqual("2015120100312", directDebitRemmitanceReject.DirectDebitTransactionRejects[1].OriginalEndtoEndTransactionIdentification);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void IfTheProvidedNumberOfTransactionsInARemmitanceRejectIsWorgAnExceptionIsThrown()
+        {
+            try
+            {
+                DirectDebitRemmitanceReject directDebitRemmitanceReject = new DirectDebitRemmitanceReject(
+                    originalDirectDebitRemmitance1MessageID,
+                    3,
+                    150,
+                    directDebitTransactionRejectsList1);
+            }
+            catch (System.ArgumentException e)
+            {
+                Assert.AreEqual("numberOfTransactions", e.ParamName);
+                Assert.AreEqual("The Number of Transactions is wrong. Provided: 3. Expected: 2. Initialized with expected value", e.GetMessageWithoutParamName());
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void IfTheProvidedControlSumInARemmitanceRejectIsWorgAnExceptionIsThrown()
+        {
+            try
+            {
+                DirectDebitRemmitanceReject directDebitRemmitanceReject = new DirectDebitRemmitanceReject(
+                    originalDirectDebitRemmitance1MessageID,
+                    2,
+                    100,
+                    directDebitTransactionRejectsList1);
+            }
+            catch (System.ArgumentException e)
+            {
+                Assert.AreEqual("controlSum", e.ParamName);
+                Assert.AreEqual("The Control Sum is wrong. Provided: 100. Expected: 150. Initialized with expected value", e.GetMessageWithoutParamName());
+                throw;
+            }
         }
 
         [TestMethod]
