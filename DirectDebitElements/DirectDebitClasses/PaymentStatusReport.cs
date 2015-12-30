@@ -2,6 +2,7 @@
 using System.Xml.Linq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,21 @@ namespace DirectDebitElements
             this.rejectAccountChargeDateTime = rejectAccountChargeDateTime;
             this.numberOfTransactions = numberOfTransactions;
             this.controlSum = controlSum;
+            this.directDebitRemmitanceRejects = directDebitRemmitanceRejects;
+
+            foreach (DirectDebitRemmitanceReject directDebitRemmitanceReject in directDebitRemmitanceRejects)
+            {
+                SuscribeTo_AddedNewTransactionEvent(directDebitRemmitanceReject);
+            }
+        }
+
+        public PaymentStatusReport(string messageID, DateTime messageCreationDateTime, DateTime rejectAccountChargeDateTime, List<DirectDebitRemmitanceReject> directDebitRemmitanceRejects)
+        {
+            this.messageID = messageID;
+            this.messageCreationDateTime = messageCreationDateTime;
+            this.rejectAccountChargeDateTime = rejectAccountChargeDateTime;
+            this.numberOfTransactions = directDebitRemmitanceRejects.Select(ddRemmitanceReject => ddRemmitanceReject.NumberOfTransactions).Sum();
+            this.controlSum = directDebitRemmitanceRejects.Select(ddRemmitanceReject => ddRemmitanceReject.ControlSum).Sum();
             this.directDebitRemmitanceRejects = directDebitRemmitanceRejects;
 
             foreach (DirectDebitRemmitanceReject directDebitRemmitanceReject in directDebitRemmitanceRejects)

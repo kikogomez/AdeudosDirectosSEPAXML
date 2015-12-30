@@ -105,6 +105,20 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
+        public void ADirectDebitRemmitanceRejectIsCorrectlyCreatedWithoutProvidingNumberOfTransactionsNorControlSum()
+        {
+            DirectDebitRemmitanceReject directDebitRemmitanceReject = new DirectDebitRemmitanceReject(
+                originalDirectDebitRemmitance1MessageID,
+                directDebitTransactionRejectsList1);
+
+            Assert.AreEqual(originalDirectDebitRemmitance1MessageID, directDebitRemmitanceReject.OriginalDirectDebitRemmitanceMessageID);
+            Assert.AreEqual(2, directDebitRemmitanceReject.NumberOfTransactions);
+            Assert.AreEqual(150, directDebitRemmitanceReject.ControlSum);
+            Assert.AreEqual("2015120100124", directDebitRemmitanceReject.DirectDebitTransactionRejects[0].OriginalEndtoEndTransactionIdentification);
+            Assert.AreEqual("2015120100312", directDebitRemmitanceReject.DirectDebitTransactionRejects[1].OriginalEndtoEndTransactionIdentification);
+        }
+
+        [TestMethod]
         public void AnEmptyDirectDebitRemmitanceRejectIsCorrectlyCreated()
         {
             string originalDirectDebitRemmitanceMessageID = "PRE201207010001";
@@ -202,21 +216,55 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
+        public void APaymentStatusReportIsCorrectlyCreatedWithoutProvidingNumberOfTransactionsNorControlSum()
+        {
+            DirectDebitRemmitanceReject directDebitRemmitanceReject1 = new DirectDebitRemmitanceReject(
+                originalDirectDebitRemmitance1MessageID,
+                directDebitTransactionRejectsList1.Count,
+                directDebitTransactionRejectsList1.Select(ddTransactionReject => ddTransactionReject.Amount).Sum(),
+                directDebitTransactionRejectsList1);
+
+            DirectDebitRemmitanceReject directDebitRemmitanceReject2 = new DirectDebitRemmitanceReject(
+                originalDirectDebitRemmitance2MessageID,
+                directDebitTransactionRejectsList2.Count,
+                directDebitTransactionRejectsList2.Select(ddTransactionReject => ddTransactionReject.Amount).Sum(),
+                directDebitTransactionRejectsList2);
+
+            List<DirectDebitRemmitanceReject> directDebitRemmitanceRejectsList = new List<DirectDebitRemmitanceReject>()
+            { directDebitRemmitanceReject1, directDebitRemmitanceReject2 };
+
+            string messageID = "DATIR00112G12345678100";
+            DateTime messageCreationDateTime = DateTime.Parse("2012-07-18T06:00:01");
+            DateTime rejectAccountChargeDateTime = DateTime.Parse("2012-07-18");
+            int numberOfTransactions = directDebitRemmitanceReject1.NumberOfTransactions + directDebitRemmitanceReject2.NumberOfTransactions;
+            decimal controlSum = directDebitRemmitanceReject1.ControlSum + directDebitRemmitanceReject2.ControlSum;
+
+            PaymentStatusReport paymentStatusReport = new PaymentStatusReport(
+                messageID,
+                messageCreationDateTime,
+                rejectAccountChargeDateTime,
+                directDebitRemmitanceRejectsList);
+
+            Assert.AreEqual("DATIR00112G12345678100", paymentStatusReport.MessageID);
+            Assert.AreEqual(messageCreationDateTime, paymentStatusReport.MessageCreationDateTime);
+            Assert.AreEqual(rejectAccountChargeDateTime, paymentStatusReport.RejectAccountChargeDateTime);
+            Assert.AreEqual(numberOfTransactions, paymentStatusReport.NumberOfTransactions);
+            Assert.AreEqual(controlSum, paymentStatusReport.ControlSum);
+            CollectionAssert.AreEqual(directDebitRemmitanceRejectsList, paymentStatusReport.DirectDebitRemmitanceRejects);
+        }
+
+        [TestMethod]
         public void AnEmptyPaymentStatusReportIsCorrectlyCreated()
         {
             string messageID = "DATIR00112G12345678100";
             DateTime messageCreationDateTime = DateTime.Parse("2012-07-18T06:00:01");
             DateTime rejectAccountChargeDateTime = DateTime.Parse("2012-07-18");
-            int numberOfTransactions = 0;
-            decimal controlSum = 0;
             List<DirectDebitRemmitanceReject> directDebitRemmitanceRejectsList = new List<DirectDebitRemmitanceReject>();
 
             PaymentStatusReport paymentStatusReport = new PaymentStatusReport(
                 messageID,
                 messageCreationDateTime,
                 rejectAccountChargeDateTime,
-                numberOfTransactions,
-                controlSum,
                 directDebitRemmitanceRejectsList);
 
             Assert.AreEqual("DATIR00112G12345678100", paymentStatusReport.MessageID);

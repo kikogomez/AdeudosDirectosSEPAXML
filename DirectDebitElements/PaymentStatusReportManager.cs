@@ -29,32 +29,71 @@ namespace DirectDebitElements
             return paymentStatusReport;
         }
 
-        //public DirectDebitTransactionsGroupPayment CreateANewGroupOfDirectDebitTransactions(string localInstrument)
-        //{
-        //    DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment = new DirectDebitTransactionsGroupPayment(localInstrument);
-        //    return directDebitTransactionsGroupPayment;
-        //}
+        public PaymentStatusReport CreatePaymentStatusReport(
+            string messageID,
+            DateTime messageCreationDateTime,
+            DateTime rejectAccountChargeDateTime,
+            List<DirectDebitRemmitanceReject> directDebitRemmitanceRejectsList)
+        {
+            PaymentStatusReport paymentStatusReport = new PaymentStatusReport(
+                messageID,
+                messageCreationDateTime,
+                rejectAccountChargeDateTime,
+                directDebitRemmitanceRejectsList);
 
-        //public DirectDebitTransaction CreateANewEmptyDirectDebitTransaction(DirectDebitMandate directDebitmandate)
-        //{
-        //    DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
-        //        directDebitmandate.InternalReferenceNumber,
-        //        directDebitmandate.BankAccount,
-        //        directDebitmandate.AccountHolderName,
-        //        directDebitmandate.DirectDebitMandateCreationDate);
-        //    return directDebitTransaction;
-        //}
+            return paymentStatusReport;
+        }
 
-        //public DirectDebitTransaction CreateANewDirectDebitTransactionFromAGroupOfBills(DirectDebitMandate directDebitmandate, List<SimplifiedBill> billsList)
-        //{
-        //    DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
-        //        billsList,
-        //        directDebitmandate.InternalReferenceNumber,
-        //        directDebitmandate.BankAccount,
-        //        directDebitmandate.AccountHolderName,
-        //        directDebitmandate.DirectDebitMandateCreationDate);
-        //    return directDebitTransaction;
-        //}
+        public DirectDebitRemmitanceReject CreateAnEmptyDirectDebitRemmitanceReject(string originalDirectDebitRemmitanceMessageID)
+        {
+            int numberOfTransactions = 0;
+            decimal controlSum = 0;
+            List<DirectDebitTransactionReject> directDebitTransactionRejects = new List<DirectDebitTransactionReject>();
+
+            DirectDebitRemmitanceReject directDebitRemmitanceReject = new DirectDebitRemmitanceReject(
+                originalDirectDebitRemmitanceMessageID,
+                numberOfTransactions,
+                controlSum,
+                directDebitTransactionRejects);
+
+            return directDebitRemmitanceReject;
+        }
+
+        public DirectDebitTransactionReject CreateDirectDebitTransactionReject(
+            string originalTransactionIdentification,
+            string originalEndtoEndTransactionIdentification,
+            DateTime requestedCollectionDate,
+            decimal amount,
+            string mandateID,
+            BankAccount debtorAccount,
+            string rejectReason)
+
+        {
+            DirectDebitTransactionReject directDebitTransactionReject = new DirectDebitTransactionReject(
+                originalTransactionIdentification,
+                originalEndtoEndTransactionIdentification,
+                requestedCollectionDate,
+                amount,
+                mandateID,
+                debtorAccount,
+                rejectReason);
+
+            return directDebitTransactionReject;
+        }
+
+        public DirectDebitRemmitanceReject CreateDirectDebitRemmitanceReject(
+            string originalDirectDebitRemmitanceMessageID,
+            List<DirectDebitTransactionReject> directDebitTransactionRejectsList)
+        {
+            int numberOfTransactions = directDebitTransactionRejectsList.Count;
+            decimal controlSum = directDebitTransactionRejectsList.Select(ddTransactionReject => ddTransactionReject.Amount).Sum();
+            DirectDebitRemmitanceReject directDebitRemmitanceReject = new DirectDebitRemmitanceReject(
+                originalDirectDebitRemmitanceMessageID,
+                numberOfTransactions,
+                controlSum,
+                directDebitTransactionRejectsList);
+            return directDebitRemmitanceReject;
+        }
 
         //public void AddBilllToExistingDirectDebitTransaction(DirectDebitTransaction directDebitTransaction, SimplifiedBill bill)
         //{

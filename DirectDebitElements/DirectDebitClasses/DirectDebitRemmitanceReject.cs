@@ -23,6 +23,14 @@ namespace DirectDebitElements
             this.directDebitTransactionRejects = directDebitTransactionRejects;
         }
 
+        public DirectDebitRemmitanceReject(string originalDirectDebitRemmitanceMessageID, List<DirectDebitTransactionReject> directDebitTransactionRejects)
+        {
+            this.originalDirectDebitRemmitanceMessageID = originalDirectDebitRemmitanceMessageID;
+            this.numberOfTransactions = directDebitTransactionRejects.Count; ;
+            this.controlSum = directDebitTransactionRejects.Select(ddTransactionReject => ddTransactionReject.Amount).Sum();
+            this.directDebitTransactionRejects = directDebitTransactionRejects;
+        }
+
         public string OriginalDirectDebitRemmitanceMessageID
         {
             get { return originalDirectDebitRemmitanceMessageID; }
