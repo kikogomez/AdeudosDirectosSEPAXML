@@ -22,8 +22,8 @@ namespace DirectDebitElements
             this.controlSum = controlSum;
             this.directDebitTransactionRejects = directDebitTransactionRejects;
 
-            CheckNumberOfTransactions();
-            CheckControlSum();
+            if (TheProvidedNumberOfTransactionsIsWrong()) ChangeNumberOfTransactionsAndRiseException();
+            if (TheProvidedControlSumIsWrong()) ChangeControlSumAndRiseException();
         }
 
         public DirectDebitRemmitanceReject(string originalDirectDebitRemmitanceMessageID, List<DirectDebitTransactionReject> directDebitTransactionRejects)
@@ -82,28 +82,22 @@ namespace DirectDebitElements
             return originalEndtoEndTransactionIdentificationsList;
         }
 
-        private void CheckNumberOfTransactions()
+        private void ChangeNumberOfTransactionsAndRiseException()
         {
-            if (TheProvidedNumberOfTransactionsIsWrong())
-            {
-                int calculatedNumberOfTransactions = directDebitTransactionRejects.Count;
-                string exceptionMessage =
-                    "The Number of Transactions is wrong. Provided: " + numberOfTransactions.ToString() + ". Expected: " + calculatedNumberOfTransactions.ToString() + ". Initialized with expected value";
-                numberOfTransactions = calculatedNumberOfTransactions;
-                throw new ArgumentException(exceptionMessage, "numberOfTransactions");
-            }
+            int calculatedNumberOfTransactions = directDebitTransactionRejects.Count;
+            string exceptionMessage =
+                "The Number of Transactions is wrong. Provided: " + numberOfTransactions.ToString() + ". Expected: " + calculatedNumberOfTransactions.ToString() + ". Initialized with expected value";
+            numberOfTransactions = calculatedNumberOfTransactions;
+            throw new ArgumentException(exceptionMessage, "numberOfTransactions");
         }
 
-        private void CheckControlSum()
+        private void ChangeControlSumAndRiseException()
         {
-            if (TheProvidedControlSumIsWrong())
-            {
-                decimal calculatedControlSum = directDebitTransactionRejects.Select(ddTransactionReject => ddTransactionReject.Amount).Sum();
-                string exceptionMessage =
-                    "The Control Sum is wrong. Provided: " + controlSum.ToString() + ". Expected: " + calculatedControlSum.ToString() + ". Initialized with expected value";
-                controlSum = calculatedControlSum;
-                throw new ArgumentException(exceptionMessage, "controlSum");
-            }
+            decimal calculatedControlSum = directDebitTransactionRejects.Select(ddTransactionReject => ddTransactionReject.Amount).Sum();
+            string exceptionMessage =
+                "The Control Sum is wrong. Provided: " + controlSum.ToString() + ". Expected: " + calculatedControlSum.ToString() + ". Initialized with expected value";
+            controlSum = calculatedControlSum;
+            throw new ArgumentException(exceptionMessage, "controlSum");
         }
 
         private bool TheProvidedNumberOfTransactionsIsWrong()
