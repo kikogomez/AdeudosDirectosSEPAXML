@@ -140,6 +140,21 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
+        public void IfTheProvidedNumberOfTransactionsInARemmitanceRejectIsWorgItIsCorrected()
+        {
+            try
+            {
+                DirectDebitRemmitanceReject directDebitRemmitanceReject = new DirectDebitRemmitanceReject(
+                    originalDirectDebitRemmitance1MessageID,
+                    3,
+                    150,
+                    directDebitTransactionRejectsList1);
+                Assert.AreEqual(2, directDebitRemmitanceReject.NumberOfTransactions);
+            }
+            catch (ArgumentException) { }
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(System.ArgumentException))]
         public void IfTheProvidedControlSumInARemmitanceRejectIsWorgAnExceptionIsThrown()
         {
@@ -157,6 +172,21 @@ namespace DirectDebitElementsUnitTests
                 Assert.AreEqual("The Control Sum is wrong. Provided: 100. Expected: 150. Initialized with expected value", e.GetMessageWithoutParamName());
                 throw;
             }
+        }
+
+        [TestMethod]
+        public void IfTheProvidedControlSumInARemmitanceRejectIsWorgItIsCorrected()
+        {
+            try
+            {
+                DirectDebitRemmitanceReject directDebitRemmitanceReject = new DirectDebitRemmitanceReject(
+                    originalDirectDebitRemmitance1MessageID,
+                    2,
+                    100,
+                    directDebitTransactionRejectsList1);
+                Assert.AreEqual(150, directDebitRemmitanceReject.ControlSum);
+            }
+            catch (ArgumentException) { }
         }
 
         [TestMethod]
@@ -292,6 +322,80 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual(numberOfTransactions, paymentStatusReport.NumberOfTransactions);
             Assert.AreEqual(controlSum, paymentStatusReport.ControlSum);
             CollectionAssert.AreEqual(directDebitRemmitanceRejectsList, paymentStatusReport.DirectDebitRemmitanceRejects);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void IfTheProvidedNumberOfTransactionsInAPaymentStatusReportIsWorgAnExceptionIsThrown()
+        {
+            //try
+            //{
+            //    DirectDebitRemmitanceReject directDebitRemmitanceReject = new DirectDebitRemmitanceReject(
+            //        originalDirectDebitRemmitance1MessageID,
+            //        3,
+            //        150,
+            //        directDebitTransactionRejectsList1);
+            //}
+            //catch (System.ArgumentException e)
+            //{
+            //    Assert.AreEqual("numberOfTransactions", e.ParamName);
+            //    Assert.AreEqual("The Number of Transactions is wrong. Provided: 3. Expected: 2. Initialized with expected value", e.GetMessageWithoutParamName());
+            //    throw;
+            //}
+            Assert.Inconclusive();
+        }
+
+        [TestMethod]
+        public void IfTheProvidedNumberOfTransactionsInAPaymentStatusReportIsWorgItIsCorrected()
+        {
+            //try
+            //{
+            //    DirectDebitRemmitanceReject directDebitRemmitanceReject = new DirectDebitRemmitanceReject(
+            //        originalDirectDebitRemmitance1MessageID,
+            //        3,
+            //        150,
+            //        directDebitTransactionRejectsList1);
+            //    Assert.AreEqual(2, directDebitRemmitanceReject.NumberOfTransactions);
+            //}
+            //catch (ArgumentException) { }
+            Assert.Inconclusive();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void IfTheProvidedControlSumInAPaymentStatusReportIsWorgAnExceptionIsThrown()
+        {
+            //try
+            //{
+            //    DirectDebitRemmitanceReject directDebitRemmitanceReject = new DirectDebitRemmitanceReject(
+            //        originalDirectDebitRemmitance1MessageID,
+            //        2,
+            //        100,
+            //        directDebitTransactionRejectsList1);
+            //}
+            //catch (System.ArgumentException e)
+            //{
+            //    Assert.AreEqual("controlSum", e.ParamName);
+            //    Assert.AreEqual("The Control Sum is wrong. Provided: 100. Expected: 150. Initialized with expected value", e.GetMessageWithoutParamName());
+            //    throw;
+            //}
+            Assert.Inconclusive();
+        }
+
+        [TestMethod]
+        public void IfTheProvidedControlSumInAPaymentStatusReportIsWorgItIsCorrected()
+        {
+            //try
+            //{
+            //    DirectDebitRemmitanceReject directDebitRemmitanceReject = new DirectDebitRemmitanceReject(
+            //        originalDirectDebitRemmitance1MessageID,
+            //        2,
+            //        100,
+            //        directDebitTransactionRejectsList1);
+            //    Assert.AreEqual(150, directDebitRemmitanceReject.ControlSum);
+            //}
+            //catch (ArgumentException) { }
+            Assert.Inconclusive();
         }
 
         [TestMethod]
