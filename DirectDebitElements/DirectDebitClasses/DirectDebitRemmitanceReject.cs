@@ -15,17 +15,6 @@ namespace DirectDebitElements
         decimal controlSum;
         List<DirectDebitTransactionReject> directDebitTransactionRejects;
 
-        //public DirectDebitRemmitanceReject(string originalDirectDebitRemmitanceMessageID, int numberOfTransactions, decimal controlSum, List<DirectDebitTransactionReject> directDebitTransactionRejects)
-        //{
-        //    this.originalDirectDebitRemmitanceMessageID = originalDirectDebitRemmitanceMessageID;
-        //    this.numberOfTransactions = numberOfTransactions;
-        //    this.controlSum = controlSum;
-        //    this.directDebitTransactionRejects = directDebitTransactionRejects;
-
-        //    if (TheProvidedNumberOfTransactionsIsWrong()) ChangeNumberOfTransactionsAndRiseException();
-        //    if (TheProvidedControlSumIsWrong()) ChangeControlSumAndRiseException();
-        //}
-
         public DirectDebitRemmitanceReject(string originalDirectDebitRemmitanceMessageID, List<DirectDebitTransactionReject> directDebitTransactionRejects)
         {
             this.originalDirectDebitRemmitanceMessageID = originalDirectDebitRemmitanceMessageID;
