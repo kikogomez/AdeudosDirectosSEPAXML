@@ -76,8 +76,8 @@ namespace DirectDebitElements
                 paymentStatusReport_MessageID,
                 paymentStatusReport_MessageCreationDateTime,
                 paymentStatusReport_RejectAccountChargeDateTime,
-                paymentStatusReport_NumberOfTransactions,
-                paymentStatusReport_ControlSum,
+                //paymentStatusReport_NumberOfTransactions,
+                //paymentStatusReport_ControlSum,
                 directDebitRemmitanceRejectsList);
 
             foreach (OriginalPaymentInformation1 originalPaymentInformation1 in customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlPmtInfAndSts)

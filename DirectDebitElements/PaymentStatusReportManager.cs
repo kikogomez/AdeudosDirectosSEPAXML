@@ -10,15 +10,15 @@ namespace DirectDebitElements
     {
         public PaymentStatusReportManager() { }
 
-        public PaymentStatusReport CreatePaymentStatusReport(
+        public PaymentStatusReportCreationResult CreatePaymentStatusReport(
             string messageID,
             DateTime messageCreationDateTime,
             DateTime rejectAccountChargeDateTime,
             int numberOfTransactions,
             decimal controlSum,
             List<DirectDebitRemmitanceReject> directDebitRemmitanceRejectsList)
-        { 
-            PaymentStatusReport paymentStatusReport = new PaymentStatusReport(
+        {
+            PaymentStatusReportCreationResult paymentStatusReportCreationResult = new PaymentStatusReportCreationResult(
                 messageID,
                 messageCreationDateTime,
                 rejectAccountChargeDateTime,
@@ -26,7 +26,7 @@ namespace DirectDebitElements
                 controlSum,
                 directDebitRemmitanceRejectsList);
 
-            return paymentStatusReport;
+            return paymentStatusReportCreationResult;
         }
 
         public PaymentStatusReport CreatePaymentStatusReport(

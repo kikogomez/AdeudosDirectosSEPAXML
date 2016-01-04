@@ -6,25 +6,25 @@ using System.Threading.Tasks;
 
 namespace DirectDebitElements
 {
-    public class DirectDebitRemmitanceRejectCreationResult
+    public class PaymentStatusReportCreationResult
     {
-        DirectDebitRemmitanceReject directDebitRemmitanceReject;
+        PaymentStatusReport paymentStatusreport;
         List<string> errorMessages;
 
-        public DirectDebitRemmitanceRejectCreationResult(
-            string originalDirectDebitRemmitanceMessageID,
-            int numberOfTransactions,
-            decimal controlSum,
-            List<DirectDebitTransactionReject> directDebitTransactionRejects)
+        public PaymentStatusReportCreationResult(string messageID, DateTime messageCreationDateTime, DateTime rejectAccountChargeDateTime, int numberOfTransactions, decimal controlSum, List<DirectDebitRemmitanceReject> directDebitRemmitanceRejects)
         {
-            this.directDebitRemmitanceReject = new DirectDebitRemmitanceReject(originalDirectDebitRemmitanceMessageID, directDebitTransactionRejects);
-            CheckForErrors(numberOfTransactions, controlSum, directDebitTransactionRejects);
+            this.paymentStatusreport = new PaymentStatusReport(
+                messageID,
+                messageCreationDateTime,
+                rejectAccountChargeDateTime,
+                directDebitRemmitanceRejects);
+            CheckForErrors(numberOfTransactions, controlSum, directDebitRemmitanceRejects);
         }
 
-        private void CheckForErrors (int numberOfTransactions, decimal controlSum, List<DirectDebitTransactionReject> directDebitTransactionRejects)
+        private void CheckForErrors(int numberOfTransactions, decimal controlSum, List<DirectDebitRemmitanceReject> directDebitRemmitanceRejects)
         {
-            int calculatedNumberOfTransactions = directDebitTransactionRejects.Count;
-            decimal calculatedControlSum = directDebitTransactionRejects.Select(ddTransactionReject => ddTransactionReject.Amount).Sum();
+            int calculatedNumberOfTransactions = directDebitRemmitanceRejects.Select(ddRemmitanceRejects => ddRemmitanceRejects.NumberOfTransactions).Sum();
+            decimal calculatedControlSum = directDebitRemmitanceRejects.Select(ddRemmitanceRejects => ddRemmitanceRejects.ControlSum).Sum();
             errorMessages = new List<string>();
             if (numberOfTransactions != calculatedNumberOfTransactions)
                 errorMessages.Add(AddErroneousNumberOfTransactionsErrorMessage(numberOfTransactions, calculatedNumberOfTransactions));
@@ -46,11 +46,11 @@ namespace DirectDebitElements
             return errorMessage;
         }
 
-        public DirectDebitRemmitanceReject DirectDebitRemmitanceReject
+        public PaymentStatusReport PaymentStatusreport
         {
             get
             {
-                return directDebitRemmitanceReject;
+                return paymentStatusreport;
             }
         }
 
@@ -61,5 +61,7 @@ namespace DirectDebitElements
                 return errorMessages;
             }
         }
+
+
     }
 }
