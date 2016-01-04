@@ -46,14 +46,14 @@ namespace DirectDebitElements
 
         public DirectDebitRemmitanceReject CreateAnEmptyDirectDebitRemmitanceReject(string originalDirectDebitRemmitanceMessageID)
         {
-            int numberOfTransactions = 0;
-            decimal controlSum = 0;
+            //int numberOfTransactions = 0;
+            //decimal controlSum = 0;
             List<DirectDebitTransactionReject> directDebitTransactionRejects = new List<DirectDebitTransactionReject>();
 
             DirectDebitRemmitanceReject directDebitRemmitanceReject = new DirectDebitRemmitanceReject(
                 originalDirectDebitRemmitanceMessageID,
-                numberOfTransactions,
-                controlSum,
+                //numberOfTransactions,
+                //controlSum,
                 directDebitTransactionRejects);
 
             return directDebitRemmitanceReject;
@@ -89,8 +89,8 @@ namespace DirectDebitElements
             decimal controlSum = directDebitTransactionRejectsList.Select(ddTransactionReject => ddTransactionReject.Amount).Sum();
             DirectDebitRemmitanceReject directDebitRemmitanceReject = new DirectDebitRemmitanceReject(
                 originalDirectDebitRemmitanceMessageID,
-                numberOfTransactions,
-                controlSum,
+                //numberOfTransactions,
+                //controlSum,
                 directDebitTransactionRejectsList);
             return directDebitRemmitanceReject;
         }

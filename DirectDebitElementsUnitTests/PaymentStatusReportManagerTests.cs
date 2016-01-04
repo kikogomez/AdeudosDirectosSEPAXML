@@ -64,14 +64,14 @@ namespace DirectDebitElementsUnitTests
         {
             DirectDebitRemmitanceReject directDebitRemmitanceReject1 = new DirectDebitRemmitanceReject(
                 originalDirectDebitRemmitance1MessageID,
-                directDebitTransactionRejectsList1.Count,
-                directDebitTransactionRejectsList1.Select(ddTransactionReject => ddTransactionReject.Amount).Sum(),
+                //directDebitTransactionRejectsList1.Count,
+                //directDebitTransactionRejectsList1.Select(ddTransactionReject => ddTransactionReject.Amount).Sum(),
                 directDebitTransactionRejectsList1);
 
             DirectDebitRemmitanceReject directDebitRemmitanceReject2 = new DirectDebitRemmitanceReject(
                 originalDirectDebitRemmitance2MessageID,
-                directDebitTransactionRejectsList2.Count,
-                directDebitTransactionRejectsList2.Select(ddTransactionReject => ddTransactionReject.Amount).Sum(),
+                //directDebitTransactionRejectsList2.Count,
+                //directDebitTransactionRejectsList2.Select(ddTransactionReject => ddTransactionReject.Amount).Sum(),
                 directDebitTransactionRejectsList2);
 
             List<DirectDebitRemmitanceReject> directDebitRemmitanceRejectsList = new List<DirectDebitRemmitanceReject>()
@@ -106,14 +106,14 @@ namespace DirectDebitElementsUnitTests
         {
             DirectDebitRemmitanceReject directDebitRemmitanceReject1 = new DirectDebitRemmitanceReject(
                 originalDirectDebitRemmitance1MessageID,
-                directDebitTransactionRejectsList1.Count,
-                directDebitTransactionRejectsList1.Select(ddTransactionReject => ddTransactionReject.Amount).Sum(),
+                //directDebitTransactionRejectsList1.Count,
+                //directDebitTransactionRejectsList1.Select(ddTransactionReject => ddTransactionReject.Amount).Sum(),
                 directDebitTransactionRejectsList1);
 
             DirectDebitRemmitanceReject directDebitRemmitanceReject2 = new DirectDebitRemmitanceReject(
                 originalDirectDebitRemmitance2MessageID,
-                directDebitTransactionRejectsList2.Count,
-                directDebitTransactionRejectsList2.Select(ddTransactionReject => ddTransactionReject.Amount).Sum(),
+                //directDebitTransactionRejectsList2.Count,
+                //directDebitTransactionRejectsList2.Select(ddTransactionReject => ddTransactionReject.Amount).Sum(),
                 directDebitTransactionRejectsList2);
 
             List<DirectDebitRemmitanceReject> directDebitRemmitanceRejectsList = new List<DirectDebitRemmitanceReject>()
