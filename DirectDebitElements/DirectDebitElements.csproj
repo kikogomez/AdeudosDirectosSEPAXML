@@ -54,6 +54,7 @@
     <Compile Include="DirectDebitClasses\DirectDebitInitiationContract.cs" />
     <Compile Include="DirectDebitClasses\DirectDebitMandate.cs" />
     <Compile Include="DirectDebitClasses\DirectDebitRemittance.cs" />
+    <Compile Include="DirectDebitClasses\DirectDebitRemmitanceRejectFactory.cs" />
     <Compile Include="DirectDebitClasses\DirectDebitTransaction.cs" />
     <Compile Include="DirectDebitClasses\DirectDebitRemmitanceReject.cs" />
     <Compile Include="DirectDebitClasses\DirectDebitTransactionReject.cs" />
