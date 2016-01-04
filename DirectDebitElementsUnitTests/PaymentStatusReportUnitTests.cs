@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using DirectDebitElements;
-using ExtensionMethods;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DirectDebitElementsUnitTests
@@ -103,75 +102,103 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual("2015120100312", directDebitRemmitanceReject.DirectDebitTransactionRejects[1].OriginalEndtoEndTransactionIdentification);
         }
 
-        //[TestMethod]
-        //[ExpectedException(typeof(System.ArgumentException))]
-        //public void IfTheProvidedNumberOfTransactionsInARemmitanceRejectIsWorgAnExceptionIsThrown()
-        //{
-        //    try
-        //    {
-        //        DirectDebitRemmitanceReject directDebitRemmitanceReject = new DirectDebitRemmitanceReject(
-        //            originalDirectDebitRemmitance1MessageID,
-        //            3,
-        //            150,
-        //            directDebitTransactionRejectsList1);
-        //    }
-        //    catch (System.ArgumentException e)
-        //    {
-        //        Assert.AreEqual("numberOfTransactions", e.ParamName);
-        //        Assert.AreEqual("The Number of Transactions is wrong. Provided: 3. Expected: 2. Initialized with expected value", e.GetMessageWithoutParamName());
-        //        throw;
-        //    }
-        //}
+        [TestMethod]
+        public void ADirectDebitRemmitanceRejectIsCorrectlyCreatedGivenACorrectNumberOfTransactionsAndControlSum()
+        {
+            int numberofTransactions = 2;
+            decimal controlSum = 150;
 
-        //[TestMethod]
-        //public void IfTheProvidedNumberOfTransactionsInARemmitanceRejectIsWorgItIsCorrected()
-        //{
-        //    try
-        //    {
-        //        DirectDebitRemmitanceReject directDebitRemmitanceReject = new DirectDebitRemmitanceReject(
-        //            originalDirectDebitRemmitance1MessageID,
-        //            3,
-        //            150,
-        //            directDebitTransactionRejectsList1);
-        //        Assert.AreEqual(2, directDebitRemmitanceReject.NumberOfTransactions);
-        //    }
-        //    catch (ArgumentException) { }
-        //}
+            DirectDebitRemmitanceRejectCreationResult directDebitRemmitanceRejectCreationResult = new DirectDebitRemmitanceRejectCreationResult(
+                originalDirectDebitRemmitance1MessageID,
+                numberofTransactions,
+                controlSum,
+                directDebitTransactionRejectsList1);
 
-        //[TestMethod]
-        //[ExpectedException(typeof(System.ArgumentException))]
-        //public void IfTheProvidedControlSumInARemmitanceRejectIsWorgAnExceptionIsThrown()
-        //{
-        //    try
-        //    {
-        //        DirectDebitRemmitanceReject directDebitRemmitanceReject = new DirectDebitRemmitanceReject(
-        //            originalDirectDebitRemmitance1MessageID,
-        //            2,
-        //            100,
-        //            directDebitTransactionRejectsList1);
-        //    }
-        //    catch (System.ArgumentException e)
-        //    {
-        //        Assert.AreEqual("controlSum", e.ParamName);
-        //        Assert.AreEqual("The Control Sum is wrong. Provided: 100. Expected: 150. Initialized with expected value", e.GetMessageWithoutParamName());
-        //        throw;
-        //    }
-        //}
+            DirectDebitRemmitanceReject directDebitRemmitanceReject = directDebitRemmitanceRejectCreationResult.DirectDebitRemmitanceReject;
+            string errorMessage = directDebitRemmitanceRejectCreationResult.ErrorMesssage;
 
-        //[TestMethod]
-        //public void IfTheProvidedControlSumInARemmitanceRejectIsWorgItIsCorrected()
-        //{
-        //    try
-        //    {
-        //        DirectDebitRemmitanceReject directDebitRemmitanceReject = new DirectDebitRemmitanceReject(
-        //            originalDirectDebitRemmitance1MessageID,
-        //            2,
-        //            100,
-        //            directDebitTransactionRejectsList1);
-        //        Assert.AreEqual(150, directDebitRemmitanceReject.ControlSum);
-        //    }
-        //    catch (ArgumentException) { }
-        //}
+            Assert.IsNull(errorMessage);
+            Assert.AreEqual(originalDirectDebitRemmitance1MessageID, directDebitRemmitanceReject.OriginalDirectDebitRemmitanceMessageID);
+            Assert.AreEqual(2, directDebitRemmitanceReject.NumberOfTransactions);
+            Assert.AreEqual(150, directDebitRemmitanceReject.ControlSum);
+            Assert.AreEqual("2015120100124", directDebitRemmitanceReject.DirectDebitTransactionRejects[0].OriginalEndtoEndTransactionIdentification);
+            Assert.AreEqual("2015120100312", directDebitRemmitanceReject.DirectDebitTransactionRejects[1].OriginalEndtoEndTransactionIdentification);
+        }
+
+        [TestMethod]
+        public void IfGivenIncorrectNumberOfTransactionsTheDirectDebirRemmitanceRejectIsCorrectlyCreatedButAnErrorMessageIsGenerated()
+        {
+            int numberofTransactions = 1;
+            decimal controlSum = 150;
+
+            DirectDebitRemmitanceRejectCreationResult directDebitRemmitanceRejectCreationResult = new DirectDebitRemmitanceRejectCreationResult(
+                originalDirectDebitRemmitance1MessageID,
+                numberofTransactions,
+                controlSum,
+                directDebitTransactionRejectsList1);
+
+            DirectDebitRemmitanceReject directDebitRemmitanceReject = directDebitRemmitanceRejectCreationResult.DirectDebitRemmitanceReject;
+            string errorMessage = directDebitRemmitanceRejectCreationResult.ErrorMesssage;
+            string expectedErrorMessage = "The Number of Transactions is wrong. Provided: 1. Expected: 2. Initialized with expected value";
+
+            Assert.AreEqual(expectedErrorMessage, errorMessage);
+            Assert.AreEqual(originalDirectDebitRemmitance1MessageID, directDebitRemmitanceReject.OriginalDirectDebitRemmitanceMessageID);
+            Assert.AreEqual(2, directDebitRemmitanceReject.NumberOfTransactions);
+            Assert.AreEqual(150, directDebitRemmitanceReject.ControlSum);
+            Assert.AreEqual("2015120100124", directDebitRemmitanceReject.DirectDebitTransactionRejects[0].OriginalEndtoEndTransactionIdentification);
+            Assert.AreEqual("2015120100312", directDebitRemmitanceReject.DirectDebitTransactionRejects[1].OriginalEndtoEndTransactionIdentification);
+        }
+
+        [TestMethod]
+        public void IfGivenIncorrectControlSumTheDirectDebirRemmitanceRejectIsCorrectlyCreatedButAnErrorMessageIsGenerated()
+        {
+            int numberofTransactions = 2;
+            decimal controlSum = 100;
+
+            DirectDebitRemmitanceRejectCreationResult directDebitRemmitanceRejectCreationResult = new DirectDebitRemmitanceRejectCreationResult(
+                originalDirectDebitRemmitance1MessageID,
+                numberofTransactions,
+                controlSum,
+                directDebitTransactionRejectsList1);
+
+            DirectDebitRemmitanceReject directDebitRemmitanceReject = directDebitRemmitanceRejectCreationResult.DirectDebitRemmitanceReject;
+            string errorMessage = directDebitRemmitanceRejectCreationResult.ErrorMesssage;
+            string expectedErrorMessage = "The Control Sum is wrong. Provided: 100. Expected: 150. Initialized with expected value";
+
+            Assert.AreEqual(expectedErrorMessage, errorMessage);
+            Assert.AreEqual(originalDirectDebitRemmitance1MessageID, directDebitRemmitanceReject.OriginalDirectDebitRemmitanceMessageID);
+            Assert.AreEqual(2, directDebitRemmitanceReject.NumberOfTransactions);
+            Assert.AreEqual(150, directDebitRemmitanceReject.ControlSum);
+            Assert.AreEqual("2015120100124", directDebitRemmitanceReject.DirectDebitTransactionRejects[0].OriginalEndtoEndTransactionIdentification);
+            Assert.AreEqual("2015120100312", directDebitRemmitanceReject.DirectDebitTransactionRejects[1].OriginalEndtoEndTransactionIdentification);
+        }
+
+        [TestMethod]
+        public void IfGivenBothIncorrectNumberOfTransactionsAndIncorrectControlSumTheDirectDebirRemmitanceRejectIsCorrectlyCreatedButAnErrorMessageIsGenerated()
+        {
+            int numberofTransactions = 1;
+            decimal controlSum = 100;
+
+            DirectDebitRemmitanceRejectCreationResult directDebitRemmitanceRejectCreationResult = new DirectDebitRemmitanceRejectCreationResult(
+                originalDirectDebitRemmitance1MessageID,
+                numberofTransactions,
+                controlSum,
+                directDebitTransactionRejectsList1);
+
+            DirectDebitRemmitanceReject directDebitRemmitanceReject = directDebitRemmitanceRejectCreationResult.DirectDebitRemmitanceReject;
+            string errorMessage = directDebitRemmitanceRejectCreationResult.ErrorMesssage;
+            string expectedErrorMessage =
+                "The Number of Transactions is wrong. Provided: 1. Expected: 2. Initialized with expected value"
+                + Environment.NewLine
+                + "The Control Sum is wrong. Provided: 100. Expected: 150. Initialized with expected value";
+
+            Assert.AreEqual(expectedErrorMessage, errorMessage);
+            Assert.AreEqual(originalDirectDebitRemmitance1MessageID, directDebitRemmitanceReject.OriginalDirectDebitRemmitanceMessageID);
+            Assert.AreEqual(2, directDebitRemmitanceReject.NumberOfTransactions);
+            Assert.AreEqual(150, directDebitRemmitanceReject.ControlSum);
+            Assert.AreEqual("2015120100124", directDebitRemmitanceReject.DirectDebitTransactionRejects[0].OriginalEndtoEndTransactionIdentification);
+            Assert.AreEqual("2015120100312", directDebitRemmitanceReject.DirectDebitTransactionRejects[1].OriginalEndtoEndTransactionIdentification);
+        }
 
         [TestMethod]
         public void AnEmptyDirectDebitRemmitanceRejectIsCorrectlyCreated()
