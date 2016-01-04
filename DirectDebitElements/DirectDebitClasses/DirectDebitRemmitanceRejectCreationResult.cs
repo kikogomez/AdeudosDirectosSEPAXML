@@ -9,7 +9,7 @@ namespace DirectDebitElements
     public class DirectDebitRemmitanceRejectCreationResult
     {
         DirectDebitRemmitanceReject directDebitRemmitanceReject;
-        string errorMesssage;
+        List<string> errorMessages;
 
         public DirectDebitRemmitanceRejectCreationResult(
             string originalDirectDebitRemmitanceMessageID,
@@ -18,16 +18,18 @@ namespace DirectDebitElements
             List<DirectDebitTransactionReject> directDebitTransactionRejects)
         {
             this.directDebitRemmitanceReject = new DirectDebitRemmitanceReject(originalDirectDebitRemmitanceMessageID, directDebitTransactionRejects);
+            CheckForErrors(numberOfTransactions, controlSum, directDebitTransactionRejects);
+        }
 
+        private void CheckForErrors (int numberOfTransactions, decimal controlSum, List<DirectDebitTransactionReject> directDebitTransactionRejects)
+        {
             int calculatedNumberOfTransactions = directDebitTransactionRejects.Count;
             decimal calculatedControlSum = directDebitTransactionRejects.Select(ddTransactionReject => ddTransactionReject.Amount).Sum();
+            errorMessages = new List<string>();
             if (numberOfTransactions != calculatedNumberOfTransactions)
-                errorMesssage += AddErroneousNumberOfTransactionsErrorMessage(numberOfTransactions, calculatedNumberOfTransactions);
+                errorMessages.Add(AddErroneousNumberOfTransactionsErrorMessage(numberOfTransactions, calculatedNumberOfTransactions));
             if (controlSum != calculatedControlSum)
-            {
-                if (errorMesssage != null) errorMesssage += Environment.NewLine;
-                errorMesssage += AddErroneousControlSumErrorMessage(controlSum, calculatedControlSum);
-            }
+                errorMessages.Add(AddErroneousControlSumErrorMessage(controlSum, calculatedControlSum));
         }
 
         private string AddErroneousNumberOfTransactionsErrorMessage(int providedNumberOfTransactions, int calculatedNumberOfTransactions)
@@ -37,10 +39,10 @@ namespace DirectDebitElements
             return errorMessage;
         }
 
-        private string AddErroneousControlSumErrorMessage(decimal providadControlSum, decimal calculatedControlSum)
+        private string AddErroneousControlSumErrorMessage(decimal providedControlSum, decimal calculatedControlSum)
         {
             string errorMessage =
-                "The Control Sum is wrong. Provided: " + providadControlSum.ToString() + ". Expected: " + calculatedControlSum.ToString() + ". Initialized with expected value";
+                "The Control Sum is wrong. Provided: " + providedControlSum.ToString() + ". Expected: " + calculatedControlSum.ToString() + ". Initialized with expected value";
             return errorMessage;
         }
 
@@ -52,11 +54,11 @@ namespace DirectDebitElements
             }
         }
 
-        public string ErrorMesssage
+        public List<string> ErrorMesssages
         {
             get
             {
-                return errorMesssage;
+                return errorMessages;
             }
         }
     }
