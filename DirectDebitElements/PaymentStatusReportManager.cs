@@ -44,7 +44,7 @@ namespace DirectDebitElements
             return paymentStatusReport;
         }
 
-        public PaymentStatusReport CreateEmptyPaymentStatusReport(
+        public PaymentStatusReport CreateAnEmptyPaymentStatusReport(
             string messageID,
             DateTime messageCreationDateTime,
             DateTime rejectAccountChargeDateTime)
@@ -59,7 +59,12 @@ namespace DirectDebitElements
             return paymentStatusReport;
         }
 
-
+        public void AddRejectedRemmitanceToPaymentStatusReport(
+            PaymentStatusReport paymentStatusReport,
+            DirectDebitRemmitanceReject directDebitRemmitanceReject)
+        {
+            paymentStatusReport.AddRemmitanceReject(directDebitRemmitanceReject);
+        }
 
         public DirectDebitRemmitanceReject CreateAnEmptyDirectDebitRemmitanceReject(string originalDirectDebitRemmitanceMessageID)
         {
@@ -117,6 +122,13 @@ namespace DirectDebitElements
                 directDebitTransactionRejectsList);
 
             return directDebitRemmitanceRejectCreationResult;
+        }
+
+        public void AddRejectedTransactionToRemmitanceReject(
+            DirectDebitRemmitanceReject directDebitRemmitanceReject,
+            DirectDebitTransactionReject directDebitTransactionReject)
+        {
+            directDebitRemmitanceReject.AddDirectDebitTransactionReject(directDebitTransactionReject);
         }
 
         //public void AddBilllToExistingDirectDebitTransaction(DirectDebitTransaction directDebitTransaction, SimplifiedBill bill)

@@ -18,21 +18,6 @@ namespace DirectDebitElements
         decimal controlSum;
         List<DirectDebitRemmitanceReject> directDebitRemmitanceRejects;
 
-        //public PaymentStatusReport(string messageID, DateTime messageCreationDateTime, DateTime rejectAccountChargeDateTime, int numberOfTransactions, decimal controlSum, List<DirectDebitRemmitanceReject> directDebitRemmitanceRejects)
-        //{
-        //    this.messageID = messageID;
-        //    this.messageCreationDateTime = messageCreationDateTime;
-        //    this.rejectAccountChargeDateTime = rejectAccountChargeDateTime;
-        //    this.numberOfTransactions = numberOfTransactions;
-        //    this.controlSum = controlSum;
-        //    this.directDebitRemmitanceRejects = directDebitRemmitanceRejects;
-
-        //    foreach (DirectDebitRemmitanceReject directDebitRemmitanceReject in directDebitRemmitanceRejects)
-        //    {
-        //        SuscribeTo_AddedNewTransactionEvent(directDebitRemmitanceReject);
-        //    }
-        //}
-
         public PaymentStatusReport(string messageID, DateTime messageCreationDateTime, DateTime rejectAccountChargeDateTime, List<DirectDebitRemmitanceReject> directDebitRemmitanceRejects)
         {
             this.messageID = messageID;
@@ -78,7 +63,7 @@ namespace DirectDebitElements
             get { return directDebitRemmitanceRejects; }
         }
 
-        public void AddRemmitance(DirectDebitRemmitanceReject directDebitRemmitanceReject)
+        public void AddRemmitanceReject(DirectDebitRemmitanceReject directDebitRemmitanceReject)
         {
             directDebitRemmitanceRejects.Add(directDebitRemmitanceReject);
             numberOfTransactions += directDebitRemmitanceReject.NumberOfTransactions;

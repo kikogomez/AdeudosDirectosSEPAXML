@@ -214,6 +214,39 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
+        public void AnEmptyDirectDebitRemmitanceRejectIsCorrectlyCreated()
+        {
+            string originalDirectDebitRemmitanceMessageID = "PRE201207010001";
+
+            PaymentStatusReportManager paymentStatusReportManager = new PaymentStatusReportManager();
+
+            DirectDebitRemmitanceReject directDebitRemmitanceReject = paymentStatusReportManager.CreateAnEmptyDirectDebitRemmitanceReject(originalDirectDebitRemmitanceMessageID);
+
+            Assert.AreEqual(originalDirectDebitRemmitanceMessageID, directDebitRemmitanceReject.OriginalDirectDebitRemmitanceMessageID);
+            Assert.AreEqual(0, directDebitRemmitanceReject.NumberOfTransactions);
+            Assert.AreEqual(0, directDebitRemmitanceReject.ControlSum);
+            Assert.AreEqual(0, directDebitRemmitanceReject.DirectDebitTransactionRejects.Count);
+        }
+
+        [TestMethod]
+        public void ADirectDebitTransactionRejectIsCorrectlyAddedToADirectDebitRemmitanceReject()
+        {
+            string originalDirectDebitRemmitanceMessageID = "PRE201207010001";
+            List<DirectDebitTransactionReject> directDebitTransactionRejects = new List<DirectDebitTransactionReject>();
+
+            DirectDebitRemmitanceReject directDebitRemmitanceReject = new DirectDebitRemmitanceReject(originalDirectDebitRemmitanceMessageID, directDebitTransactionRejects);
+
+            PaymentStatusReportManager paymentStatusReportManager = new PaymentStatusReportManager();
+
+            paymentStatusReportManager.AddRejectedTransactionToRemmitanceReject(directDebitRemmitanceReject, directDebitTransactionReject1);
+
+            Assert.AreEqual(originalDirectDebitRemmitanceMessageID, directDebitRemmitanceReject.OriginalDirectDebitRemmitanceMessageID);
+            Assert.AreEqual(1, directDebitRemmitanceReject.NumberOfTransactions);
+            Assert.AreEqual(80, directDebitRemmitanceReject.ControlSum);
+            Assert.AreEqual(1, directDebitRemmitanceReject.DirectDebitTransactionRejects.Count);
+        }
+
+        [TestMethod]
         public void APaymentStatusReportIsCorrectlyCreatedGivenACorrectNumberOfTransactionsAndControlSum()
         {
             DirectDebitRemmitanceReject directDebitRemmitanceReject1 = new DirectDebitRemmitanceReject(
@@ -436,7 +469,7 @@ namespace DirectDebitElementsUnitTests
 
             PaymentStatusReportManager paymentStatusReportManager = new PaymentStatusReportManager();
 
-            PaymentStatusReport paymentStatusReport = paymentStatusReportManager.CreateEmptyPaymentStatusReport(
+            PaymentStatusReport paymentStatusReport = paymentStatusReportManager.CreateAnEmptyPaymentStatusReport(
                 messageID,
                 messageCreationDateTime,
                 rejectAccountChargeDateTime);
@@ -450,19 +483,37 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        public void AnEmptyDirectDebitRemmitanceRejectIsCorrectlyCreated()
+        public void ADirectDebitRemmitanceIsCorrectlyAddedToAPaymentStatusReport()
         {
-            string originalDirectDebitRemmitanceMessageID = "PRE201207010001";
+            string messageID = "DATIR00112G12345678100";
+            DateTime messageCreationDateTime = DateTime.Parse("2012-07-18T06:00:01");
+            DateTime rejectAccountChargeDateTime = DateTime.Parse("2012-07-18");
+
+            List<DirectDebitRemmitanceReject> directDebitRemmitanceRejects = new List<DirectDebitRemmitanceReject>();
+
+            PaymentStatusReport paymentStatusReport = new PaymentStatusReport(
+                messageID,
+                messageCreationDateTime,
+                rejectAccountChargeDateTime,
+                directDebitRemmitanceRejects);
 
             PaymentStatusReportManager paymentStatusReportManager = new PaymentStatusReportManager();
 
-            DirectDebitRemmitanceReject directDebitRemmitanceReject = paymentStatusReportManager.CreateAnEmptyDirectDebitRemmitanceReject(originalDirectDebitRemmitanceMessageID);
+            DirectDebitRemmitanceReject directDebitRemmitanceReject1 = new DirectDebitRemmitanceReject(
+                originalDirectDebitRemmitance1MessageID,
+                directDebitTransactionRejectsList1);
 
-            Assert.AreEqual(originalDirectDebitRemmitanceMessageID, directDebitRemmitanceReject.OriginalDirectDebitRemmitanceMessageID);
-            Assert.AreEqual(0, directDebitRemmitanceReject.NumberOfTransactions);
-            Assert.AreEqual(0, directDebitRemmitanceReject.ControlSum);
-            Assert.AreEqual(0, directDebitRemmitanceReject.DirectDebitTransactionRejects.Count);
+            paymentStatusReportManager.AddRejectedRemmitanceToPaymentStatusReport(paymentStatusReport, directDebitRemmitanceReject1);
+
+            Assert.AreEqual("DATIR00112G12345678100", paymentStatusReport.MessageID);
+            Assert.AreEqual(messageCreationDateTime, paymentStatusReport.MessageCreationDateTime);
+            Assert.AreEqual(rejectAccountChargeDateTime, paymentStatusReport.RejectAccountChargeDateTime);
+            Assert.AreEqual(2, paymentStatusReport.NumberOfTransactions);
+            Assert.AreEqual(150, paymentStatusReport.ControlSum);
+            Assert.AreEqual(1, paymentStatusReport.DirectDebitRemmitanceRejects.Count);
         }
+
+
 
 
     }

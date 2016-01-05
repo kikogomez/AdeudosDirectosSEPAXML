@@ -498,7 +498,7 @@ namespace DirectDebitElementsUnitTests
                 originalDirectDebitRemmitance2MessageID,
                 directDebitTransactionRejectsList2);
 
-            paymentStatusReport.AddRemmitance(directDebitRemmitanceReject2);
+            paymentStatusReport.AddRemmitanceReject(directDebitRemmitanceReject2);
 
             List<DirectDebitRemmitanceReject> expectedDirectDebitRemmitanceRejectsList = new List<DirectDebitRemmitanceReject>()
             {directDebitRemmitanceReject1, directDebitRemmitanceReject2 };
