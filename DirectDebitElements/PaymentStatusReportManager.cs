@@ -44,6 +44,23 @@ namespace DirectDebitElements
             return paymentStatusReport;
         }
 
+        public PaymentStatusReport CreateEmptyPaymentStatusReport(
+            string messageID,
+            DateTime messageCreationDateTime,
+            DateTime rejectAccountChargeDateTime)
+        {
+            List<DirectDebitRemmitanceReject> directDebitRemmitanceRejectsList = new List<DirectDebitRemmitanceReject>();
+            PaymentStatusReport paymentStatusReport = new PaymentStatusReport(
+                messageID,
+                messageCreationDateTime,
+                rejectAccountChargeDateTime,
+                directDebitRemmitanceRejectsList);
+
+            return paymentStatusReport;
+        }
+
+
+
         public DirectDebitRemmitanceReject CreateAnEmptyDirectDebitRemmitanceReject(string originalDirectDebitRemmitanceMessageID)
         {
             List<DirectDebitTransactionReject> directDebitTransactionRejects = new List<DirectDebitTransactionReject>();
