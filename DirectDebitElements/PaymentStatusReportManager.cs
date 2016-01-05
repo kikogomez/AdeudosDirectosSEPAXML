@@ -130,24 +130,5 @@ namespace DirectDebitElements
         {
             directDebitRemmitanceReject.AddDirectDebitTransactionReject(directDebitTransactionReject);
         }
-
-        //public void AddBilllToExistingDirectDebitTransaction(DirectDebitTransaction directDebitTransaction, SimplifiedBill bill)
-        //{
-        //    directDebitTransaction.AddBill(bill);
-        //}
-
-        //public void AddDirectDebitTransactionToGroupPayment(
-        //    DirectDebitTransaction directDebitTransaction,
-        //    DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment)
-        //{
-        //    directDebitTransactionsGroupPayment.AddDirectDebitTransaction(directDebitTransaction);
-        //}
-
-        //public void AddDirectDebitTransactionGroupPaymentToDirectDebitRemittance(
-        //    DirectDebitRemittance directDebitRemmitance,
-        //    DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment)
-        //{
-        //    directDebitRemmitance.AddDirectDebitTransactionsGroupPayment(directDebitTransactionsGroupPayment);
-        //}
     }
 }

@@ -68,32 +68,28 @@ namespace DirectDebitElements
             string paymentStatusReport_MessageID = customerPaymentStatusReportDocument.CstmrPmtStsRpt.GrpHdr.MsgId;
             DateTime paymentStatusReport_MessageCreationDateTime = customerPaymentStatusReportDocument.CstmrPmtStsRpt.GrpHdr.CreDtTm;
             DateTime paymentStatusReport_RejectAccountChargeDateTime = ExtractRejectAccountChargeDateTimeFrom_OrgnlGrpInfAndSts_OrgnlMsgId(customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlMsgId);
-            int paymentStatusReport_NumberOfTransactions = 0;
-            decimal paymentStatusReport_ControlSum = 0;
+            int paymentStatusReport_NumberOfTransactions = Int32.Parse(customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlNbOfTxs);
+            decimal paymentStatusReport_ControlSum = customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlCtrlSum;
             List<DirectDebitRemmitanceReject> directDebitRemmitanceRejectsList = new List<DirectDebitRemmitanceReject>();
 
             PaymentStatusReport paymentStatusReport = new PaymentStatusReport(
                 paymentStatusReport_MessageID,
                 paymentStatusReport_MessageCreationDateTime,
                 paymentStatusReport_RejectAccountChargeDateTime,
-                //paymentStatusReport_NumberOfTransactions,
-                //paymentStatusReport_ControlSum,
                 directDebitRemmitanceRejectsList);
 
+            //Crear un DirectDebitRemmitanceReject por cada OriginalPaymentInformation1 en OrgnlPmtInfAndSts y añadirlo a PaymentStatusReport
             foreach (OriginalPaymentInformation1 originalPaymentInformation1 in customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlPmtInfAndSts)
             {
-                directDebitRemmitanceRejectsList.Add(GetDirectDebitRemmitanceReject(originalPaymentInformation1));
+                paymentStatusReport.AddRemmitanceReject(CreateDirectDebitRemmitanceReject(originalPaymentInformation1));
             }
+            
+            //Comprobar numero de transaciiones y suma de control            
 
+            if (paymentStatusReport.NumberOfTransactions.ToString() != customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlNbOfTxs) ;
+            if (paymentStatusReport.ControlSum != customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlCtrlSum) ;
 
-            //string messageID;
-            //DateTime messageCreationDateTime;
-            //DateTime rejectAccountChargeDateTime;   //This info is extracted from the OriginalMessageIdentification <OrignlMsgId>
-            //int numberOfTransactions;
-            //decimal controlSum;
-            //List<DirectDebitRemmitanceReject> directDebitRemmitanceRejects = new List<DirectDebitRemmitanceReject>();
-
-            return null;
+            return paymentStatusReport;
         }
 
         private PartyIdentification32 GenerateInitiationParty_InitPty(
@@ -323,14 +319,55 @@ namespace DirectDebitElements
             return paymentInformation_PmtInf;
         }
 
-        private DateTime ExtractRejectAccountChargeDateTimeFrom_OrgnlGrpInfAndSts_OrgnlMsgId(string orgnlGrpInfAndSts_OrgnlMsgId)
+        DateTime ExtractRejectAccountChargeDateTimeFrom_OrgnlGrpInfAndSts_OrgnlMsgId(string orgnlGrpInfAndSts_OrgnlMsgId)
         {
             return DateTime.Parse(orgnlGrpInfAndSts_OrgnlMsgId.Substring(0,10));
         }
 
-        private DirectDebitRemmitanceReject GetDirectDebitRemmitanceReject(OriginalPaymentInformation1 originalPaymentInformation1)
+        DirectDebitRemmitanceReject CreateDirectDebitRemmitanceReject(OriginalPaymentInformation1 originalPaymentInformation1)
         {
-            return null;
+            string originalDirectDebitRemmitanceMessageID = originalPaymentInformation1.OrgnlPmtInfId;
+            int numberOfTransactions = Int32.Parse(originalPaymentInformation1.OrgnlNbOfTxs);
+            decimal controlSum = originalPaymentInformation1.OrgnlCtrlSum;
+            List<DirectDebitTransactionReject> directDebitTransactionRejects = new List<DirectDebitTransactionReject>();
+
+            foreach (PaymentTransactionInformation25 paymentTransactionInformation25 in originalPaymentInformation1.TxInfAndSts)
+            {
+                string originalTransactionIdentification = paymentTransactionInformation25.OrgnlInstrId;
+                string originalEndtoEndTransactionIdentification = paymentTransactionInformation25.OrgnlEndToEndId;
+                Nullable<DateTime> requestedCollectionDate = paymentTransactionInformation25.OrgnlTxRef.ReqdColltnDt;
+                decimal amount = (decimal)paymentTransactionInformation25.OrgnlTxRef.Amt.Item;
+                string mandateID = paymentTransactionInformation25.OrgnlTxRef.MndtRltdInf.MndtId;
+                InternationalAccountBankNumberIBAN iban = new InternationalAccountBankNumberIBAN((string)paymentTransactionInformation25.OrgnlTxRef.DbtrAcct.Id.Item);
+                BankAccount debtorAccount = new BankAccount(iban);
+                string rejectReason = (string)paymentTransactionInformation25.StsRsnInf[0].Rsn.Item;
+
+                DirectDebitTransactionReject directDebitTransactionReject = new DirectDebitTransactionReject(
+                    originalTransactionIdentification,
+                    originalEndtoEndTransactionIdentification,
+                    requestedCollectionDate ?? DateTime.MinValue,
+                    amount,
+                    mandateID,
+                    debtorAccount,
+                    rejectReason);
+
+                directDebitTransactionRejects.Add(directDebitTransactionReject);
+            }
+
+            DirectDebitRemmitanceRejectCreationResult directDebitRemmitanceRejectCreationResult = new DirectDebitRemmitanceRejectCreationResult(
+                originalDirectDebitRemmitanceMessageID,
+                numberOfTransactions,
+                controlSum,
+                directDebitTransactionRejects);
+
+            if (directDebitRemmitanceRejectCreationResult.ErrorMessages.Count==0)
+            {
+                return directDebitRemmitanceRejectCreationResult.DirectDebitRemmitanceReject;
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
         }
     }
 }
