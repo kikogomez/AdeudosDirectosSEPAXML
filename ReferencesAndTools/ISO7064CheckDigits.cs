@@ -12,7 +12,7 @@ namespace ReferencesAndTools
         {
             string longNumber = ccc + nationalIdentifier + "00";
             int resultMod97_10 = CalculateMod97_10(longNumber);
-            return (resultMod97_10 == -1 ? null : resultMod97_10.ToString());
+            return (resultMod97_10 == -1 ? null : resultMod97_10.ToString("00"));
         }
 
         public static string CalculateSEPACreditIdentifierCheckDigits(string nationalIdentifier, string nIF)

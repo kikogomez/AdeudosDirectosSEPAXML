@@ -168,6 +168,14 @@ namespace DirectDebitElementsUnitTests
             Assert.IsFalse(BankAccount.IsValidIBAN("ES1111111111111111111111"));
         }
 
+
+        [TestMethod]
+        public void AnIBANZeroesInCheckNumberIsWellValidated()
+        {
+            Assert.IsTrue(BankAccount.IsValidIBAN("ES0621000000610000000002"));
+        }
+
+
         [TestMethod]
         public void ThisIBANHasAValidIBANCheckButHasAnInvalidCCC()
         {
@@ -284,7 +292,7 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        public void AcceptsInvalidAcountNumbers()
+        public void AcceptsInvalidAcountNumbersIfProvidingFields()
         {
             BankAccountFields bankAccountFields = new BankAccountFields("124", "1 00", " 4", "100/234-1");
             BankAccount testAccount = new BankAccount(bankAccountFields);
@@ -299,7 +307,7 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        public void AcceptsEmptyAcountNumbers()
+        public void AcceptsEmptyAcountNumbersIfProvidingFields()
         {
             BankAccountFields bankAccountFields = new BankAccountFields("", "", "", "");
             BankAccount testAccount = new BankAccount(bankAccountFields);
@@ -313,7 +321,7 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        public void AcceptsNullOnAcountNumbers()
+        public void AcceptsNullOnAcountNumbersIfProvidingFields()
         {
             BankAccountFields bankAccountFields = new BankAccountFields(null, "", "02", "aaaaa");
             BankAccount testAccount = new BankAccount(bankAccountFields);
@@ -402,7 +410,6 @@ namespace DirectDebitElementsUnitTests
                 throw;
             }
         }
-
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentException))]
@@ -500,5 +507,95 @@ namespace DirectDebitElementsUnitTests
             BankAccount testAccount = new BankAccount(bankAccountFields);
             Assert.AreEqual("68", testAccount.IBAN.IBANCheck);
         }
+
+        [TestMethod]
+        public void AnIBANIsCorrectlyCreatedGivingAValidIBANString()
+        {
+            InternationalAccountBankNumberIBAN iban = new InternationalAccountBankNumberIBAN("ES7621000000650000000001");
+            Assert.AreEqual("ES7621000000650000000001", iban.IBAN);
+        }
+
+        [TestMethod]
+        public void AnIBANIsCorrectlyCreatedGivingAValidIBANString_EvenIfCheckNumbersHaveZeroes()
+        {
+            InternationalAccountBankNumberIBAN iban = new InternationalAccountBankNumberIBAN("ES0621000000610000000002");
+            Assert.AreEqual("ES0621000000610000000002", iban.IBAN);
+        }
+
+        [TestMethod]
+        public void AnIBANIsCorrectlyCreatedGivingAValidCCC()
+        {
+            ClientAccountCodeCCC ccc = new ClientAccountCodeCCC("21000000610000000002");
+            InternationalAccountBankNumberIBAN iban = new InternationalAccountBankNumberIBAN(ccc);
+            Assert.AreEqual("ES0621000000610000000002", iban.IBAN);
+        }
+
+        [TestMethod]
+        public void AnEmptyIBANWithNullPropertiesIsCreatedGivingAnInvalidIBANString()
+        {
+            InternationalAccountBankNumberIBAN iban = new InternationalAccountBankNumberIBAN("ES0621000000000000000002");
+            Assert.IsNotNull(iban);
+            Assert.IsNull(iban.IBAN);
+            Assert.IsNull(iban.CCC);
+            Assert.IsNull(iban.FormattedIBAN);
+            Assert.IsNull(iban.InternationalCode);
+            Assert.IsNull(iban.IBANCheck);
+        }
+
+        [TestMethod]
+        public void AnEmptyIBANWithNullPropertiesIsCreatedGivingAnInvalidCCC()
+        {
+            ClientAccountCodeCCC ccc = new ClientAccountCodeCCC("21000000000000000002");
+            InternationalAccountBankNumberIBAN iban = new InternationalAccountBankNumberIBAN(ccc);
+            Assert.IsNotNull(iban);
+            Assert.IsNull(iban.IBAN);
+            Assert.IsNull(iban.CCC);
+            Assert.IsNull(iban.FormattedIBAN);
+            Assert.IsNull(iban.InternationalCode);
+            Assert.IsNull(iban.IBANCheck);
+        }
+
+        //[TestMethod]
+        //[ExpectedException(typeof(System.ArgumentException))]
+        //public void WhenCreatingIBANIfProvidingAnInvalidIBANStringAnExceptionIsTrown()
+        //{
+        //    try
+        //    {
+        //        InternationalAccountBankNumberIBAN iban = new InternationalAccountBankNumberIBAN("ES021000000610000000002");
+        //    }
+
+        //    catch (System.ArgumentException e)
+        //    {
+        //        Assert.AreEqual("IBAN", e.ParamName);
+        //        throw;
+        //    }
+        //}
+
+        //[TestMethod]
+        //[ExpectedException(typeof(System.ArgumentException))]
+        //public void WhenCreatingIBANIfProvidingAnInvalidCCCAnExceptionIsTrown()
+        //{
+        //    try
+        //    {
+        //        ClientAccountCodeCCC ccc = new ClientAccountCodeCCC("21000000000000000002");
+        //        InternationalAccountBankNumberIBAN iban = new InternationalAccountBankNumberIBAN(ccc);
+        //    }
+
+        //    catch (System.ArgumentException e)
+        //    {
+        //        Assert.AreEqual("CCC", e.ParamName);
+        //        throw;
+        //    }
+        //}
+
+        [TestMethod]
+        public void IfProvidingAnInvalidCCCtringThereturnedAccountIsNull()
+        {
+            BankAccountFields bankAccountFields = new BankAccountFields("1234", "5678", "06", "1234567890");
+            BankAccount testAccount = new BankAccount(bankAccountFields);
+            //Assert.AreEqual("68", testAccount.IBAN.IBANCheck);
+            Assert.Inconclusive();
+        }
+
     }
 }

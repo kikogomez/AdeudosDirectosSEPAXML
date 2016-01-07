@@ -10,6 +10,7 @@
         {
             this.bankAccountFields = bankAccountFields;
             ccc = new ClientAccountCodeCCC(bankAccountFields.BankCode, bankAccountFields.OfficeCode, bankAccountFields.CheckDigits, bankAccountFields.AccountNumber);
+            //CreateIBANIfPossibleButDontThrowExceptionIfCant();
             iban = new InternationalAccountBankNumberIBAN(ccc);
         }
 
@@ -18,7 +19,8 @@
             this.ccc = ccc;
             this.bankAccountFields = new BankAccountFields(
                 ccc.BankCode, ccc.OfficeCode, ccc.CCCCheck.bankOfficeCheckDigit + ccc.CCCCheck.accountNumberCheckDigit, ccc.AccountNumber);
-            this.iban = new InternationalAccountBankNumberIBAN(ccc);
+            //CreateIBANIfPossibleButDontThrowExceptionIfCant();
+            iban = new InternationalAccountBankNumberIBAN(ccc);
         }
 
         public BankAccount(InternationalAccountBankNumberIBAN iban)
@@ -113,5 +115,15 @@
         {
             return InternationalAccountBankNumberIBAN.IsValidIBAN(iban);
         }
+
+        //private void CreateIBANIfPossibleButDontThrowExceptionIfCant()
+        //{
+        //    try
+        //    {
+        //        iban = new InternationalAccountBankNumberIBAN(ccc);
+        //    }
+        //    catch (System.ArgumentException)
+        //    {}
+        //}
     }
 }

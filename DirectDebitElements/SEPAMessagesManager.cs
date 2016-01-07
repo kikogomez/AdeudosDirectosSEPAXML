@@ -233,7 +233,7 @@ namespace DirectDebitElements
             return directDebitTransactionInfo_DrctDbtTxInf;
         }
 
-        PaymentInstructionInformation4 GeneratePaymentInformation_PmtInf(
+        private PaymentInstructionInformation4 GeneratePaymentInformation_PmtInf(
             Creditor creditor,
             CreditorAgent creditorAgent,
             DirectDebitInitiationContract directDebitInitiationContract,
@@ -319,12 +319,12 @@ namespace DirectDebitElements
             return paymentInformation_PmtInf;
         }
 
-        DateTime ExtractRejectAccountChargeDateTimeFrom_OrgnlGrpInfAndSts_OrgnlMsgId(string orgnlGrpInfAndSts_OrgnlMsgId)
+        private DateTime ExtractRejectAccountChargeDateTimeFrom_OrgnlGrpInfAndSts_OrgnlMsgId(string orgnlGrpInfAndSts_OrgnlMsgId)
         {
             return DateTime.Parse(orgnlGrpInfAndSts_OrgnlMsgId.Substring(0,10));
         }
 
-        DirectDebitRemmitanceReject CreateDirectDebitRemmitanceReject(OriginalPaymentInformation1 originalPaymentInformation1)
+        private DirectDebitRemmitanceReject CreateDirectDebitRemmitanceReject(OriginalPaymentInformation1 originalPaymentInformation1)
         {
             string originalDirectDebitRemmitanceMessageID = originalPaymentInformation1.OrgnlPmtInfId;
             int numberOfTransactions = Int32.Parse(originalPaymentInformation1.OrgnlNbOfTxs);
@@ -336,11 +336,11 @@ namespace DirectDebitElements
                 string originalTransactionIdentification = paymentTransactionInformation25.OrgnlInstrId;
                 string originalEndtoEndTransactionIdentification = paymentTransactionInformation25.OrgnlEndToEndId;
                 Nullable<DateTime> requestedCollectionDate = paymentTransactionInformation25.OrgnlTxRef.ReqdColltnDt;
-                decimal amount = (decimal)paymentTransactionInformation25.OrgnlTxRef.Amt.Item;
+                decimal amount = ((ActiveOrHistoricCurrencyAndAmount)paymentTransactionInformation25.OrgnlTxRef.Amt.Item).Value;
                 string mandateID = paymentTransactionInformation25.OrgnlTxRef.MndtRltdInf.MndtId;
                 InternationalAccountBankNumberIBAN iban = new InternationalAccountBankNumberIBAN((string)paymentTransactionInformation25.OrgnlTxRef.DbtrAcct.Id.Item);
                 BankAccount debtorAccount = new BankAccount(iban);
-                string rejectReason = (string)paymentTransactionInformation25.StsRsnInf[0].Rsn.Item;
+                string rejectReason = paymentTransactionInformation25.StsRsnInf[0].Rsn.Item;
 
                 DirectDebitTransactionReject directDebitTransactionReject = new DirectDebitTransactionReject(
                     originalTransactionIdentification,
