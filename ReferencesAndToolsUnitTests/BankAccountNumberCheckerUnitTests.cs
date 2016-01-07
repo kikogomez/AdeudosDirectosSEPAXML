@@ -11,7 +11,7 @@ namespace ReferencesAndToolsUnitTests
     public class BankAccountNumberCheckerUnitTests
     {
         [TestMethod]
-        public void PublicStructsInStaticClassesInstantiatesCorrectly()
+        public void PublicStructCCCCheckDigitsInStaticClassBankAccountNumberCheckerInstantiatesCorrectly()
         {
             BankAccountNumberChecker.CCCCheckDigits checkDigits1 = new BankAccountNumberChecker.CCCCheckDigits { bankOfficeCheckDigit = "0", accountNumberCheckDigit = "6" };
             BankAccountNumberChecker.CCCCheckDigits checkDigits2 = new BankAccountNumberChecker.CCCCheckDigits { bankOfficeCheckDigit = "1", accountNumberCheckDigit = "7" };
@@ -19,6 +19,86 @@ namespace ReferencesAndToolsUnitTests
             Assert.AreEqual("6", checkDigits1.accountNumberCheckDigit);
             Assert.AreEqual("1", checkDigits2.bankOfficeCheckDigit);
             Assert.AreEqual("7", checkDigits2.accountNumberCheckDigit);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void BankCodeMaxLengthIs4()
+        {
+            try
+            {
+                BankAccountNumberChecker.CheckBankAccountFieldsLength("04234", "466", "00", "12345678");
+            }
+
+            catch (System.ArgumentException e)
+            {
+                Assert.AreEqual("banco", e.ParamName);
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void OfficeCodeMaxLengthIs4()
+        {
+            try
+            {
+                BankAccountNumberChecker.CheckBankAccountFieldsLength(null, "65466", "00", "12345678");
+            }
+
+            catch (System.ArgumentException e)
+            {
+                Assert.AreEqual("sucursal", e.ParamName);
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void CheckDigitsMaxLegthIs2()
+        {
+            try
+            {
+                BankAccountNumberChecker.CheckBankAccountFieldsLength(null, "", "020", "12345678");
+            }
+
+            catch (System.ArgumentException e)
+            {
+                Assert.AreEqual("dígito de control", e.ParamName);
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void AccounNumberMaxLenghtIs10()
+        {
+            try
+            {
+                BankAccountNumberChecker.CheckBankAccountFieldsLength(null, "", "02", "1234561234578909");
+            }
+
+            catch (System.ArgumentException e)
+            {
+                Assert.AreEqual("número de cuenta", e.ParamName);
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void IfManyArgumentExceptionsOnlyFirstIsThrown()
+        {
+            try
+            {
+                BankAccountNumberChecker.CheckBankAccountFieldsLength("4234", "46565", "050", "12345678");
+            }
+
+            catch (System.ArgumentException e)
+            {
+                Assert.AreEqual("sucursal", e.ParamName);
+                throw;
+            }
         }
 
         [TestMethod]

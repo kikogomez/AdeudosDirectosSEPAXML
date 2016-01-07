@@ -88,6 +88,19 @@ namespace ReferencesAndTools
                 {"accountNumber", ccc.Substring(10, CCCFieldLenghts.AccountNumberLenght)}};
         }
 
+        public static void CheckBankAccountFieldsLength(string bank, string office, string checkDigits, string accountNumber)
+        {
+            ThrowExceptionOnTooLongAccountDataString("banco", bank, CCCFieldLenghts.BankLength);
+            ThrowExceptionOnTooLongAccountDataString("sucursal", office, CCCFieldLenghts.OfficeLenght);
+            ThrowExceptionOnTooLongAccountDataString("dígito de control", checkDigits, CCCFieldLenghts.CheckDigitsLenght);
+            ThrowExceptionOnTooLongAccountDataString("número de cuenta", accountNumber, CCCFieldLenghts.AccountNumberLenght);
+        }
+
+        private static void ThrowExceptionOnTooLongAccountDataString(string fieldName, string fieldValue, int maxLenght)
+        {
+            if ((fieldValue ?? "").Length > maxLenght) throw new System.ArgumentException("El código de " + fieldName + " es demasiado largo", fieldName);
+        }
+
         private static string BankOfficeCCCCheck(string bank, string office)
         {
             return CalculateCCCCheckDigit("00" + bank + office);
@@ -108,7 +121,7 @@ namespace ReferencesAndTools
             return (ccc ?? "").Trim().Length == CCCFieldLenghts.CCCLength;
         }
 
-        struct CCCFieldLenghts
+        public struct CCCFieldLenghts
         {
             public const int BankLength = 4;
             public const int OfficeLenght = 4;

@@ -12,7 +12,7 @@ namespace DirectDebitElements
 
         public BankAccountFields(string bankCode, string officeCode, string checkDigits, string accountNumber)
         {
-            CheckBankAccountFieldsLength(bankCode, officeCode, checkDigits, accountNumber);
+            BankAccountNumberChecker.CheckBankAccountFieldsLength(bankCode, officeCode, checkDigits, accountNumber);
 
             this.bank = bankCode;
             this.office = officeCode;
@@ -45,27 +45,26 @@ namespace DirectDebitElements
             return BankAccountNumberChecker.IsValidCCC(bank, office, checkDigits, accountNumber);
         }
 
+        //private void CheckBankAccountFieldsLength(string bank, string office, string checkDigits, string accountNumber)
+        //{
+        //    ThrowExceptionOnTooLongAccountDataString("banco", bank, BankAccountNumberChecker.CCCFieldLenghts.BankLength);
+        //    ThrowExceptionOnTooLongAccountDataString("sucursal", office, BankAccountNumberChecker.CCCFieldLenghts.OfficeLenght);
+        //    ThrowExceptionOnTooLongAccountDataString("dígito de control", checkDigits, BankAccountNumberChecker.CCCFieldLenghts.CheckDigitsLenght);
+        //    ThrowExceptionOnTooLongAccountDataString("número de cuenta", accountNumber, BankAccountNumberChecker.CCCFieldLenghts.AccountNumberLenght);        
+        //}
 
-        private void CheckBankAccountFieldsLength(string bank, string office, string checkDigits, string accountNumber)
-        {
-            ThrowExceptionOnTooLongAccountDataString("banco", bank, FieldLenghts.BankLength);
-            ThrowExceptionOnTooLongAccountDataString("sucursal", office, FieldLenghts.OfficeLenght);
-            ThrowExceptionOnTooLongAccountDataString("dígito de control", checkDigits, FieldLenghts.CheckDigitsLenght);
-            ThrowExceptionOnTooLongAccountDataString("número de cuenta", accountNumber, FieldLenghts.AccountNumberLenght);        
-        }
+        //private void ThrowExceptionOnTooLongAccountDataString(string fieldName, string fieldValue, int maxLenght)
+        //{
+        //     if ((fieldValue ?? "").Length>maxLenght) throw new System.ArgumentException("El código de " + fieldName + " es demasiado largo", fieldName);
+        //}
 
-        private void ThrowExceptionOnTooLongAccountDataString(string fieldName, string fieldValue, int maxLenght)
-        {
-             if ((fieldValue ?? "").Length>maxLenght) throw new System.ArgumentException("El código de " + fieldName + " es demasiado largo", fieldName);
-        }
-
-        public struct FieldLenghts
-        {
-            public const int BankLength = 4;
-            public const int OfficeLenght = 4;
-            public const int CheckDigitsLenght = 2;
-            public const int AccountNumberLenght = 10;
-            public const int CCCLength = 20;
-        }
+        //private struct FieldLenghts
+        //{
+        //    public const int BankLength = 4;
+        //    public const int OfficeLenght = 4;
+        //    public const int CheckDigitsLenght = 2;
+        //    public const int AccountNumberLenght = 10;
+        //    public const int CCCLength = 20;
+        //}
     }
 }
