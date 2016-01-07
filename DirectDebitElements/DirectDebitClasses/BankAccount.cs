@@ -10,7 +10,6 @@
         {
             this.bankAccountFields = bankAccountFields;
             ccc = new ClientAccountCodeCCC(bankAccountFields.BankCode, bankAccountFields.OfficeCode, bankAccountFields.CheckDigits, bankAccountFields.AccountNumber);
-            //CreateIBANIfPossibleButDontThrowExceptionIfCant();
             iban = new InternationalAccountBankNumberIBAN(ccc);
         }
 
@@ -19,7 +18,6 @@
             this.ccc = ccc;
             this.bankAccountFields = new BankAccountFields(
                 ccc.BankCode, ccc.OfficeCode, ccc.CCCCheck.bankOfficeCheckDigit + ccc.CCCCheck.accountNumberCheckDigit, ccc.AccountNumber);
-            //CreateIBANIfPossibleButDontThrowExceptionIfCant();
             iban = new InternationalAccountBankNumberIBAN(ccc);
         }
 
@@ -61,69 +59,59 @@
             get { return (iban.IBAN != null); }
         }
 
-        public static ClientAccountCodeCCC.CCCCheckDigits CalculateCCCCheckDigits(string bank, string office, string accountNumber)
-        {
-            return ClientAccountCodeCCC.CalculateCCCCheckDigits(bank, office, accountNumber);
-        }
-
-        public static string CalculateCCC(string bank, string office, string accountNumber)
-        {
-            return ClientAccountCodeCCC.CalculateCCC(bank, office, accountNumber);
-        }
-
-        public static bool IsValidCCC(string bank, string office, string checkDigits, string accountNumber)
-        {
-            string ccc = bank + office + checkDigits + accountNumber;
-            return IsValidCCC(ccc);
-        }
-
-        public static bool IsValidCCC(string ccc)
-        {
-            return ClientAccountCodeCCC.IsValidCCC(ccc);
-        }
-
-        public static string CalculateSpanishIBANCheck(string bank, string office, string cccCheckDigits, string accountNumber)
-        {
-            string ccc = bank + office + cccCheckDigits + accountNumber;
-            return CalculateSpanishIBANCheck(ccc);
-        }
-
-        public static string CalculateSpanishIBANCheck(string ccc)
-        {
-            return InternationalAccountBankNumberIBAN.CalculateSpanishIBANCheck(ccc);
-        }
-
-        public static string CalculateSpanishIBAN(string bank, string office, string accountNumber)
-        {
-            ClientAccountCodeCCC.CCCCheckDigits cccCheckDigits = CalculateCCCCheckDigits(bank, office, accountNumber);
-            string ccc = bank + office + cccCheckDigits.bankOfficeCheckDigit + cccCheckDigits.accountNumberCheckDigit + accountNumber;
-            return CalculateSpanishIBAN(ccc);
-        }
-
-        public static string CalculateSpanishIBAN(string bank, string office, string checkDigits, string accountNumber)
-        {
-            string ccc = bank + office + checkDigits + accountNumber;
-            return CalculateSpanishIBAN(ccc);
-        }
-
-        public static string CalculateSpanishIBAN(string ccc)
-        {
-            return InternationalAccountBankNumberIBAN.CalculateSpanishIBAN(ccc);
-        }
-
-        public static bool IsValidIBAN(string iban)
-        {
-            return InternationalAccountBankNumberIBAN.IsValidIBAN(iban);
-        }
-
-        //private void CreateIBANIfPossibleButDontThrowExceptionIfCant()
+        //public static ClientAccountCodeCCC.CCCCheckDigits CalculateCCCCheckDigits(string bank, string office, string accountNumber)
         //{
-        //    try
-        //    {
-        //        iban = new InternationalAccountBankNumberIBAN(ccc);
-        //    }
-        //    catch (System.ArgumentException)
-        //    {}
+        //    return ClientAccountCodeCCC.CalculateCCCCheckDigits(bank, office, accountNumber);
+        //}
+
+        //public static string CalculateCCC(string bank, string office, string accountNumber)
+        //{
+        //    return ClientAccountCodeCCC.CalculateCCC(bank, office, accountNumber);
+        //}
+
+        //public static bool IsValidCCC(string bank, string office, string checkDigits, string accountNumber)
+        //{
+        //    string ccc = bank + office + checkDigits + accountNumber;
+        //    return IsValidCCC(ccc);
+        //}
+
+        //public static bool IsValidCCC(string ccc)
+        //{
+        //    return ClientAccountCodeCCC.IsValidCCC(ccc);
+        //}
+
+        //public static string CalculateSpanishIBANCheck(string bank, string office, string cccCheckDigits, string accountNumber)
+        //{
+        //    string ccc = bank + office + cccCheckDigits + accountNumber;
+        //    return CalculateSpanishIBANCheck(ccc);
+        //}
+
+        //public static string CalculateSpanishIBANCheck(string ccc)
+        //{
+        //    return InternationalAccountBankNumberIBAN.CalculateSpanishIBANCheck(ccc);
+        //}
+
+        //public static string CalculateSpanishIBAN(string bank, string office, string accountNumber)
+        //{
+        //    ClientAccountCodeCCC.CCCCheckDigits cccCheckDigits = CalculateCCCCheckDigits(bank, office, accountNumber);
+        //    string ccc = bank + office + cccCheckDigits.bankOfficeCheckDigit + cccCheckDigits.accountNumberCheckDigit + accountNumber;
+        //    return CalculateSpanishIBAN(ccc);
+        //}
+
+        //public static string CalculateSpanishIBAN(string bank, string office, string checkDigits, string accountNumber)
+        //{
+        //    string ccc = bank + office + checkDigits + accountNumber;
+        //    return CalculateSpanishIBAN(ccc);
+        //}
+
+        //public static string CalculateSpanishIBAN(string ccc)
+        //{
+        //    return InternationalAccountBankNumberIBAN.CalculateSpanishIBAN(ccc);
+        //}
+
+        //public static bool IsValidIBAN(string iban)
+        //{
+        //    return InternationalAccountBankNumberIBAN.IsValidIBAN(iban);
         //}
     }
 }

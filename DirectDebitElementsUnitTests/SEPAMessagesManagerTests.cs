@@ -84,8 +84,6 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual(1, paymentStatusReport.DirectDebitRemmitanceRejects[1].NumberOfTransactions);
             Assert.AreEqual((decimal)71.47, paymentStatusReport.DirectDebitRemmitanceRejects[2].ControlSum);
             CollectionAssert.AreEqual(expectedOriginalEndtoEndTransactionIdentificationList2, paymentStatusReport.DirectDebitRemmitanceRejects[1].OriginalEndtoEndTransactionIdentificationList);
-
-
         }
     }
 }

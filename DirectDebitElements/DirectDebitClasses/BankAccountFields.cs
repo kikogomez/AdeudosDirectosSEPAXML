@@ -1,4 +1,5 @@
 ﻿using System;
+using ReferencesAndTools;
 
 namespace DirectDebitElements
 {
@@ -12,14 +13,6 @@ namespace DirectDebitElements
         public BankAccountFields(string bankCode, string officeCode, string checkDigits, string accountNumber)
         {
             CheckBankAccountFieldsLength(bankCode, officeCode, checkDigits, accountNumber);
-            //try
-            //{
-            //    CheckBankAccountFieldsLength(bankCode,officeCode,checkDigits,accountNumber);
-            //}
-            //catch (ArgumentException e)
-            //{
-            //    throw e;
-            //}
 
             this.bank = bankCode;
             this.office = officeCode;
@@ -49,7 +42,7 @@ namespace DirectDebitElements
 
         public bool AreValid()
         {
-            return ClientAccountCodeCCC.IsValidCCC(bank, office, checkDigits, accountNumber);
+            return BankAccountNumberChecker.IsValidCCC(bank, office, checkDigits, accountNumber);
         }
 
 
@@ -58,18 +51,7 @@ namespace DirectDebitElements
             ThrowExceptionOnTooLongAccountDataString("banco", bank, FieldLenghts.BankLength);
             ThrowExceptionOnTooLongAccountDataString("sucursal", office, FieldLenghts.OfficeLenght);
             ThrowExceptionOnTooLongAccountDataString("dígito de control", checkDigits, FieldLenghts.CheckDigitsLenght);
-            ThrowExceptionOnTooLongAccountDataString("número de cuenta", accountNumber, FieldLenghts.AccountNumberLenght);
-            //try
-            //{
-            //    ThrowExceptionOnTooLongAccountDataString("banco", bank, FieldLenghts.BankLength);
-            //    ThrowExceptionOnTooLongAccountDataString("sucursal", office, FieldLenghts.OfficeLenght);
-            //    ThrowExceptionOnTooLongAccountDataString("dígito de control", checkDigits, FieldLenghts.CheckDigitsLenght);
-            //    ThrowExceptionOnTooLongAccountDataString("número de cuenta", accountNumber, FieldLenghts.AccountNumberLenght);
-            //}
-            //catch (System.ArgumentException e)
-            //{
-            //    throw e;
-            //}           
+            ThrowExceptionOnTooLongAccountDataString("número de cuenta", accountNumber, FieldLenghts.AccountNumberLenght);        
         }
 
         private void ThrowExceptionOnTooLongAccountDataString(string fieldName, string fieldValue, int maxLenght)

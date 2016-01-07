@@ -1,6 +1,7 @@
 ﻿using TechTalk.SpecFlow;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DirectDebitElements;
+using ReferencesAndTools;
 
 namespace AdeudosDirectosSEPAXMLSpecFlowBDD
 {
@@ -97,21 +98,21 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
                 bankAccountContextData.office +
                 bankAccountContextData.checkDigits +
                 bankAccountContextData.accountNumber;
-            Assert.AreEqual(valid, BankAccount.IsValidCCC(ccc));
+            Assert.AreEqual(valid, BankAccountNumberChecker.IsValidCCC(ccc));
         }
 
         [Then(@"the CCC is considered ""(.*)""")]
         public void TheCCCIsConsidered(string validity)
         {
             bool valid = (validity == "valid" ? true : false);
-            Assert.AreEqual(valid, BankAccount.IsValidCCC(bankAccountContextData.ccc));
+            Assert.AreEqual(valid, BankAccountNumberChecker.IsValidCCC(bankAccountContextData.ccc));
         }
 
         [Then(@"the IBAN is considered ""(.*)""")]
         public void ThenTheIBANIsConsidered(string validity)
         {
             bool valid = (validity == "valid" ? true : false);
-            Assert.AreEqual(valid, BankAccount.IsValidIBAN(bankAccountContextData.iban));
+            Assert.AreEqual(valid, BankAccountNumberChecker.IsValidIBAN(bankAccountContextData.iban));
         }
 
         [Then(@"the bank account is ""(.*)""")]

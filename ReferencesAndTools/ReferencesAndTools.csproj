@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BankAccountCheckNumbersCalculator.cs" />
+    <Compile Include="BankAccountNumberChecker.cs" />
     <Compile Include="BankCode.cs" />
     <Compile Include="BankCodes.cs" />
     <Compile Include="ISO7064CheckDigits.cs" />

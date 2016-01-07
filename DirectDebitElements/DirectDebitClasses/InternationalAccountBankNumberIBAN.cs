@@ -8,7 +8,7 @@ namespace DirectDebitElements
 
         public InternationalAccountBankNumberIBAN(string iban)
         {
-            if (IsValidIBAN(iban))
+            if (BankAccountNumberChecker.IsValidIBAN(iban))
             {
                 this.iban = iban;
             }
@@ -21,9 +21,9 @@ namespace DirectDebitElements
 
         public InternationalAccountBankNumberIBAN(ClientAccountCodeCCC ccc)
         {
-            if (ClientAccountCodeCCC.IsValidCCC(ccc.CCC))
+            if (BankAccountNumberChecker.IsValidCCC(ccc.CCC))
             {
-                this.iban = CalculateSpanishIBAN(ccc.CCC);
+                this.iban = BankAccountNumberChecker.CalculateSpanishIBAN(ccc.CCC);
             }
             //else
             //{
@@ -73,30 +73,30 @@ namespace DirectDebitElements
             }
         }
 
-        public static bool IsValidIBAN(string iban)
-        {
-            if (((iban ?? "").Length)!=24) return false;
-            string ccc = iban.Substring(iban.Length-ClientAccountCodeCCC.CCCFieldLenghts.CCCLength);
-            string ibanCheckDigits = iban.Substring(2,2);
-            string countryCode = iban.Substring(0, 2);
-            return (
-                countryCode=="ES" &&
-                ClientAccountCodeCCC.IsValidCCC(ccc) &&
-                BankAccountCheckNumbersCalculator.CalculateSpanishIBANCheckDigits(ccc)== ibanCheckDigits);
-        }
+        //public static bool IsValidIBAN(string iban)
+        //{
+        //    if (((iban ?? "").Length)!=24) return false;
+        //    string ccc = iban.Substring(iban.Length- BankAccountNumberChecker.CCCFieldLenghts.CCCLength);
+        //    string ibanCheckDigits = iban.Substring(2,2);
+        //    string countryCode = iban.Substring(0, 2);
+        //    return (
+        //        countryCode=="ES" &&
+        //        BankAccountNumberChecker.IsValidCCC(ccc) &&
+        //        BankAccountNumberChecker.CalculateSpanishIBANCheckDigits(ccc)== ibanCheckDigits);
+        //}
 
-        public static string CalculateSpanishIBAN(string ccc)
-        {
-            if (!ClientAccountCodeCCC.IsValidCCC(ccc)) return null;
-            string iban = "ES" + BankAccountCheckNumbersCalculator.CalculateSpanishIBANCheckDigits(ccc) + ccc;
-            return iban;
-        }
+        //public static string CalculateSpanishIBAN(string ccc)
+        //{
+        //    if (!BankAccountNumberChecker.IsValidCCC(ccc)) return null;
+        //    string iban = "ES" + BankAccountNumberChecker.CalculateSpanishIBANCheckDigits(ccc) + ccc;
+        //    return iban;
+        //}
 
-        public static string CalculateSpanishIBANCheck(string ccc)
-        {
-            if (!ClientAccountCodeCCC.IsValidCCC(ccc)) return null;
-            return BankAccountCheckNumbersCalculator.CalculateSpanishIBANCheckDigits(ccc);
-        }
+        //public static string CalculateSpanishIBANCheck(string ccc)
+        //{
+        //    if (!BankAccountNumberChecker.IsValidCCC(ccc)) return null;
+        //    return BankAccountNumberChecker.CalculateSpanishIBANCheckDigits(ccc);
+        //}
 
         private string splitIBAN(string iban)
         {
