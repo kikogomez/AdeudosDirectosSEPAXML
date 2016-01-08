@@ -6,7 +6,6 @@ namespace ReferencesAndToolsUnitTests
     [TestClass]
     public class ISO7064UnitTests
     {
-        [TestClass]
         public class ISO7064Test
         {
             [TestMethod]

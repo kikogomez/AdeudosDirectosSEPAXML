@@ -75,7 +75,6 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
         [Given(@"These bills")]
         public void GivenTheseBills(Table billsTable)
         {
-            //invoiceContextData.billDataManager.InvoiceSequenceNumber = 5000;
             Dictionary<string, Debtor> debtorsCollection = (Dictionary<string, Debtor>)ScenarioContext.Current["Debtors"];
             foreach (var row in billsTable.Rows)
             {
@@ -264,9 +263,6 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
         {
             Debtor debtor = ((Dictionary<string, Debtor>)ScenarioContext.Current["Debtors"])["00002"];
             DirectDebitMandate directDebitmandate = debtor.DirectDebitmandates.Values.ElementAt(0);
-            //Invoice invoice = debtor.InvoicesList.Values.ElementAt(0);
-            //Bill bill = invoice.Bills.Values.ElementAt(0);
-            //DirectDebitMandate directDebitmandate = debtor.DirectDebitmandates.Values.ElementAt(0);
             SimplifiedBill bill = new SimplifiedBill("0002", "Recibo 2", amount, DateTime.Today, DateTime.Today.AddMonths(2));
             DirectDebitTransaction directDebitTransaction = directDebitRemittancesManager.CreateANewDirectDebitTransactionFromAGroupOfBills(
                 directDebitmandate,
@@ -327,11 +323,6 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
                 {
                     directDebitRemittancesManager.AddBilllToExistingDirectDebitTransaction(directDebitTransaction, bill);
                 }
-                //foreach (Invoice invoice in debtor.InvoicesList.Values)
-                //{
-                //    Bill bill = invoice.Bills.Values.ElementAt(0);
-                //    directDebitRemittancesManager.AddBilllToExistingDirectDebitTransaction(directDebitTransaction, bill);
-                //}
                 directDebitRemittancesManager.AddDirectDebitTransactionToGroupPayment(
                     directDebitTransaction, directDebitTransactionsGroupPayment);
             }
