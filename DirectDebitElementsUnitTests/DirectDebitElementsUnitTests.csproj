@@ -78,6 +78,10 @@
       <Project>{5fed753a-7a36-4a4a-8b4d-c9ba3d577840}</Project>
       <Name>ReferencesAndTools</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XMLSerializerValidator\XMLSerializerValidator.csproj">
+      <Project>{e080b83d-9a86-4c93-8b7f-4674a607cbc9}</Project>
+      <Name>XMLSerializerValidator</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="XML Test Files\pain.002.001.03\LaCaixa_pain00200103_Example2.xml">
@@ -86,6 +90,24 @@
     <Content Include="XML Test Files\pain.002.001.03\LaCaixa_pain00200103_Example1.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="XML Test Files\pain.008.001.02\BasicDirectDebitRemmitanceExample.XML">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="XML Test Files\pain.008.001.02\tmp.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="XSDFiles\pain.002.001.03.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="XSDFiles\pain.007.001.02.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="XSDFiles\pain.008.001.02.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

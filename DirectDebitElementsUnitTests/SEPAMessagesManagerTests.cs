@@ -5,6 +5,7 @@ using System.Linq;
 using Billing;
 using DirectDebitElements;
 using ReferencesAndTools;
+using XMLSerializerValidator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DirectDebitElementsUnitTests
@@ -16,7 +17,7 @@ namespace DirectDebitElementsUnitTests
         static Creditor creditor;
         static CreditorAgent creditorAgent;
         static DirectDebitInitiationContract directDebitInitiationContract;
-        static BankCodes spanishBankCodes;
+        //static BankCodes spanishBankCodes;
 
         [ClassInitialize]
         public static void ClassInit(TestContext context)
@@ -71,105 +72,47 @@ namespace DirectDebitElementsUnitTests
                 debtor.AddSimplifiedBill(bills);
             }
 
-            spanishBankCodes = new BankCodes(@"XMLFiles\SpanishBankCodes.xml", BankCodes.BankCodesFileFormat.XML);
+            //spanishBankCodes = new BankCodes(@"XMLFiles\SpanishBankCodes.xml", BankCodes.BankCodesFileFormat.XML);
         }
 
         [TestMethod]
         public void ACustomerDirectDebitRemmitanceXMLStringMessageIsCorrectlyGenerated()
         {
-
-            //Creating Remmitance
             DateTime creationDate = new DateTime(2015, 01, 10, 7, 15, 0);
             DateTime requestedCollectionDate = new DateTime(2015, 01, 15);
 
             DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(creationDate, requestedCollectionDate, directDebitInitiationContract);
             DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment = new DirectDebitTransactionsGroupPayment("CORE");
 
+            int transactionsCounter = 0;
             foreach (Debtor debtor in debtors.Values)
             {
                 DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
-                    //new List<SimplifiedBill>(debtor.SimplifiedBills.Values),
                     debtor.SimplifiedBills.Select(dictionaryElement => dictionaryElement.Value).ToList(),
-                    debtor.DirectDebitmandates[0].InternalReferenceNumber,
-                    debtor.DirectDebitmandates[0].BankAccount,
+                    debtor.DirectDebitmandates.First().Value.InternalReferenceNumber,
+                    debtor.DirectDebitmandates.First().Value.BankAccount,
                     debtor.FullName,
-                    debtor.DirectDebitmandates[0].DirectDebitMandateCreationDate);
-            }
-
-            //string localInstrument = "COR1";
-            //DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment = new DirectDebitTransactionsGroupPayment(localInstrument);
-
-            //Debtor debtor = debtors["00002"];
-            //List<SimplifiedBill> bills = new List<SimplifiedBill> { debtor.SimplifiedBills.ElementAt(0).Value };
-            //DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
-            //int internalDirectDebitReferenceNumber = directDebitMandate.InternalReferenceNumber;
-            //BankAccount debtorAccount = directDebitMandate.BankAccount;
-            //string accountHolderName = directDebitMandate.AccountHolderName;
-            //DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
-            //DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(bills, internalDirectDebitReferenceNumber, debtorAccount, accountHolderName, mandateSignatureDate);
-            //directDebitTransactionsGroupPayment.AddDirectDebitTransaction(directDebitTransaction);
-            //Assert.AreEqual(1, directDebitTransactionsGroupPayment.NumberOfDirectDebitTransactions);
-            //Assert.AreEqual((decimal)79, directDebitTransactionsGroupPayment.TotalAmount);
-
-
-
-
-            //DateTime creationDate = new DateTime(2013, 11, 11);
-            //DateTime requestedCollectionDate = new DateTime(2013, 11, 12);
-            //DirectDebitInitiationContract directDebitInitiationContract = (DirectDebitInitiationContract)ScenarioContext.Current["DirectDebitInitiationContract"];
-            //DirectDebitRemittance directDebitRemmitance = directDebitRemittancesManager.CreateADirectDebitRemmitance(creationDate, requestedCollectionDate, directDebitInitiationContract);
-            //DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment =
-            //    directDebitRemittancesManager.CreateANewGroupOfDirectDebitTransactions("COR1");
-
-            //List<Debtor> debtors = ((Dictionary<string, Debtor>)ScenarioContext.Current["Debtors"]).Values.ToList();
-            //int transactionsCounter = 0;
-            //foreach (Debtor debtor in debtors)
-            //{
-            //    DirectDebitMandate directDebitmandate = debtor.DirectDebitmandates.Values.ElementAt(0);
-            //    DirectDebitTransaction directDebitTransaction = directDebitRemittancesManager.CreateANewEmptyDirectDebitTransaction(directDebitmandate);
-            //    transactionsCounter++;
-            //    directDebitTransaction.GenerateDirectDebitTransactionInternalReference(transactionsCounter);
-            //    directDebitTransaction.GenerateMandateID(directDebitInitiationContract.CreditorBussinessCode);
-            //    foreach (SimplifiedBill bill in debtor.SimplifiedBills.Values)
-            //    {
-            //        directDebitRemittancesManager.AddBilllToExistingDirectDebitTransaction(directDebitTransaction, bill);
-            //    }
-            //    directDebitRemittancesManager.AddDirectDebitTransactionToGroupPayment(
-            //        directDebitTransaction, directDebitTransactionsGroupPayment);
-            //}
-            //directDebitRemittancesManager.AddDirectDebitTransactionGroupPaymentToDirectDebitRemittance(
-            //    directDebitRemmitance, directDebitTransactionsGroupPayment);
-            //directDebitTransactionsGroupPayment.GeneratePaymentInformationID(1);
-            //ScenarioContext.Current.Add("DirectDebitRemittance", directDebitRemmitance);
-
-            //Creating Customer Direct Debit Initiation Message from Direct Debit Remmitance
-
-
-
-            int transactionsCounter = 0;
-            foreach (Debtor debtor in debtors)
-            {
-                DirectDebitMandate directDebitmandate = debtor.DirectDebitmandates.Values.ElementAt(0);
-                DirectDebitTransaction directDebitTransaction = directDebitRemittancesManager.CreateANewEmptyDirectDebitTransaction(directDebitmandate);
+                    debtor.DirectDebitmandates.First().Value.DirectDebitMandateCreationDate);
                 transactionsCounter++;
                 directDebitTransaction.GenerateDirectDebitTransactionInternalReference(transactionsCounter);
-                directDebitTransaction.GenerateMandateID(directDebitInitiationContract.CreditorBussinessCode);
-                foreach (SimplifiedBill bill in debtor.SimplifiedBills.Values)
-                {
-                    directDebitRemittancesManager.AddBilllToExistingDirectDebitTransaction(directDebitTransaction, bill);
-                }
-                //foreach (Invoice invoice in debtor.InvoicesList.Values)
-                //{
-                //    Bill bill = invoice.Bills.Values.ElementAt(0);
-                //    directDebitRemittancesManager.AddBilllToExistingDirectDebitTransaction(directDebitTransaction, bill);
-                //}
-                directDebitRemittancesManager.AddDirectDebitTransactionToGroupPayment(
-                    directDebitTransaction, directDebitTransactionsGroupPayment);
+                directDebitTransactionsGroupPayment.AddDirectDebitTransaction(directDebitTransaction);
             }
-            directDebitRemittancesManager.AddDirectDebitTransactionGroupPaymentToDirectDebitRemittance(
-                directDebitRemmitance, directDebitTransactionsGroupPayment);
-            directDebitTransactionsGroupPayment.GeneratePaymentInformationID(1);
-            ScenarioContext.Current.Add("DirectDebitRemittance", directDebitRemmitance);
+
+            directDebitRemmitance.AddDirectDebitTransactionsGroupPayment(directDebitTransactionsGroupPayment);
+
+            SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
+            string xMLCustomerDirectDeitInitiationMessage = sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationMessage(
+                creditor,
+                creditorAgent,
+                directDebitRemmitance);
+
+            string xMLValidatingErrors = XMLValidator.ValidateXMLStringThroughXSDFile(
+                xMLCustomerDirectDeitInitiationMessage,
+                @"XSDFiles\pain.008.001.02.xsd");
+            Assert.AreEqual("", xMLValidatingErrors);
+
+            string expectedXMLString = File.ReadAllText(@"XML Test Files\pain.008.001.02\BasicDirectDebitRemmitanceExample.xml");           
+            Assert.AreEqual(expectedXMLString, xMLCustomerDirectDeitInitiationMessage);
         }
 
 
