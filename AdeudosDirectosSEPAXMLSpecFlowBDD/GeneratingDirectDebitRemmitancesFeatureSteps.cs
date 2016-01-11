@@ -317,8 +317,8 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
                 DirectDebitMandate directDebitmandate = debtor.DirectDebitmandates.Values.ElementAt(0);
                 DirectDebitTransaction directDebitTransaction = directDebitRemittancesManager.CreateANewEmptyDirectDebitTransaction(directDebitmandate);
                 transactionsCounter++;
-                directDebitTransaction.GenerateDirectDebitTransactionInternalReference(transactionsCounter);
-                directDebitTransaction.GenerateMandateID(directDebitInitiationContract.CreditorBussinessCode);
+                directDebitTransaction.GenerateInternalUniqueInstructionID(transactionsCounter);
+                directDebitTransaction.GenerateAT01MandateID(directDebitInitiationContract.CreditorBussinessCode);
                 foreach (SimplifiedBill bill in debtor.SimplifiedBills.Values)
                 {
                     directDebitRemittancesManager.AddBilllToExistingDirectDebitTransaction(directDebitTransaction, bill);

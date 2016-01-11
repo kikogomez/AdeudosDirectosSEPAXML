@@ -48,7 +48,6 @@ namespace DirectDebitElements
             DateTime generationDateTime,
             int numberOfTransactions,
             decimal controlSum,
-            //DirectDebitRemittance directDebitRemmitance,
             PartyIdentification32 initiationParty_InitgPty)
         {
 
@@ -75,8 +74,8 @@ namespace DirectDebitElements
             DirectDebitTransaction directDebitTransaction)
         {
             PaymentIdentification1 paymentIdentification_PmtID = new PaymentIdentification1(
-                directDebitTransaction.DirectDebitTransactionInternalReference,    //<InstrID>
-                directDebitTransaction.DirectDebitTransactionInternalReference);   //<EndToEndID>
+                directDebitTransaction.InternalUniqueInstructionID,    //<InstrID>
+                directDebitTransaction.InternalUniqueInstructionID);   //<EndToEndID>
 
             ActiveOrHistoricCurrencyAndAmount instructedAmount_InstdAmt = new ActiveOrHistoricCurrencyAndAmount(
                 "EUR",                                      //<InstdAmt> ""CCY" atribute value

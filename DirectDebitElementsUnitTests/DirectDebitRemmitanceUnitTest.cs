@@ -95,7 +95,7 @@ namespace DirectDebitElementsUnitTests
             string accountHolderName = directDebitMandate.AccountHolderName; 
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(internalDirectDebitReferenceNumber, debtorAccount, accountHolderName, mandateSignatureDate);
-            Assert.AreEqual(internalDirectDebitReferenceNumber, directDebitTransaction.InternalDirectDebitReferenceNumber);
+            Assert.AreEqual(internalDirectDebitReferenceNumber, directDebitTransaction.MandateInternalReferenceNumber);
             Assert.AreEqual(debtorAccount, directDebitTransaction.DebtorAccount);
             Assert.AreEqual(0, directDebitTransaction.NumberOfBills);
         }
@@ -112,7 +112,7 @@ namespace DirectDebitElementsUnitTests
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(bills, internalDirectDebitReferenceNumber, debtorAccount, accountHolderName, mandateSignatureDate);
             Assert.AreEqual(bills, directDebitTransaction.BillsInTransaction);
-            Assert.AreEqual(internalDirectDebitReferenceNumber, directDebitTransaction.InternalDirectDebitReferenceNumber);
+            Assert.AreEqual(internalDirectDebitReferenceNumber, directDebitTransaction.MandateInternalReferenceNumber);
             Assert.AreEqual(debtorAccount, directDebitTransaction.DebtorAccount);
             Assert.AreEqual((decimal)158, directDebitTransaction.Amount);
             Assert.AreEqual(2, directDebitTransaction.NumberOfBills);
@@ -197,8 +197,8 @@ namespace DirectDebitElementsUnitTests
             string accountHolderName = directDebitMandate.AccountHolderName; 
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(bills, internalDirectDebitReferenceNumber, debtorAccount, accountHolderName, mandateSignatureDate);
-            directDebitTransaction.GenerateDirectDebitTransactionInternalReference(sequenceNumber);
-            Assert.AreEqual("000001", directDebitTransaction.DirectDebitTransactionInternalReference);
+            directDebitTransaction.GenerateInternalUniqueInstructionID(sequenceNumber);
+            Assert.AreEqual("000001", directDebitTransaction.InternalUniqueInstructionID);
         }
 
         [TestMethod]
@@ -212,8 +212,8 @@ namespace DirectDebitElementsUnitTests
             string accountHolderName = directDebitMandate.AccountHolderName; 
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(bills, internalDirectDebitReferenceNumber, debtorAccount, accountHolderName, mandateSignatureDate);
-            Assert.AreEqual(1235, directDebitTransaction.InternalDirectDebitReferenceNumber);
-            directDebitTransaction.GenerateMandateID("777");
+            Assert.AreEqual(1235, directDebitTransaction.MandateInternalReferenceNumber);
+            directDebitTransaction.GenerateAT01MandateID("777");
             Assert.AreEqual("000077701235                       ", directDebitTransaction.MandateID);
         }
     }

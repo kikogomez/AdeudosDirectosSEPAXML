@@ -94,7 +94,7 @@ namespace DirectDebitElementsUnitTests
                     debtor.FullName,
                     debtor.DirectDebitmandates.First().Value.DirectDebitMandateCreationDate);
                 transactionsCounter++;
-                directDebitTransaction.GenerateDirectDebitTransactionInternalReference(transactionsCounter);
+                directDebitTransaction.GenerateInternalUniqueInstructionID(transactionsCounter);
                 directDebitTransactionsGroupPayment.AddDirectDebitTransaction(directDebitTransaction);
             }
 

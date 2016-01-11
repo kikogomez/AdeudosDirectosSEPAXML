@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using Billing;
 using DirectDebitElements;
 using ReferencesAndTools;
@@ -19,7 +19,6 @@ namespace DirectDebitElementsUnitTests
         static Creditor creditor;
         static CreditorAgent creditorAgent;
         static DirectDebitInitiationContract directDebitInitiationContract;
-        static BankCodes spanishBankCodes;
 
         [ClassInitialize]
         public static void ClassInit(TestContext context)
@@ -78,18 +77,12 @@ namespace DirectDebitElementsUnitTests
         [TestMethod]
         public void APartyIdentification32IsCorrectlyGenerated()
         {
-            Creditor creditor = new Creditor("G12345678", "NOMBRE ACREEDOR PRUEBAS");
-            BankAccount creditorAccount = new BankAccount(new InternationalAccountBankNumberIBAN("ES5621001111301111111111"));
-            BankCode bankCode = new BankCode("2100", "CaixaBank", "CAIXESBBXXX");
-            CreditorAgent creditorAgent = new CreditorAgent(bankCode);
-            DirectDebitInitiationContract directDebitInitiationContract = new DirectDebitInitiationContract(creditorAccount, "G12345678", "011", creditorAgent);
-
             PartyIdentification32 initiationParty_InitPty = SEPAElementsGenerator.GenerateInitiationParty_InitPty(
                 creditor,
                 directDebitInitiationContract);
 
             Assert.AreEqual("NOMBRE ACREEDOR PRUEBAS",initiationParty_InitPty.Nm);
-            Assert.AreEqual("ES26011G12345678", ((OrganisationIdentification4)initiationParty_InitPty.Id.Item).Othr[0].Id);
+            Assert.AreEqual("ES26777G12345678", ((OrganisationIdentification4)initiationParty_InitPty.Id.Item).Othr[0].Id);
 
             Assert.IsNull(initiationParty_InitPty.CtctDtls);
             Assert.IsNull(initiationParty_InitPty.CtryOfRes);
@@ -104,15 +97,6 @@ namespace DirectDebitElementsUnitTests
             int numberOfTransactions = 2;
             decimal controlSum = 158;
 
-            Creditor creditor = new Creditor("G12345678", "NOMBRE ACREEDOR PRUEBAS");
-            BankAccount creditorAccount = new BankAccount(new InternationalAccountBankNumberIBAN("ES5621001111301111111111"));
-            BankCode bankCode = new BankCode("2100", "CaixaBank", "CAIXESBBXXX");
-            CreditorAgent creditorAgent = new CreditorAgent(bankCode);
-            DirectDebitInitiationContract directDebitInitiationContract = new DirectDebitInitiationContract(
-                creditorAccount,
-                "G12345678",
-                "011",
-                creditorAgent);
             PartyIdentification32 initiationParty_InitPty = SEPAElementsGenerator.GenerateInitiationParty_InitPty(
                 creditor,
                 directDebitInitiationContract);
@@ -139,10 +123,20 @@ namespace DirectDebitElementsUnitTests
         [TestMethod]
         public void ADirectDebitTransactionInformation9IsCorrectlyGenerated()
         {
-            BankCode bankCode = new BankCode("2100", "CaixaBank", "CAIXESBBXXX");
-            CreditorAgent creditorAgent = new CreditorAgent(bankCode);
+            Debtor debtor = debtors["00002"];
+            List<SimplifiedBill> bills = debtor.SimplifiedBills.Values.ToList();
+            DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
+            int internalDirectDebitReferenceNumber = directDebitMandate.InternalReferenceNumber;
+            BankAccount debtorAccount = directDebitMandate.BankAccount;
+            string accountHolderName = directDebitMandate.AccountHolderName;
+            DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
+            DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(bills, internalDirectDebitReferenceNumber, debtorAccount, accountHolderName, mandateSignatureDate);
 
-            //DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction()
+            DirectDebitTransactionInformation9 directDebitTransactionInformation = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
+                creditorAgent,
+                directDebitTransaction);
+
+            //Assert.AreEqual(directDebitTransactionInformation.PmtId.InstrId);
 
 
             //DateTime truncatedToSecondsGenerationDateTime = DateTime.SpecifyKind(generationDateTime, DateTimeKind.Unspecified).Truncate(TimeSpan.FromSeconds(1));
