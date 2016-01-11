@@ -44,8 +44,11 @@ namespace DirectDebitElements
         }
 
         public static GroupHeader39 GenerateGroupHeader_GrpHdr(
+            string messageID,
             DateTime generationDateTime,
-            DirectDebitRemittance directDebitRemmitance,
+            int numberOfTransactions,
+            decimal controlSum,
+            //DirectDebitRemittance directDebitRemmitance,
             PartyIdentification32 initiationParty_InitgPty)
         {
 
@@ -55,11 +58,11 @@ namespace DirectDebitElements
                 DateTime.SpecifyKind(generationDateTime, DateTimeKind.Unspecified).Truncate(TimeSpan.FromSeconds(1));
 
             GroupHeader39 groupHeader_grpHdr = new GroupHeader39(
-                directDebitRemmitance.MessageID,                        //<MsgID>
+                messageID,                                              //<MsgID>
                 creatingdDateTime,                                      //<CreDtTm>
                 authorisation_authstn,                                  //<Authstn> - Not used in SEPA. Array of null instead of null to avoid null reference exception
-                directDebitRemmitance.NumberOfTransactions.ToString(),  //<NbOfTxs>
-                directDebitRemmitance.ControlSum,                       //<CtrlSum>
+                numberOfTransactions.ToString(),                        //<NbOfTxs>
+                controlSum,                                             //<CtrlSum>
                 true,                                                   //Control sum is specified
                 initiationParty_InitgPty,                               //<InitgPty>
                 null);                                                  //<FwdgAgt> - Not used by creditor in SEPA COR

@@ -7,7 +7,7 @@ Background:
 	
 	Given My creditor info is
 	| NIF       | Name                              |
-	| G35008770 | Real Club Náutico de Gran Canaria |
+	| G12345678 | NOMBRE ACREEDOR PRUEBAS           |
 
 Scenario: Create a creditor agent
 	Given I have a bank

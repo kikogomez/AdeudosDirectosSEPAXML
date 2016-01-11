@@ -28,10 +28,10 @@ namespace ISO20022PaymentInitiationsUnitTests
         public void AT02CreditorIDIsWellCalculated()
         {
             string nationalIdentifier = "ES";
-            string nIF = "G35008770";
+            string nIF = "G12345678";
             string suffix = "777";
             string creditorIdentifier = sEPAAttributes.AT02CreditorIdentifier(nationalIdentifier, nIF, suffix);
-            Assert.AreEqual("ES90777G35008770", creditorIdentifier);
+            Assert.AreEqual("ES26777G12345678", creditorIdentifier);
         }
 
         [TestMethod]

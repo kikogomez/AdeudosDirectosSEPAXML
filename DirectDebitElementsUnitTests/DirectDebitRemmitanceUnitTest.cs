@@ -26,7 +26,7 @@ namespace DirectDebitElementsUnitTests
                 {"00002", new Debtor("00002", "Pedro", "Pérez", "Gómez")}
             };
 
-            creditor = new Creditor("G35008770", "Real Club Náutico de Gran Canaria");
+            creditor = new Creditor("G12345678", "NOMBRE ACREEDOR PRUEBAS");
             creditorAgent = new CreditorAgent(new BankCode("2100", "CaixaBank","CAIXESBBXXX"));
             directDebitInitiationContract = new DirectDebitInitiationContract(
                 new BankAccount(new InternationalAccountBankNumberIBAN("ES5621001111301111111111")),
@@ -79,7 +79,7 @@ namespace DirectDebitElementsUnitTests
             DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
             DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
             DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(creationDate, requestedCollectionDate, directDebitInitiationContract);
-            string expectedMessageId = "ES90777G350087702013113007:15:00";
+            string expectedMessageId = "ES26777G123456782013113007:15:00";
             Assert.AreEqual(expectedMessageId, directDebitRemmitance.MessageID);
             Assert.AreEqual(creationDate, directDebitRemmitance.CreationDate);
             Assert.AreEqual(requestedCollectionDate, directDebitRemmitance.RequestedCollectionDate);

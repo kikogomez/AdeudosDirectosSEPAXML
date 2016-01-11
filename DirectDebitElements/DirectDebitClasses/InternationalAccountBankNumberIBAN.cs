@@ -12,11 +12,6 @@ namespace DirectDebitElements
             {
                 this.iban = iban;
             }
-            //else
-            //{
-            //    string exceptionMessage = "The provided IBAN string is invalid";
-            //    throw new System.ArgumentException(exceptionMessage, "IBAN");
-            //}
         }
 
         public InternationalAccountBankNumberIBAN(ClientAccountCodeCCC ccc)
@@ -25,11 +20,6 @@ namespace DirectDebitElements
             {
                 this.iban = BankAccountNumberChecker.CalculateSpanishIBAN(ccc.CCC);
             }
-            //else
-            //{
-            //    string exceptionMessage = "The provided CCC string is invalid";
-            //    throw new System.ArgumentException(exceptionMessage, "CCC");
-            //}
         }
 
         public string IBAN

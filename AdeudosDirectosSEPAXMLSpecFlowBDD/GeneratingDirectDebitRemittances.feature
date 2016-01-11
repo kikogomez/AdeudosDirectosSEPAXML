@@ -7,7 +7,7 @@ Background:
 	
 	Given My Direct Debit Initiation Contract is
 	| NIF       | Name                              | BIC         | CreditorAgentName | LocalBankCode | CreditorBussinesCode | CreditorAccount          |
-	| G35008770 | Real Club Náutico de Gran Canaria | CAIXESBBXXX | CAIXABANK         | 2100          | 777                  | ES5621001111301111111111 |
+	| G12345678 | NOMBRE ACREEDOR PRUEBAS           | CAIXESBBXXX | CAIXABANK         | 2100          | 777                  | ES5621001111301111111111 |
 
 	Given These debtors
 	| DebtorID | Name      | FirstSurname  | SecondSurname | Reference | Account              | BIC         |

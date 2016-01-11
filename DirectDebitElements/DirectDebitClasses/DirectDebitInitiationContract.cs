@@ -11,10 +11,20 @@ namespace DirectDebitElements
 
         public DirectDebitInitiationContract(BankAccount creditorAccount, string nIF, string creditorBusinessCode, CreditorAgent creditorAgent)
         {
+            CheckArguments(creditorAccount, nIF, creditorBusinessCode, creditorAgent);
             this.creditorAccount = creditorAccount;
             this.creditorBusinessCode = creditorBusinessCode;
             GenerateCreditorID(nIF,creditorBusinessCode);
             this.creditorAgent = creditorAgent;
+        }
+
+        private void CheckArguments(BankAccount creditorAccount, string nIF, string creditorBusinessCode, CreditorAgent creditorAgent)
+        {
+            if (creditorAccount == null) throw new System.ArgumentNullException("creditorAccount");
+            if (creditorAccount.HasValidIBAN == false) throw new System.ArgumentException("The Creditor Account IBAN is invalid", "creditorAccount");
+            if (nIF == null) throw new System.ArgumentNullException("NIF");
+            if (creditorBusinessCode == null) throw new System.ArgumentNullException("CreditorBusinessCode");
+            if (creditorAgent == null) throw new System.ArgumentNullException("CreditorAgent");
         }
 
         public BankAccount CreditorAcount

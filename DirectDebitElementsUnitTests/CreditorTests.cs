@@ -12,9 +12,9 @@ namespace DirectDebitElementsUnitTests
         [TestMethod]
         public void TheCreditorInfoIsCorrectlyCreated()
         {
-            Creditor creditor = new Creditor("G35008770", "Real Club Náutico de Gran Canaria");
-            Assert.AreEqual("G35008770", creditor.NIF);
-            Assert.AreEqual("Real Club Náutico de Gran Canaria", creditor.Name);
+            Creditor creditor = new Creditor("G12345678", "NOMBRE ACREEDOR PRUEBAS");
+            Assert.AreEqual("G12345678", creditor.NIF);
+            Assert.AreEqual("NOMBRE ACREEDOR PRUEBAS", creditor.Name);
         }
 
         [TestMethod]
@@ -30,7 +30,7 @@ namespace DirectDebitElementsUnitTests
         [TestMethod]
         public void ANewDirectDebitInitiationContractIsCorrectlyCreated()
         {
-            Creditor creditor = new Creditor("G35008770", "Real Club Náutico de Gran Canaria");
+            Creditor creditor = new Creditor("G12345678", "NOMBRE ACREEDOR PRUEBAS");
             BankAccount creditorAccount = new BankAccount(new ClientAccountCodeCCC("20381111401111111111"));
             BankCode bankCode = new BankCode("2038", "Bankia, S.A.", "CAHMESMMXXX");
             CreditorAgent creditorAgent = new CreditorAgent(bankCode);
@@ -39,13 +39,13 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual("20381111401111111111", directDebitInitiationContract.CreditorAcount.CCC.CCC);
             Assert.AreEqual("CAHMESMMXXX", directDebitInitiationContract.CreditorAgent.BankBIC);
             Assert.AreEqual("777", directDebitInitiationContract.CreditorBussinessCode);
-            Assert.AreEqual("ES90777G35008770", directDebitInitiationContract.CreditorID);
+            Assert.AreEqual("ES26777G12345678", directDebitInitiationContract.CreditorID);
         }
 
         [TestMethod]
         public void ADirectDebitInitiationContractIsCorrectlyRegisteredByTheCreditor()
         {
-            Creditor creditor = new Creditor("G35008770", "Real Club Náutico de Gran Canaria");
+            Creditor creditor = new Creditor("G12345678", "NOMBRE ACREEDOR PRUEBAS");
             BankAccount creditorAccount = new BankAccount(new ClientAccountCodeCCC("20381111401111111111"));
             BankCode bankCode = new BankCode("2038", "Bankia, S.A.", "CAHMESMMXXX");
             CreditorAgent creditorAgent = new CreditorAgent(bankCode);
@@ -55,13 +55,13 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual("20381111401111111111", creditor.DirectDebitInitiationContracts["777"].CreditorAcount.CCC.CCC);
             Assert.AreEqual("CAHMESMMXXX", creditor.DirectDebitInitiationContracts["777"].CreditorAgent.BankBIC);
             Assert.AreEqual("777", creditor.DirectDebitInitiationContracts["777"].CreditorBussinessCode);
-            Assert.AreEqual("ES90777G35008770", creditor.DirectDebitInitiationContracts["777"].CreditorID);
+            Assert.AreEqual("ES26777G12345678", creditor.DirectDebitInitiationContracts["777"].CreditorID);
         }
 
         [TestMethod]
         public void ICanRegisterMoreThanOneDirectDebitInitiationContract()
         {
-            Creditor creditor = new Creditor("G35008770", "Real Club Náutico de Gran Canaria");
+            Creditor creditor = new Creditor("G12345678", "NOMBRE ACREEDOR PRUEBAS");
 
             BankCode bankCode = new BankCode("2038", "Bankia, S.A.", "CAHMESMMXXX");
             CreditorAgent creditorAgent = new CreditorAgent(bankCode);
@@ -80,12 +80,12 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual("20381111401111111111", creditor.DirectDebitInitiationContracts["777"].CreditorAcount.CCC.CCC);
             Assert.AreEqual("CAHMESMMXXX", creditor.DirectDebitInitiationContracts["777"].CreditorAgent.BankBIC);
             Assert.AreEqual("777", creditor.DirectDebitInitiationContracts["777"].CreditorBussinessCode);
-            Assert.AreEqual("ES90777G35008770", creditor.DirectDebitInitiationContracts["777"].CreditorID);
+            Assert.AreEqual("ES26777G12345678", creditor.DirectDebitInitiationContracts["777"].CreditorID);
 
             Assert.AreEqual("21001111301111111111", creditor.DirectDebitInitiationContracts["333"].CreditorAcount.CCC.CCC);
             Assert.AreEqual("CAIXESBBXXX", creditor.DirectDebitInitiationContracts["333"].CreditorAgent.BankBIC);
             Assert.AreEqual("333", creditor.DirectDebitInitiationContracts["333"].CreditorBussinessCode);
-            Assert.AreEqual("ES90333G35008770", creditor.DirectDebitInitiationContracts["333"].CreditorID);
+            Assert.AreEqual("ES26333G12345678", creditor.DirectDebitInitiationContracts["333"].CreditorID);
         }
 
         [TestMethod]
@@ -107,7 +107,7 @@ namespace DirectDebitElementsUnitTests
         [ExpectedException(typeof(System.ArgumentException))]
         public void OnlyCanChangeDirectDebitContractAccountsWithAccountsFromTheSameCreditorAgent()
         {
-            Creditor creditor = new Creditor("G35008770", "Real Club Náutico de Gran Canaria");
+            Creditor creditor = new Creditor("G12345678", "NOMBRE ACREEDOR PRUEBAS");
             BankCode bankCode = new BankCode("2038", "Bankia, S.A.", "CAHMESMMXXX");
             CreditorAgent creditorAgent = new CreditorAgent(bankCode);
             BankAccount creditorAccount = new BankAccount(new ClientAccountCodeCCC("20381111401111111111"));
@@ -128,7 +128,7 @@ namespace DirectDebitElementsUnitTests
         [TestMethod]
         public void ICanRemoveADirectDebitContract()
         {
-            Creditor creditor = new Creditor("G35008770", "Real Club Náutico de Gran Canaria");
+            Creditor creditor = new Creditor("G12345678", "NOMBRE ACREEDOR PRUEBAS");
             BankCode bankCode = new BankCode("2038", "Bankia, S.A.", "CAHMESMMXXX");
             CreditorAgent creditorAgent = new CreditorAgent(bankCode);
             BankAccount creditorAccount = new BankAccount(new ClientAccountCodeCCC("20381111401111111111"));

@@ -110,7 +110,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             Assert.AreEqual("20381111401111111111", creditor.DirectDebitInitiationContracts["777"].CreditorAcount.CCC.CCC);
             Assert.AreEqual("CAHMESMMXXX", creditor.DirectDebitInitiationContracts["777"].CreditorAgent.BankBIC);
             Assert.AreEqual("777", creditor.DirectDebitInitiationContracts["777"].CreditorBussinessCode);
-            Assert.AreEqual("ES90777G35008770", creditor.DirectDebitInitiationContracts["777"].CreditorID);
+            Assert.AreEqual("ES26777G12345678", creditor.DirectDebitInitiationContracts["777"].CreditorID);
         }
 
         [Then(@"The contract account is correctly updated to ""(.*)""")]

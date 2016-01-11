@@ -82,8 +82,8 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
                         "CreditorBussinesCode",
                         "CreditorAccount"});
             table1.AddRow(new string[] {
-                        "G35008770",
-                        "Real Club Náutico de Gran Canaria",
+                        "G12345678",
+                        "NOMBRE ACREEDOR PRUEBAS",
                         "CAIXESBBXXX",
                         "CAIXABANK",
                         "2100",

@@ -19,7 +19,12 @@ namespace DirectDebitElements
             DirectDebitRemittance directDebitRemmitance)
         {
             PartyIdentification32 initiationParty_InitPty = SEPAElementsGenerator.GenerateInitiationParty_InitPty(creditor, directDebitInitiationContract);
-            GroupHeader39 groupHeader_GrpHdr = SEPAElementsGenerator.GenerateGroupHeader_GrpHdr(generationDateTime, directDebitRemmitance, initiationParty_InitPty);
+            GroupHeader39 groupHeader_GrpHdr = SEPAElementsGenerator.GenerateGroupHeader_GrpHdr(
+                directDebitRemmitance.MessageID,
+                generationDateTime,
+                directDebitRemmitance.NumberOfTransactions,
+                directDebitRemmitance.ControlSum,
+                initiationParty_InitPty);
             List<PaymentInstructionInformation4> paymentInformation_PmtInf_List = new List<PaymentInstructionInformation4>();
 
             foreach (DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment in directDebitRemmitance.DirectDebitTransactionGroupPaymentCollection)
@@ -56,7 +61,13 @@ namespace DirectDebitElements
             DateTime generationDateTime = directDebitRemmitance.CreationDate;
 
             PartyIdentification32 initiationParty_InitPty = SEPAElementsGenerator.GenerateInitiationParty_InitPty(creditor, directDebitInitiationContract);
-            GroupHeader39 groupHeader_GrpHdr = SEPAElementsGenerator.GenerateGroupHeader_GrpHdr(generationDateTime, directDebitRemmitance, initiationParty_InitPty);
+            //GroupHeader39 groupHeader_GrpHdr = SEPAElementsGenerator.GenerateGroupHeader_GrpHdr(generationDateTime, directDebitRemmitance, initiationParty_InitPty);
+            GroupHeader39 groupHeader_GrpHdr = SEPAElementsGenerator.GenerateGroupHeader_GrpHdr(
+                directDebitRemmitance.MessageID,
+                generationDateTime,
+                directDebitRemmitance.NumberOfTransactions,
+                directDebitRemmitance.ControlSum,
+                initiationParty_InitPty);
             List<PaymentInstructionInformation4> paymentInformation_PmtInf_List = new List<PaymentInstructionInformation4>();
 
             List<DirectDebitTransactionInformation9> directDebitTransactionInfoList = new List<DirectDebitTransactionInformation9>();
@@ -75,8 +86,6 @@ namespace DirectDebitElements
                     creditorAgent,
                     directDebitInitiationContract,
                     directDebitTransactionsGroupPayment);
-                    //directDebitRemmitance,
-                    //directDebitTransactionInfoList);
 
                 paymentInformation_PmtInf_List.Add(paymentInformation_PmtInf);
             }
@@ -119,9 +128,14 @@ namespace DirectDebitElements
                 paymentStatusReport.AddRemmitanceReject(SEPAElementsReader.CreateDirectDebitRemmitanceReject(originalPaymentInformation1));
             }
             
+            //
+            //REVISAR!!!!!
+            //
             //Comprobar numero de transaciiones y suma de control            
-            if (paymentStatusReport.NumberOfTransactions.ToString() != customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlNbOfTxs) ;
-            if (paymentStatusReport.ControlSum != customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlCtrlSum) ;
+            //if (paymentStatusReport.NumberOfTransactions.ToString() != customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlNbOfTxs);
+            //if (paymentStatusReport.ControlSum != customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlCtrlSum);
+            //
+            //
 
             return paymentStatusReport;
         }

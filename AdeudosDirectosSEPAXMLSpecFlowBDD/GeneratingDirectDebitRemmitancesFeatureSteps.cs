@@ -92,7 +92,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
         {
             DirectDebitInitiationContract directDebitInitiationContract = (DirectDebitInitiationContract)ScenarioContext.Current["DirectDebitInitiationContract"];
             Assert.AreEqual("777", directDebitInitiationContract.CreditorBussinessCode);
-            Assert.AreEqual("ES90777G35008770", directDebitInitiationContract.CreditorID);
+            Assert.AreEqual("ES26777G12345678", directDebitInitiationContract.CreditorID);
             Assert.AreEqual("ES5621001111301111111111", directDebitInitiationContract.CreditorAcount.IBAN.IBAN);
         }
         

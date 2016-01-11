@@ -77,8 +77,8 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
                         "NIF",
                         "Name"});
             table1.AddRow(new string[] {
-                        "G35008770",
-                        "Real Club Náutico de Gran Canaria"});
+                        "G12345678",
+                        "NOMBRE ACREEDOR PRUEBAS"});
 #line 8
  testRunner.Given("My creditor info is", ((string)(null)), table1, "Given ");
 #line hidden
