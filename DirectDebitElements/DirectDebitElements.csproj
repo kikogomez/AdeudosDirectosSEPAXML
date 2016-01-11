@@ -66,6 +66,7 @@
     <Compile Include="PaymentStatusReportManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SEPAElementsGenerator.cs" />
+    <Compile Include="SEPAElementsReader.cs" />
     <Compile Include="SEPAMessagesManager.cs" />
   </ItemGroup>
   <ItemGroup>
