@@ -21,6 +21,7 @@ namespace DirectDebitElements
         public string PaymentInformationID
         {
             get { return paymentInformationID; }
+            set { paymentInformationID = CheckPaymentInformationID(value); }
         }
        
         public string LocalInstrument
@@ -49,15 +50,18 @@ namespace DirectDebitElements
             this.totalAmount = directDebitTransactionsCollection.Select(directDebitTransaction => directDebitTransaction.Amount).Sum();
         }
 
-        public void GeneratePaymentInformationID(int sequenceNumber)
-        {
-            paymentInformationID = sequenceNumber.ToString("000");
-        }
-
         public void AddDirectDebitTransaction(DirectDebitTransaction directDebitTransaction)
         {
             directDebitTransactionsCollection.Add(directDebitTransaction);
             UpdateNumberOfDirectDebitTransactionsAndAmount();
+        }
+
+        private string CheckPaymentInformationID(string paymentInformationID)
+        {
+            if (paymentInformationID == null) throw new System.ArgumentNullException("PaymentInformationID", "PaymentInformationID can't be null");
+            if (paymentInformationID.Length > 35) throw new System.ArgumentOutOfRangeException("PaymentInformationID", "PaymentInformationID lenght can't exceed 35 characters");
+            if (paymentInformationID.Length == 0) throw new System.ArgumentOutOfRangeException("PaymentInformationID", "PaymentInformationID lenght can't be empty");
+            return paymentInformationID;
         }
     }
 }

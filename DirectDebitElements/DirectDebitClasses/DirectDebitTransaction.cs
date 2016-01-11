@@ -41,6 +41,7 @@ namespace DirectDebitElements
         public string InternalUniqueInstructionID
         {
             get { return internalUniqueInstructionID; }
+            set { internalUniqueInstructionID = value; }
         }
 
         public string MandateID
@@ -87,11 +88,6 @@ namespace DirectDebitElements
         {
             this.billsInTransaction.Add(bill);
             UpdateAmountAndNumberOfBills();
-        }
-
-        public void GenerateInternalUniqueInstructionID(int sequenceNumber)
-        {
-            internalUniqueInstructionID = sequenceNumber.ToString("000000");
         }
 
         public void GenerateAT01MandateID(string creditorBusinessCode)

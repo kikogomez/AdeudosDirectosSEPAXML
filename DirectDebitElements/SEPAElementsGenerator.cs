@@ -166,7 +166,8 @@ namespace DirectDebitElements
             //DirectDebitRemittance directDebitRemittance,
             //List<DirectDebitTransactionInformation9> directDebitTransactionInfo_DrctDbtTxInfList)
         {
-            string paymentInformationIdentificaction_PmtInfId = "201402101";  //Private unique ID for payment group
+            //string paymentInformationIdentificaction_PmtInfId = "201402101";  //Private unique ID for payment group
+            string paymentInformationIdentificaction_PmtInfId = directDebitTransactionsGroupPayment.PaymentInformationID;  //Private unique ID for payment group
             DateTime reqCollectionDate_ReqdColltnDt = new DateTime(2014, 2, 01);
             List<DirectDebitTransactionInformation9> directDebitTransactionInfo_DrctDbtTxInfList = new List<DirectDebitTransactionInformation9>();
             foreach (DirectDebitTransaction directDebitTransaction in directDebitTransactionsGroupPayment.DirectDebitTransactionsCollection)

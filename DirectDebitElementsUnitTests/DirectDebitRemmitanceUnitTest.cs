@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DirectDebitElements;
 using Billing;
 using ReferencesAndTools;
+using ExtensionMethods;
 
 namespace DirectDebitElementsUnitTests
 {
@@ -81,6 +82,18 @@ namespace DirectDebitElementsUnitTests
             DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(creationDate, requestedCollectionDate, directDebitInitiationContract);
             string expectedMessageId = "ES26777G123456782013113007:15:00";
             Assert.AreEqual(expectedMessageId, directDebitRemmitance.MessageID);
+            Assert.AreEqual(creationDate, directDebitRemmitance.CreationDate);
+            Assert.AreEqual(requestedCollectionDate, directDebitRemmitance.RequestedCollectionDate);
+        }
+
+        [TestMethod]
+        public void TheDirectDebitRemmitanceMessageIDCanBeDirectlyAsignedAtAnyMoment()
+        {
+            DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
+            DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
+            DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(creationDate, requestedCollectionDate, directDebitInitiationContract);
+            directDebitRemmitance.MessageID = "TestingID";
+            Assert.AreEqual("TestingID", directDebitRemmitance.MessageID);
             Assert.AreEqual(creationDate, directDebitRemmitance.CreationDate);
             Assert.AreEqual(requestedCollectionDate, directDebitRemmitance.RequestedCollectionDate);
         }
@@ -177,28 +190,80 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        public void TheDirectDebitTransactionGruopPaymentIdIsWellGenerated() //Actualizar los ID al generar el mensaje 
+        public void ThePaymentInformationIDOfADirectDebitTransactionGroupPaymentCanBeDirectlyAsignedAtAnyMoment() //Actualizar los ID al generar el mensaje 
         {
-            int sequenceNumber = 1;
             DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment = new DirectDebitTransactionsGroupPayment("COR1");
-            directDebitTransactionsGroupPayment.GeneratePaymentInformationID(sequenceNumber);
-            Assert.AreEqual("001", directDebitTransactionsGroupPayment.PaymentInformationID);
+            directDebitTransactionsGroupPayment.PaymentInformationID = "testingID";
+            Assert.AreEqual("testingID", directDebitTransactionsGroupPayment.PaymentInformationID);
         }
 
         [TestMethod]
-        public void TheInstructionIDOfADirectDebitTransactionIsWellGenerated() 
+        [ExpectedException(typeof(System.ArgumentOutOfRangeException))]
+        public void CantAssignAPaymentInformationIDLongerThan35Characters()
         {
-            int sequenceNumber = 1;
+            try
+            {
+                DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment = new DirectDebitTransactionsGroupPayment("COR1");
+                directDebitTransactionsGroupPayment.PaymentInformationID = "0123456789012345678901234567890123456789";
+            }
+
+            catch (System.ArgumentOutOfRangeException e)
+            {
+                Assert.AreEqual("PaymentInformationID", e.ParamName);
+                Assert.AreEqual("PaymentInformationID lenght can't exceed 35 characters", e.GetMessageWithoutParamName());
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentOutOfRangeException))]
+        public void CantAssignAnEmptyPaymentInformationID()
+        {
+            try
+            {
+                DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment = new DirectDebitTransactionsGroupPayment("COR1");
+                directDebitTransactionsGroupPayment.PaymentInformationID = "";
+            }
+
+            catch (System.ArgumentOutOfRangeException e)
+            {
+                Assert.AreEqual("PaymentInformationID", e.ParamName);
+                Assert.AreEqual("PaymentInformationID lenght can't be empty", e.GetMessageWithoutParamName());
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentNullException))]
+        public void CantAssignANullPaymentInformationID()
+        {
+            try
+            {
+                DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment = new DirectDebitTransactionsGroupPayment("COR1");
+                directDebitTransactionsGroupPayment.PaymentInformationID = null;
+            }
+
+            catch (System.ArgumentNullException e)
+            {
+                Assert.AreEqual("PaymentInformationID", e.ParamName);
+                Assert.AreEqual("PaymentInformationID can't be null", e.GetMessageWithoutParamName());
+                throw;
+            }
+        }
+
+        [TestMethod]
+        public void TheInstructionIDOfADirectDebitTransactionCanBeDirectlyAsignedAtAnyMoment()
+        {
             Debtor debtor = debtors["00002"];
             List<SimplifiedBill> bills = new List<SimplifiedBill> { debtor.SimplifiedBills.ElementAt(0).Value };
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
             int internalDirectDebitReferenceNumber = directDebitMandate.InternalReferenceNumber;
             BankAccount debtorAccount = directDebitMandate.BankAccount;
-            string accountHolderName = directDebitMandate.AccountHolderName; 
+            string accountHolderName = directDebitMandate.AccountHolderName;
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(bills, internalDirectDebitReferenceNumber, debtorAccount, accountHolderName, mandateSignatureDate);
-            directDebitTransaction.GenerateInternalUniqueInstructionID(sequenceNumber);
-            Assert.AreEqual("000001", directDebitTransaction.InternalUniqueInstructionID);
+            directDebitTransaction.InternalUniqueInstructionID = "testingID";
+            Assert.AreEqual("testingID", directDebitTransaction.InternalUniqueInstructionID);
         }
 
         [TestMethod]

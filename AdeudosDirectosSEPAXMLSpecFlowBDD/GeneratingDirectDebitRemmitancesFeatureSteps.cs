@@ -309,7 +309,9 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             DirectDebitRemittance directDebitRemmitance = directDebitRemittancesManager.CreateADirectDebitRemmitance(creationDate, requestedCollectionDate, directDebitInitiationContract);
             DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment =
                 directDebitRemittancesManager.CreateANewGroupOfDirectDebitTransactions("COR1");
-            
+            directDebitTransactionsGroupPayment.PaymentInformationID = "GroupPayment1";
+
+
             List<Debtor> debtors = ((Dictionary<string, Debtor>)ScenarioContext.Current["Debtors"]).Values.ToList();
             int transactionsCounter = 0;
             foreach (Debtor debtor in debtors)
@@ -317,7 +319,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
                 DirectDebitMandate directDebitmandate = debtor.DirectDebitmandates.Values.ElementAt(0);
                 DirectDebitTransaction directDebitTransaction = directDebitRemittancesManager.CreateANewEmptyDirectDebitTransaction(directDebitmandate);
                 transactionsCounter++;
-                directDebitTransaction.GenerateInternalUniqueInstructionID(transactionsCounter);
+                directDebitTransaction.InternalUniqueInstructionID= "GroupPayment1"+ transactionsCounter.ToString("00000");
                 directDebitTransaction.GenerateAT01MandateID(directDebitInitiationContract.CreditorBussinessCode);
                 foreach (SimplifiedBill bill in debtor.SimplifiedBills.Values)
                 {
@@ -328,7 +330,6 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             }
             directDebitRemittancesManager.AddDirectDebitTransactionGroupPaymentToDirectDebitRemittance(
                 directDebitRemmitance, directDebitTransactionsGroupPayment);
-            directDebitTransactionsGroupPayment.GeneratePaymentInformationID(1);
             ScenarioContext.Current.Add("DirectDebitRemittance", directDebitRemmitance);
         }
 

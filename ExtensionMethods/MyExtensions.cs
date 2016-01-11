@@ -10,6 +10,18 @@ namespace ExtensionMethods
             return messageLines[0];
         }
 
+        //public static string GetMessageWithoutParamName(this ArgumentOutOfRangeException argumentException)
+        //{
+        //    string[] messageLines = argumentException.Message.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+        //    return messageLines[0];
+        //}
+
+        //public static string GetMessageWithoutParamName(this ArgumentNullException argumentException)
+        //{
+        //    string[] messageLines = argumentException.Message.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+        //    return messageLines[0];
+        //}
+
         ///<summary>Truncates DateTime to specified TimeSpan</summary>
         ///<remarks>dateTime = dateTime.Truncate(TimeSpan.FromSeconds(1)); // Truncate to whole second</remarks>
         ///<param name="timeSpan">TimeSpan to truncate to</param>

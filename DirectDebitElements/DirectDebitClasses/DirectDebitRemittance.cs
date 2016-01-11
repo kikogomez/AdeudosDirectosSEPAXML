@@ -29,6 +29,7 @@ namespace DirectDebitElements
         public string MessageID
         {
             get { return messageID; }
+            set { messageID = value; }
         }
 
         public DateTime CreationDate

@@ -17,7 +17,6 @@ namespace DirectDebitElementsUnitTests
         static Creditor creditor;
         static CreditorAgent creditorAgent;
         static DirectDebitInitiationContract directDebitInitiationContract;
-        //static BankCodes spanishBankCodes;
 
         [ClassInitialize]
         public static void ClassInit(TestContext context)
@@ -71,8 +70,6 @@ namespace DirectDebitElementsUnitTests
                     DateTime.Today.AddMonths(1));
                 debtor.AddSimplifiedBill(bills);
             }
-
-            //spanishBankCodes = new BankCodes(@"XMLFiles\SpanishBankCodes.xml", BankCodes.BankCodesFileFormat.XML);
         }
 
         [TestMethod]
@@ -83,6 +80,8 @@ namespace DirectDebitElementsUnitTests
 
             DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(creationDate, requestedCollectionDate, directDebitInitiationContract);
             DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment = new DirectDebitTransactionsGroupPayment("CORE");
+            string prefix = directDebitRemmitance.MessageID.Substring(directDebitRemmitance.MessageID.Length - 25);
+            directDebitTransactionsGroupPayment.PaymentInformationID = prefix + "001";
 
             int transactionsCounter = 0;
             foreach (Debtor debtor in debtors.Values)
@@ -94,7 +93,8 @@ namespace DirectDebitElementsUnitTests
                     debtor.FullName,
                     debtor.DirectDebitmandates.First().Value.DirectDebitMandateCreationDate);
                 transactionsCounter++;
-                directDebitTransaction.GenerateInternalUniqueInstructionID(transactionsCounter);
+                directDebitTransaction.InternalUniqueInstructionID = 
+                    directDebitTransactionsGroupPayment.PaymentInformationID + transactionsCounter.ToString("000000");
                 directDebitTransactionsGroupPayment.AddDirectDebitTransaction(directDebitTransaction);
             }
 
