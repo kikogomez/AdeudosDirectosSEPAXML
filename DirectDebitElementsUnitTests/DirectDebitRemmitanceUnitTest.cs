@@ -124,12 +124,13 @@ namespace DirectDebitElementsUnitTests
                 debtorAccount,
                 accountHolderName);
 
+            List<SimplifiedBill> expectedEmptyList = new List<SimplifiedBill>();
             Assert.AreEqual(internalUniqueInstructionID, directDebitTransaction.InternalUniqueInstructionID);
-            Assert.AreEqual("000001101235", directDebitTransaction.MandateID);
+            Assert.AreEqual("000077701235", directDebitTransaction.MandateID);
             Assert.AreEqual(mandateSignatureDate, directDebitTransaction.MandateSigatureDate);
             Assert.AreEqual(debtorAccount, directDebitTransaction.DebtorAccount);
             Assert.AreEqual(accountHolderName, directDebitTransaction.AccountHolderName);
-            Assert.AreEqual(null, directDebitTransaction.BillsInTransaction);
+            CollectionAssert.AreEqual(expectedEmptyList, directDebitTransaction.BillsInTransaction);
             Assert.AreEqual(0, directDebitTransaction.NumberOfBills);
             Assert.AreEqual(0, directDebitTransaction.Amount);
         }
@@ -156,7 +157,7 @@ namespace DirectDebitElementsUnitTests
                 accountHolderName);
 
             Assert.AreEqual(internalUniqueInstructionID, directDebitTransaction.InternalUniqueInstructionID);
-            Assert.AreEqual("000001101235", directDebitTransaction.MandateID);
+            Assert.AreEqual("000077701235", directDebitTransaction.MandateID);
             Assert.AreEqual(mandateSignatureDate, directDebitTransaction.MandateSigatureDate);
             Assert.AreEqual(debtorAccount, directDebitTransaction.DebtorAccount);
             Assert.AreEqual(accountHolderName, directDebitTransaction.AccountHolderName);

@@ -130,7 +130,6 @@ namespace DirectDebitElementsUnitTests
             List<SimplifiedBill> bills = debtor.SimplifiedBills.Values.ToList();
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
             string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19Code(directDebitMandate.InternalReferenceNumber);
-            //int internalDirectDebitReferenceNumber = directDebitMandate.InternalReferenceNumber;
             BankAccount debtorAccount = directDebitMandate.BankAccount;
             string accountHolderName = directDebitMandate.AccountHolderName;
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
@@ -146,7 +145,17 @@ namespace DirectDebitElementsUnitTests
                 creditorAgent,
                 directDebitTransaction);
 
-            Assert.Inconclusive();
+            //Assert.Inconclusive();
+            Assert.AreEqual(directDebitTransaction.InternalUniqueInstructionID, directDebitTransactionInformation.PmtId.InstrId);
+            Assert.AreEqual(directDebitTransaction.InternalUniqueInstructionID, directDebitTransactionInformation.PmtId.EndToEndId);
+            Assert.AreEqual(directDebitTransaction.Amount, directDebitTransactionInformation.InstdAmt.Value);
+            Assert.AreEqual(directDebitTransaction.MandateID, directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.MndtId);
+            Assert.AreEqual(directDebitTransaction.MandateSigatureDate, directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.DtOfSgntr);
+            Assert.AreEqual(creditorAgent.BankBIC, directDebitTransactionInformation.DbtrAgt.FinInstnId.BIC);
+            Assert.AreEqual(directDebitTransaction.AccountHolderName, directDebitTransactionInformation.Dbtr.Nm);
+            Assert.AreEqual(directDebitTransaction.DebtorAccount.IBAN.IBAN, (string)directDebitTransactionInformation.DbtrAcct.Id.Item);
+            Assert.AreEqual("Cuota Social Octubre 2013", directDebitTransactionInformation.RmtInf.Ustrd);
+
 
             //Assert.AreEqual(directDebitTransactionInformation.PmtId.InstrId);
 
