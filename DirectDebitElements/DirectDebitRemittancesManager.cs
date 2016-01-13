@@ -26,24 +26,27 @@ namespace DirectDebitElements
             return directDebitTransactionsGroupPayment;
         }
 
-        public DirectDebitTransaction CreateANewEmptyDirectDebitTransaction(DirectDebitMandate directDebitmandate)
+        public DirectDebitTransaction CreateANewEmptyDirectDebitTransaction(string internalUniqueInstructionID, string mandateID, DirectDebitMandate directDebitmandate)
         {
+
             DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
-                directDebitmandate.InternalReferenceNumber,
+                internalUniqueInstructionID,
+                mandateID,
+                directDebitmandate.DirectDebitMandateCreationDate,
                 directDebitmandate.BankAccount,
-                directDebitmandate.AccountHolderName,
-                directDebitmandate.DirectDebitMandateCreationDate);
+                directDebitmandate.AccountHolderName);
             return directDebitTransaction;
         }
 
-        public DirectDebitTransaction CreateANewDirectDebitTransactionFromAGroupOfBills(DirectDebitMandate directDebitmandate, List<SimplifiedBill> billsList)
+        public DirectDebitTransaction CreateANewDirectDebitTransactionFromAGroupOfBills(string internalUniqueInstructionID, string mandateID, DirectDebitMandate directDebitmandate, List<SimplifiedBill> billsList)
         {
-            DirectDebitTransaction directDebitTransaction  = new DirectDebitTransaction(
+            DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                 billsList,
-                directDebitmandate.InternalReferenceNumber,
+                internalUniqueInstructionID,
+                mandateID,
+                directDebitmandate.DirectDebitMandateCreationDate,
                 directDebitmandate.BankAccount,
-                directDebitmandate.AccountHolderName,
-                directDebitmandate.DirectDebitMandateCreationDate);
+                directDebitmandate.AccountHolderName);
             return directDebitTransaction;
         }
 

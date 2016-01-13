@@ -8,70 +8,44 @@ namespace DirectDebitElements
 {
     public class DirectDebitTransaction
     {
-        string internalUniqueInstructionID;
         List<SimplifiedBill> billsInTransaction;
-        BankAccount debtorAccount;
-        string accountHolderName;
-        DateTime mandateSignatureDate;
-        int mandateInternalReferenceNumber;
-        string mandateID;
-
         decimal totalAmount;
         int numberOfBills;
+        string internalUniqueInstructionID;
+        string mandateID;
+        DateTime mandateSignatureDate;
+        BankAccount debtorAccount;
+        string accountHolderName;
 
-        public DirectDebitTransaction(List<SimplifiedBill> billsInTransaction, int mandateInternalReferenceNumber, BankAccount debtorAccount, string accountHolderName, DateTime mandateSignatureDate)
+
+        public DirectDebitTransaction(
+            List<SimplifiedBill> billsInTransaction,
+            string internalUniqueInstructionID,
+            string mandateID,
+            DateTime mandateSignatureDate,
+            BankAccount debtorAccount,
+            string accountHolderName)
         {
+            InitializeFields(internalUniqueInstructionID, mandateID, mandateSignatureDate, debtorAccount, accountHolderName);
             this.billsInTransaction = billsInTransaction;
-            this.mandateInternalReferenceNumber = mandateInternalReferenceNumber;
-            this.debtorAccount = debtorAccount;
-            this.accountHolderName = accountHolderName;
-            this.mandateSignatureDate = mandateSignatureDate;
             UpdateAmountAndNumberOfBills();
         }
 
-        public DirectDebitTransaction(int mandateInternalReferenceNumber, BankAccount debtorAccount, string accountHolderName, DateTime mandateSignatureDate)
+        public DirectDebitTransaction(
+            string internalUniqueInstructionID,
+            string mandateID,
+            DateTime mandateSignatureDate,
+            BankAccount debtorAccount,
+            string accountHolderName)
         {
-            this.mandateInternalReferenceNumber = mandateInternalReferenceNumber;
-            this.debtorAccount = debtorAccount;
-            this.accountHolderName = accountHolderName;
-            this.mandateSignatureDate = mandateSignatureDate;
+            InitializeFields(internalUniqueInstructionID, mandateID, mandateSignatureDate, debtorAccount, accountHolderName);
             billsInTransaction = new List<SimplifiedBill>();
-        }
-
-        public string InternalUniqueInstructionID
-        {
-            get { return internalUniqueInstructionID; }
-            set { internalUniqueInstructionID = value; }
-        }
-
-        public string MandateID
-        {
-            get { return mandateID; }
-        }
-
-        public DateTime MandateSigatureDate
-        {
-            get { return mandateSignatureDate; }
+            UpdateAmountAndNumberOfBills();
         }
 
         public List<SimplifiedBill> BillsInTransaction
         {
             get { return billsInTransaction; }
-        }
-
-        public int MandateInternalReferenceNumber
-        {
-            get { return mandateInternalReferenceNumber; }
-        }
-
-        public BankAccount DebtorAccount
-        {
-            get { return debtorAccount; }
-        }
-
-        public string AccountHolderName
-        {
-            get { return accountHolderName; }
         }
 
         public decimal Amount
@@ -84,23 +58,63 @@ namespace DirectDebitElements
             get { return numberOfBills; }
         }
 
+        public string InternalUniqueInstructionID
+        {
+            get { return internalUniqueInstructionID; }
+            //set { internalUniqueInstructionID = value; }
+        }
+
+        public string MandateID
+        {
+            get { return mandateID; }
+        }
+
+        public DateTime MandateSigatureDate
+        {
+            get { return mandateSignatureDate; }
+        }
+
+        public BankAccount DebtorAccount
+        {
+            get { return debtorAccount; }
+        }
+
+        public string AccountHolderName
+        {
+            get { return accountHolderName; }
+        }
+
         public void AddBill(SimplifiedBill bill)
         {
             this.billsInTransaction.Add(bill);
             UpdateAmountAndNumberOfBills();
         }
 
-        public void GenerateAT01MandateID(string creditorBusinessCode)
+        private void InitializeFields(
+            string internalUniqueInstructionID,
+            string mandateID,
+            DateTime mandateSignatureDate,
+            BankAccount debtorAccount,
+            string accountHolderName)
         {
-            string csb19ReferenceNumber = CalculateOldCSB19Code(creditorBusinessCode);
-            SEPAAttributes sEPAttributes = new SEPAAttributes();
-            mandateID = sEPAttributes.AT01MandateReference(csb19ReferenceNumber);
+            this.internalUniqueInstructionID = internalUniqueInstructionID;
+            this.mandateID = mandateID;
+            this.mandateSignatureDate = mandateSignatureDate;
+            this.debtorAccount = debtorAccount;
+            this.accountHolderName = accountHolderName;
         }
 
-        private string CalculateOldCSB19Code(string creditorBusinessCode)
-        {
-            return "0000" + creditorBusinessCode + mandateInternalReferenceNumber.ToString("00000");
-        }
+        //private void GenerateAT01MandateID()
+        //{
+        //    string mandateID = CalculateOldCSB19Code();
+        //    //SEPAAttributes sEPAttributes = new SEPAAttributes();
+        //    //mandateID = sEPAttributes.AT01PlainText1914MandateReference(csb19ReferenceNumber);
+        //}
+
+        //private string CalculateOldCSB19Code()
+        //{
+        //    return "0000" + creditorBusinessCode + mandateInternalReferenceNumber.ToString("00000");
+        //}
 
         private void UpdateAmountAndNumberOfBills()
         {

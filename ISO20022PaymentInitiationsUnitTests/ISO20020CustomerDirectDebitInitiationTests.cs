@@ -38,10 +38,10 @@ namespace ISO20022PaymentInitiationsUnitTests
                 "InternalID2510201300099",
                 new string[] { "Cuota Mensual Numerario Septiembre 2013", "Cuota Mensual Numerario Octubre 2013" },
                 (double)158,
-                sEPAAttributes.AT01MandateReference("000001102345"),
+                sEPAAttributes.AT01PlainText1914MandateReference("000001102345"),
                 sEPAAttributes.AT07IBAN_Spanish("01000100709999999999"),
                 sEPAAttributes.AT25DateOfMandateSigning_MigrationValue,
-                sEPAAttributes.AT01MandateReference("000001101111"),
+                sEPAAttributes.AT01PlainText1914MandateReference("000001101111"),
                 sEPAAttributes.AT07IBAN_Spanish("01000100761234567890"));
 
             directDebitMandateInfo2 = new DirectDebitTransactionInfo_POCOClass(
@@ -49,7 +49,7 @@ namespace ISO20022PaymentInitiationsUnitTests
                 "InternalID2510201300100",
                 new string[] { "Cuota Mensual Numerario Octubre 2013" },
                 (double)79,
-                sEPAAttributes.AT01MandateReference("000001102346"),
+                sEPAAttributes.AT01PlainText1914MandateReference("000001102346"),
                 sEPAAttributes.AT07IBAN_Spanish("01821234861234567890"),
                 sEPAAttributes.AT25DateOfMandateSigning_MigrationValue,
                 null,

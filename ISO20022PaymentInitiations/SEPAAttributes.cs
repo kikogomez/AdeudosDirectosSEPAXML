@@ -21,7 +21,7 @@ namespace ISO20022PaymentInitiations
             get { return new DateTime(2009, 10, 31); }
         }
 
-        public string AT01MandateReference(string csb19ReferenceNumber)
+        public string AT01PlainText1914MandateReference(string csb19ReferenceNumber)
         {
             return csb19ReferenceNumber.PadRight(35, ' ');
         }

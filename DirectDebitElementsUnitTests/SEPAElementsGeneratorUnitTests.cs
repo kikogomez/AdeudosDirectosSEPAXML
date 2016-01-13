@@ -19,6 +19,7 @@ namespace DirectDebitElementsUnitTests
         static Creditor creditor;
         static CreditorAgent creditorAgent;
         static DirectDebitInitiationContract directDebitInitiationContract;
+        static DirectDebitPropietaryCodesGenerator directDebitPropietaryCodesGenerator;
 
         [ClassInitialize]
         public static void ClassInit(TestContext context)
@@ -36,6 +37,7 @@ namespace DirectDebitElementsUnitTests
                 creditor.NIF,
                 "777",
                 creditorAgent);
+            directDebitPropietaryCodesGenerator = new DirectDebitPropietaryCodesGenerator(directDebitInitiationContract);
 
             var directDebitmandateslist = new[]
             {
@@ -123,18 +125,28 @@ namespace DirectDebitElementsUnitTests
         [TestMethod]
         public void ADirectDebitTransactionInformation9IsCorrectlyGenerated()
         {
+            string internalUniqueInstructionID = "00001";
             Debtor debtor = debtors["00002"];
             List<SimplifiedBill> bills = debtor.SimplifiedBills.Values.ToList();
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
-            int internalDirectDebitReferenceNumber = directDebitMandate.InternalReferenceNumber;
+            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19Code(directDebitMandate.InternalReferenceNumber);
+            //int internalDirectDebitReferenceNumber = directDebitMandate.InternalReferenceNumber;
             BankAccount debtorAccount = directDebitMandate.BankAccount;
             string accountHolderName = directDebitMandate.AccountHolderName;
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
-            DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(bills, internalDirectDebitReferenceNumber, debtorAccount, accountHolderName, mandateSignatureDate);
+            DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
+                bills,
+                internalUniqueInstructionID,
+                mandateID,
+                mandateSignatureDate,
+                debtorAccount,
+                accountHolderName);
 
             DirectDebitTransactionInformation9 directDebitTransactionInformation = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
                 creditorAgent,
                 directDebitTransaction);
+
+            Assert.Inconclusive();
 
             //Assert.AreEqual(directDebitTransactionInformation.PmtId.InstrId);
 

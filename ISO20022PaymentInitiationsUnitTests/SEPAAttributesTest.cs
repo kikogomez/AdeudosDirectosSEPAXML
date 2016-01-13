@@ -20,7 +20,7 @@ namespace ISO20022PaymentInitiationsUnitTests
         public void AT01MandateReferenceIDIsWellCalculated()
         {
             string csbReference = "000001110100";
-            string mandateReference = sEPAAttributes.AT01MandateReference(csbReference);
+            string mandateReference = sEPAAttributes.AT01PlainText1914MandateReference(csbReference);
             Assert.AreEqual("000001110100" + new string(' ', 23), mandateReference);
         }
 

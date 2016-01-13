@@ -62,6 +62,7 @@
     <Compile Include="DirectDebitClasses\InternationalAccountBankNumberIBAN.cs" />
     <Compile Include="DirectDebitClasses\PaymentStatusReport.cs" />
     <Compile Include="DirectDebitClasses\PaymentStatusReportCreationResult.cs" />
+    <Compile Include="DirectDebitPropietaryCodesGenerator.cs" />
     <Compile Include="DirectDebitRemittancesManager.cs" />
     <Compile Include="PaymentStatusReportManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

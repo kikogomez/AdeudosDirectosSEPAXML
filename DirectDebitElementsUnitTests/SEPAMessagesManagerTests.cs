@@ -17,6 +17,7 @@ namespace DirectDebitElementsUnitTests
         static Creditor creditor;
         static CreditorAgent creditorAgent;
         static DirectDebitInitiationContract directDebitInitiationContract;
+        static DirectDebitPropietaryCodesGenerator directDebitPropietaryCodesGenerator;
 
         [ClassInitialize]
         public static void ClassInit(TestContext context)
@@ -34,6 +35,7 @@ namespace DirectDebitElementsUnitTests
                 creditor.NIF,
                 "011",
                 creditorAgent);
+            directDebitPropietaryCodesGenerator = new DirectDebitPropietaryCodesGenerator(directDebitInitiationContract);
 
             var directDebitmandateslist = new[]
             {
@@ -83,18 +85,30 @@ namespace DirectDebitElementsUnitTests
             string prefix = directDebitRemmitance.MessageID.Substring(directDebitRemmitance.MessageID.Length - 25);
             directDebitTransactionsGroupPayment.PaymentInformationID = prefix + "001";
 
+
+            List<SimplifiedBill> simplifiedBills;
+            string internalUniqueInstructionID;
+            string mandateID;
+            DateTime mandateSignatureDate;
+            BankAccount debtorAccount;
+            string debtorFullName;
             int transactionsCounter = 0;
             foreach (Debtor debtor in debtors.Values)
             {
+                simplifiedBills = debtor.SimplifiedBills.Select(dictionaryElement => dictionaryElement.Value).ToList();
+                internalUniqueInstructionID = (transactionsCounter + 1).ToString("000000");
+                mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19Code(debtor.DirectDebitmandates.First().Value.InternalReferenceNumber);
+                mandateSignatureDate = debtor.DirectDebitmandates.First().Value.DirectDebitMandateCreationDate;
+                debtorAccount = debtor.DirectDebitmandates.First().Value.BankAccount;
+                debtorFullName = debtor.FullName;
                 DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
-                    debtor.SimplifiedBills.Select(dictionaryElement => dictionaryElement.Value).ToList(),
-                    debtor.DirectDebitmandates.First().Value.InternalReferenceNumber,
-                    debtor.DirectDebitmandates.First().Value.BankAccount,
-                    debtor.FullName,
-                    debtor.DirectDebitmandates.First().Value.DirectDebitMandateCreationDate);
+                    simplifiedBills,
+                    internalUniqueInstructionID,
+                    mandateID,
+                    mandateSignatureDate,
+                    debtorAccount,
+                    debtorFullName);
                 transactionsCounter++;
-                directDebitTransaction.InternalUniqueInstructionID = 
-                    directDebitTransactionsGroupPayment.PaymentInformationID + transactionsCounter.ToString("000000");
                 directDebitTransactionsGroupPayment.AddDirectDebitTransaction(directDebitTransaction);
             }
 
