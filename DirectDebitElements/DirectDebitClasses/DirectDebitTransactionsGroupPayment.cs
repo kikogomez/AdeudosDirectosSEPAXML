@@ -23,7 +23,7 @@ namespace DirectDebitElements
             get { return paymentInformationID; }
             set { paymentInformationID = CheckPaymentInformationID(value); }
         }
-       
+
         public string LocalInstrument
         {
             get { return localInstrument; }
