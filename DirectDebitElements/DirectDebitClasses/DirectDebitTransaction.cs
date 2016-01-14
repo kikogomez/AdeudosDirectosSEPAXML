@@ -97,24 +97,20 @@ namespace DirectDebitElements
             BankAccount debtorAccount,
             string accountHolderName)
         {
-            this.internalUniqueInstructionID = internalUniqueInstructionID;
-            this.mandateID = mandateID;
+            if (internalUniqueInstructionID == null) throw new ArgumentNullException("InternalUniqueInstructionID", "InternalUniqueInstructionID can't be null");
+            if (internalUniqueInstructionID.Trim() == "") throw new ArgumentException("InternalUniqueInstructionID can't be empty","InternalUniqueInstructionID");
+            if (internalUniqueInstructionID.Trim().Length > 35) throw new ArgumentOutOfRangeException("InternalUniqueInstructionID", "InternalUniqueInstructionID can't be longer than 35 characters");
+            if (mandateID == null) throw new ArgumentNullException("MandateID", "MandateID can't be null");
+            if (mandateID.Trim() == "") throw new ArgumentException("MandateID can't be empty", "MandateID");
+            if (mandateID.Trim().Length > 35) throw new ArgumentOutOfRangeException("MandateID", "MandateID can't be longer than 35 characters");
+            if (debtorAccount == null) throw new ArgumentNullException("DebtorAccount", "DebtorAccount can't be null");
+            if (!debtorAccount.HasValidIBAN) throw new ArgumentException("DebtorAccount", "DebtorAccount must be a valid IBAN");
+            this.internalUniqueInstructionID = internalUniqueInstructionID.Trim();
+            this.mandateID = mandateID.Trim();
             this.mandateSignatureDate = mandateSignatureDate;
             this.debtorAccount = debtorAccount;
             this.accountHolderName = accountHolderName;
         }
-
-        //private void GenerateAT01MandateID()
-        //{
-        //    string mandateID = CalculateOldCSB19Code();
-        //    //SEPAAttributes sEPAttributes = new SEPAAttributes();
-        //    //mandateID = sEPAttributes.AT01PlainText1914MandateReference(csb19ReferenceNumber);
-        //}
-
-        //private string CalculateOldCSB19Code()
-        //{
-        //    return "0000" + creditorBusinessCode + mandateInternalReferenceNumber.ToString("00000");
-        //}
 
         private void UpdateAmountAndNumberOfBills()
         {
