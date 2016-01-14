@@ -197,6 +197,31 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(System.ArgumentNullException))]
+        public void DirectDebitInitiationContractCantBeNullInADirectDebitRemmitance()
+        {
+            DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
+            string messageID = "ES26777G123456782013113007:15:00";
+            DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
+
+            try
+            {
+                DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(
+                    messageID,
+                    creationDate,
+                    requestedCollectionDate,
+                    null);
+            }
+
+            catch (System.ArgumentNullException e)
+            {
+                Assert.AreEqual("DirectDebitInitiationContract", e.ParamName);
+                Assert.AreEqual("DirectDebitInitiationContract can't be null", e.GetMessageWithoutParamName());
+                throw;
+            }
+        }
+
+        [TestMethod]
         public void ADirectDebitTransactionIsCorrectlyCreated()
         {
             Debtor debtor = debtors["00002"];

@@ -83,6 +83,7 @@ namespace DirectDebitElements
             if (messageID == null) throw new ArgumentNullException("MessageID", "MessageID can't be null");
             if (messageID.Trim().Length == 0) throw new ArgumentException("MessageID can't be empty", "MessageID");
             if (messageID.Trim().Length > 35) throw new ArgumentOutOfRangeException("MessageID", "MessageID can't be longer than 35 characters");
+            if (directDebitInitiationContract == null) throw new ArgumentNullException("DirectDebitInitiationContract", "DirectDebitInitiationContract can't be null");
         }
     }
 }
