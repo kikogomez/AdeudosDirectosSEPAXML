@@ -183,7 +183,7 @@ namespace DirectDebitElements
 
             LocalInstrument2Choice localInstrument_LclInstrm = new LocalInstrument2Choice(directDebitTransactionsGroupPayment.LocalInstrument, ItemChoiceType.Cd);
 
-            //CategoryPurpose1Choice categoryOfPurpose_CtgyPurp = new CategoryPurpose1Choice("Mensualidad", ItemChoiceType.Prtry);
+            CategoryPurpose1Choice categoryOfPurpose_CtgyPurp = new CategoryPurpose1Choice("TRAD", ItemChoiceType.Cd);
 
             PaymentTypeInformation20 paymentTypeInformation_PmtTpInf = new PaymentTypeInformation20(
                 Priority2Code.NORM,                 //<InstrPrty> Not used in SEPA COR1, but can't be null
@@ -192,7 +192,7 @@ namespace DirectDebitElements
                 localInstrument_LclInstrm,          //<LclInstrm>
                 SequenceType1Code.RCUR,             //<SeqTp>
                 true,                               //<SeqTP> wll be serialized
-                null);                              //<CtgyPurp>
+                categoryOfPurpose_CtgyPurp);        //<CtgyPurp>
 
             PartyIdentification32 creditor_Cdtr = new PartyIdentification32(
                 creditor.Name, null, null, null, null);
