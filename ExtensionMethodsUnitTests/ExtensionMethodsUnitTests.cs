@@ -46,6 +46,28 @@ namespace ExtensionMethodsUnitTests
         }
 
         [TestMethod]
+        public void LeftMostNCharactersAreCorrectlyReturned()
+        {
+            string s="1234567890";
+            Assert.AreEqual("1234", s.Left(4));
+        }
+
+        [TestMethod]
+        public void IfParameterIsGreaterThanStringLenghtTheFullStringIsReturned()
+        {
+            string s = "1234567890";
+            Assert.AreEqual("1234567890", s.Left(50));
+        }
+
+        [TestMethod]
+        public void IfStringIsNullANullIsReturned()
+        {
+            string s = null;
+            Assert.AreEqual(null, s.Left(50));
+        }
+
+
+        [TestMethod]
         public void DateIdCorrectlyTruncatedToSeconds()
         {
             DateTime dateTime = new DateTime(2013, 11, 9, 10, 10, 10, 10);

@@ -130,7 +130,8 @@ namespace DirectDebitElements
                 null,           //<Ccy> - Not used by creditor in SEPA COR
                 null);          //<Nm> - Not used by creditor in SEPA COR
 
-            string[] remittanceConcepts = directDebitTransaction.BillsInTransaction.Select(bill => bill.Description).ToArray();
+
+            string[] remittanceConcepts = new string[] { BuildUnstructedRemmitanceInformation(directDebitTransaction) };
             RemittanceInformation5 remitanceInformation_RmtInf = new RemittanceInformation5(
                 remittanceConcepts,                                     //<Ustrd>
                 new StructuredRemittanceInformation7[] { null });       //<Strd> - Only <Ustrd> or <Strd>
@@ -250,5 +251,13 @@ namespace DirectDebitElements
 
             return paymentInformation_PmtInf;
         }
+
+        private static string BuildUnstructedRemmitanceInformation(DirectDebitTransaction directDebitTransaction)
+        {
+            string[] remittanceConcepts = directDebitTransaction.BillsInTransaction.Select
+                (bill => bill.Description + " -> " + bill.Amount.ToString("0.00")).ToArray();
+            string singleUstrd = String.Join("; ", remittanceConcepts).Left(140);
+            return singleUstrd;
+         }
     }
 }

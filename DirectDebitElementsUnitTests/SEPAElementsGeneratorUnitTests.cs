@@ -145,7 +145,6 @@ namespace DirectDebitElementsUnitTests
                 creditorAgent,
                 directDebitTransaction);
 
-            //Assert.Inconclusive();
             Assert.AreEqual(directDebitTransaction.InternalUniqueInstructionID, directDebitTransactionInformation.PmtId.InstrId);
             Assert.AreEqual(directDebitTransaction.InternalUniqueInstructionID, directDebitTransactionInformation.PmtId.EndToEndId);
             Assert.AreEqual(directDebitTransaction.Amount, directDebitTransactionInformation.InstdAmt.Value);
@@ -154,25 +153,8 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual(creditorAgent.BankBIC, directDebitTransactionInformation.DbtrAgt.FinInstnId.BIC);
             Assert.AreEqual(directDebitTransaction.AccountHolderName, directDebitTransactionInformation.Dbtr.Nm);
             Assert.AreEqual(directDebitTransaction.DebtorAccount.IBAN.IBAN, (string)directDebitTransactionInformation.DbtrAcct.Id.Item);
-            Assert.AreEqual("Cuota Social Octubre 2013", directDebitTransactionInformation.RmtInf.Ustrd);
-
-
-            //Assert.AreEqual(directDebitTransactionInformation.PmtId.InstrId);
-
-
-            //DateTime truncatedToSecondsGenerationDateTime = DateTime.SpecifyKind(generationDateTime, DateTimeKind.Unspecified).Truncate(TimeSpan.FromSeconds(1));
-            //Assert.AreEqual("ES26011G123456782015011007:15:00", groupHeader_GrpHdr.MsgId);
-            //Assert.AreEqual(truncatedToSecondsGenerationDateTime, groupHeader_GrpHdr.CreDtTm);
-            //Assert.IsTrue(groupHeader_GrpHdr.CtrlSumSpecified);
-            //Assert.AreEqual(numberOfTransactions.ToString(), groupHeader_GrpHdr.NbOfTxs);
-            //Assert.AreEqual(controlSum, groupHeader_GrpHdr.CtrlSum);
-            //Assert.AreEqual(initiationParty_InitPty, groupHeader_GrpHdr.InitgPty);
-
-            //CollectionAssert.AreEqual(new Authorisation1Choice[] { null }, groupHeader_GrpHdr.Authstn);
-            //Assert.IsNull(groupHeader_GrpHdr.FwdgAgt);
+            string[] expectedStringArrayWithOnlyOneString = new string[] { "Cuota Social Octubre 2013 -> 79,00; Cuota Social Noviembre 2013 -> 79,00" };
+            CollectionAssert.AreEqual(expectedStringArrayWithOnlyOneString, directDebitTransactionInformation.RmtInf.Ustrd);
         }
-
-
-
     }
 }
