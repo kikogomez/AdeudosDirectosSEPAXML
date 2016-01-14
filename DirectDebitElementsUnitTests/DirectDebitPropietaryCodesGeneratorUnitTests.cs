@@ -37,7 +37,7 @@ namespace DirectDebitElementsUnitTests
 
             DirectDebitPropietaryCodesGenerator directDebitPropietaryCodesGenerator = new DirectDebitPropietaryCodesGenerator(directDebitInitiationContract);
 
-            Assert.AreEqual("000001112345", directDebitPropietaryCodesGenerator.CalculateMyOldCSB19Code(12345));
+            Assert.AreEqual("000001112345", directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(12345));
         }
     }
 }

@@ -23,7 +23,7 @@ namespace DirectDebitElements
             }
         }
 
-        public string CalculateMyOldCSB19Code(int mandateInternalReferenceNumber)
+        public string CalculateMyOldCSB19MandateID(int mandateInternalReferenceNumber)
         {
             return "0000" + directDebitInitiationContract.CreditorBussinessCode + mandateInternalReferenceNumber.ToString("00000");
         }

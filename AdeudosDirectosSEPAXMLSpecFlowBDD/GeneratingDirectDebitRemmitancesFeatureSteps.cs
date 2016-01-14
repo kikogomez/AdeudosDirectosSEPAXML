@@ -171,7 +171,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             DirectDebitInitiationContract directDebitInitiationContract = (DirectDebitInitiationContract)ScenarioContext.Current["DirectDebitInitiationContract"];
             DirectDebitPropietaryCodesGenerator directDebitPropietaryCodesGenerator = new DirectDebitPropietaryCodesGenerator(directDebitInitiationContract);
             DirectDebitMandate directDebitmandate = (DirectDebitMandate)ScenarioContext.Current["DirectDebitMandate"];
-            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19Code(directDebitmandate.InternalReferenceNumber);
+            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitmandate.InternalReferenceNumber);
             SimplifiedBill bill = (SimplifiedBill)ScenarioContext.Current["Bill"];
 
             DirectDebitTransaction directDebitTransaction = directDebitRemittancesManager.CreateANewDirectDebitTransactionFromAGroupOfBills(
@@ -199,7 +199,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             DirectDebitPropietaryCodesGenerator directDebitPropietaryCodesGenerator = new DirectDebitPropietaryCodesGenerator(directDebitInitiationContract);
             Debtor debtor = ((Dictionary<string, Debtor>)ScenarioContext.Current["Debtors"])["00002"];
             DirectDebitMandate directDebitmandate = debtor.DirectDebitmandates.Values.ElementAt(0);
-            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19Code(directDebitmandate.InternalReferenceNumber);
+            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitmandate.InternalReferenceNumber);
             SimplifiedBill bill = new SimplifiedBill("0001", "Recibo 1", amount, DateTime.Today, DateTime.Today.AddMonths(1));
             DirectDebitTransaction directDebitTransaction = directDebitRemittancesManager.CreateANewDirectDebitTransactionFromAGroupOfBills(
                 internalUniqueInstructionID,
@@ -262,7 +262,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             DirectDebitPropietaryCodesGenerator directDebitPropietaryCodesGenerator = new DirectDebitPropietaryCodesGenerator(directDebitInitiationContract);
             Debtor debtor = ((Dictionary<string, Debtor>)ScenarioContext.Current["Debtors"])["00001"];
             DirectDebitMandate directDebitmandate = debtor.DirectDebitmandates.Values.ElementAt(0);
-            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19Code(directDebitmandate.InternalReferenceNumber);
+            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitmandate.InternalReferenceNumber);
             SimplifiedBill bill = new SimplifiedBill("0001", "Recibo 1", amount, DateTime.Today, DateTime.Today.AddMonths(1));
             DirectDebitTransaction directDebitTransaction = directDebitRemittancesManager.CreateANewDirectDebitTransactionFromAGroupOfBills(
                 internalUniqueInstructionID,
@@ -285,7 +285,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             DirectDebitPropietaryCodesGenerator directDebitPropietaryCodesGenerator = new DirectDebitPropietaryCodesGenerator(directDebitInitiationContract);
             Debtor debtor = ((Dictionary<string, Debtor>)ScenarioContext.Current["Debtors"])["00002"];
             DirectDebitMandate directDebitmandate = debtor.DirectDebitmandates.Values.ElementAt(0);
-            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19Code(directDebitmandate.InternalReferenceNumber);
+            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitmandate.InternalReferenceNumber);
             SimplifiedBill bill = new SimplifiedBill("0002", "Recibo 2", amount, DateTime.Today, DateTime.Today.AddMonths(2));
             DirectDebitTransaction directDebitTransaction = directDebitRemittancesManager.CreateANewDirectDebitTransactionFromAGroupOfBills(
                 internalUniqueInstructionID,
@@ -344,7 +344,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             foreach (Debtor debtor in debtors)
             {
                 DirectDebitMandate directDebitmandate = debtor.DirectDebitmandates.Values.ElementAt(0);
-                mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19Code(directDebitmandate.InternalReferenceNumber);
+                mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitmandate.InternalReferenceNumber);
                 internalUniqueInstructionID = "GroupPayment1" + (transactionsCounter + 1).ToString("00000");
                 DirectDebitTransaction directDebitTransaction =
                     directDebitRemittancesManager.CreateANewEmptyDirectDebitTransaction(internalUniqueInstructionID, mandateID, directDebitmandate);

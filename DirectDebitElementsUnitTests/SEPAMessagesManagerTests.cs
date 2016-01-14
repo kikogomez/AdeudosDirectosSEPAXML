@@ -97,7 +97,7 @@ namespace DirectDebitElementsUnitTests
             {
                 simplifiedBills = debtor.SimplifiedBills.Select(dictionaryElement => dictionaryElement.Value).ToList();
                 internalUniqueInstructionID = (transactionsCounter + 1).ToString("000000");
-                mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19Code(debtor.DirectDebitmandates.First().Value.InternalReferenceNumber);
+                mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(debtor.DirectDebitmandates.First().Value.InternalReferenceNumber);
                 mandateSignatureDate = debtor.DirectDebitmandates.First().Value.DirectDebitMandateCreationDate;
                 debtorAccount = debtor.DirectDebitmandates.First().Value.BankAccount;
                 debtorFullName = debtor.FullName;

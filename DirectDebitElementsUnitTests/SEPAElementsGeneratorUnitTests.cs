@@ -129,7 +129,7 @@ namespace DirectDebitElementsUnitTests
             Debtor debtor = debtors["00002"];
             List<SimplifiedBill> bills = debtor.SimplifiedBills.Values.ToList();
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
-            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19Code(directDebitMandate.InternalReferenceNumber);
+            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
             BankAccount debtorAccount = directDebitMandate.BankAccount;
             string accountHolderName = directDebitMandate.AccountHolderName;
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;

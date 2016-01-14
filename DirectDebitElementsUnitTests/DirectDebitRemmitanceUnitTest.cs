@@ -112,7 +112,7 @@ namespace DirectDebitElementsUnitTests
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
             int internalDirectDebitReferenceNumber = directDebitMandate.InternalReferenceNumber;
             string internalUniqueInstructionID = "00001";
-            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19Code(directDebitMandate.InternalReferenceNumber);
+            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             BankAccount debtorAccount = directDebitMandate.BankAccount;
             string accountHolderName = directDebitMandate.AccountHolderName; 
@@ -142,7 +142,7 @@ namespace DirectDebitElementsUnitTests
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
             int internalDirectDebitReferenceNumber = directDebitMandate.InternalReferenceNumber;
             string internalUniqueInstructionID = "00001";
-            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19Code(directDebitMandate.InternalReferenceNumber);
+            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             BankAccount debtorAccount = directDebitMandate.BankAccount;
             string accountHolderName = directDebitMandate.AccountHolderName;
@@ -173,7 +173,7 @@ namespace DirectDebitElementsUnitTests
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
             int internalDirectDebitReferenceNumber = directDebitMandate.InternalReferenceNumber;
             string internalUniqueInstructionID = "00001";
-            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19Code(directDebitMandate.InternalReferenceNumber);
+            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             BankAccount debtorAccount = directDebitMandate.BankAccount;
             string accountHolderName = directDebitMandate.AccountHolderName;
@@ -212,7 +212,7 @@ namespace DirectDebitElementsUnitTests
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
             int internalDirectDebitReferenceNumber = directDebitMandate.InternalReferenceNumber;
             string internalUniqueInstructionID = "00001";
-            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19Code(directDebitMandate.InternalReferenceNumber);
+            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             BankAccount debtorAccount = directDebitMandate.BankAccount;
             string accountHolderName = directDebitMandate.AccountHolderName;
