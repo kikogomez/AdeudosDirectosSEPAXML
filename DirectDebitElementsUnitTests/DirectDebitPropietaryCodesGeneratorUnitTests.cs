@@ -8,17 +8,25 @@ namespace DirectDebitElementsUnitTests
     [TestClass]
     public class DirectDebitPropietaryCodesGeneratorUnitTests
     {
-        [TestMethod]
-        public void ADirectDebitPropietaryCodesGeneratorIsCorrectlyGenerated()
+        static Creditor creditor;
+        static CreditorAgent creditorAgent;
+        static DirectDebitInitiationContract directDebitInitiationContract;
+
+        [ClassInitialize]
+        public static void ClassInit(TestContext context)
         {
-            Creditor creditor = new Creditor("G12345678", "NOMBRE ACREEDOR PRUEBAS");
-            CreditorAgent creditorAgent = new CreditorAgent(new BankCode("2100", "CaixaBank", "CAIXESBBXXX"));
-            DirectDebitInitiationContract directDebitInitiationContract = new DirectDebitInitiationContract(
+            creditor = new Creditor("G12345678", "NOMBRE ACREEDOR PRUEBAS");
+            creditorAgent = new CreditorAgent(new BankCode("2100", "CaixaBank", "CAIXESBBXXX"));
+            directDebitInitiationContract = new DirectDebitInitiationContract(
                 new BankAccount(new InternationalAccountBankNumberIBAN("ES5621001111301111111111")),
                 creditor.NIF,
                 "777",
                 creditorAgent);
+        }
 
+        [TestMethod]
+        public void ADirectDebitPropietaryCodesGeneratorIsCorrectlyGenerated()
+        {
             DirectDebitPropietaryCodesGenerator directDebitPropietaryCodesGenerator = new DirectDebitPropietaryCodesGenerator(directDebitInitiationContract);
 
             Assert.AreEqual(directDebitInitiationContract, directDebitPropietaryCodesGenerator.DirectDebitInitiationContract);
@@ -27,17 +35,18 @@ namespace DirectDebitElementsUnitTests
         [TestMethod]
         public void TheMandateIDIsCorrectlyCalculatedGivenAnInternalReferenceNumber()
         {
-            Creditor creditor = new Creditor("G12345678", "NOMBRE ACREEDOR PRUEBAS");
-            CreditorAgent creditorAgent = new CreditorAgent(new BankCode("2100", "CaixaBank", "CAIXESBBXXX"));
-            DirectDebitInitiationContract directDebitInitiationContract = new DirectDebitInitiationContract(
-                new BankAccount(new InternationalAccountBankNumberIBAN("ES5621001111301111111111")),
-                creditor.NIF,
-                "011",
-                creditorAgent);
-
             DirectDebitPropietaryCodesGenerator directDebitPropietaryCodesGenerator = new DirectDebitPropietaryCodesGenerator(directDebitInitiationContract);
 
-            Assert.AreEqual("000001112345", directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(12345));
+            Assert.AreEqual("000077712345", directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(12345));
+        }
+
+        [TestMethod]
+        public void TheDirectDebitRemmitanceMessageIDIsCorrectlyCalculatedGivenAGenrationDate()
+        {
+            DirectDebitPropietaryCodesGenerator directDebitPropietaryCodesGenerator = new DirectDebitPropietaryCodesGenerator(directDebitInitiationContract);
+
+            DateTime generationDate = DateTime.Parse("30-10-2015");
+            Assert.AreEqual("ES26777G123456782015103000:00:00", directDebitPropietaryCodesGenerator.GenerateRemmitanceID(generationDate));
         }
     }
 }

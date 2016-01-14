@@ -15,21 +15,23 @@ namespace DirectDebitElements
         DirectDebitInitiationContract directDebitInitiationContract;
 
         public DirectDebitRemittance(
+            string messageID,
             DateTime creationDateTime,
             DateTime requestedCollectionDate, 
             DirectDebitInitiationContract directDebitInitiationContract)
         {
+            CheckMandatoryFields(messageID, directDebitInitiationContract);
+
+            this.messageID = messageID;
             this.creationDateTime = creationDateTime;
             this.requestedCollectionDate = requestedCollectionDate;
             this.directDebitInitiationContract=directDebitInitiationContract;
             directDebitTransactionGroupPaymentCollection = new List<DirectDebitTransactionsGroupPayment>();
-            GenerateRemmitanceID();
         }
 
         public string MessageID
         {
             get { return messageID; }
-            set { messageID = value; }
         }
 
         public DateTime CreationDate
@@ -76,9 +78,11 @@ namespace DirectDebitElements
                 directDebitTransactionGroupPayment => directDebitTransactionGroupPayment.TotalAmount).Sum();
         }
 
-        private void GenerateRemmitanceID()
+        private void CheckMandatoryFields(string messageID, DirectDebitInitiationContract directDebitInitiationContract)
         {
-            messageID = directDebitInitiationContract.CreditorID + creationDateTime.ToString("yyyyMMddHH:mm:ss");
+            if (messageID == null) throw new ArgumentNullException("MessageID", "MessageID can't be null");
+            if (messageID.Trim().Length == 0) throw new ArgumentException("MessageID can't be empty", "MessageID");
+            if (messageID.Trim().Length > 35) throw new ArgumentOutOfRangeException("MessageID", "MessageID can't be longer than 35 characters");
         }
     }
 }

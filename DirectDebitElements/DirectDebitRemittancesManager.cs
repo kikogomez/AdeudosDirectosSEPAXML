@@ -14,15 +14,15 @@ namespace DirectDebitElements
         {
         }
 
-        public DirectDebitRemittance CreateADirectDebitRemmitance(DateTime creationDateTime, DateTime requestedCollectionDate, DirectDebitInitiationContract directDebitInitiationContract)
+        public DirectDebitRemittance CreateADirectDebitRemmitance(string messageID, DateTime creationDateTime, DateTime requestedCollectionDate, DirectDebitInitiationContract directDebitInitiationContract)
         {
-            DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(creationDateTime, requestedCollectionDate, directDebitInitiationContract);
+            DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(messageID, creationDateTime, requestedCollectionDate, directDebitInitiationContract);
             return directDebitRemmitance;
         }
 
-        public DirectDebitTransactionsGroupPayment CreateANewGroupOfDirectDebitTransactions(string localInstrument)
+        public DirectDebitTransactionsGroupPayment CreateANewGroupOfDirectDebitTransactions(string paymentInformationID, string localInstrument)
         {
-            DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment = new DirectDebitTransactionsGroupPayment(localInstrument);
+            DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment = new DirectDebitTransactionsGroupPayment(paymentInformationID, localInstrument);
             return directDebitTransactionsGroupPayment;
         }
 

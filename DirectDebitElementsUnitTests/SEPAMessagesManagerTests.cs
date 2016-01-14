@@ -78,13 +78,13 @@ namespace DirectDebitElementsUnitTests
         public void ACustomerDirectDebitRemmitanceXMLStringMessageIsCorrectlyGenerated()
         {
             DateTime creationDate = new DateTime(2015, 01, 10, 7, 15, 0);
+            string messageID = "ES26011G123456782015011007:15:00";
             DateTime requestedCollectionDate = new DateTime(2015, 01, 15);
 
-            DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(creationDate, requestedCollectionDate, directDebitInitiationContract);
-            DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment = new DirectDebitTransactionsGroupPayment("CORE");
+            DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
             string prefix = directDebitRemmitance.MessageID.Substring(directDebitRemmitance.MessageID.Length - 25);
-            directDebitTransactionsGroupPayment.PaymentInformationID = prefix + "001";
-
+            string paymentInformationID = prefix + "001";
+            DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment = new DirectDebitTransactionsGroupPayment(paymentInformationID, "CORE");
 
             List<SimplifiedBill> simplifiedBills;
             string internalUniqueInstructionID;

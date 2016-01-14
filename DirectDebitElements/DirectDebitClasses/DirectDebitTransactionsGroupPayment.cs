@@ -12,8 +12,9 @@ namespace DirectDebitElements
         int numberOfDirectDebitTransactions;
         decimal totalAmount;
 
-        public DirectDebitTransactionsGroupPayment(string localInstrument)
+        public DirectDebitTransactionsGroupPayment(string paymentInformationID, string localInstrument)
         {
+            this.paymentInformationID = CheckPaymentInformationID(paymentInformationID);
             this.localInstrument = localInstrument;
             directDebitTransactionsCollection = new List<DirectDebitTransaction>();
         }
@@ -21,7 +22,6 @@ namespace DirectDebitElements
         public string PaymentInformationID
         {
             get { return paymentInformationID; }
-            set { paymentInformationID = CheckPaymentInformationID(value); }
         }
 
         public string LocalInstrument
@@ -59,8 +59,8 @@ namespace DirectDebitElements
         private string CheckPaymentInformationID(string paymentInformationID)
         {
             if (paymentInformationID == null) throw new System.ArgumentNullException("PaymentInformationID", "PaymentInformationID can't be null");
-            if (paymentInformationID.Length > 35) throw new System.ArgumentOutOfRangeException("PaymentInformationID", "PaymentInformationID lenght can't exceed 35 characters");
-            if (paymentInformationID.Length == 0) throw new System.ArgumentOutOfRangeException("PaymentInformationID", "PaymentInformationID lenght can't be empty");
+            if (paymentInformationID.Trim().Length > 35) throw new System.ArgumentOutOfRangeException("PaymentInformationID", "PaymentInformationID lenght can't exceed 35 characters");
+            if (paymentInformationID.Trim().Length == 0) throw new System.ArgumentException("PaymentInformationID lenght can't be empty", "PaymentInformationID");
             return paymentInformationID;
         }
     }
