@@ -6,7 +6,7 @@ using ISO20022PaymentInitiations.SchemaSerializableClasses;
 namespace ISO20022PaymentInitiationsUnitTests
 {
     [TestClass]
-    public class SEPAIAttributesTests
+    public class SEPAAttributesTests
     {
         static SEPAAttributes sEPAAttributes;
 

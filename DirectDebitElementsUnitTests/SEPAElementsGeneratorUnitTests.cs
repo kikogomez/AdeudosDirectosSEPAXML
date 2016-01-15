@@ -123,7 +123,7 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        public void ADirectDebitTransactionInformation9IsCorrectlyGenerated()
+        public void ADirectDebitTransactionInformation9WithoutAmmendmentInformationIsCorrectlyGenerated()
         {
             string internalUniqueInstructionID = "00001";
             Debtor debtor = debtors["00002"];
@@ -148,13 +148,59 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual(directDebitTransaction.InternalUniqueInstructionID, directDebitTransactionInformation.PmtId.InstrId);
             Assert.AreEqual(directDebitTransaction.InternalUniqueInstructionID, directDebitTransactionInformation.PmtId.EndToEndId);
             Assert.AreEqual(directDebitTransaction.Amount, directDebitTransactionInformation.InstdAmt.Value);
+            Assert.AreEqual("EUR", directDebitTransactionInformation.InstdAmt.Ccy);
             Assert.AreEqual(directDebitTransaction.MandateID, directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.MndtId);
             Assert.AreEqual(directDebitTransaction.MandateSigatureDate, directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.DtOfSgntr);
+            Assert.IsTrue(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.DtOfSgntrSpecified);
             Assert.AreEqual(creditorAgent.BankBIC, directDebitTransactionInformation.DbtrAgt.FinInstnId.BIC);
             Assert.AreEqual(directDebitTransaction.AccountHolderName, directDebitTransactionInformation.Dbtr.Nm);
             Assert.AreEqual(directDebitTransaction.DebtorAccount.IBAN.IBAN, (string)directDebitTransactionInformation.DbtrAcct.Id.Item);
             string[] expectedStringArrayWithOnlyOneString = new string[] { "Cuota Social Octubre 2013 -> 79,00; Cuota Social Noviembre 2013 -> 79,00" };
             CollectionAssert.AreEqual(expectedStringArrayWithOnlyOneString, directDebitTransactionInformation.RmtInf.Ustrd);
+            Assert.AreEqual(ChargeBearerType1Code.SLEV,directDebitTransactionInformation.ChrgBr);
+            Assert.IsFalse(directDebitTransactionInformation.ChrgBrSpecified);                              //ChargeBearer se especifica una sola vez por remesa, en el PaymentInformation
+
+            Assert.IsFalse(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInd);              //AmmendmentInformationInd es 'false'
+            Assert.IsFalse(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntIndSpecified);     //Si AmmendmentInformationInd es 'false', no hace falta ni siquiera incluirlo
+            Assert.IsNull(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInfDtls);
+
+            AssertUnusedDirectDebitTransactionInformation9(directDebitTransactionInformation);
+        }
+
+        private void AssertUnusedDirectDebitTransactionInformation9(DirectDebitTransactionInformation9 directDebitTransactionInformation)
+        {
+            Assert.IsNull(directDebitTransactionInformation.Dbtr.CtctDtls);
+            Assert.IsNull(directDebitTransactionInformation.Dbtr.CtryOfRes);
+            Assert.IsNull(directDebitTransactionInformation.Dbtr.Id);
+            Assert.IsNull(directDebitTransactionInformation.Dbtr.PstlAdr);
+            Assert.IsNull(directDebitTransactionInformation.DbtrAcct.Ccy);
+            Assert.IsNull(directDebitTransactionInformation.DbtrAcct.Nm);
+            Assert.IsNull(directDebitTransactionInformation.DbtrAcct.Tp);
+            Assert.IsNull(directDebitTransactionInformation.DbtrAgt.BrnchId);
+            Assert.IsNull(directDebitTransactionInformation.DbtrAgt.FinInstnId.ClrSysMmbId);
+            Assert.IsNull(directDebitTransactionInformation.DbtrAgt.FinInstnId.Nm);
+            Assert.IsNull(directDebitTransactionInformation.DbtrAgt.FinInstnId.Othr);
+            Assert.IsNull(directDebitTransactionInformation.DbtrAgt.FinInstnId.PstlAdr);
+            Assert.IsNull(directDebitTransactionInformation.DbtrAgtAcct);
+            Assert.IsNull(directDebitTransactionInformation.DrctDbtTx.CdtrSchmeId);
+            Assert.IsNull(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.ElctrncSgntr);
+            Assert.AreEqual(DateTime.MaxValue, directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.FnlColltnDt);    //No se admiten nulos, asi que se pone un valor maximo
+            Assert.IsFalse(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.FnlColltnDtSpecified);               //No se serializa
+            Assert.AreEqual(Frequency1Code.MNTH, directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.Frqcy);
+            Assert.IsFalse(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.FrqcySpecified);                     //Aunque se especifica frecuencia mensual, no se serializa
+            Assert.AreEqual(DateTime.MinValue, directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.FrstColltnDt);   //No se admiten nulos, asi que se pone un valor minimo
+            Assert.IsFalse(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.FrstColltnDtSpecified);              //No se serializa
+            Assert.AreEqual(DateTime.MinValue, directDebitTransactionInformation.DrctDbtTx.PreNtfctnDt);                //No se admiten nulos, asi que se pone un valor minimo
+            Assert.IsFalse(directDebitTransactionInformation.DrctDbtTx.PreNtfctnDtSpecified);                           //No se serializa
+            Assert.IsNull(directDebitTransactionInformation.DrctDbtTx.PreNtfctnId);
+            Assert.IsNull(directDebitTransactionInformation.InstrForCdtrAgt);
+            Assert.IsNull(directDebitTransactionInformation.PmtTpInf);
+            Assert.IsNull(directDebitTransactionInformation.Purp);
+            CollectionAssert.AreEqual(new RegulatoryReporting3[] { null }, directDebitTransactionInformation.RgltryRptg);
+            CollectionAssert.AreEqual(new RemittanceLocation2[] { null }, directDebitTransactionInformation.RltdRmtInf);
+            Assert.IsNull(directDebitTransactionInformation.Tax);
+            Assert.IsNull(directDebitTransactionInformation.UltmtCdtr);
+            Assert.IsNull(directDebitTransactionInformation.UltmtDbtr);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace DirectDebitElements
     {
         public PaymentStatusReportManager() { }
 
-        public PaymentStatusReportCreationResult CreatePaymentStatusReport(
+        public PaymentStatusReportCreationResult CreateCheckedPaymentStatusReport(
             string messageID,
             DateTime messageCreationDateTime,
             DateTime rejectAccountChargeDateTime,
@@ -25,7 +25,7 @@ namespace DirectDebitElements
                 numberOfTransactions,
                 controlSum,
                 directDebitRemmitanceRejectsList);
-
+            
             return paymentStatusReportCreationResult;
         }
 

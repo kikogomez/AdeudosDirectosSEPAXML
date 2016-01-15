@@ -247,7 +247,7 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        public void APaymentStatusReportIsCorrectlyCreatedGivenACorrectNumberOfTransactionsAndControlSum()
+        public void ACheckedPaymentStatusReportIsCorrectlyCreatedGivenACorrectNumberOfTransactionsAndControlSum()
         {
             DirectDebitRemmitanceReject directDebitRemmitanceReject1 = new DirectDebitRemmitanceReject(
                 originalDirectDebitRemmitance1MessageID,
@@ -268,7 +268,7 @@ namespace DirectDebitElementsUnitTests
 
             PaymentStatusReportManager paymentStatusReportManager = new PaymentStatusReportManager();
 
-            PaymentStatusReportCreationResult paymentStatusReportCreationResult = paymentStatusReportManager.CreatePaymentStatusReport(
+            PaymentStatusReportCreationResult paymentStatusReportCreationResult = paymentStatusReportManager.CreateCheckedPaymentStatusReport(
                 messageID,
                 messageCreationDateTime,
                 rejectAccountChargeDateTime,
@@ -289,7 +289,7 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        public void IfGivenIncorrectNumberOfTransactionsThePaymentStatusReportIsCorrectlyCreatedButAnErrorMessageIsGenerated()
+        public void IfGivenIncorrectNumberOfTransactionsTheCheckedPaymentStatusReportIsCorrectlyCreatedButAnErrorMessageIsGenerated()
         {
             DirectDebitRemmitanceReject directDebitRemmitanceReject1 = new DirectDebitRemmitanceReject(
                 originalDirectDebitRemmitance1MessageID,
@@ -310,7 +310,7 @@ namespace DirectDebitElementsUnitTests
 
             PaymentStatusReportManager paymentStatusReportManager = new PaymentStatusReportManager();
 
-            PaymentStatusReportCreationResult paymentStatusReportCreationResult = paymentStatusReportManager.CreatePaymentStatusReport(
+            PaymentStatusReportCreationResult paymentStatusReportCreationResult = paymentStatusReportManager.CreateCheckedPaymentStatusReport(
                 messageID,
                 messageCreationDateTime,
                 rejectAccountChargeDateTime,
@@ -333,7 +333,7 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        public void IfGivenIncorrectControlSumThePaymentStatusReportIsCorrectlyCreatedButAnErrorMessageIsGenerated()
+        public void IfGivenIncorrectControlSumTheCheckedPaymentStatusReportIsCorrectlyCreatedButAnErrorMessageIsGenerated()
         {
             DirectDebitRemmitanceReject directDebitRemmitanceReject1 = new DirectDebitRemmitanceReject(
                 originalDirectDebitRemmitance1MessageID,
@@ -354,7 +354,7 @@ namespace DirectDebitElementsUnitTests
 
             PaymentStatusReportManager paymentStatusReportManager = new PaymentStatusReportManager();
 
-            PaymentStatusReportCreationResult paymentStatusReportCreationResult = paymentStatusReportManager.CreatePaymentStatusReport(
+            PaymentStatusReportCreationResult paymentStatusReportCreationResult = paymentStatusReportManager.CreateCheckedPaymentStatusReport(
                 messageID,
                 messageCreationDateTime,
                 rejectAccountChargeDateTime,
@@ -377,7 +377,7 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        public void IfGivenBothIncorrectNumberOfTransactionsAndIncorrectControlSumThePaymentStatusReportIsCorrectlyCreatedButAnErrorMessageIsGenerated()
+        public void IfGivenBothIncorrectNumberOfTransactionsAndIncorrectControlSumTheCheckedPaymentStatusReportIsCorrectlyCreatedButAnErrorMessageIsGenerated()
         {
             DirectDebitRemmitanceReject directDebitRemmitanceReject1 = new DirectDebitRemmitanceReject(
                 originalDirectDebitRemmitance1MessageID,
@@ -398,7 +398,7 @@ namespace DirectDebitElementsUnitTests
 
             PaymentStatusReportManager paymentStatusReportManager = new PaymentStatusReportManager();
 
-            PaymentStatusReportCreationResult paymentStatusReportCreationResult = paymentStatusReportManager.CreatePaymentStatusReport(
+            PaymentStatusReportCreationResult paymentStatusReportCreationResult = paymentStatusReportManager.CreateCheckedPaymentStatusReport(
                 messageID,
                 messageCreationDateTime,
                 rejectAccountChargeDateTime,
