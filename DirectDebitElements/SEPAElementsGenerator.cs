@@ -131,15 +131,7 @@ namespace DirectDebitElements
                 null,           //<Ccy> - Not used by creditor in SEPA COR
                 null);          //<Nm> - Not used by creditor in SEPA COR
 
-            string[] remittanceConcepts = BuildUnstructedRemmitanceInformation(directDebitTransaction, singleUnstructuredConcept);
-            //if (singleUnstructuredConcept)
-            //{
-            //    remittanceConcepts = new string[] { BuildUnstructedRemmitanceInformation(directDebitTransaction);
-            //}
-            //else
-            //{
-            //    remittanceConcepts=directDebitTransaction.
-            //}
+            string[] remittanceConcepts = BuildUnstructuredRemmitanceInformation(directDebitTransaction, singleUnstructuredConcept);
 
             RemittanceInformation5 remitanceInformation_RmtInf = new RemittanceInformation5(
                 remittanceConcepts,                                     //<Ustrd>
@@ -260,7 +252,7 @@ namespace DirectDebitElements
             return paymentInformation_PmtInf;
         }
 
-        private static string[] BuildUnstructedRemmitanceInformation(DirectDebitTransaction directDebitTransaction, bool singleUnstructuredConcept)
+        private static string[] BuildUnstructuredRemmitanceInformation(DirectDebitTransaction directDebitTransaction, bool singleUnstructuredConcept)
         {
             string[] remittanceConcepts = directDebitTransaction.BillsInTransaction.Select
                 (bill => bill.Description + " --- " + bill.Amount.ToString("0.00")).ToArray();

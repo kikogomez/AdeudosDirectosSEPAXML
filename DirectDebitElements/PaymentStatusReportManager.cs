@@ -10,25 +10,6 @@ namespace DirectDebitElements
     {
         public PaymentStatusReportManager() { }
 
-        //public PaymentStatusReportCreationResult CreateCheckedPaymentStatusReport(
-        //    string messageID,
-        //    DateTime messageCreationDateTime,
-        //    DateTime rejectAccountChargeDateTime,
-        //    int numberOfTransactions,
-        //    decimal controlSum,
-        //    List<DirectDebitRemmitanceReject> directDebitRemmitanceRejectsList)
-        //{
-        //    PaymentStatusReportCreationResult paymentStatusReportCreationResult = new PaymentStatusReportCreationResult(
-        //        messageID,
-        //        messageCreationDateTime,
-        //        rejectAccountChargeDateTime,
-        //        numberOfTransactions,
-        //        controlSum,
-        //        directDebitRemmitanceRejectsList);
-
-        //    return paymentStatusReportCreationResult;
-        //}
-
         public PaymentStatusReport CreateCheckedPaymentStatusReport(
             string messageID,
             DateTime messageCreationDateTime,

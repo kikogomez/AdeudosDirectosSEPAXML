@@ -149,18 +149,6 @@ namespace DirectDebitElementsUnitTests
                 Assert.AreEqual(expectedErrorMessage, exceptionMessage);
                 throw typeInitializationException;
             }
-
-
-            //DirectDebitRemmitanceReject directDebitRemmitanceReject = directDebitRemmitanceRejectCreationResult.DirectDebitRemmitanceReject;
-            //string errorMessage = directDebitRemmitanceRejectCreationResult.ErrorMessages[0];
-            //string expectedErrorMessage = "The Number of Transactions is wrong. Provided: 1. Expected: 2. Initialized with expected value";
-
-            //Assert.AreEqual(expectedErrorMessage, errorMessage);
-            //Assert.AreEqual(originalDirectDebitRemmitance1MessageID, directDebitRemmitanceReject.OriginalDirectDebitRemmitanceMessageID);
-            //Assert.AreEqual(2, directDebitRemmitanceReject.NumberOfTransactions);
-            //Assert.AreEqual(150, directDebitRemmitanceReject.ControlSum);
-            //Assert.AreEqual("2015120100124", directDebitRemmitanceReject.DirectDebitTransactionRejects[0].OriginalEndtoEndTransactionIdentification);
-            //Assert.AreEqual("2015120100312", directDebitRemmitanceReject.DirectDebitTransactionRejects[1].OriginalEndtoEndTransactionIdentification);
         }
 
         [TestMethod]
@@ -188,52 +176,7 @@ namespace DirectDebitElementsUnitTests
                 Assert.AreEqual(expectedErrorMessage, exceptionMessage);
                 throw typeInitializationException;
             }
-
-            //DirectDebitRemmitanceRejectCreationResult directDebitRemmitanceRejectCreationResult = new DirectDebitRemmitanceRejectCreationResult(
-            //    originalDirectDebitRemmitance1MessageID,
-            //    numberofTransactions,
-            //    controlSum,
-            //    directDebitTransactionRejectsList1);
-
-            //DirectDebitRemmitanceReject directDebitRemmitanceReject = directDebitRemmitanceRejectCreationResult.DirectDebitRemmitanceReject;
-            //string errorMessage = directDebitRemmitanceRejectCreationResult.ErrorMessages[0];
-            //string expectedErrorMessage = "The Control Sum is wrong. Provided: 100. Expected: 150. Initialized with expected value";
-
-            //Assert.AreEqual(expectedErrorMessage, errorMessage);
-            //Assert.AreEqual(originalDirectDebitRemmitance1MessageID, directDebitRemmitanceReject.OriginalDirectDebitRemmitanceMessageID);
-            //Assert.AreEqual(2, directDebitRemmitanceReject.NumberOfTransactions);
-            //Assert.AreEqual(150, directDebitRemmitanceReject.ControlSum);
-            //Assert.AreEqual("2015120100124", directDebitRemmitanceReject.DirectDebitTransactionRejects[0].OriginalEndtoEndTransactionIdentification);
-            //Assert.AreEqual("2015120100312", directDebitRemmitanceReject.DirectDebitTransactionRejects[1].OriginalEndtoEndTransactionIdentification);
         }
-
-        //[TestMethod]
-        //public void IfGivenBothIncorrectNumberOfTransactionsAndIncorrectControlSumTheDirectDebitRemmitanceRejectIsCorrectlyCreatedButAnErrorMessageIsGenerated()
-        //{
-        //    int numberofTransactions = 1;
-        //    decimal controlSum = 100;
-
-        //    DirectDebitRemmitanceRejectCreationResult directDebitRemmitanceRejectCreationResult = new DirectDebitRemmitanceRejectCreationResult(
-        //        originalDirectDebitRemmitance1MessageID,
-        //        numberofTransactions,
-        //        controlSum,
-        //        directDebitTransactionRejectsList1);
-
-        //    DirectDebitRemmitanceReject directDebitRemmitanceReject = directDebitRemmitanceRejectCreationResult.DirectDebitRemmitanceReject;
-        //    List<string> errorMessages = directDebitRemmitanceRejectCreationResult.ErrorMessages;
-        //    List<string> expectedErrorMessages = new List<string>()
-        //    {
-        //        "The Number of Transactions is wrong. Provided: 1. Expected: 2. Initialized with expected value",
-        //        "The Control Sum is wrong. Provided: 100. Expected: 150. Initialized with expected value"
-        //    };
-
-        //    CollectionAssert.AreEqual(expectedErrorMessages, errorMessages);
-        //    Assert.AreEqual(originalDirectDebitRemmitance1MessageID, directDebitRemmitanceReject.OriginalDirectDebitRemmitanceMessageID);
-        //    Assert.AreEqual(2, directDebitRemmitanceReject.NumberOfTransactions);
-        //    Assert.AreEqual(150, directDebitRemmitanceReject.ControlSum);
-        //    Assert.AreEqual("2015120100124", directDebitRemmitanceReject.DirectDebitTransactionRejects[0].OriginalEndtoEndTransactionIdentification);
-        //    Assert.AreEqual("2015120100312", directDebitRemmitanceReject.DirectDebitTransactionRejects[1].OriginalEndtoEndTransactionIdentification);
-        //}
 
         [TestMethod]
         public void AnEmptyDirectDebitRemmitanceRejectIsCorrectlyCreated()
@@ -344,10 +287,6 @@ namespace DirectDebitElementsUnitTests
                 controlSum,
                 directDebitRemmitanceRejectsList);
 
-            //PaymentStatusReport paymentStatusReport = paymentStatusReportCreationResult.PaymentStatusreport;
-            //List<string> errorMessages = paymentStatusReportCreationResult.ErrorMessages;
-
-            //Assert.AreEqual(0, errorMessages.Count);
             Assert.AreEqual("DATIR00112G12345678100", paymentStatusReport.MessageID);
             Assert.AreEqual(messageCreationDateTime, paymentStatusReport.MessageCreationDateTime);
             Assert.AreEqual(rejectAccountChargeDateTime, paymentStatusReport.RejectAccountChargeDateTime);
@@ -389,8 +328,6 @@ namespace DirectDebitElementsUnitTests
             }
             catch (TypeInitializationException typeInitializationException)
             {
-                //PaymentStatusReport paymentStatusReport = paymentStatusReportCreationResult.PaymentStatusreport;
-                //string errorMessage = paymentStatusReportCreationResult.ErrorMessages[0];
                 string expectedErrorMessage = "The Number of Transactions is wrong. It should be 3, but 2 is provided";
                 ArgumentException argumentException = (ArgumentException)typeInitializationException.InnerException;
                 string paramName = argumentException.ParamName;
@@ -398,15 +335,6 @@ namespace DirectDebitElementsUnitTests
                 Assert.AreEqual("numberOfTransactions", paramName);
                 Assert.AreEqual(expectedErrorMessage, exceptionMessage);
                 throw typeInitializationException;
-
-                //Assert.AreEqual(1, paymentStatusReportCreationResult.ErrorMessages.Count);
-                //Assert.AreEqual(expectedErrorMessage, errorMessage);
-                //Assert.AreEqual("DATIR00112G12345678100", paymentStatusReport.MessageID);
-                //Assert.AreEqual(messageCreationDateTime, paymentStatusReport.MessageCreationDateTime);
-                //Assert.AreEqual(rejectAccountChargeDateTime, paymentStatusReport.RejectAccountChargeDateTime);
-                //Assert.AreEqual(3, paymentStatusReport.NumberOfTransactions);
-                //Assert.AreEqual(230, paymentStatusReport.ControlSum);
-                //CollectionAssert.AreEqual(directDebitRemmitanceRejectsList, paymentStatusReport.DirectDebitRemmitanceRejects);
             }
         }
 
@@ -443,8 +371,6 @@ namespace DirectDebitElementsUnitTests
             }
             catch (TypeInitializationException typeInitializationException)
             {
-                //PaymentStatusReport paymentStatusReport = paymentStatusReportCreationResult.PaymentStatusreport;
-                //string errorMessage = paymentStatusReportCreationResult.ErrorMessages[0];
                 string expectedErrorMessage = "The Control Sum is wrong. It should be 230, but 330 is provided";
                 ArgumentException argumentException = (ArgumentException)typeInitializationException.InnerException;
                 string paramName = argumentException.ParamName;
@@ -452,63 +378,8 @@ namespace DirectDebitElementsUnitTests
                 Assert.AreEqual("controlSum", paramName);
                 Assert.AreEqual(expectedErrorMessage, exceptionMessage);
                 throw typeInitializationException;
-
-                //Assert.AreEqual(1, paymentStatusReportCreationResult.ErrorMessages.Count);
-                //Assert.AreEqual(expectedErrorMessage, errorMessage);
-                //Assert.AreEqual("DATIR00112G12345678100", paymentStatusReport.MessageID);
-                //Assert.AreEqual(messageCreationDateTime, paymentStatusReport.MessageCreationDateTime);
-                //Assert.AreEqual(rejectAccountChargeDateTime, paymentStatusReport.RejectAccountChargeDateTime);
-                //Assert.AreEqual(3, paymentStatusReport.NumberOfTransactions);
-                //Assert.AreEqual(230, paymentStatusReport.ControlSum);
-                //CollectionAssert.AreEqual(directDebitRemmitanceRejectsList, paymentStatusReport.DirectDebitRemmitanceRejects);
             }
         }
-
-        //[TestMethod]
-        //public void IfGivenBothIncorrectNumberOfTransactionsAndIncorrectControlSumThePaymentStatusReportIsCorrectlyCreatedButAnErrorMessageIsGenerated()
-        //{
-        //    DirectDebitRemmitanceReject directDebitRemmitanceReject1 = new DirectDebitRemmitanceReject(
-        //        originalDirectDebitRemmitance1MessageID,
-        //        directDebitTransactionRejectsList1);
-
-        //    DirectDebitRemmitanceReject directDebitRemmitanceReject2 = new DirectDebitRemmitanceReject(
-        //        originalDirectDebitRemmitance2MessageID,
-        //        directDebitTransactionRejectsList2);
-
-        //    List<DirectDebitRemmitanceReject> directDebitRemmitanceRejectsList = new List<DirectDebitRemmitanceReject>()
-        //    { directDebitRemmitanceReject1, directDebitRemmitanceReject2 };
-
-        //    string messageID = "DATIR00112G12345678100";
-        //    DateTime messageCreationDateTime = DateTime.Parse("2012-07-18T06:00:01");
-        //    DateTime rejectAccountChargeDateTime = DateTime.Parse("2012-07-18");
-        //    int numberOfTransactions = 2;
-        //    decimal controlSum = 330;
-
-        //    PaymentStatusReportCreationResult paymentStatusReportCreationResult = new PaymentStatusReportCreationResult(
-        //        messageID,
-        //        messageCreationDateTime,
-        //        rejectAccountChargeDateTime,
-        //        numberOfTransactions,
-        //        controlSum,
-        //        directDebitRemmitanceRejectsList);
-
-        //    PaymentStatusReport paymentStatusReport = paymentStatusReportCreationResult.PaymentStatusreport;
-        //    List<string> errorMessages = paymentStatusReportCreationResult.ErrorMessages;
-        //    List<string> expectedErrorMessages = new List<string>()
-        //    {
-        //        "The Number of Transactions is wrong. Provided: 2. Expected: 3. Initialized with expected value",
-        //        "The Control Sum is wrong. Provided: 330. Expected: 230. Initialized with expected value"
-        //    };
-
-        //    Assert.AreEqual(2, paymentStatusReportCreationResult.ErrorMessages.Count);
-        //    CollectionAssert.AreEqual(expectedErrorMessages, errorMessages);
-        //    Assert.AreEqual("DATIR00112G12345678100", paymentStatusReport.MessageID);
-        //    Assert.AreEqual(messageCreationDateTime, paymentStatusReport.MessageCreationDateTime);
-        //    Assert.AreEqual(rejectAccountChargeDateTime, paymentStatusReport.RejectAccountChargeDateTime);
-        //    Assert.AreEqual(3, paymentStatusReport.NumberOfTransactions);
-        //    Assert.AreEqual(230, paymentStatusReport.ControlSum);
-        //    CollectionAssert.AreEqual(directDebitRemmitanceRejectsList, paymentStatusReport.DirectDebitRemmitanceRejects);
-        //}
 
         [TestMethod]
         public void AnEmptyPaymentStatusReportIsCorrectlyCreated()
@@ -572,51 +443,24 @@ namespace DirectDebitElementsUnitTests
         [TestMethod]
         public void IfIAddANewDirecDebitTransactionRejectTheTotalNumberOfTransactionsAndAmountOfAPaymentStatusReportIsUpdated()
         {
-            //Creating payment status report
-
-            string originalDirectDebitRemmitanceMessageID = "PRE201207010001";
-            DirectDebitTransactionReject directDebitTransactionReject = new DirectDebitTransactionReject(
-                "0123456788",
-                "2015120100124",
-                DateTime.Parse("2015-12-01"),
-                80,
-                "000001102564",
-                new BankAccount(new InternationalAccountBankNumberIBAN("ES6812345678061234567890")),
-                "MS02");
-            List<DirectDebitTransactionReject> directDebitTransactionRejectList = new List<DirectDebitTransactionReject>()
-            { directDebitTransactionReject };
-
-            DirectDebitRemmitanceReject directDebitRemmitanceReject = new DirectDebitRemmitanceReject(
-                originalDirectDebitRemmitanceMessageID,
-                directDebitTransactionRejectList);
-
-            string paymentStatusReportMessageID = "DATIR00112G12345678100";
-            DateTime paymentStatusReportMessaceCreationDate = DateTime.Parse("2012-07-18T06:00:01");
-            DateTime paymentStatusReportRejectAccountChargeDateTime = DateTime.Parse("2012-07-18");
-            List<DirectDebitRemmitanceReject> directDebitRemmitanceRejectsList = new List<DirectDebitRemmitanceReject>()
-            { directDebitRemmitanceReject };
-
+            DirectDebitRemmitanceReject directDebitRemmitanceReject1 = new DirectDebitRemmitanceReject(
+                originalDirectDebitRemmitance1MessageID,
+                directDebitTransactionRejectsList1);
+            List<DirectDebitRemmitanceReject> directDebitRemmitanceRejectsList = new List<DirectDebitRemmitanceReject>() {directDebitRemmitanceReject1};
+            string messageID = "DATIR00112G12345678100";
+            DateTime messageCreationDateTime = DateTime.Parse("2012-07-18T06:00:01");
+            DateTime rejectAccountChargeDateTime = DateTime.Parse("2012-07-18");
             PaymentStatusReport paymentStatusReport = new PaymentStatusReport(
-                paymentStatusReportMessageID,
-                paymentStatusReportMessaceCreationDate,
-                paymentStatusReportRejectAccountChargeDateTime,
+                messageID,
+                messageCreationDateTime,
+                rejectAccountChargeDateTime,
                 directDebitRemmitanceRejectsList);
-
-            //Adding new DirectDebitTransactionReject
-
-            DirectDebitTransactionReject newDirectDebitTransactionReject = new DirectDebitTransactionReject(
-                "0123456789",
-                "2015120100312",
-                DateTime.Parse("2015-12-01"),
-                70,
-                "00000110421",
-                new BankAccount(new InternationalAccountBankNumberIBAN("ES3011112222003333333333")),
-                "MS01");
+            DirectDebitTransactionReject newDirectDebitTransactionReject = directDebitTransactionRejectsList2[0];
 
             paymentStatusReport.DirectDebitRemmitanceRejects[0].AddDirectDebitTransactionReject(newDirectDebitTransactionReject);
 
-            Assert.AreEqual(2, paymentStatusReport.NumberOfTransactions);
-            Assert.AreEqual(150, paymentStatusReport.ControlSum);
+            Assert.AreEqual(3, paymentStatusReport.NumberOfTransactions);
+            Assert.AreEqual(230, paymentStatusReport.ControlSum);
         }
     }
 }

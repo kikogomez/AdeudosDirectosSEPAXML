@@ -11,49 +11,6 @@ namespace DirectDebitElements
 {
     public class SEPAMessagesManager
     {
-        //public string GenerateISO20022CustomerDirectDebitInitiationMessage(
-        //    DateTime generationDateTime,
-        //    Creditor creditor,
-        //    CreditorAgent creditorAgent,
-        //    DirectDebitInitiationContract directDebitInitiationContract,
-        //    DirectDebitRemittance directDebitRemmitance,
-        //    bool singleUnstructuredConcept)
-        //{
-        //    PartyIdentification32 initiationParty_InitPty = SEPAElementsGenerator.GenerateInitiationParty_InitPty(creditor, directDebitInitiationContract);
-        //    GroupHeader39 groupHeader_GrpHdr = SEPAElementsGenerator.GenerateGroupHeader_GrpHdr(
-        //        directDebitRemmitance.MessageID,
-        //        generationDateTime,
-        //        directDebitRemmitance.NumberOfTransactions,
-        //        directDebitRemmitance.ControlSum,
-        //        initiationParty_InitPty);
-        //    List<PaymentInstructionInformation4> paymentInformation_PmtInf_List = new List<PaymentInstructionInformation4>();
-
-        //    foreach (DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment in directDebitRemmitance.DirectDebitTransactionGroupPaymentCollection)
-        //    {
-
-        //        PaymentInstructionInformation4 paymentInformation_PmtInf = SEPAElementsGenerator.GeneratePaymentInformation_PmtInf(
-        //            creditor,
-        //            creditorAgent,
-        //            directDebitInitiationContract,
-        //            directDebitTransactionsGroupPayment,
-        //            singleUnstructuredConcept);
-
-        //        paymentInformation_PmtInf_List.Add(paymentInformation_PmtInf);
-        //    }
-
-        //    PaymentInstructionInformation4[] paymentInformation_PmtInf_Array = paymentInformation_PmtInf_List.ToArray();
-
-        //    CustomerDirectDebitInitiationV02 customerDebitInitiationV02_Document = new CustomerDirectDebitInitiationV02(
-        //        groupHeader_GrpHdr,                     //<GrpHdr>
-        //        paymentInformation_PmtInf_Array);       //<PmtInf>
-
-        //    CustomerDirectDebitInitiationDocument document_Document = new CustomerDirectDebitInitiationDocument(customerDebitInitiationV02_Document);
-
-        //    string xMLNamespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02";
-        //    string xmlString = XMLSerializer.XMLSerializeToString<CustomerDirectDebitInitiationDocument>(document_Document, "Document", xMLNamespace);
-        //    return xmlString;
-        //}
-
         public string GenerateISO20022CustomerDirectDebitInitiationMessage(
             Creditor creditor,
             CreditorAgent creditorAgent,
@@ -133,29 +90,6 @@ namespace DirectDebitElements
                 paymentStatusReport_NumberOfTransactions,
                 paymentStatusReport_ControlSum,
                 directDebitRemmitanceRejectsList);
-
-            ////Crear un DirectDebitRemmitanceReject por cada OriginalPaymentInformation1 en OrgnlPmtInfAndSts y añadirlo a PaymentStatusReport
-            //foreach (OriginalPaymentInformation1 originalPaymentInformation1 in customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlPmtInfAndSts)
-            //{
-            //    paymentStatusReport.AddRemmitanceReject(SEPAElementsReader.CreateDirectDebitRemmitanceReject(originalPaymentInformation1));
-            //}
-
-            //int directDebitRemmitanceRejecstNumberOfTransactionsSum =
-            //    paymentStatusReport.DirectDebitRemmitanceRejects.Select(ddRemitanceReject => ddRemitanceReject.NumberOfTransactions).Sum();
-            //decimal directDebitRemmitanceRejecstAmountSum =
-            //    paymentStatusReport.DirectDebitRemmitanceRejects.Select(ddRemitanceReject => ddRemitanceReject.ControlSum).Sum();
-
-            //if (paymentStatusReport_NumberOfTransactions != directDebitRemmitanceRejecstNumberOfTransactionsSum) throw new TypeInitializationException("PaymentStatusReport", new ArgumentException("The Number of Transactions are erroneous", "paymentStatusReportXMLMessage"));
-            //if (paymentStatusReport_ControlSum != directDebitRemmitanceRejecstAmountSum) throw new TypeInitializationException("PaymentStatusReport", new ArgumentException("The Control Sum is erroneous", "paymentStatusReportXMLMessage"));
-
-            //
-            //REVISAR!!!!!
-            //
-            //Comprobar numero de transaciiones y suma de control            
-            //if (paymentStatusReport.NumberOfTransactions.ToString() != customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlNbOfTxs);
-            //if (paymentStatusReport.ControlSum != customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlCtrlSum);
-            //
-            //
 
             return paymentStatusReport;
         }
