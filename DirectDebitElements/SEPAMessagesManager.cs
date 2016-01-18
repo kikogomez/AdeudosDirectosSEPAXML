@@ -125,7 +125,8 @@ namespace DirectDebitElements
                 directDebitRemmitanceRejectsList.Add(SEPAElementsReader.CreateDirectDebitRemmitanceReject(originalPaymentInformation1));
             }
 
-            PaymentStatusReport paymentStatusReport = new PaymentStatusReport(
+            PaymentStatusReportManager paymentStatusReportmanager = new PaymentStatusReportManager();
+            PaymentStatusReport paymentStatusReport = paymentStatusReportmanager.CreateCheckedPaymentStatusReport(
                 paymentStatusReport_MessageID,
                 paymentStatusReport_MessageCreationDateTime,
                 paymentStatusReport_RejectAccountChargeDateTime,

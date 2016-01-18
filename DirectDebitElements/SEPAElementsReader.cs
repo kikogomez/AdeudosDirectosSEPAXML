@@ -11,8 +11,11 @@ namespace DirectDebitElements
 {
     public static class SEPAElementsReader
     {
+
         public static DirectDebitRemmitanceReject CreateDirectDebitRemmitanceReject(OriginalPaymentInformation1 originalPaymentInformation1)
         {
+            PaymentStatusReportManager paymentStatusReportManager = new PaymentStatusReportManager();
+
             string originalDirectDebitRemmitanceMessageID = originalPaymentInformation1.OrgnlPmtInfId;
             int numberOfTransactions = Int32.Parse(originalPaymentInformation1.OrgnlNbOfTxs);
             decimal controlSum = originalPaymentInformation1.OrgnlCtrlSum;
@@ -29,7 +32,7 @@ namespace DirectDebitElements
                 BankAccount debtorAccount = new BankAccount(iban);
                 string rejectReason = paymentTransactionInformation25.StsRsnInf[0].Rsn.Item;
 
-                DirectDebitTransactionReject directDebitTransactionReject = new DirectDebitTransactionReject(
+                DirectDebitTransactionReject directDebitTransactionReject = paymentStatusReportManager.CreateDirectDebitTransactionReject(
                     originalTransactionIdentification,
                     originalEndtoEndTransactionIdentification,
                     requestedCollectionDate ?? DateTime.MinValue,
@@ -41,20 +44,13 @@ namespace DirectDebitElements
                 directDebitTransactionRejects.Add(directDebitTransactionReject);
             }
 
-            DirectDebitRemmitanceRejectCreationResult directDebitRemmitanceRejectCreationResult = new DirectDebitRemmitanceRejectCreationResult(
+            DirectDebitRemmitanceReject directDebitRemmitanceReject = paymentStatusReportManager.CreateCheckedDirectDebitRemmitanceReject(
                 originalDirectDebitRemmitanceMessageID,
                 numberOfTransactions,
                 controlSum,
                 directDebitTransactionRejects);
 
-            if (directDebitRemmitanceRejectCreationResult.ErrorMessages.Count == 0)
-            {
-                return directDebitRemmitanceRejectCreationResult.DirectDebitRemmitanceReject;
-            }
-            else
-            {
-                throw new ArgumentException();
-            }
+            return directDebitRemmitanceReject;
         }
     }
 }

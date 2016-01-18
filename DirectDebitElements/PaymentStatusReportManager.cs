@@ -79,11 +79,29 @@ namespace DirectDebitElements
             return paymentStatusReport;
         }
 
-        public void AddRejectedRemmitanceToPaymentStatusReport(
-            PaymentStatusReport paymentStatusReport,
-            DirectDebitRemmitanceReject directDebitRemmitanceReject)
+        public DirectDebitRemmitanceReject CreateDirectDebitRemmitanceReject(
+            string originalDirectDebitRemmitanceMessageID,
+            List<DirectDebitTransactionReject> directDebitTransactionRejectsList)
         {
-            paymentStatusReport.AddRemmitanceReject(directDebitRemmitanceReject);
+            DirectDebitRemmitanceReject directDebitRemmitanceReject = new DirectDebitRemmitanceReject(
+                originalDirectDebitRemmitanceMessageID,
+                directDebitTransactionRejectsList);
+            return directDebitRemmitanceReject;
+        }
+
+        public DirectDebitRemmitanceReject CreateCheckedDirectDebitRemmitanceReject(
+            string originalDirectDebitRemmitanceMessageID,
+            int numberOfTransactions,
+            decimal controlSum,
+            List<DirectDebitTransactionReject> directDebitTransactionRejectsList)
+        {
+            DirectDebitRemmitanceReject directDebitRemmitanceRejectCreationResult = new DirectDebitRemmitanceReject(
+                originalDirectDebitRemmitanceMessageID,
+                numberOfTransactions,
+                controlSum,
+                directDebitTransactionRejectsList);
+
+            return directDebitRemmitanceRejectCreationResult;
         }
 
         public DirectDebitRemmitanceReject CreateAnEmptyDirectDebitRemmitanceReject(string originalDirectDebitRemmitanceMessageID)
@@ -119,29 +137,11 @@ namespace DirectDebitElements
             return directDebitTransactionReject;
         }
 
-        public DirectDebitRemmitanceReject CreateDirectDebitRemmitanceReject(
-            string originalDirectDebitRemmitanceMessageID,
-            List<DirectDebitTransactionReject> directDebitTransactionRejectsList)
+        public void AddRejectedRemmitanceToPaymentStatusReport(
+            PaymentStatusReport paymentStatusReport,
+            DirectDebitRemmitanceReject directDebitRemmitanceReject)
         {
-            DirectDebitRemmitanceReject directDebitRemmitanceReject = new DirectDebitRemmitanceReject(
-                originalDirectDebitRemmitanceMessageID,
-                directDebitTransactionRejectsList);
-            return directDebitRemmitanceReject;
-        }
-
-        public DirectDebitRemmitanceRejectCreationResult CreateDirectDebitRemmitanceReject(
-            string originalDirectDebitRemmitanceMessageID,
-            int numberOfTransactions,
-            decimal controlSum,
-            List<DirectDebitTransactionReject> directDebitTransactionRejectsList)
-        {
-            DirectDebitRemmitanceRejectCreationResult directDebitRemmitanceRejectCreationResult= new DirectDebitRemmitanceRejectCreationResult(
-                originalDirectDebitRemmitanceMessageID,
-                numberOfTransactions,
-                controlSum,
-                directDebitTransactionRejectsList);
-
-            return directDebitRemmitanceRejectCreationResult;
+            paymentStatusReport.AddRemmitanceReject(directDebitRemmitanceReject);
         }
 
         public void AddRejectedTransactionToRemmitanceReject(

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace DirectDebitElements
 {
+    //
+    //The use of this class has been discarded, but keeped (just in case...)
+    //
     //public class PaymentStatusReportCreationResult
     //{
     //    PaymentStatusReport paymentStatusreport;
