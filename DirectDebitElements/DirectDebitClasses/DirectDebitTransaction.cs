@@ -61,7 +61,6 @@ namespace DirectDebitElements
         public string InternalUniqueInstructionID
         {
             get { return internalUniqueInstructionID; }
-            //set { internalUniqueInstructionID = value; }
         }
 
         public string MandateID

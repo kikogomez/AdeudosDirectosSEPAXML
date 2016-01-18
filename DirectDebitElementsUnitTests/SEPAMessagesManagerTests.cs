@@ -75,7 +75,7 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        public void ACustomerDirectDebitRemmitanceXMLStringMessageIsCorrectlyGenerated()
+        public void ACustomerDirectDebitRemmitanceXMLStringMessageWithConceptsJoinedIsCorrectlyGenerated()
         {
             DateTime creationDate = new DateTime(2015, 01, 10, 7, 15, 0);
             string messageID = "ES26011G123456782015011007:15:00";
@@ -114,11 +114,13 @@ namespace DirectDebitElementsUnitTests
 
             directDebitRemmitance.AddDirectDebitTransactionsGroupPayment(directDebitTransactionsGroupPayment);
 
+            bool singleUnstructuredConcept = true;
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
             string xMLCustomerDirectDeitInitiationMessage = sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationMessage(
                 creditor,
                 creditorAgent,
-                directDebitRemmitance);
+                directDebitRemmitance,
+                singleUnstructuredConcept);
 
             string xMLValidatingErrors = XMLValidator.ValidateXMLStringThroughXSDFile(
                 xMLCustomerDirectDeitInitiationMessage,

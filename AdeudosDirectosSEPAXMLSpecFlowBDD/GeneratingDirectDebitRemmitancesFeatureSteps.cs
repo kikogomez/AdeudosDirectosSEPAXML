@@ -388,8 +388,9 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             DirectDebitRemittance directDebitRemittance = (DirectDebitRemittance)ScenarioContext.Current["DirectDebitRemittance"];
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
             DateTime generationTime = directDebitRemittance.CreationDate;
+            bool singleUnstructuredConcept = false;
             string xMLString = sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationMessage(
-                generationTime, creditor, creditorAgent, directDebitInitiationContract, directDebitRemittance);
+                generationTime, creditor, creditorAgent, directDebitInitiationContract, directDebitRemittance, singleUnstructuredConcept);
             ScenarioContext.Current.Add("xMLString", xMLString);
 
         }

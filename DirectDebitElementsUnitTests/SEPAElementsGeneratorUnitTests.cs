@@ -140,10 +140,12 @@ namespace DirectDebitElementsUnitTests
                 mandateSignatureDate,
                 debtorAccount,
                 accountHolderName);
+            bool singleUnstructuredConcept = false;
 
             DirectDebitTransactionInformation9 directDebitTransactionInformation = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
                 creditorAgent,
-                directDebitTransaction);
+                directDebitTransaction,
+                singleUnstructuredConcept);
 
             Assert.AreEqual(directDebitTransaction.InternalUniqueInstructionID, directDebitTransactionInformation.PmtId.InstrId);
             Assert.AreEqual(directDebitTransaction.InternalUniqueInstructionID, directDebitTransactionInformation.PmtId.EndToEndId);
@@ -155,9 +157,9 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual(creditorAgent.BankBIC, directDebitTransactionInformation.DbtrAgt.FinInstnId.BIC);
             Assert.AreEqual(directDebitTransaction.AccountHolderName, directDebitTransactionInformation.Dbtr.Nm);
             Assert.AreEqual(directDebitTransaction.DebtorAccount.IBAN.IBAN, (string)directDebitTransactionInformation.DbtrAcct.Id.Item);
-            string[] expectedStringArrayWithOnlyOneString = new string[] { "Cuota Social Octubre 2013 -> 79,00; Cuota Social Noviembre 2013 -> 79,00" };
-            CollectionAssert.AreEqual(expectedStringArrayWithOnlyOneString, directDebitTransactionInformation.RmtInf.Ustrd);
-            Assert.AreEqual(ChargeBearerType1Code.SLEV,directDebitTransactionInformation.ChrgBr);
+            string[] expectedConcepts = new string[] { "Cuota Social Octubre 2013 --- 79,00", "Cuota Social Noviembre 2013 --- 79,00" };
+            CollectionAssert.AreEqual(expectedConcepts, directDebitTransactionInformation.RmtInf.Ustrd);
+            Assert.AreEqual(ChargeBearerType1Code.SLEV, directDebitTransactionInformation.ChrgBr);
             Assert.IsFalse(directDebitTransactionInformation.ChrgBrSpecified);                              //ChargeBearer se especifica una sola vez por remesa, en el PaymentInformation
 
             Assert.IsFalse(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInd);              //AmmendmentInformationInd es 'false'
@@ -165,6 +167,35 @@ namespace DirectDebitElementsUnitTests
             Assert.IsNull(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInfDtls);
 
             AssertUnusedDirectDebitTransactionInformation9(directDebitTransactionInformation);
+        }
+
+        [TestMethod]
+        public void ADirectDebitTransactionInformation9WithAllConceptsJoinedIsCorrectlyGenrated()
+        {
+            string internalUniqueInstructionID = "00001";
+            Debtor debtor = debtors["00002"];
+            List<SimplifiedBill> bills = debtor.SimplifiedBills.Values.ToList();
+            DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
+            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
+            BankAccount debtorAccount = directDebitMandate.BankAccount;
+            string accountHolderName = directDebitMandate.AccountHolderName;
+            DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
+            bool singleUnstructuredConcept = true;
+            DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
+                bills,
+                internalUniqueInstructionID,
+                mandateID,
+                mandateSignatureDate,
+                debtorAccount,
+                accountHolderName);
+
+            DirectDebitTransactionInformation9 directDebitTransactionInformation = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
+                creditorAgent,
+                directDebitTransaction,
+                singleUnstructuredConcept);
+
+            string[] expectedStringArrayWithOnlyOneString = new string[] { "Cuota Social Octubre 2013 --- 79,00; Cuota Social Noviembre 2013 --- 79,00" };
+            CollectionAssert.AreEqual(expectedStringArrayWithOnlyOneString, directDebitTransactionInformation.RmtInf.Ustrd);
         }
 
         private void AssertUnusedDirectDebitTransactionInformation9(DirectDebitTransactionInformation9 directDebitTransactionInformation)

@@ -16,7 +16,8 @@ namespace DirectDebitElements
             Creditor creditor,
             CreditorAgent creditorAgent,
             DirectDebitInitiationContract directDebitInitiationContract,
-            DirectDebitRemittance directDebitRemmitance)
+            DirectDebitRemittance directDebitRemmitance,
+            bool singleUnstructuredConcept)
         {
             PartyIdentification32 initiationParty_InitPty = SEPAElementsGenerator.GenerateInitiationParty_InitPty(creditor, directDebitInitiationContract);
             GroupHeader39 groupHeader_GrpHdr = SEPAElementsGenerator.GenerateGroupHeader_GrpHdr(
@@ -34,7 +35,8 @@ namespace DirectDebitElements
                     creditor,
                     creditorAgent,
                     directDebitInitiationContract,
-                    directDebitTransactionsGroupPayment);
+                    directDebitTransactionsGroupPayment,
+                    singleUnstructuredConcept);
 
                 paymentInformation_PmtInf_List.Add(paymentInformation_PmtInf);
             }
@@ -55,13 +57,13 @@ namespace DirectDebitElements
         public string GenerateISO20022CustomerDirectDebitInitiationMessage(
             Creditor creditor,
             CreditorAgent creditorAgent,
-            DirectDebitRemittance directDebitRemmitance)
+            DirectDebitRemittance directDebitRemmitance,
+            bool singleUnstructuredConcept)
         {
             DirectDebitInitiationContract directDebitInitiationContract = directDebitRemmitance.DirectDebitInitiationContract;
             DateTime generationDateTime = directDebitRemmitance.CreationDate;
 
             PartyIdentification32 initiationParty_InitPty = SEPAElementsGenerator.GenerateInitiationParty_InitPty(creditor, directDebitInitiationContract);
-            //GroupHeader39 groupHeader_GrpHdr = SEPAElementsGenerator.GenerateGroupHeader_GrpHdr(generationDateTime, directDebitRemmitance, initiationParty_InitPty);
             GroupHeader39 groupHeader_GrpHdr = SEPAElementsGenerator.GenerateGroupHeader_GrpHdr(
                 directDebitRemmitance.MessageID,
                 generationDateTime,
@@ -77,7 +79,8 @@ namespace DirectDebitElements
                 {
                     DirectDebitTransactionInformation9 directDebitTransactionInfo_DrctDbtTxInf = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
                         creditorAgent,
-                        directDebitTransaction);
+                        directDebitTransaction,
+                        singleUnstructuredConcept);
                     directDebitTransactionInfoList.Add(directDebitTransactionInfo_DrctDbtTxInf);
                 }
 
@@ -85,7 +88,8 @@ namespace DirectDebitElements
                     creditor,
                     creditorAgent,
                     directDebitInitiationContract,
-                    directDebitTransactionsGroupPayment);
+                    directDebitTransactionsGroupPayment,
+                    singleUnstructuredConcept);
 
                 paymentInformation_PmtInf_List.Add(paymentInformation_PmtInf);
             }
