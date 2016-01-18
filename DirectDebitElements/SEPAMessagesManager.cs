@@ -120,18 +120,33 @@ namespace DirectDebitElements
             decimal paymentStatusReport_ControlSum = customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlCtrlSum;
             List<DirectDebitRemmitanceReject> directDebitRemmitanceRejectsList = new List<DirectDebitRemmitanceReject>();
 
+            foreach (OriginalPaymentInformation1 originalPaymentInformation1 in customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlPmtInfAndSts)
+            {
+                directDebitRemmitanceRejectsList.Add(SEPAElementsReader.CreateDirectDebitRemmitanceReject(originalPaymentInformation1));
+            }
+
             PaymentStatusReport paymentStatusReport = new PaymentStatusReport(
                 paymentStatusReport_MessageID,
                 paymentStatusReport_MessageCreationDateTime,
                 paymentStatusReport_RejectAccountChargeDateTime,
+                paymentStatusReport_NumberOfTransactions,
+                paymentStatusReport_ControlSum,
                 directDebitRemmitanceRejectsList);
 
-            //Crear un DirectDebitRemmitanceReject por cada OriginalPaymentInformation1 en OrgnlPmtInfAndSts y añadirlo a PaymentStatusReport
-            foreach (OriginalPaymentInformation1 originalPaymentInformation1 in customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlPmtInfAndSts)
-            {
-                paymentStatusReport.AddRemmitanceReject(SEPAElementsReader.CreateDirectDebitRemmitanceReject(originalPaymentInformation1));
-            }
-            
+            ////Crear un DirectDebitRemmitanceReject por cada OriginalPaymentInformation1 en OrgnlPmtInfAndSts y añadirlo a PaymentStatusReport
+            //foreach (OriginalPaymentInformation1 originalPaymentInformation1 in customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlPmtInfAndSts)
+            //{
+            //    paymentStatusReport.AddRemmitanceReject(SEPAElementsReader.CreateDirectDebitRemmitanceReject(originalPaymentInformation1));
+            //}
+
+            //int directDebitRemmitanceRejecstNumberOfTransactionsSum =
+            //    paymentStatusReport.DirectDebitRemmitanceRejects.Select(ddRemitanceReject => ddRemitanceReject.NumberOfTransactions).Sum();
+            //decimal directDebitRemmitanceRejecstAmountSum =
+            //    paymentStatusReport.DirectDebitRemmitanceRejects.Select(ddRemitanceReject => ddRemitanceReject.ControlSum).Sum();
+
+            //if (paymentStatusReport_NumberOfTransactions != directDebitRemmitanceRejecstNumberOfTransactionsSum) throw new TypeInitializationException("PaymentStatusReport", new ArgumentException("The Number of Transactions are erroneous", "paymentStatusReportXMLMessage"));
+            //if (paymentStatusReport_ControlSum != directDebitRemmitanceRejecstAmountSum) throw new TypeInitializationException("PaymentStatusReport", new ArgumentException("The Control Sum is erroneous", "paymentStatusReportXMLMessage"));
+
             //
             //REVISAR!!!!!
             //

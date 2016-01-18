@@ -197,21 +197,28 @@ namespace DirectDebitElementsUnitTests
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
             PaymentStatusReport paymentStatusReport = sEPAMessagesManager.ReadISO20022PaymentStatusReportMessage(paymentStatusReportXMLStringMessage);
 
+            //General info from file
             DateTime expectedMessageCreationDate = DateTime.Parse("2012-07-18T06:00:01");
             DateTime expectedRejectAccountChargeDateTime = DateTime.Parse("2012-07-18");
-            List<string> expectedOriginalEndtoEndTransactionIdentificationList1 = new List<string>()
-            {"201207010001/01002", "201207010001/02452"};
-            List<string> expectedOriginalEndtoEndTransactionIdentificationList2 = new List<string>()
-            {"201205270001/01650"};
-
             Assert.AreEqual("DATIR00112G12345678100", paymentStatusReport.MessageID);
             Assert.AreEqual(expectedMessageCreationDate, paymentStatusReport.MessageCreationDateTime);
             Assert.AreEqual(expectedRejectAccountChargeDateTime, paymentStatusReport.RejectAccountChargeDateTime);
             Assert.AreEqual(3, paymentStatusReport.NumberOfTransactions);
             Assert.AreEqual((decimal)220.30, paymentStatusReport.ControlSum);
+            Assert.AreEqual(2, paymentStatusReport.DirectDebitRemmitanceRejects.Count);
+
+            //Info from first DirectDectDebitRemmitance
+            List<string> expectedOriginalEndtoEndTransactionIdentificationList1 = new List<string>()
+            {"201207010001/01002", "201207010001/02452"};
+            Assert.AreEqual("PRE201207010001", paymentStatusReport.DirectDebitRemmitanceRejects[0].OriginalDirectDebitRemmitanceMessageID);
             Assert.AreEqual(2, paymentStatusReport.DirectDebitRemmitanceRejects[0].NumberOfTransactions);
             Assert.AreEqual((decimal)130.30, paymentStatusReport.DirectDebitRemmitanceRejects[0].ControlSum);
             CollectionAssert.AreEqual(expectedOriginalEndtoEndTransactionIdentificationList1, paymentStatusReport.DirectDebitRemmitanceRejects[0].OriginalEndtoEndTransactionIdentificationList);
+
+            //Info from second DirectDectDebitRemmitance
+            List<string> expectedOriginalEndtoEndTransactionIdentificationList2 = new List<string>()
+            {"201205270001/01650"};
+            Assert.AreEqual("PRE201205270001", paymentStatusReport.DirectDebitRemmitanceRejects[1].OriginalDirectDebitRemmitanceMessageID);
             Assert.AreEqual(1, paymentStatusReport.DirectDebitRemmitanceRejects[1].NumberOfTransactions);
             Assert.AreEqual((decimal)90, paymentStatusReport.DirectDebitRemmitanceRejects[1].ControlSum);
             CollectionAssert.AreEqual(expectedOriginalEndtoEndTransactionIdentificationList2, paymentStatusReport.DirectDebitRemmitanceRejects[1].OriginalEndtoEndTransactionIdentificationList);
