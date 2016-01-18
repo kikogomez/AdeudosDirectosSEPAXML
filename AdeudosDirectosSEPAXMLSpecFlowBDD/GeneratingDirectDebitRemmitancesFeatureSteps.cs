@@ -390,7 +390,10 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             DateTime generationTime = directDebitRemittance.CreationDate;
             bool singleUnstructuredConcept = false;
             string xMLString = sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationMessage(
-                generationTime, creditor, creditorAgent, directDebitInitiationContract, directDebitRemittance, singleUnstructuredConcept);
+                creditor,
+                creditorAgent,
+                directDebitRemittance,
+                singleUnstructuredConcept);
             ScenarioContext.Current.Add("xMLString", xMLString);
 
         }

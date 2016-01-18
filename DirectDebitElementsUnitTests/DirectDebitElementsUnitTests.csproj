@@ -97,6 +97,9 @@
     <Content Include="XML Test Files\pain.002.001.03\LaCaixa_pain00200103_Example1.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="XML Test Files\pain.008.001.02\BasicDirectDebitRemmitanceExampleWithConceptsJoined.XML">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="XML Test Files\pain.008.001.02\BasicDirectDebitRemmitanceExample.XML">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

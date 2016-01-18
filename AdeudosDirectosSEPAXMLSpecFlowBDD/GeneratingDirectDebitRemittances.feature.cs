@@ -292,12 +292,12 @@ this.FeatureBackground();
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Generating SEPA ISO20022 XML CustomerDirectDebitInitiation Message form a Direct " +
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Generating SEPA ISO20022 XML CustomerDirectDebitInitiation Message from a Direct " +
             "Debit Remmitance")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Generating Direct Debit Remmitances")]
-        public virtual void GeneratingSEPAISO20022XMLCustomerDirectDebitInitiationMessageFormADirectDebitRemmitance()
+        public virtual void GeneratingSEPAISO20022XMLCustomerDirectDebitInitiationMessageFromADirectDebitRemmitance()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Generating SEPA ISO20022 XML CustomerDirectDebitInitiation Message form a Direct " +
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Generating SEPA ISO20022 XML CustomerDirectDebitInitiation Message from a Direct " +
                     "Debit Remmitance", ((string[])(null)));
 #line 62
 this.ScenarioSetup(scenarioInfo);

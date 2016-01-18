@@ -59,7 +59,7 @@ Scenario: Add a group payments to a direct debit remmitance
 	When I add the group to the direct debit remittance
 	Then The direct debit remittance is updated with 1 direct debit and total amount of 79
 
-Scenario: Generating SEPA ISO20022 XML CustomerDirectDebitInitiation Message form a Direct Debit Remmitance
+Scenario: Generating SEPA ISO20022 XML CustomerDirectDebitInitiation Message from a Direct Debit Remmitance
 	Given I have a prepared Direct Debit Remmitance
 	When I generate de SEPA ISO200022 XML CustomerDirectDebitInitiation message
 	Then The message is correctly created

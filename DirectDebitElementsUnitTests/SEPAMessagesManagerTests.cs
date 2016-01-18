@@ -75,6 +75,62 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
+        public void ACustomerDirectDebitRemmitanceXMLStringMessageIsCorrectlyGenerated()
+        {
+            DateTime creationDate = new DateTime(2015, 01, 10, 7, 15, 0);
+            string messageID = "ES26011G123456782015011007:15:00";
+            DateTime requestedCollectionDate = new DateTime(2015, 01, 15);
+
+            DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
+            string prefix = directDebitRemmitance.MessageID.Substring(directDebitRemmitance.MessageID.Length - 25);
+            string paymentInformationID = prefix + "001";
+            DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment = new DirectDebitTransactionsGroupPayment(paymentInformationID, "CORE");
+
+            List<SimplifiedBill> simplifiedBills;
+            string internalUniqueInstructionID;
+            string mandateID;
+            DateTime mandateSignatureDate;
+            BankAccount debtorAccount;
+            string debtorFullName;
+            int transactionsCounter = 0;
+            foreach (Debtor debtor in debtors.Values)
+            {
+                simplifiedBills = debtor.SimplifiedBills.Select(dictionaryElement => dictionaryElement.Value).ToList();
+                internalUniqueInstructionID = (transactionsCounter + 1).ToString("000000");
+                mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(debtor.DirectDebitmandates.First().Value.InternalReferenceNumber);
+                mandateSignatureDate = debtor.DirectDebitmandates.First().Value.DirectDebitMandateCreationDate;
+                debtorAccount = debtor.DirectDebitmandates.First().Value.BankAccount;
+                debtorFullName = debtor.FullName;
+                DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
+                    simplifiedBills,
+                    internalUniqueInstructionID,
+                    mandateID,
+                    mandateSignatureDate,
+                    debtorAccount,
+                    debtorFullName);
+                transactionsCounter++;
+                directDebitTransactionsGroupPayment.AddDirectDebitTransaction(directDebitTransaction);
+            }
+
+            directDebitRemmitance.AddDirectDebitTransactionsGroupPayment(directDebitTransactionsGroupPayment);
+            bool singleUnstructuredConcept = false;
+
+            SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
+            string xMLCustomerDirectDeitInitiationMessage = sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationMessage(
+                creditor,
+                creditorAgent,
+                directDebitRemmitance,
+                singleUnstructuredConcept);
+
+            string xMLValidatingErrors = XMLValidator.ValidateXMLStringThroughXSDFile(
+                xMLCustomerDirectDeitInitiationMessage,
+                @"XSDFiles\pain.008.001.02.xsd");
+            Assert.AreEqual("", xMLValidatingErrors);
+            string expectedXMLString = File.ReadAllText(@"XML Test Files\pain.008.001.02\BasicDirectDebitRemmitanceExample.xml");
+            Assert.AreEqual(expectedXMLString, xMLCustomerDirectDeitInitiationMessage);
+        }
+
+        [TestMethod]
         public void ACustomerDirectDebitRemmitanceXMLStringMessageWithConceptsJoinedIsCorrectlyGenerated()
         {
             DateTime creationDate = new DateTime(2015, 01, 10, 7, 15, 0);
@@ -113,8 +169,8 @@ namespace DirectDebitElementsUnitTests
             }
 
             directDebitRemmitance.AddDirectDebitTransactionsGroupPayment(directDebitTransactionsGroupPayment);
-
             bool singleUnstructuredConcept = true;
+
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
             string xMLCustomerDirectDeitInitiationMessage = sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationMessage(
                 creditor,
@@ -126,8 +182,7 @@ namespace DirectDebitElementsUnitTests
                 xMLCustomerDirectDeitInitiationMessage,
                 @"XSDFiles\pain.008.001.02.xsd");
             Assert.AreEqual("", xMLValidatingErrors);
-
-            string expectedXMLString = File.ReadAllText(@"XML Test Files\pain.008.001.02\BasicDirectDebitRemmitanceExample.xml");           
+            string expectedXMLString = File.ReadAllText(@"XML Test Files\pain.008.001.02\BasicDirectDebitRemmitanceExampleWithConceptsJoined.xml");           
             Assert.AreEqual(expectedXMLString, xMLCustomerDirectDeitInitiationMessage);
         }
 
