@@ -1,0 +1,72 @@
+- Modificar DirectDebitRemmitanceReject y cambiarlo por DirectDebitTransactionsGroupPaymentReject
+	-> Cambiar el nombre del fichero
+	-> Cambiar el nombre de la clase
+	-> Cambiar los nombres de las instancias de objetos creados
+	-> Cambiar los nombres de los tests que lo utilizan
+	-> Cambiar el nombre del parametro y/o variable 'originalDirectDebitRemmitanceMessageID' por 'originalDirectDebitTransactionsGroupPaymentPaymentInformationID'
+
+- Añadir la gestión de Amendment Information
+	-> Añadir la clase con dos campos:
+		- oldMandateId
+		- oldBankAccount
+	-> Testear que se aceptan:
+		- Cualquiera de los dos puede ser nulo, incluso ambos.
+		- Si se especifica, MandateID no puede ser cadena vacía o solo espacios
+		- Si se especifica, oldBankAccount nopuede tener un IBAN invalido
+	-> Incluir el campo AmendmentInformation en DirectdebitTransaction:
+		- Puede ser nulo
+		- Testear ('DirectDebitTransactionsUnitTests') que se puede crear un DirectDebitTransaction con AmendmendInformation nulo o que tenga componentes nulos.
+		- Modificar los métodos de DirectDebitRemitancesManager y testearlos (DirectDebitRemmittancesManagerUnitTest)
+		- Comprobar que se crean correctamente las clase serializables (SEPAElementsGenerator y SEPAElementsGeneratorUnitTests)
+			* AmendmentInformationDetails6
+			* DirectDebitTransactionInformation9 gestiona bien el AmendmentInformation
+			* Mirar los casos:
+				-> Cambio de cuenta en el mismo banco se pone el nuevo banco (Etiqueta <OrgnlDbtrAcct>)
+				-> Cambio de cuenta a otro banco NO se pone el nuev banco, sino SMNDA en <OrgnlDbtrAgt>
+		- Comprobar la serializazion:
+			* De un AmendmentInformationDetails6 es necesario, o basta mirar el DirectDebitTransactionInformation9 siguiente?
+			* De un DirectDebitTransactionInformation9 que incluya amendment information ('DirectDebitTransactionInfo.xml')
+			* El campo <AmdmntInd> solo debería aparecer si es TRUE. Si es 'false' es innecesario
+- Añadir a la gestión de los adeudos el campo FRST
+	-> Añadir a DirectDebitTransaction el campo booleano 'First' (modificar los test unitarios de DirectDebitTransaction para que comprueben este valor)
+	-> Comprobar si existe AmendmentInformation al instanciar DirectDebitTransaction
+		-> Si hay cambio de BANCO es obligatorio que se considere 'FRST'
+	-> Añadir a DirectDebitTransactionsGroupPayment el campo 'First'
+	-> Al añadir un DirectDebitTransaction a DirectDebitTransactionsGroupPayment comprobar si se corresponden 'RCUR' o 'FRST'
+		* En el método .AddRejectedTransactionToTransactionsGroupPaymentReject
+		* Al crear una instancia de DirectDebitTransacionsGroupPayment con una lista de DirectDebitTransaction incluida
+- Completar los tests de SEPAElementsGenerator (creacion de clases serializables para el ENVIO)
+- Completar los tests de SEPAElementsReader (lectura de las clases deserializadas de una devolucíon)
+- Al desserializar un PaymentStatusReport, hay que revisar los contenidos de(que campos existen y sus valores)
+		
+
+
+
+
+
+
+
+
+
+
+
+- ¿Hacer que todas las instanciaciones de objetos DirectDebitElements pasen a través de una clase o clases controladoras?
+	-> Internamente:
+		- SEPAMessagesManager usa:
+			* DirectDebitRemmittancesManager y PaymentStatusReportManager para acceder a las clases DirectDebitElements
+			* SEPAElementsReader y SEPAElementsGenerator para acceder a las clases serializables de ISO20022
+		- SEPAElementsGenerator y SEPAElementsReader deben usar DirectdebitRemmitancesaManager y PaymentStatusReport? Quizá NO... Podria acceder directamente a las clases DirectDebit Elements
+		- DirectDebitRemmittancesManager tiene métodos para cerar y gestionar SOLO las clases principales:
+			* DirectDebitTransaction
+			* DirectDebitTransactionsGroupPayment
+			* DirectDebitRemmitance
+		- PaymentStatusReport tiene métodos para cerar y gestionar SOLO las clases principales:
+			* DirectDebitTransactionReject
+			* DirectDebitTransactionSGroupPaymentreject
+			* PaymentStatusReport
+	-> Externamente:
+		- Con la estructura anterior sigue siendo necesario acceder directamente (sin pasar por 'Manager') a muchos elementos. ¿Cambiarlo?:
+			 * 'Billing' (Debtor, SimplifiedBill...)
+			 * 'DirectDebitElements' (BankAccount, DirectdebitInitiationContract, DirectdebitMandate)
+
+	 

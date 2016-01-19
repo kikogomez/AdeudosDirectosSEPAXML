@@ -13,8 +13,8 @@ namespace DirectDebitElementsUnitTests
         static DirectDebitTransactionReject directDebitTransactionReject1;
         static DirectDebitTransactionReject directDebitTransactionReject2;
         static DirectDebitTransactionReject directDebitTransactionReject3;
-        static List<DirectDebitTransactionReject> directDebitTransactionRejectsList1;
-        static List<DirectDebitTransactionReject> directDebitTransactionRejectsList2;
+        static List<DirectDebitTransactionReject> directDebitTransactionsRejectsList1;
+        static List<DirectDebitTransactionReject> directDebitTransactionsRejectsList2;
         static string originalDirectDebitTransactionsGroupPayment1PaymentInformationID;
         static string originalDirectDebitTransactionsGroupPayment2PaymentInformationID;
 
@@ -48,11 +48,11 @@ namespace DirectDebitElementsUnitTests
                 new BankAccount(new InternationalAccountBankNumberIBAN("ES6812345678061234567890")),
                 "MS02");
 
-            directDebitTransactionRejectsList1 =
+            directDebitTransactionsRejectsList1 =
                 new List<DirectDebitTransactionReject>()
                 { directDebitTransactionReject1, directDebitTransactionReject2 };
 
-            directDebitTransactionRejectsList2 =
+            directDebitTransactionsRejectsList2 =
                 new List<DirectDebitTransactionReject>()
                 { directDebitTransactionReject3};
 
@@ -98,7 +98,7 @@ namespace DirectDebitElementsUnitTests
 
             DirectDebitTransactionsGroupPaymentReject directDebitTransactionsGroupPaymentReject = paymentStatusReportManager.CreateDirectDebitTransactionGroupPaymentReject(
                 originalDirectDebitTransactionsGroupPayment1PaymentInformationID,
-                directDebitTransactionRejectsList1);
+                directDebitTransactionsRejectsList1);
 
             Assert.AreEqual(originalDirectDebitTransactionsGroupPayment1PaymentInformationID, directDebitTransactionsGroupPaymentReject.OriginalDirectDebitTransactionsGroupPaymentPaymentInformationID);
             Assert.AreEqual(2, directDebitTransactionsGroupPaymentReject.NumberOfTransactions);
@@ -116,18 +116,18 @@ namespace DirectDebitElementsUnitTests
             int numberofTransactions = 2;
             decimal controlSum = 150;
 
-            DirectDebitTransactionsGroupPaymentReject directDebitRemmitanceReject = paymentStatusReportManager.CreateCheckedDirectDebitTransactionGroupPaymentReject(
+            DirectDebitTransactionsGroupPaymentReject directDebitTransactionsGroupPaymentReject = paymentStatusReportManager.CreateCheckedDirectDebitTransactionGroupPaymentReject(
                 originalDirectDebitTransactionsGroupPayment1PaymentInformationID,
                 numberofTransactions,
                 controlSum,
-                directDebitTransactionRejectsList1);
+                directDebitTransactionsRejectsList1);
 
-            Assert.AreEqual(originalDirectDebitTransactionsGroupPayment1PaymentInformationID, directDebitRemmitanceReject.OriginalDirectDebitTransactionsGroupPaymentPaymentInformationID);
-            Assert.AreEqual(2, directDebitRemmitanceReject.NumberOfTransactions);
-            Assert.AreEqual(150, directDebitRemmitanceReject.ControlSum);
-            Assert.AreEqual(2, directDebitRemmitanceReject.DirectDebitTransactionsRejects.Count);
-            Assert.AreEqual("2015120100124", directDebitRemmitanceReject.DirectDebitTransactionsRejects[0].OriginalEndtoEndTransactionIdentification);
-            Assert.AreEqual("2015120100312", directDebitRemmitanceReject.DirectDebitTransactionsRejects[1].OriginalEndtoEndTransactionIdentification);
+            Assert.AreEqual(originalDirectDebitTransactionsGroupPayment1PaymentInformationID, directDebitTransactionsGroupPaymentReject.OriginalDirectDebitTransactionsGroupPaymentPaymentInformationID);
+            Assert.AreEqual(2, directDebitTransactionsGroupPaymentReject.NumberOfTransactions);
+            Assert.AreEqual(150, directDebitTransactionsGroupPaymentReject.ControlSum);
+            Assert.AreEqual(2, directDebitTransactionsGroupPaymentReject.DirectDebitTransactionsRejects.Count);
+            Assert.AreEqual("2015120100124", directDebitTransactionsGroupPaymentReject.DirectDebitTransactionsRejects[0].OriginalEndtoEndTransactionIdentification);
+            Assert.AreEqual("2015120100312", directDebitTransactionsGroupPaymentReject.DirectDebitTransactionsRejects[1].OriginalEndtoEndTransactionIdentification);
         }
 
         [TestMethod]
@@ -145,7 +145,7 @@ namespace DirectDebitElementsUnitTests
                     originalDirectDebitTransactionsGroupPayment1PaymentInformationID,
                     numberofTransactions,
                     controlSum,
-                    directDebitTransactionRejectsList1);
+                    directDebitTransactionsRejectsList1);
             }
             catch (TypeInitializationException typeInitializationException)
             {
@@ -174,7 +174,7 @@ namespace DirectDebitElementsUnitTests
                     originalDirectDebitTransactionsGroupPayment1PaymentInformationID,
                     numberofTransactions,
                     controlSum,
-                    directDebitTransactionRejectsList1);
+                    directDebitTransactionsRejectsList1);
             }
             catch (TypeInitializationException typeInitializationException)
             {
@@ -228,11 +228,11 @@ namespace DirectDebitElementsUnitTests
         {
             DirectDebitTransactionsGroupPaymentReject directDebitRemmitanceReject1 = new DirectDebitTransactionsGroupPaymentReject(
                 originalDirectDebitTransactionsGroupPayment1PaymentInformationID,
-                directDebitTransactionRejectsList1);
+                directDebitTransactionsRejectsList1);
 
             DirectDebitTransactionsGroupPaymentReject directDebitRemmitanceReject2 = new DirectDebitTransactionsGroupPaymentReject(
                 originalDirectDebitTransactionsGroupPayment2PaymentInformationID,
-                directDebitTransactionRejectsList2);
+                directDebitTransactionsRejectsList2);
 
             List<DirectDebitTransactionsGroupPaymentReject> directDebitRemmitanceRejectsList = new List<DirectDebitTransactionsGroupPaymentReject>()
             { directDebitRemmitanceReject1, directDebitRemmitanceReject2 };
@@ -267,11 +267,11 @@ namespace DirectDebitElementsUnitTests
         {
             DirectDebitTransactionsGroupPaymentReject directDebitRemmitanceReject1 = new DirectDebitTransactionsGroupPaymentReject(
                 originalDirectDebitTransactionsGroupPayment1PaymentInformationID,
-                directDebitTransactionRejectsList1);
+                directDebitTransactionsRejectsList1);
 
             DirectDebitTransactionsGroupPaymentReject directDebitRemmitanceReject2 = new DirectDebitTransactionsGroupPaymentReject(
                 originalDirectDebitTransactionsGroupPayment2PaymentInformationID,
-                directDebitTransactionRejectsList2);
+                directDebitTransactionsRejectsList2);
 
             List<DirectDebitTransactionsGroupPaymentReject> directDebitRemmitanceRejectsList = new List<DirectDebitTransactionsGroupPaymentReject>()
             { directDebitRemmitanceReject1, directDebitRemmitanceReject2 };
@@ -315,11 +315,11 @@ namespace DirectDebitElementsUnitTests
         {
             DirectDebitTransactionsGroupPaymentReject directDebitRemmitanceReject1 = new DirectDebitTransactionsGroupPaymentReject(
                 originalDirectDebitTransactionsGroupPayment1PaymentInformationID,
-                directDebitTransactionRejectsList1);
+                directDebitTransactionsRejectsList1);
 
             DirectDebitTransactionsGroupPaymentReject directDebitRemmitanceReject2 = new DirectDebitTransactionsGroupPaymentReject(
                 originalDirectDebitTransactionsGroupPayment2PaymentInformationID,
-                directDebitTransactionRejectsList2);
+                directDebitTransactionsRejectsList2);
 
             List<DirectDebitTransactionsGroupPaymentReject> directDebitRemmitanceRejectsList = new List<DirectDebitTransactionsGroupPaymentReject>()
             { directDebitRemmitanceReject1, directDebitRemmitanceReject2 };
@@ -359,11 +359,11 @@ namespace DirectDebitElementsUnitTests
         {
             DirectDebitTransactionsGroupPaymentReject directDebitRemmitanceReject1 = new DirectDebitTransactionsGroupPaymentReject(
                 originalDirectDebitTransactionsGroupPayment1PaymentInformationID,
-                directDebitTransactionRejectsList1);
+                directDebitTransactionsRejectsList1);
 
             DirectDebitTransactionsGroupPaymentReject directDebitRemmitanceReject2 = new DirectDebitTransactionsGroupPaymentReject(
                 originalDirectDebitTransactionsGroupPayment2PaymentInformationID,
-                directDebitTransactionRejectsList2);
+                directDebitTransactionsRejectsList2);
 
             List<DirectDebitTransactionsGroupPaymentReject> directDebitRemmitanceRejectsList = new List<DirectDebitTransactionsGroupPaymentReject>()
             { directDebitRemmitanceReject1, directDebitRemmitanceReject2 };
@@ -431,7 +431,7 @@ namespace DirectDebitElementsUnitTests
 
             DirectDebitTransactionsGroupPaymentReject directDebitRemmitanceReject1 = new DirectDebitTransactionsGroupPaymentReject(
                 originalDirectDebitTransactionsGroupPayment1PaymentInformationID,
-                directDebitTransactionRejectsList1);
+                directDebitTransactionsRejectsList1);
 
             paymentStatusReportManager.AddRejectedTransactionsGroupPaymentToPaymentStatusReport(paymentStatusReport, directDebitRemmitanceReject1);
 
