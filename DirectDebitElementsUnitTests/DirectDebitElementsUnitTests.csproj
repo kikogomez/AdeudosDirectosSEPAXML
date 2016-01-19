@@ -55,6 +55,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BankAccountUnitTests.cs" />
+    <Compile Include="DirectDebitAmendmentInformationUnitTests.cs" />
     <Compile Include="DirectDebitinitiationContractUnitTests.cs" />
     <Compile Include="DirectDebitPropietaryCodesGeneratorUnitTests.cs" />
     <Compile Include="DirectDebitRemmitanceUnitTest.cs" />

@@ -16,7 +16,7 @@ namespace DirectDebitElements
             DateTime rejectAccountChargeDateTime,
             int numberOfTransactions,
             decimal controlSum,
-            List<DirectDebitRemmitanceReject> directDebitRemmitanceRejectsList)
+            List<DirectDebitTransactionGroupPaymentReject> directDebitRemmitanceRejectsList)
         {
             PaymentStatusReport paymentStatusReportCreationResult = new PaymentStatusReport(
                 messageID,
@@ -34,7 +34,7 @@ namespace DirectDebitElements
             string messageID,
             DateTime messageCreationDateTime,
             DateTime rejectAccountChargeDateTime,
-            List<DirectDebitRemmitanceReject> directDebitRemmitanceRejectsList)
+            List<DirectDebitTransactionGroupPaymentReject> directDebitRemmitanceRejectsList)
         {
             PaymentStatusReport paymentStatusReport = new PaymentStatusReport(
                 messageID,
@@ -50,7 +50,7 @@ namespace DirectDebitElements
             DateTime messageCreationDateTime,
             DateTime rejectAccountChargeDateTime)
         {
-            List<DirectDebitRemmitanceReject> directDebitRemmitanceRejectsList = new List<DirectDebitRemmitanceReject>();
+            List<DirectDebitTransactionGroupPaymentReject> directDebitRemmitanceRejectsList = new List<DirectDebitTransactionGroupPaymentReject>();
             PaymentStatusReport paymentStatusReport = new PaymentStatusReport(
                 messageID,
                 messageCreationDateTime,
@@ -60,24 +60,24 @@ namespace DirectDebitElements
             return paymentStatusReport;
         }
 
-        public DirectDebitRemmitanceReject CreateDirectDebitRemmitanceReject(
-            string originalDirectDebitRemmitanceMessageID,
+        public DirectDebitTransactionGroupPaymentReject CreateDirectDebitTransactionGroupPaymentReject(
+            string originalDirectDebitTransactionGroupPaymentPaymentInformationID,
             List<DirectDebitTransactionReject> directDebitTransactionRejectsList)
         {
-            DirectDebitRemmitanceReject directDebitRemmitanceReject = new DirectDebitRemmitanceReject(
-                originalDirectDebitRemmitanceMessageID,
+            DirectDebitTransactionGroupPaymentReject directDebitTransactionGroupPaymentReject = new DirectDebitTransactionGroupPaymentReject(
+                originalDirectDebitTransactionGroupPaymentPaymentInformationID,
                 directDebitTransactionRejectsList);
-            return directDebitRemmitanceReject;
+            return directDebitTransactionGroupPaymentReject;
         }
 
-        public DirectDebitRemmitanceReject CreateCheckedDirectDebitRemmitanceReject(
-            string originalDirectDebitRemmitanceMessageID,
+        public DirectDebitTransactionGroupPaymentReject CreateCheckedDirectDebitTransactionGroupPaymentReject(
+            string originalDirectDebitTransactionGroupPaymentPaymentInformationID,
             int numberOfTransactions,
             decimal controlSum,
             List<DirectDebitTransactionReject> directDebitTransactionRejectsList)
         {
-            DirectDebitRemmitanceReject directDebitRemmitanceRejectCreationResult = new DirectDebitRemmitanceReject(
-                originalDirectDebitRemmitanceMessageID,
+            DirectDebitTransactionGroupPaymentReject directDebitRemmitanceRejectCreationResult = new DirectDebitTransactionGroupPaymentReject(
+                originalDirectDebitTransactionGroupPaymentPaymentInformationID,
                 numberOfTransactions,
                 controlSum,
                 directDebitTransactionRejectsList);
@@ -85,11 +85,11 @@ namespace DirectDebitElements
             return directDebitRemmitanceRejectCreationResult;
         }
 
-        public DirectDebitRemmitanceReject CreateAnEmptyDirectDebitRemmitanceReject(string originalDirectDebitRemmitanceMessageID)
+        public DirectDebitTransactionGroupPaymentReject CreateAnEmptyDirectDebitRemmitanceReject(string originalDirectDebitRemmitanceMessageID)
         {
             List<DirectDebitTransactionReject> directDebitTransactionRejects = new List<DirectDebitTransactionReject>();
 
-            DirectDebitRemmitanceReject directDebitRemmitanceReject = new DirectDebitRemmitanceReject(
+            DirectDebitTransactionGroupPaymentReject directDebitRemmitanceReject = new DirectDebitTransactionGroupPaymentReject(
                 originalDirectDebitRemmitanceMessageID,
                 directDebitTransactionRejects);
 
@@ -120,13 +120,13 @@ namespace DirectDebitElements
 
         public void AddRejectedRemmitanceToPaymentStatusReport(
             PaymentStatusReport paymentStatusReport,
-            DirectDebitRemmitanceReject directDebitRemmitanceReject)
+            DirectDebitTransactionGroupPaymentReject directDebitRemmitanceReject)
         {
             paymentStatusReport.AddRemmitanceReject(directDebitRemmitanceReject);
         }
 
         public void AddRejectedTransactionToRemmitanceReject(
-            DirectDebitRemmitanceReject directDebitRemmitanceReject,
+            DirectDebitTransactionGroupPaymentReject directDebitRemmitanceReject,
             DirectDebitTransactionReject directDebitTransactionReject)
         {
             directDebitRemmitanceReject.AddDirectDebitTransactionReject(directDebitTransactionReject);

@@ -96,11 +96,11 @@ namespace DirectDebitElementsUnitTests
         {
             PaymentStatusReportManager paymentStatusReportManager = new PaymentStatusReportManager();
 
-            DirectDebitRemmitanceReject directDebitRemmitanceReject = paymentStatusReportManager.CreateDirectDebitRemmitanceReject(
+            DirectDebitTransactionGroupPaymentReject directDebitRemmitanceReject = paymentStatusReportManager.CreateDirectDebitTransactionGroupPaymentReject(
                 originalDirectDebitRemmitance1MessageID,
                 directDebitTransactionRejectsList1);
 
-            Assert.AreEqual(originalDirectDebitRemmitance1MessageID, directDebitRemmitanceReject.OriginalDirectDebitRemmitanceMessageID);
+            Assert.AreEqual(originalDirectDebitRemmitance1MessageID, directDebitRemmitanceReject.OriginalDirectDebitTransactionGroupPaymentPaymentInformationID);
             Assert.AreEqual(2, directDebitRemmitanceReject.NumberOfTransactions);
             Assert.AreEqual(150, directDebitRemmitanceReject.ControlSum);
             Assert.AreEqual(2, directDebitRemmitanceReject.DirectDebitTransactionRejects.Count);
@@ -116,13 +116,13 @@ namespace DirectDebitElementsUnitTests
             int numberofTransactions = 2;
             decimal controlSum = 150;
 
-            DirectDebitRemmitanceReject directDebitRemmitanceReject = paymentStatusReportManager.CreateCheckedDirectDebitRemmitanceReject(
+            DirectDebitTransactionGroupPaymentReject directDebitRemmitanceReject = paymentStatusReportManager.CreateCheckedDirectDebitTransactionGroupPaymentReject(
                 originalDirectDebitRemmitance1MessageID,
                 numberofTransactions,
                 controlSum,
                 directDebitTransactionRejectsList1);
 
-            Assert.AreEqual(originalDirectDebitRemmitance1MessageID, directDebitRemmitanceReject.OriginalDirectDebitRemmitanceMessageID);
+            Assert.AreEqual(originalDirectDebitRemmitance1MessageID, directDebitRemmitanceReject.OriginalDirectDebitTransactionGroupPaymentPaymentInformationID);
             Assert.AreEqual(2, directDebitRemmitanceReject.NumberOfTransactions);
             Assert.AreEqual(150, directDebitRemmitanceReject.ControlSum);
             Assert.AreEqual(2, directDebitRemmitanceReject.DirectDebitTransactionRejects.Count);
@@ -141,7 +141,7 @@ namespace DirectDebitElementsUnitTests
 
             try
             {
-                DirectDebitRemmitanceReject directDebitRemmitanceReject = paymentStatusReportManager.CreateCheckedDirectDebitRemmitanceReject(
+                DirectDebitTransactionGroupPaymentReject directDebitRemmitanceReject = paymentStatusReportManager.CreateCheckedDirectDebitTransactionGroupPaymentReject(
                     originalDirectDebitRemmitance1MessageID,
                     numberofTransactions,
                     controlSum,
@@ -170,7 +170,7 @@ namespace DirectDebitElementsUnitTests
 
             try
             {
-                DirectDebitRemmitanceReject directDebitRemmitanceReject = paymentStatusReportManager.CreateCheckedDirectDebitRemmitanceReject(
+                DirectDebitTransactionGroupPaymentReject directDebitRemmitanceReject = paymentStatusReportManager.CreateCheckedDirectDebitTransactionGroupPaymentReject(
                     originalDirectDebitRemmitance1MessageID,
                     numberofTransactions,
                     controlSum,
@@ -195,9 +195,9 @@ namespace DirectDebitElementsUnitTests
 
             PaymentStatusReportManager paymentStatusReportManager = new PaymentStatusReportManager();
 
-            DirectDebitRemmitanceReject directDebitRemmitanceReject = paymentStatusReportManager.CreateAnEmptyDirectDebitRemmitanceReject(originalDirectDebitRemmitanceMessageID);
+            DirectDebitTransactionGroupPaymentReject directDebitRemmitanceReject = paymentStatusReportManager.CreateAnEmptyDirectDebitRemmitanceReject(originalDirectDebitRemmitanceMessageID);
 
-            Assert.AreEqual(originalDirectDebitRemmitanceMessageID, directDebitRemmitanceReject.OriginalDirectDebitRemmitanceMessageID);
+            Assert.AreEqual(originalDirectDebitRemmitanceMessageID, directDebitRemmitanceReject.OriginalDirectDebitTransactionGroupPaymentPaymentInformationID);
             Assert.AreEqual(0, directDebitRemmitanceReject.NumberOfTransactions);
             Assert.AreEqual(0, directDebitRemmitanceReject.ControlSum);
             Assert.AreEqual(0, directDebitRemmitanceReject.DirectDebitTransactionRejects.Count);
@@ -209,13 +209,13 @@ namespace DirectDebitElementsUnitTests
             string originalDirectDebitRemmitanceMessageID = "PRE201207010001";
             List<DirectDebitTransactionReject> directDebitTransactionRejects = new List<DirectDebitTransactionReject>();
 
-            DirectDebitRemmitanceReject directDebitRemmitanceReject = new DirectDebitRemmitanceReject(originalDirectDebitRemmitanceMessageID, directDebitTransactionRejects);
+            DirectDebitTransactionGroupPaymentReject directDebitRemmitanceReject = new DirectDebitTransactionGroupPaymentReject(originalDirectDebitRemmitanceMessageID, directDebitTransactionRejects);
 
             PaymentStatusReportManager paymentStatusReportManager = new PaymentStatusReportManager();
 
             paymentStatusReportManager.AddRejectedTransactionToRemmitanceReject(directDebitRemmitanceReject, directDebitTransactionReject1);
 
-            Assert.AreEqual(originalDirectDebitRemmitanceMessageID, directDebitRemmitanceReject.OriginalDirectDebitRemmitanceMessageID);
+            Assert.AreEqual(originalDirectDebitRemmitanceMessageID, directDebitRemmitanceReject.OriginalDirectDebitTransactionGroupPaymentPaymentInformationID);
             Assert.AreEqual(1, directDebitRemmitanceReject.NumberOfTransactions);
             Assert.AreEqual(80, directDebitRemmitanceReject.ControlSum);
             Assert.AreEqual(1, directDebitRemmitanceReject.DirectDebitTransactionRejects.Count);
@@ -224,15 +224,15 @@ namespace DirectDebitElementsUnitTests
         [TestMethod]
         public void ACheckedPaymentStatusReportIsCorrectlyCreatedGivenACorrectNumberOfTransactionsAndControlSum()
         {
-            DirectDebitRemmitanceReject directDebitRemmitanceReject1 = new DirectDebitRemmitanceReject(
+            DirectDebitTransactionGroupPaymentReject directDebitRemmitanceReject1 = new DirectDebitTransactionGroupPaymentReject(
                 originalDirectDebitRemmitance1MessageID,
                 directDebitTransactionRejectsList1);
 
-            DirectDebitRemmitanceReject directDebitRemmitanceReject2 = new DirectDebitRemmitanceReject(
+            DirectDebitTransactionGroupPaymentReject directDebitRemmitanceReject2 = new DirectDebitTransactionGroupPaymentReject(
                 originalDirectDebitRemmitance2MessageID,
                 directDebitTransactionRejectsList2);
 
-            List<DirectDebitRemmitanceReject> directDebitRemmitanceRejectsList = new List<DirectDebitRemmitanceReject>()
+            List<DirectDebitTransactionGroupPaymentReject> directDebitRemmitanceRejectsList = new List<DirectDebitTransactionGroupPaymentReject>()
             { directDebitRemmitanceReject1, directDebitRemmitanceReject2 };
 
             string messageID = "DATIR00112G12345678100";
@@ -263,15 +263,15 @@ namespace DirectDebitElementsUnitTests
         [ExpectedException(typeof(System.TypeInitializationException))]
         public void IfGivenIncorrectNumberOfTransactionsTheCheckedPaymentStatusReportThrowsATypeInitializationException()
         {
-            DirectDebitRemmitanceReject directDebitRemmitanceReject1 = new DirectDebitRemmitanceReject(
+            DirectDebitTransactionGroupPaymentReject directDebitRemmitanceReject1 = new DirectDebitTransactionGroupPaymentReject(
                 originalDirectDebitRemmitance1MessageID,
                 directDebitTransactionRejectsList1);
 
-            DirectDebitRemmitanceReject directDebitRemmitanceReject2 = new DirectDebitRemmitanceReject(
+            DirectDebitTransactionGroupPaymentReject directDebitRemmitanceReject2 = new DirectDebitTransactionGroupPaymentReject(
                 originalDirectDebitRemmitance2MessageID,
                 directDebitTransactionRejectsList2);
 
-            List<DirectDebitRemmitanceReject> directDebitRemmitanceRejectsList = new List<DirectDebitRemmitanceReject>()
+            List<DirectDebitTransactionGroupPaymentReject> directDebitRemmitanceRejectsList = new List<DirectDebitTransactionGroupPaymentReject>()
             { directDebitRemmitanceReject1, directDebitRemmitanceReject2 };
 
             string messageID = "DATIR00112G12345678100";
@@ -311,15 +311,15 @@ namespace DirectDebitElementsUnitTests
         [ExpectedException(typeof(System.TypeInitializationException))]
         public void IfGivenIncorrectControlSumTheCheckedPaymentStatusReportThrowsATypeInitializationException()
         {
-            DirectDebitRemmitanceReject directDebitRemmitanceReject1 = new DirectDebitRemmitanceReject(
+            DirectDebitTransactionGroupPaymentReject directDebitRemmitanceReject1 = new DirectDebitTransactionGroupPaymentReject(
                 originalDirectDebitRemmitance1MessageID,
                 directDebitTransactionRejectsList1);
 
-            DirectDebitRemmitanceReject directDebitRemmitanceReject2 = new DirectDebitRemmitanceReject(
+            DirectDebitTransactionGroupPaymentReject directDebitRemmitanceReject2 = new DirectDebitTransactionGroupPaymentReject(
                 originalDirectDebitRemmitance2MessageID,
                 directDebitTransactionRejectsList2);
 
-            List<DirectDebitRemmitanceReject> directDebitRemmitanceRejectsList = new List<DirectDebitRemmitanceReject>()
+            List<DirectDebitTransactionGroupPaymentReject> directDebitRemmitanceRejectsList = new List<DirectDebitTransactionGroupPaymentReject>()
             { directDebitRemmitanceReject1, directDebitRemmitanceReject2 };
 
             string messageID = "DATIR00112G12345678100";
@@ -355,15 +355,15 @@ namespace DirectDebitElementsUnitTests
         [TestMethod]
         public void APaymentStatusReportIsCorrectlyCreatedWithoutProvidingNumberOfTransactionsNorControlSum()
         {
-            DirectDebitRemmitanceReject directDebitRemmitanceReject1 = new DirectDebitRemmitanceReject(
+            DirectDebitTransactionGroupPaymentReject directDebitRemmitanceReject1 = new DirectDebitTransactionGroupPaymentReject(
                 originalDirectDebitRemmitance1MessageID,
                 directDebitTransactionRejectsList1);
 
-            DirectDebitRemmitanceReject directDebitRemmitanceReject2 = new DirectDebitRemmitanceReject(
+            DirectDebitTransactionGroupPaymentReject directDebitRemmitanceReject2 = new DirectDebitTransactionGroupPaymentReject(
                 originalDirectDebitRemmitance2MessageID,
                 directDebitTransactionRejectsList2);
 
-            List<DirectDebitRemmitanceReject> directDebitRemmitanceRejectsList = new List<DirectDebitRemmitanceReject>()
+            List<DirectDebitTransactionGroupPaymentReject> directDebitRemmitanceRejectsList = new List<DirectDebitTransactionGroupPaymentReject>()
             { directDebitRemmitanceReject1, directDebitRemmitanceReject2 };
 
             string messageID = "DATIR00112G12345678100";
@@ -417,7 +417,7 @@ namespace DirectDebitElementsUnitTests
             DateTime messageCreationDateTime = DateTime.Parse("2012-07-18T06:00:01");
             DateTime rejectAccountChargeDateTime = DateTime.Parse("2012-07-18");
 
-            List<DirectDebitRemmitanceReject> directDebitRemmitanceRejects = new List<DirectDebitRemmitanceReject>();
+            List<DirectDebitTransactionGroupPaymentReject> directDebitRemmitanceRejects = new List<DirectDebitTransactionGroupPaymentReject>();
 
             PaymentStatusReport paymentStatusReport = new PaymentStatusReport(
                 messageID,
@@ -427,7 +427,7 @@ namespace DirectDebitElementsUnitTests
 
             PaymentStatusReportManager paymentStatusReportManager = new PaymentStatusReportManager();
 
-            DirectDebitRemmitanceReject directDebitRemmitanceReject1 = new DirectDebitRemmitanceReject(
+            DirectDebitTransactionGroupPaymentReject directDebitRemmitanceReject1 = new DirectDebitTransactionGroupPaymentReject(
                 originalDirectDebitRemmitance1MessageID,
                 directDebitTransactionRejectsList1);
 
