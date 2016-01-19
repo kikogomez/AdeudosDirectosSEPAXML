@@ -37,7 +37,12 @@
 		* Al crear una instancia de DirectDebitTransacionsGroupPayment con una lista de DirectDebitTransaction incluida
 - Completar los tests de SEPAElementsGenerator (creacion de clases serializables para el ENVIO)
 - Completar los tests de SEPAElementsReader (lectura de las clases deserializadas de una devolucíon)
-- Al desserializar un PaymentStatusReport, hay que revisar los contenidos de(que campos existen y sus valores)
+- Al deserializar un PaymentStatusReport, hay que revisar los contenidos de(que campos existen y sus valores), para diferenciar entre Devolucion y Rechazo
+- Realizar un test de CARGA: Generar unos ficheros de prueba de CustomerDirectDebitInitiation de 100, 500, 1000, 3000 y 6000 adeudos, a ver si 'peta' por falta de memoria o va muy lento.
+	-> ¡OJO! El PC de desarrollo tiene 16 gigas. Controlar el uso de memoria (preguntar en 'stackoverflow')
+	-> ¡OJO! El PC de desarrollo es RAPIDO. Hay que estimar cuanto tardaría en un PC normal
+	-> Los test hay que marcarlos para que no se ejecuten mas que cuando se pidan lanzar individualmente. Podemos probar a DESACTIVARLOS, y activarlos solo para la ocasión.
+ 
 		
 
 
