@@ -16,7 +16,7 @@ namespace DirectDebitElements
         DateTime mandateSignatureDate;
         BankAccount debtorAccount;
         string accountHolderName;
-
+        DirectDebitAmendmentInformation amendmentInformation;
 
         public DirectDebitTransaction(
             List<SimplifiedBill> billsInTransaction,
@@ -24,22 +24,11 @@ namespace DirectDebitElements
             string mandateID,
             DateTime mandateSignatureDate,
             BankAccount debtorAccount,
-            string accountHolderName)
+            string accountHolderName, 
+            DirectDebitAmendmentInformation amendmentInformation)
         {
-            InitializeFields(internalUniqueInstructionID, mandateID, mandateSignatureDate, debtorAccount, accountHolderName);
+            InitializeFields(internalUniqueInstructionID, mandateID, mandateSignatureDate, debtorAccount, accountHolderName, amendmentInformation);
             this.billsInTransaction = billsInTransaction;
-            UpdateAmountAndNumberOfBills();
-        }
-
-        public DirectDebitTransaction(
-            string internalUniqueInstructionID,
-            string mandateID,
-            DateTime mandateSignatureDate,
-            BankAccount debtorAccount,
-            string accountHolderName)
-        {
-            InitializeFields(internalUniqueInstructionID, mandateID, mandateSignatureDate, debtorAccount, accountHolderName);
-            billsInTransaction = new List<SimplifiedBill>();
             UpdateAmountAndNumberOfBills();
         }
 
@@ -83,6 +72,11 @@ namespace DirectDebitElements
             get { return accountHolderName; }
         }
 
+        public DirectDebitAmendmentInformation AmendmentInformation
+        {
+            get { return amendmentInformation; }
+        }
+
         public void AddBill(SimplifiedBill bill)
         {
             this.billsInTransaction.Add(bill);
@@ -94,7 +88,8 @@ namespace DirectDebitElements
             string mandateID,
             DateTime mandateSignatureDate,
             BankAccount debtorAccount,
-            string accountHolderName)
+            string accountHolderName,
+            DirectDebitAmendmentInformation amendmentInformation)
         {
             CheckMandatoryFields(internalUniqueInstructionID, mandateID, debtorAccount);
 
@@ -103,6 +98,7 @@ namespace DirectDebitElements
             this.mandateSignatureDate = mandateSignatureDate;
             this.debtorAccount = debtorAccount;
             this.accountHolderName = accountHolderName;
+            this.amendmentInformation = amendmentInformation;
         }
 
         private void UpdateAmountAndNumberOfBills()

@@ -195,7 +195,8 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
                 internalUniqueInstructionID,
                 mandateID,
                 directDebitmandate,
-                new List<SimplifiedBill>() { bill });
+                new List<SimplifiedBill>() { bill },
+                null);
             ScenarioContext.Current.Add("DirectDebitTransaction", directDebitTransaction);
         }
 
@@ -222,7 +223,8 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
                 internalUniqueInstructionID,
                 mandateID,
                 directDebitmandate,
-                new List<SimplifiedBill>() { bill });
+                new List<SimplifiedBill>() { bill },
+                null);
             Assert.AreEqual(numberOfBills, directDebitTransaction.NumberOfBills);
             Assert.AreEqual(amount, directDebitTransaction.Amount);
             ScenarioContext.Current.Add("DirectDebitTransaction", directDebitTransaction);
@@ -285,7 +287,8 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
                 internalUniqueInstructionID,
                 mandateID,
                 directDebitmandate,
-                new List<SimplifiedBill>() { bill });
+                new List<SimplifiedBill>() { bill },
+                null);
             DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment =
                 directDebitRemittancesManager.CreateANewGroupOfDirectDebitTransactions("PaymentGroup1", "COR1");
             directDebitRemittancesManager.AddDirectDebitTransactionToGroupPayment(directDebitTransaction, directDebitTransactionsGroupPayment);
@@ -308,7 +311,8 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
                 internalUniqueInstructionID,
                 mandateID,
                 directDebitmandate,
-                new List<SimplifiedBill>() { bill });
+                new List<SimplifiedBill>() { bill },
+                null);
             Assert.AreEqual(amount, directDebitTransaction.Amount);
             DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment =
                 (DirectDebitTransactionsGroupPayment)ScenarioContext.Current["DirectDebitTransactionsGroupPayment"];

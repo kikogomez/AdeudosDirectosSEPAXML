@@ -30,15 +30,22 @@ namespace DirectDebitElements
         {
 
             DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
+                new List<SimplifiedBill>(),
                 internalUniqueInstructionID,
                 mandateID,
                 directDebitmandate.DirectDebitMandateCreationDate,
                 directDebitmandate.BankAccount,
-                directDebitmandate.AccountHolderName);
+                directDebitmandate.AccountHolderName,
+                null);
             return directDebitTransaction;
         }
 
-        public DirectDebitTransaction CreateANewDirectDebitTransactionFromAGroupOfBills(string internalUniqueInstructionID, string mandateID, DirectDebitMandate directDebitmandate, List<SimplifiedBill> billsList)
+        public DirectDebitTransaction CreateANewDirectDebitTransactionFromAGroupOfBills(
+            string internalUniqueInstructionID,
+            string mandateID,
+            DirectDebitMandate directDebitmandate,
+            List<SimplifiedBill> billsList,
+            DirectDebitAmendmentInformation amendmentInformation)
         {
             DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                 billsList,
@@ -46,7 +53,8 @@ namespace DirectDebitElements
                 mandateID,
                 directDebitmandate.DirectDebitMandateCreationDate,
                 directDebitmandate.BankAccount,
-                directDebitmandate.AccountHolderName);
+                directDebitmandate.AccountHolderName,
+                amendmentInformation);
             return directDebitTransaction;
         }
 

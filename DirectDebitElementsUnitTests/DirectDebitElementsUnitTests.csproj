@@ -63,6 +63,7 @@
     <Compile Include="PaymentStatusReportManagerTests.cs" />
     <Compile Include="PaymentStatusReportUnitTests.cs" />
     <Compile Include="SEPAElementsGeneratorUnitTests.cs" />
+    <Compile Include="SEPAElementsReaderUnitTests.cs" />
     <Compile Include="SEPAMessagesManagerTests.cs" />
     <Compile Include="SimplifiedBillUnitTests.cs" />
     <Compile Include="CreditorTests.cs" />
@@ -102,6 +103,7 @@
     </Content>
     <Content Include="XML Test Files\pain.008.001.02\BasicDirectDebitRemmitanceExample.XML">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="XML Test Files\pain.008.001.02\tmp.XML" />
   </ItemGroup>

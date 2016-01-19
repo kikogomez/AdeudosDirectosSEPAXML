@@ -51,6 +51,7 @@
     <Compile Include="DirectDebitClasses\ClientAccountCodeCCC.cs" />
     <Compile Include="DirectDebitClasses\Creditor.cs" />
     <Compile Include="DirectDebitClasses\CreditorAgent.cs" />
+    <Compile Include="DirectDebitClasses\DirectDebitAmendmentInformation.cs" />
     <Compile Include="DirectDebitClasses\DirectDebitInitiationContract.cs" />
     <Compile Include="DirectDebitClasses\DirectDebitMandate.cs" />
     <Compile Include="DirectDebitClasses\DirectDebitRemittance.cs" />

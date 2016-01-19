@@ -139,7 +139,56 @@ namespace DirectDebitElementsUnitTests
                 mandateID,
                 mandateSignatureDate,
                 debtorAccount,
-                accountHolderName);
+                accountHolderName,
+                null);
+            bool singleUnstructuredConcept = false;
+
+            DirectDebitTransactionInformation9 directDebitTransactionInformation = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
+                creditorAgent,
+                directDebitTransaction,
+                singleUnstructuredConcept);
+
+            Assert.AreEqual(directDebitTransaction.InternalUniqueInstructionID, directDebitTransactionInformation.PmtId.InstrId);
+            Assert.AreEqual(directDebitTransaction.InternalUniqueInstructionID, directDebitTransactionInformation.PmtId.EndToEndId);
+            Assert.AreEqual(directDebitTransaction.Amount, directDebitTransactionInformation.InstdAmt.Value);
+            Assert.AreEqual("EUR", directDebitTransactionInformation.InstdAmt.Ccy);
+            Assert.AreEqual(directDebitTransaction.MandateID, directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.MndtId);
+            Assert.AreEqual(directDebitTransaction.MandateSigatureDate, directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.DtOfSgntr);
+            Assert.IsTrue(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.DtOfSgntrSpecified);
+            Assert.AreEqual(creditorAgent.BankBIC, directDebitTransactionInformation.DbtrAgt.FinInstnId.BIC);
+            Assert.AreEqual(directDebitTransaction.AccountHolderName, directDebitTransactionInformation.Dbtr.Nm);
+            Assert.AreEqual(directDebitTransaction.DebtorAccount.IBAN.IBAN, (string)directDebitTransactionInformation.DbtrAcct.Id.Item);
+            string[] expectedConcepts = new string[] { "Cuota Social Octubre 2013 --- 79,00", "Cuota Social Noviembre 2013 --- 79,00" };
+            CollectionAssert.AreEqual(expectedConcepts, directDebitTransactionInformation.RmtInf.Ustrd);
+            Assert.AreEqual(ChargeBearerType1Code.SLEV, directDebitTransactionInformation.ChrgBr);
+            Assert.IsFalse(directDebitTransactionInformation.ChrgBrSpecified);                              //ChargeBearer se especifica una sola vez por remesa, en el PaymentInformation
+
+            Assert.IsFalse(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInd);              //AmmendmentInformationInd es 'false'
+            Assert.IsFalse(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntIndSpecified);     //Si AmmendmentInformationInd es 'false', no hace falta ni siquiera incluirlo
+            Assert.IsNull(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInfDtls);
+
+            AssertUnusedDirectDebitTransactionInformation9(directDebitTransactionInformation);
+        }
+
+        [TestMethod]
+        public void ADirectDebitTransactionInformation9WithAmmendmentInformationIsCorrectlyGenerated()
+        {
+            string internalUniqueInstructionID = "00001";
+            Debtor debtor = debtors["00002"];
+            List<SimplifiedBill> bills = debtor.SimplifiedBills.Values.ToList();
+            DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
+            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
+            BankAccount debtorAccount = directDebitMandate.BankAccount;
+            string accountHolderName = directDebitMandate.AccountHolderName;
+            DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
+            DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
+                bills,
+                internalUniqueInstructionID,
+                mandateID,
+                mandateSignatureDate,
+                debtorAccount,
+                accountHolderName,
+                null);
             bool singleUnstructuredConcept = false;
 
             DirectDebitTransactionInformation9 directDebitTransactionInformation = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
@@ -187,7 +236,8 @@ namespace DirectDebitElementsUnitTests
                 mandateID,
                 mandateSignatureDate,
                 debtorAccount,
-                accountHolderName);
+                accountHolderName,
+                null);
 
             DirectDebitTransactionInformation9 directDebitTransactionInformation = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
                 creditorAgent,
