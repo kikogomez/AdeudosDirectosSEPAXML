@@ -102,7 +102,7 @@ namespace DirectDebitElements
             get { return directDebitPaymentInstructionRejects; }
         }
 
-        public void AddTransactionsGroupPaymentReject(DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject)
+        public void AddDirectDebitPaymentInstructionReject(DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject)
         {
             directDebitPaymentInstructionRejects.Add(directDebitPaymentInstructionReject);
             numberOfTransactions += directDebitPaymentInstructionReject.NumberOfTransactions;

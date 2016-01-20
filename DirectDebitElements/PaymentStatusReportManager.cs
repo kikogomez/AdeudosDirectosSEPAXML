@@ -121,7 +121,7 @@ namespace DirectDebitElements
             PaymentStatusReport paymentStatusReport,
             DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject)
         {
-            paymentStatusReport.AddTransactionsGroupPaymentReject(directDebitPaymentInstructionReject);
+            paymentStatusReport.AddDirectDebitPaymentInstructionReject(directDebitPaymentInstructionReject);
         }
 
         public void AddRejectedTransactionToPaymentInstructionReject(

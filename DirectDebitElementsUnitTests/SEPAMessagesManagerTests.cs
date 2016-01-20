@@ -84,7 +84,7 @@ namespace DirectDebitElementsUnitTests
             DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
             string prefix = directDebitRemmitance.MessageID.Substring(directDebitRemmitance.MessageID.Length - 25);
             string paymentInformationID = prefix + "001";
-            DirectDebitPaymentInstruction directDebitTransactionsGroupPayment = new DirectDebitPaymentInstruction(paymentInformationID, "CORE");
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, "CORE");
 
             List<SimplifiedBill> simplifiedBills;
             string internalUniqueInstructionID;
@@ -110,10 +110,10 @@ namespace DirectDebitElementsUnitTests
                     debtorFullName,
                     null);
                 transactionsCounter++;
-                directDebitTransactionsGroupPayment.AddDirectDebitTransaction(directDebitTransaction);
+                directDebitPaymentInstruction.AddDirectDebitTransaction(directDebitTransaction);
             }
 
-            directDebitRemmitance.AddDirectDebitPaymentInstruction(directDebitTransactionsGroupPayment);
+            directDebitRemmitance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction);
             bool singleUnstructuredConcept = false;
 
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
@@ -141,7 +141,7 @@ namespace DirectDebitElementsUnitTests
             DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
             string prefix = directDebitRemmitance.MessageID.Substring(directDebitRemmitance.MessageID.Length - 25);
             string paymentInformationID = prefix + "001";
-            DirectDebitPaymentInstruction directDebitTransactionsGroupPayment = new DirectDebitPaymentInstruction(paymentInformationID, "CORE");
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, "CORE");
 
             List<SimplifiedBill> simplifiedBills;
             string internalUniqueInstructionID;
@@ -167,10 +167,10 @@ namespace DirectDebitElementsUnitTests
                     debtorFullName,
                     null);
                 transactionsCounter++;
-                directDebitTransactionsGroupPayment.AddDirectDebitTransaction(directDebitTransaction);
+                directDebitPaymentInstruction.AddDirectDebitTransaction(directDebitTransaction);
             }
 
-            directDebitRemmitance.AddDirectDebitPaymentInstruction(directDebitTransactionsGroupPayment);
+            directDebitRemmitance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction);
             bool singleUnstructuredConcept = true;
 
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
