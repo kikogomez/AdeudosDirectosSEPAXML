@@ -20,9 +20,9 @@ namespace DirectDebitElements
             return directDebitRemmitance;
         }
 
-        public DirectDebitTransactionsGroupPayment CreateANewGroupOfDirectDebitTransactions(string paymentInformationID, string localInstrument)
+        public DirectDebitPaymentInstruction CreateANewGroupOfDirectDebitTransactions(string paymentInformationID, string localInstrument)
         {
-            DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment = new DirectDebitTransactionsGroupPayment(paymentInformationID, localInstrument);
+            DirectDebitPaymentInstruction directDebitTransactionsGroupPayment = new DirectDebitPaymentInstruction(paymentInformationID, localInstrument);
             return directDebitTransactionsGroupPayment;
         }
 
@@ -65,14 +65,14 @@ namespace DirectDebitElements
 
         public void AddDirectDebitTransactionToGroupPayment(
             DirectDebitTransaction directDebitTransaction,
-            DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment)
+            DirectDebitPaymentInstruction directDebitTransactionsGroupPayment)
         {
             directDebitTransactionsGroupPayment.AddDirectDebitTransaction(directDebitTransaction);
         }
 
         public void AddDirectDebitTransactionGroupPaymentToDirectDebitRemittance(
             DirectDebitRemittance directDebitRemmitance,
-            DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment)
+            DirectDebitPaymentInstruction directDebitTransactionsGroupPayment)
         {
             directDebitRemmitance.AddDirectDebitTransactionsGroupPayment(directDebitTransactionsGroupPayment);
         }

@@ -58,7 +58,7 @@
     <Compile Include="DirectDebitClasses\DirectDebitTransaction.cs" />
     <Compile Include="DirectDebitClasses\DirectDebitTransactionsGroupPaymentReject.cs" />
     <Compile Include="DirectDebitClasses\DirectDebitTransactionReject.cs" />
-    <Compile Include="DirectDebitClasses\DirectDebitTransactionsGroupPayment.cs" />
+    <Compile Include="DirectDebitClasses\DirectDebitPaymentInstruction.cs" />
     <Compile Include="DirectDebitClasses\InternationalAccountBankNumberIBAN.cs" />
     <Compile Include="DirectDebitClasses\PaymentStatusReport.cs" />
     <Compile Include="DirectDebitClasses\PaymentStatusReportCreationResult.cs" />

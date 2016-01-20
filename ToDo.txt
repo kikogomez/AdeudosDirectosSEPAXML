@@ -1,9 +1,10 @@
-- Modificar DirectDebitRemmitanceReject y cambiarlo por DirectDebitTransactionsGroupPaymentReject
+- Cambiar DirectDebitTransactionsGroupPayment por DirectDebitPaymentInstruction, y hace lo mismo con el 'Reject'
 	-> Cambiar el nombre del fichero
 	-> Cambiar el nombre de la clase
 	-> Cambiar los nombres de las instancias de objetos creados
 	-> Cambiar los nombres de los tests que lo utilizan
-	-> Cambiar el nombre del parametro y/o variable 'originalDirectDebitRemmitanceMessageID' por 'originalDirectDebitTransactionsGroupPaymentPaymentInformationID'
+
+- Permitir inicializar DirectDebitTransactionsGroupPayment con una lista de Transacciones, en vez de solo poder empezar vacia y añadir posteriormente. En este caso
 
 - Añadir la gestión de Amendment Information
 	-> Añadir la clase con dos campos:

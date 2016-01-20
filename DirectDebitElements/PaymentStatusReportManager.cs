@@ -122,7 +122,7 @@ namespace DirectDebitElements
             PaymentStatusReport paymentStatusReport,
             DirectDebitTransactionsGroupPaymentReject directDebitTransactionsGroupPaymentReject)
         {
-            paymentStatusReport.AddRemmitanceReject(directDebitTransactionsGroupPaymentReject);
+            paymentStatusReport.AddTransactionsGroupPaymentReject(directDebitTransactionsGroupPaymentReject);
         }
 
         public void AddRejectedTransactionToTransactionsGroupPaymentReject(

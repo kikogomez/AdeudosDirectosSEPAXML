@@ -11,7 +11,7 @@ namespace DirectDebitElements
         DateTime requestedCollectionDate;
         int numberOfTransactions;
         decimal controlSum;
-        List<DirectDebitTransactionsGroupPayment> directDebitTransactionGroupPaymentCollection;
+        List<DirectDebitPaymentInstruction> directDebitPaymentInstructionsList;
         DirectDebitInitiationContract directDebitInitiationContract;
 
         public DirectDebitRemittance(
@@ -26,7 +26,7 @@ namespace DirectDebitElements
             this.creationDateTime = creationDateTime;
             this.requestedCollectionDate = requestedCollectionDate;
             this.directDebitInitiationContract=directDebitInitiationContract;
-            directDebitTransactionGroupPaymentCollection = new List<DirectDebitTransactionsGroupPayment>();
+            directDebitPaymentInstructionsList = new List<DirectDebitPaymentInstruction>();
         }
 
         public string MessageID
@@ -49,9 +49,9 @@ namespace DirectDebitElements
             get { return directDebitInitiationContract; }
         }
 
-        public List<DirectDebitTransactionsGroupPayment> DirectDebitTransactionGroupPaymentCollection
+        public List<DirectDebitPaymentInstruction> DirectDebitTransactionGroupPaymentCollection
         {
-            get { return directDebitTransactionGroupPaymentCollection; }
+            get { return directDebitPaymentInstructionsList; }
         }
 
         public int NumberOfTransactions
@@ -64,17 +64,17 @@ namespace DirectDebitElements
             get { return controlSum; }
         }
 
-        public void AddDirectDebitTransactionsGroupPayment(DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment)
+        public void AddDirectDebitTransactionsGroupPayment(DirectDebitPaymentInstruction directDebitTransactionsGroupPayment)
         {
-            directDebitTransactionGroupPaymentCollection.Add(directDebitTransactionsGroupPayment);
+            directDebitPaymentInstructionsList.Add(directDebitTransactionsGroupPayment);
             UpdateNumberOfDirectDebitTransactionsAndAmount();
         }
 
         public void UpdateNumberOfDirectDebitTransactionsAndAmount()
         {
             this.numberOfTransactions = 
-                directDebitTransactionGroupPaymentCollection.Select(dDTxGPC => dDTxGPC.NumberOfDirectDebitTransactions).Sum();
-            this.controlSum = directDebitTransactionGroupPaymentCollection.Select(
+                directDebitPaymentInstructionsList.Select(dDTxGPC => dDTxGPC.NumberOfDirectDebitTransactions).Sum();
+            this.controlSum = directDebitPaymentInstructionsList.Select(
                 directDebitTransactionGroupPayment => directDebitTransactionGroupPayment.TotalAmount).Sum();
         }
 

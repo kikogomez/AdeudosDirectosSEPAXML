@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace DirectDebitElements
 {
-    public class DirectDebitTransactionsGroupPayment
+    public class DirectDebitPaymentInstruction
     {
         string paymentInformationID;
         string localInstrument;
@@ -12,12 +12,25 @@ namespace DirectDebitElements
         int numberOfDirectDebitTransactions;
         decimal totalAmount;
 
-        public DirectDebitTransactionsGroupPayment(string paymentInformationID, string localInstrument)
+        public DirectDebitPaymentInstruction(string paymentInformationID, string localInstrument)
         {
             this.paymentInformationID = CheckPaymentInformationID(paymentInformationID);
             this.localInstrument = localInstrument;
             directDebitTransactionsCollection = new List<DirectDebitTransaction>();
         }
+
+        //public DirectDebitPaymentInstruction(
+        //    string paymentInformationID,
+        //    string localInstrument,
+        //    List<DirectDebitTransaction> directDebitTransactionsCollection,
+        //    int numberOfDirectDebitTransactions,
+        //    decimal totalAmount)
+        //{
+        //    this.paymentInformationID = CheckPaymentInformationID(paymentInformationID);
+        //    this.localInstrument = localInstrument;
+        //    this.directDebitTransactionsCollection = directDebitTransactionsCollection;
+        //    UpdateNumberOfDirectDebitTransactionsAndAmount();
+        //}
 
         public string PaymentInformationID
         {

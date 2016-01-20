@@ -652,7 +652,7 @@ namespace DirectDebitElementsUnitTests
         {
             string paymentInformationID = "PaymentGroup1";
             string localInstrument = "COR1";
-            DirectDebitTransactionsGroupPayment dDTxGrpPaymentInfo = new DirectDebitTransactionsGroupPayment(paymentInformationID, localInstrument);
+            DirectDebitPaymentInstruction dDTxGrpPaymentInfo = new DirectDebitPaymentInstruction(paymentInformationID, localInstrument);
             Assert.AreEqual("PaymentGroup1", dDTxGrpPaymentInfo.PaymentInformationID);
             Assert.AreEqual("COR1", dDTxGrpPaymentInfo.LocalInstrument);
             Assert.AreEqual(0, dDTxGrpPaymentInfo.NumberOfDirectDebitTransactions);
@@ -664,7 +664,7 @@ namespace DirectDebitElementsUnitTests
         {
             string paymentInformationID = "PaymentGroup1";
             string localInstrument = "COR1";
-            DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment = new DirectDebitTransactionsGroupPayment(paymentInformationID, localInstrument);
+            DirectDebitPaymentInstruction directDebitTransactionsGroupPayment = new DirectDebitPaymentInstruction(paymentInformationID, localInstrument);
             Debtor debtor = debtors["00002"];
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
             int internalDirectDebitReferenceNumber = directDebitMandate.InternalReferenceNumber;
@@ -699,7 +699,7 @@ namespace DirectDebitElementsUnitTests
             string paymentInformationID = "PaymentGroup1";
             string localInstrument = "COR1";
 
-            DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment = new DirectDebitTransactionsGroupPayment(paymentInformationID, localInstrument);
+            DirectDebitPaymentInstruction directDebitTransactionsGroupPayment = new DirectDebitPaymentInstruction(paymentInformationID, localInstrument);
 
             directDebitRemmitance.AddDirectDebitTransactionsGroupPayment(directDebitTransactionsGroupPayment);
             Assert.AreEqual(1, directDebitRemmitance.DirectDebitTransactionGroupPaymentCollection.Count);
@@ -712,7 +712,7 @@ namespace DirectDebitElementsUnitTests
             string paymentInformationID = "0123456789012345678901234567890123456789";
             try
             {
-                DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment = new DirectDebitTransactionsGroupPayment(paymentInformationID, "COR1");
+                DirectDebitPaymentInstruction directDebitTransactionsGroupPayment = new DirectDebitPaymentInstruction(paymentInformationID, "COR1");
             }
 
             catch (System.ArgumentOutOfRangeException e)
@@ -729,7 +729,7 @@ namespace DirectDebitElementsUnitTests
         {
             try
             {
-                DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment = new DirectDebitTransactionsGroupPayment("", "COR1");
+                DirectDebitPaymentInstruction directDebitTransactionsGroupPayment = new DirectDebitPaymentInstruction("", "COR1");
             }
 
             catch (System.ArgumentException e)
@@ -746,7 +746,7 @@ namespace DirectDebitElementsUnitTests
         {
             try
             {
-                DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment = new DirectDebitTransactionsGroupPayment(null, "COR1");
+                DirectDebitPaymentInstruction directDebitTransactionsGroupPayment = new DirectDebitPaymentInstruction(null, "COR1");
             }
 
             catch (System.ArgumentNullException e)

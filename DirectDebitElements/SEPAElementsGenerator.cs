@@ -164,7 +164,7 @@ namespace DirectDebitElements
             Creditor creditor,
             CreditorAgent creditorAgent,
             DirectDebitInitiationContract directDebitInitiationContract,
-            DirectDebitTransactionsGroupPayment directDebitTransactionsGroupPayment,
+            DirectDebitPaymentInstruction directDebitTransactionsGroupPayment,
             bool singleUnstructuredConcept)
         {
             string paymentInformationIdentificaction_PmtInfId = directDebitTransactionsGroupPayment.PaymentInformationID;  //Private unique ID for payment group

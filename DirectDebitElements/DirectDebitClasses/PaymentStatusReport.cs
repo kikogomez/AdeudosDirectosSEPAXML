@@ -16,7 +16,7 @@ namespace DirectDebitElements
         DateTime rejectAccountChargeDateTime;
         int numberOfTransactions;
         decimal controlSum;
-        List<DirectDebitTransactionsGroupPaymentReject> directDebitRemmitanceRejects;
+        List<DirectDebitTransactionsGroupPaymentReject> directDebitTransactionsGroupPaymentRejects;
 
         public PaymentStatusReport(string messageID, DateTime messageCreationDateTime, DateTime rejectAccountChargeDateTime, List<DirectDebitTransactionsGroupPaymentReject> directDebitRemmitanceRejects)
         {
@@ -25,7 +25,7 @@ namespace DirectDebitElements
             this.rejectAccountChargeDateTime = rejectAccountChargeDateTime;
             this.numberOfTransactions = directDebitRemmitanceRejects.Select(ddRemmitanceReject => ddRemmitanceReject.NumberOfTransactions).Sum();
             this.controlSum = directDebitRemmitanceRejects.Select(ddRemmitanceReject => ddRemmitanceReject.ControlSum).Sum();
-            this.directDebitRemmitanceRejects = directDebitRemmitanceRejects;
+            this.directDebitTransactionsGroupPaymentRejects = directDebitRemmitanceRejects;
 
             foreach (DirectDebitTransactionsGroupPaymentReject directDebitRemmitanceReject in directDebitRemmitanceRejects)
             {
@@ -39,14 +39,14 @@ namespace DirectDebitElements
             DateTime rejectAccountChargeDateTime,
             int numberOfTransactions,
             decimal controlSum,
-            List<DirectDebitTransactionsGroupPaymentReject> directDebitRemmitanceRejects)
+            List<DirectDebitTransactionsGroupPaymentReject> directDebitTransactionsGroupPaymentRejects)
         {
             this.messageID = messageID;
             this.messageCreationDateTime = messageCreationDateTime;
             this.rejectAccountChargeDateTime = rejectAccountChargeDateTime;
-            this.numberOfTransactions = directDebitRemmitanceRejects.Select(ddRemmitanceReject => ddRemmitanceReject.NumberOfTransactions).Sum();
-            this.controlSum = directDebitRemmitanceRejects.Select(ddRemmitanceReject => ddRemmitanceReject.ControlSum).Sum();
-            this.directDebitRemmitanceRejects = directDebitRemmitanceRejects;
+            this.numberOfTransactions = directDebitTransactionsGroupPaymentRejects.Select(ddTransactionsGroupPaymentRejects => ddTransactionsGroupPaymentRejects.NumberOfTransactions).Sum();
+            this.controlSum = directDebitTransactionsGroupPaymentRejects.Select(ddTransactionsGroupPaymentRejects => ddTransactionsGroupPaymentRejects.ControlSum).Sum();
+            this.directDebitTransactionsGroupPaymentRejects = directDebitTransactionsGroupPaymentRejects;
 
             try
             {
@@ -57,9 +57,9 @@ namespace DirectDebitElements
                 throw new TypeInitializationException("PaymentStatusReport", argumentException);
             }
             
-            foreach (DirectDebitTransactionsGroupPaymentReject directDebitRemmitanceReject in directDebitRemmitanceRejects)
+            foreach (DirectDebitTransactionsGroupPaymentReject directDebitTransactionsGroupPaymentReject in directDebitTransactionsGroupPaymentRejects)
             {
-                SuscribeTo_AddedNewTransactionEvent(directDebitRemmitanceReject);
+                SuscribeTo_AddedNewTransactionEvent(directDebitTransactionsGroupPaymentReject);
             }
         }
 
@@ -88,21 +88,21 @@ namespace DirectDebitElements
             get { return controlSum; }
         }
 
-        public List<DirectDebitTransactionsGroupPaymentReject> DirectDebitRemmitanceRejects
+        public List<DirectDebitTransactionsGroupPaymentReject> DirectDebitTransactionsGroupPaymentRejects
         {
-            get { return directDebitRemmitanceRejects; }
+            get { return directDebitTransactionsGroupPaymentRejects; }
         }
 
-        public void AddRemmitanceReject(DirectDebitTransactionsGroupPaymentReject directDebitRemmitanceReject)
+        public void AddTransactionsGroupPaymentReject(DirectDebitTransactionsGroupPaymentReject directDebitTransactionsGroupPaymentReject)
         {
-            directDebitRemmitanceRejects.Add(directDebitRemmitanceReject);
-            numberOfTransactions += directDebitRemmitanceReject.NumberOfTransactions;
-            controlSum += directDebitRemmitanceReject.ControlSum;
+            directDebitTransactionsGroupPaymentRejects.Add(directDebitTransactionsGroupPaymentReject);
+            numberOfTransactions += directDebitTransactionsGroupPaymentReject.NumberOfTransactions;
+            controlSum += directDebitTransactionsGroupPaymentReject.ControlSum;
         }
 
-        private void SuscribeTo_AddedNewTransactionEvent(DirectDebitTransactionsGroupPaymentReject directDebitRemmitanceReject)
+        private void SuscribeTo_AddedNewTransactionEvent(DirectDebitTransactionsGroupPaymentReject directDebitTransactionsGroupPaymentReject)
         {
-            directDebitRemmitanceReject.AddedNewDirectDebitTransactionReject += AddDirectDebitTransactionRejectEventHandler;
+            directDebitTransactionsGroupPaymentReject.AddedNewDirectDebitTransactionReject += AddDirectDebitTransactionRejectEventHandler;
         }
 
         private void AddDirectDebitTransactionRejectEventHandler(Object sender, decimal directDebitTransactionRejectAmount)

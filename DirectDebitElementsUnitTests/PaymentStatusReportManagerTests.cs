@@ -258,7 +258,7 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual(rejectAccountChargeDateTime, paymentStatusReport.RejectAccountChargeDateTime);
             Assert.AreEqual(numberOfTransactions, paymentStatusReport.NumberOfTransactions);
             Assert.AreEqual(controlSum, paymentStatusReport.ControlSum);
-            CollectionAssert.AreEqual(directDebitRemmitanceRejectsList, paymentStatusReport.DirectDebitRemmitanceRejects);
+            CollectionAssert.AreEqual(directDebitRemmitanceRejectsList, paymentStatusReport.DirectDebitTransactionsGroupPaymentRejects);
         }
 
         [TestMethod]
@@ -387,7 +387,7 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual(rejectAccountChargeDateTime, paymentStatusReport.RejectAccountChargeDateTime);
             Assert.AreEqual(numberOfTransactions, paymentStatusReport.NumberOfTransactions);
             Assert.AreEqual(controlSum, paymentStatusReport.ControlSum);
-            CollectionAssert.AreEqual(directDebitRemmitanceRejectsList, paymentStatusReport.DirectDebitRemmitanceRejects);
+            CollectionAssert.AreEqual(directDebitRemmitanceRejectsList, paymentStatusReport.DirectDebitTransactionsGroupPaymentRejects);
         }
 
         [TestMethod]
@@ -409,7 +409,7 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual(rejectAccountChargeDateTime, paymentStatusReport.RejectAccountChargeDateTime);
             Assert.AreEqual(0, paymentStatusReport.NumberOfTransactions);
             Assert.AreEqual(0, paymentStatusReport.ControlSum);
-            Assert.AreEqual(0, paymentStatusReport.DirectDebitRemmitanceRejects.Count);
+            Assert.AreEqual(0, paymentStatusReport.DirectDebitTransactionsGroupPaymentRejects.Count);
         }
 
         [TestMethod]
@@ -440,7 +440,7 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual(rejectAccountChargeDateTime, paymentStatusReport.RejectAccountChargeDateTime);
             Assert.AreEqual(2, paymentStatusReport.NumberOfTransactions);
             Assert.AreEqual(150, paymentStatusReport.ControlSum);
-            Assert.AreEqual(1, paymentStatusReport.DirectDebitRemmitanceRejects.Count);
+            Assert.AreEqual(1, paymentStatusReport.DirectDebitTransactionsGroupPaymentRejects.Count);
         }
     }
 }
