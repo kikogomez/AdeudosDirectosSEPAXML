@@ -14,19 +14,19 @@ namespace DirectDebitElements
         {
         }
 
-        public DirectDebitRemittance CreateADirectDebitRemmitance(string messageID, DateTime creationDateTime, DateTime requestedCollectionDate, DirectDebitInitiationContract directDebitInitiationContract)
+        public DirectDebitRemittance CreateAnEmptyDirectDebitRemmitance(string messageID, DateTime creationDateTime, DateTime requestedCollectionDate, DirectDebitInitiationContract directDebitInitiationContract)
         {
             DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(messageID, creationDateTime, requestedCollectionDate, directDebitInitiationContract);
             return directDebitRemmitance;
         }
 
-        public DirectDebitPaymentInstruction CreateANewGroupOfDirectDebitTransactions(string paymentInformationID, string localInstrument)
+        public DirectDebitPaymentInstruction CreateAnEmptyDirectDebitPaymentInstruction(string paymentInformationID, string localInstrument)
         {
-            DirectDebitPaymentInstruction directDebitTransactionsGroupPayment = new DirectDebitPaymentInstruction(paymentInformationID, localInstrument);
-            return directDebitTransactionsGroupPayment;
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, localInstrument);
+            return directDebitPaymentInstruction;
         }
 
-        public DirectDebitTransaction CreateANewEmptyDirectDebitTransaction(string internalUniqueInstructionID, string mandateID, DirectDebitMandate directDebitmandate)
+        public DirectDebitTransaction CreateAnEmptyDirectDebitTransaction(string internalUniqueInstructionID, string mandateID, DirectDebitMandate directDebitmandate)
         {
 
             DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
@@ -40,7 +40,7 @@ namespace DirectDebitElements
             return directDebitTransaction;
         }
 
-        public DirectDebitTransaction CreateANewDirectDebitTransactionFromAGroupOfBills(
+        public DirectDebitTransaction CreateADirectDebitTransactionFromAGroupOfBills(
             string internalUniqueInstructionID,
             string mandateID,
             DirectDebitMandate directDebitmandate,
@@ -65,16 +65,16 @@ namespace DirectDebitElements
 
         public void AddDirectDebitTransactionToGroupPayment(
             DirectDebitTransaction directDebitTransaction,
-            DirectDebitPaymentInstruction directDebitTransactionsGroupPayment)
+            DirectDebitPaymentInstruction directDebitPaymentInstruction)
         {
-            directDebitTransactionsGroupPayment.AddDirectDebitTransaction(directDebitTransaction);
+            directDebitPaymentInstruction.AddDirectDebitTransaction(directDebitTransaction);
         }
 
         public void AddDirectDebitTransactionGroupPaymentToDirectDebitRemittance(
             DirectDebitRemittance directDebitRemmitance,
-            DirectDebitPaymentInstruction directDebitTransactionsGroupPayment)
+            DirectDebitPaymentInstruction directDebitPaymentInstruction)
         {
-            directDebitRemmitance.AddDirectDebitTransactionsGroupPayment(directDebitTransactionsGroupPayment);
+            directDebitRemmitance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction);
         }
     }
 }

@@ -701,8 +701,8 @@ namespace DirectDebitElementsUnitTests
 
             DirectDebitPaymentInstruction directDebitTransactionsGroupPayment = new DirectDebitPaymentInstruction(paymentInformationID, localInstrument);
 
-            directDebitRemmitance.AddDirectDebitTransactionsGroupPayment(directDebitTransactionsGroupPayment);
-            Assert.AreEqual(1, directDebitRemmitance.DirectDebitTransactionGroupPaymentCollection.Count);
+            directDebitRemmitance.AddDirectDebitPaymentInstruction(directDebitTransactionsGroupPayment);
+            Assert.AreEqual(1, directDebitRemmitance.DirectDebitPaymentInstructions.Count);
         }
 
         [TestMethod]

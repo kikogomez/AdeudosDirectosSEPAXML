@@ -12,7 +12,7 @@ namespace DirectDebitElements
     public static class SEPAElementsReader
     {
 
-        public static DirectDebitTransactionsGroupPaymentReject CreateDirectDebitTransactionsGroupPaymentReject(OriginalPaymentInformation1 originalPaymentInformation1)
+        public static DirectDebitPaymentInstructionReject CreateDirectDebitTransactionsGroupPaymentReject(OriginalPaymentInformation1 originalPaymentInformation1)
         {
             PaymentStatusReportManager paymentStatusReportManager = new PaymentStatusReportManager();
 
@@ -44,7 +44,7 @@ namespace DirectDebitElements
                 directDebitTransactionRejects.Add(directDebitTransactionReject);
             }
 
-            DirectDebitTransactionsGroupPaymentReject directDebitRemmitanceReject = paymentStatusReportManager.CreateCheckedDirectDebitTransactionGroupPaymentReject(
+            DirectDebitPaymentInstructionReject directDebitRemmitanceReject = paymentStatusReportManager.CreateCheckedDirectDebitPaymentInstructionReject(
                 originalDirectDebitTransactionsGroupPaymentPaymentInformationID,
                 numberOfTransactions,
                 controlSum,

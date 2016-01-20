@@ -6,32 +6,32 @@ using System.Threading.Tasks;
 
 namespace DirectDebitElements
 {
-    public class DirectDebitTransactionsGroupPaymentReject
+    public class DirectDebitPaymentInstructionReject
     {
         public event EventHandler<decimal> AddedNewDirectDebitTransactionReject;
 
-        string originalDirectDebitTransactionsGroupPaymentPaymentInformationID;
+        string originalPaymentInformationID;
         int numberOfTransactions;
         decimal controlSum;
         List<DirectDebitTransactionReject> directDebitTransactionsRejects;
 
-        public DirectDebitTransactionsGroupPaymentReject(
-            string originalDirectDebitTransactionsGroupPaymentPaymentInformationID,
+        public DirectDebitPaymentInstructionReject(
+            string originalPaymentInformationID,
             List<DirectDebitTransactionReject> directDebitTransactionsRejects)
         {
-            this.originalDirectDebitTransactionsGroupPaymentPaymentInformationID = originalDirectDebitTransactionsGroupPaymentPaymentInformationID;
+            this.originalPaymentInformationID = originalPaymentInformationID;
             this.numberOfTransactions = directDebitTransactionsRejects.Count;
             this.controlSum = directDebitTransactionsRejects.Select(ddTransactionReject => ddTransactionReject.Amount).Sum();
             this.directDebitTransactionsRejects = directDebitTransactionsRejects;
         }
 
-        public DirectDebitTransactionsGroupPaymentReject(
-            string originalDirectDebitTransactionsGroupPaymentPaymentInformationID,
+        public DirectDebitPaymentInstructionReject(
+            string originalPaymentInformationID,
             int numberOfTransactions,
             decimal controlSum,
             List<DirectDebitTransactionReject> directDebitTransactionsRejects)
         {
-            this.originalDirectDebitTransactionsGroupPaymentPaymentInformationID = originalDirectDebitTransactionsGroupPaymentPaymentInformationID;
+            this.originalPaymentInformationID = originalPaymentInformationID;
             this.numberOfTransactions = directDebitTransactionsRejects.Count;
             this.controlSum = directDebitTransactionsRejects.Select(ddTransactionReject => ddTransactionReject.Amount).Sum();
             this.directDebitTransactionsRejects = directDebitTransactionsRejects;
@@ -45,9 +45,9 @@ namespace DirectDebitElements
             }
         }
 
-        public string OriginalDirectDebitTransactionsGroupPaymentPaymentInformationID
+        public string OriginalPaymentInformationID
         {
-            get { return originalDirectDebitTransactionsGroupPaymentPaymentInformationID; }
+            get { return originalPaymentInformationID; }
 
         }
 

@@ -4,7 +4,17 @@
 	-> Cambiar los nombres de las instancias de objetos creados
 	-> Cambiar los nombres de los tests que lo utilizan
 
-- Permitir inicializar DirectDebitTransactionsGroupPayment con una lista de Transacciones, en vez de solo poder empezar vacia y añadir posteriormente. En este caso
+- IMPORTANTE!! ERROR DETECTADO!! El método SEPAElementsGenerator.GeneratePaymentInformation_PmtInf usa una RequestedCollectionDate fija de prueba
+	-> Añadir RequestedCollectionDate en el constructor, tomandolo de DirectDebitRemitance.RequestedCollectionDate
+
+- Permitir inicializar DirectDebitPaymentInstruction con una lista de Transacciones, en vez de solo poder empezar vacia y añadir posteriormente. Conm esto evitamos recalcular el numero de transacciones y la suma de las mismas en cada iteración
+	-> Crear el constructor, que tambien incluya numero de transacciones y suma de control.
+	-> Añadir los tests unitarios basicos
+	-> Añadir un checkeo de numero de transacciones y suma de control que lance una excepcion
+- Permitir inicializar DirectDebitRemmitance con una lista de PaymentInstructions, en vez de solo poder empezar vacia y añadir posteriormente. Conm esto evitamos recalcular el numero de transacciones y la suma de las mismas en cada iteración 
+	-> Crear el constructor, que tambien incluya numero de transacciones y suma de control.
+	-> Añadir los tests unitarios basicos
+	-> Añadir un checkeo de numero de transacciones y suma de control que lance una excepcion
 
 - Añadir la gestión de Amendment Information
 	-> Añadir la clase con dos campos:
@@ -32,11 +42,11 @@
 	-> Añadir a DirectDebitTransaction el campo booleano 'First' (modificar los test unitarios de DirectDebitTransaction para que comprueben este valor)
 	-> Comprobar si existe AmendmentInformation al instanciar DirectDebitTransaction
 		-> Si hay cambio de BANCO es obligatorio que se considere 'FRST'
-	-> Añadir a DirectDebitTransactionsGroupPayment el campo 'First'
-	-> Al añadir un DirectDebitTransaction a DirectDebitTransactionsGroupPayment comprobar si se corresponden 'RCUR' o 'FRST'
+	-> Añadir a DirectDebitPaymentInstruction el campo 'First'
+	-> Al añadir un DirectDebitTransaction a DirectDebitPaymentInstruction comprobar si se corresponden 'RCUR' o 'FRST'
 		* En el método .AddRejectedTransactionToTransactionsGroupPaymentReject
 		* Al crear una instancia de DirectDebitTransacionsGroupPayment con una lista de DirectDebitTransaction incluida
-	-> Comprobar que se crea correctamente un CustomerDirectDebitInitiation con los DirectDebitTransactionsGroupPayment 'FRST' y 'RCUR'
+	-> Comprobar que se crea correctamente un CustomerDirectDebitInitiation con los DirectDebitPaymentInstruction 'FRST' y 'RCUR'
 - Completar los tests de SEPAElementsGenerator (creacion de clases serializables para el ENVIO)
 - Completar los tests de SEPAElementsReader (lectura de las clases deserializadas de una devolucíon)
 - En este punto debemos haber testeados los 3 veles:
@@ -62,11 +72,11 @@
 		- SEPAElementsGenerator y SEPAElementsReader deben usar DirectdebitRemmitancesaManager y PaymentStatusReport? Quizá NO... Podria acceder directamente a las clases DirectDebit Elements
 		- DirectDebitRemmittancesManager tiene métodos para cerar y gestionar SOLO las clases principales:
 			* DirectDebitTransaction
-			* DirectDebitTransactionsGroupPayment
+			* DirectDebitPaymentInstruction
 			* DirectDebitRemmitance
 		- PaymentStatusReport tiene métodos para cerar y gestionar SOLO las clases principales:
 			* DirectDebitTransactionReject
-			* DirectDebitTransactionSGroupPaymentreject
+			* DirectDebitPaymentInstructionReject
 			* PaymentStatusReport
 	-> Externamente:
 		- Con la estructura anterior sigue siendo necesario acceder directamente (sin pasar por 'Manager') a muchos elementos. ¿Cambiarlo?:

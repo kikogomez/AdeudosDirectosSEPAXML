@@ -164,13 +164,14 @@ namespace DirectDebitElements
             Creditor creditor,
             CreditorAgent creditorAgent,
             DirectDebitInitiationContract directDebitInitiationContract,
-            DirectDebitPaymentInstruction directDebitTransactionsGroupPayment,
+            DirectDebitPaymentInstruction directDebitPaymentInstruction,
+            DateTime requestedCollectionDate, 
             bool singleUnstructuredConcept)
         {
-            string paymentInformationIdentificaction_PmtInfId = directDebitTransactionsGroupPayment.PaymentInformationID;  //Private unique ID for payment group
-            DateTime reqCollectionDate_ReqdColltnDt = new DateTime(2014, 2, 01);
+            string paymentInformationIdentificaction_PmtInfId = directDebitPaymentInstruction.PaymentInformationID;  //Private unique ID for payment group
+            DateTime reqCollectionDate_ReqdColltnDt = requestedCollectionDate;
             List<DirectDebitTransactionInformation9> directDebitTransactionInfo_DrctDbtTxInfList = new List<DirectDebitTransactionInformation9>();
-            foreach (DirectDebitTransaction directDebitTransaction in directDebitTransactionsGroupPayment.DirectDebitTransactionsCollection)
+            foreach (DirectDebitTransaction directDebitTransaction in directDebitPaymentInstruction.DirectDebitTransactionsCollection)
             {
                 DirectDebitTransactionInformation9 directDebitTransactionInfo_DrctDbtTxInf = GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
                     creditorAgent,
@@ -181,7 +182,7 @@ namespace DirectDebitElements
 
             ServiceLevel8Choice serviceLevel_SvcLvl = new ServiceLevel8Choice("SEPA", ItemChoiceType.Cd);
 
-            LocalInstrument2Choice localInstrument_LclInstrm = new LocalInstrument2Choice(directDebitTransactionsGroupPayment.LocalInstrument, ItemChoiceType.Cd);
+            LocalInstrument2Choice localInstrument_LclInstrm = new LocalInstrument2Choice(directDebitPaymentInstruction.LocalInstrument, ItemChoiceType.Cd);
 
             CategoryPurpose1Choice categoryOfPurpose_CtgyPurp = new CategoryPurpose1Choice("TRAD", ItemChoiceType.Cd);
 

@@ -104,7 +104,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             DateTime requestedCollectionDate = new DateTime(2013, 11, 12);
             DirectDebitInitiationContract directDebitInitiationContract = (DirectDebitInitiationContract)ScenarioContext.Current["DirectDebitInitiationContract"];
 
-            DirectDebitRemittance directDebitRemmitance = directDebitRemittancesManager.CreateADirectDebitRemmitance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
+            DirectDebitRemittance directDebitRemmitance = directDebitRemittancesManager.CreateAnEmptyDirectDebitRemmitance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
             ScenarioContext.Current.Add("CreationDate", creationDate);
             ScenarioContext.Current.Add("RequestedCollectionDate", requestedCollectionDate);
             ScenarioContext.Current.Add("MessageID", messageID);
@@ -119,7 +119,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             DateTime requestedCollectionDate = (DateTime)ScenarioContext.Current["RequestedCollectionDate"];
             DirectDebitInitiationContract directDebitInitiationContract = (DirectDebitInitiationContract)ScenarioContext.Current["DirectDebitInitiationContract"];
             DirectDebitRemittance directDebitRemmitance = (DirectDebitRemittance)ScenarioContext.Current["DirectDebitRemittance"];
-            List<DirectDebitPaymentInstruction> emptyDirectDebitTransactionsGroupPaymentList = new List<DirectDebitPaymentInstruction>();
+            List<DirectDebitPaymentInstruction> emptyDirectDebitPaymentInstructionsList = new List<DirectDebitPaymentInstruction>();
 
             Assert.AreEqual(messageID, directDebitRemmitance.MessageID);
             Assert.AreEqual(creationDate, directDebitRemmitance.CreationDate);
@@ -127,7 +127,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             Assert.AreEqual(directDebitInitiationContract, directDebitRemmitance.DirectDebitInitiationContract);
             Assert.AreEqual(0, directDebitRemmitance.NumberOfTransactions);
             Assert.AreEqual(0, directDebitRemmitance.ControlSum);
-            CollectionAssert.AreEqual(emptyDirectDebitTransactionsGroupPaymentList, directDebitRemmitance.DirectDebitTransactionGroupPaymentCollection);
+            CollectionAssert.AreEqual(emptyDirectDebitPaymentInstructionsList, directDebitRemmitance.DirectDebitPaymentInstructions);
         }
 
         [Given(@"I will send the payments using ""(.*)"" local instrument")]
@@ -142,20 +142,20 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             string paymentInformationID = "PaymentGroup1";
             ScenarioContext.Current.Add("PaymentInformationID", paymentInformationID);
             string localInstrument = (string)ScenarioContext.Current["LocalInstrument"];
-            DirectDebitPaymentInstruction directDebitTransactionsGroupPayment =
-                directDebitRemittancesManager.CreateANewGroupOfDirectDebitTransactions(paymentInformationID, localInstrument);
-            ScenarioContext.Current.Add("EmptyDirectDebitTransactionsGroupPayment", directDebitTransactionsGroupPayment);
+            DirectDebitPaymentInstruction directDebitPaymentInstruction =
+                directDebitRemittancesManager.CreateAnEmptyDirectDebitPaymentInstruction(paymentInformationID, localInstrument);
+            ScenarioContext.Current.Add("EmptyDirectDebitPaymentInstruction", directDebitPaymentInstruction);
         }
 
         [Then(@"An empty group of direct debit payments using ""(.*)"" is generated")]
         public void ThenAnEmptyGroupOfDirectDebitPaymentsUsingIsGenerated(string localInstrument)
         {
             string paymentImformationID = (string)ScenarioContext.Current["PaymentInformationID"];
-            DirectDebitPaymentInstruction directDebitTransactionsGroupPayment =
-                (DirectDebitPaymentInstruction)ScenarioContext.Current["EmptyDirectDebitTransactionsGroupPayment"];
-            Assert.AreEqual(paymentImformationID, directDebitTransactionsGroupPayment.PaymentInformationID);
-            Assert.AreEqual(localInstrument, directDebitTransactionsGroupPayment.LocalInstrument);
-            Assert.AreEqual(0, directDebitTransactionsGroupPayment.NumberOfDirectDebitTransactions);
+            DirectDebitPaymentInstruction directDebitPaymentInstruction =
+                (DirectDebitPaymentInstruction)ScenarioContext.Current["EmptyDirectDebitPaymentInstruction"];
+            Assert.AreEqual(paymentImformationID, directDebitPaymentInstruction.PaymentInformationID);
+            Assert.AreEqual(localInstrument, directDebitPaymentInstruction.LocalInstrument);
+            Assert.AreEqual(0, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
         }
 
         [Given(@"I have a debtor")]
@@ -191,7 +191,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitmandate.InternalReferenceNumber);
             SimplifiedBill bill = (SimplifiedBill)ScenarioContext.Current["Bill"];
 
-            DirectDebitTransaction directDebitTransaction = directDebitRemittancesManager.CreateANewDirectDebitTransactionFromAGroupOfBills(
+            DirectDebitTransaction directDebitTransaction = directDebitRemittancesManager.CreateADirectDebitTransactionFromAGroupOfBills(
                 internalUniqueInstructionID,
                 mandateID,
                 directDebitmandate,
@@ -219,7 +219,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             DirectDebitMandate directDebitmandate = debtor.DirectDebitmandates.Values.ElementAt(0);
             string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitmandate.InternalReferenceNumber);
             SimplifiedBill bill = new SimplifiedBill("0001", "Recibo 1", amount, DateTime.Today, DateTime.Today.AddMonths(1));
-            DirectDebitTransaction directDebitTransaction = directDebitRemittancesManager.CreateANewDirectDebitTransactionFromAGroupOfBills(
+            DirectDebitTransaction directDebitTransaction = directDebitRemittancesManager.CreateADirectDebitTransactionFromAGroupOfBills(
                 internalUniqueInstructionID,
                 mandateID,
                 directDebitmandate,
@@ -250,27 +250,27 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
         [Given(@"I have an empty group of payments")]
         public void GivenIHaveAnEmptyGroupOfPayments()
         {
-            DirectDebitPaymentInstruction directDebitTransactionsGroupPayment =
-                directDebitRemittancesManager.CreateANewGroupOfDirectDebitTransactions("PaymentGroup1", "COR1");
-            ScenarioContext.Current.Add("DirectDebitTransactionsGroupPayment", directDebitTransactionsGroupPayment);
+            DirectDebitPaymentInstruction directDebitPaymentInstruction =
+                directDebitRemittancesManager.CreateAnEmptyDirectDebitPaymentInstruction("PaymentGroup1", "COR1");
+            ScenarioContext.Current.Add("DirectDebitPaymentInstruction", directDebitPaymentInstruction);
         }
 
         [When(@"I add the direct debit transaction to the group of payments")]
         public void WhenIAddTheDirectDebitTransactionToTheGroupOfPayments()
         {
-            DirectDebitPaymentInstruction directDebitTransactionsGroupPayment =
-                (DirectDebitPaymentInstruction)ScenarioContext.Current["DirectDebitTransactionsGroupPayment"];
+            DirectDebitPaymentInstruction directDebitPaymentInstruction =
+                (DirectDebitPaymentInstruction)ScenarioContext.Current["DirectDebitPaymentInstruction"];
             DirectDebitTransaction directDebitTransaction = (DirectDebitTransaction)ScenarioContext.Current["DirectDebitTransaction"];
-            directDebitRemittancesManager.AddDirectDebitTransactionToGroupPayment(directDebitTransaction, directDebitTransactionsGroupPayment);
+            directDebitRemittancesManager.AddDirectDebitTransactionToGroupPayment(directDebitTransaction, directDebitPaymentInstruction);
         }
 
         [Then(@"The group of payments is updated with (.*) direct debit and total amount of (.*)")]
         public void ThenTheGroupOfPaymentsIsUpdatedWithDirectDebitAndTotalAmountOf(int numberOfDirectDebitmandates, decimal amount)
         {
-            DirectDebitPaymentInstruction directDebitTransactionsGroupPayment =
-                (DirectDebitPaymentInstruction)ScenarioContext.Current["DirectDebitTransactionsGroupPayment"];
-            Assert.AreEqual(numberOfDirectDebitmandates, directDebitTransactionsGroupPayment.NumberOfDirectDebitTransactions);
-            Assert.AreEqual(amount, directDebitTransactionsGroupPayment.TotalAmount);
+            DirectDebitPaymentInstruction directDebitPaymentInstruction =
+                (DirectDebitPaymentInstruction)ScenarioContext.Current["DirectDebitPaymentInstruction"];
+            Assert.AreEqual(numberOfDirectDebitmandates, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
+            Assert.AreEqual(amount, directDebitPaymentInstruction.TotalAmount);
         }
 
         [Given(@"I have a group of payments with (.*) direct debit transaction and amount of (.*)")]
@@ -283,18 +283,18 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             DirectDebitMandate directDebitmandate = debtor.DirectDebitmandates.Values.ElementAt(0);
             string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitmandate.InternalReferenceNumber);
             SimplifiedBill bill = new SimplifiedBill("0001", "Recibo 1", amount, DateTime.Today, DateTime.Today.AddMonths(1));
-            DirectDebitTransaction directDebitTransaction = directDebitRemittancesManager.CreateANewDirectDebitTransactionFromAGroupOfBills(
+            DirectDebitTransaction directDebitTransaction = directDebitRemittancesManager.CreateADirectDebitTransactionFromAGroupOfBills(
                 internalUniqueInstructionID,
                 mandateID,
                 directDebitmandate,
                 new List<SimplifiedBill>() { bill },
                 null);
-            DirectDebitPaymentInstruction directDebitTransactionsGroupPayment =
-                directDebitRemittancesManager.CreateANewGroupOfDirectDebitTransactions("PaymentGroup1", "COR1");
-            directDebitRemittancesManager.AddDirectDebitTransactionToGroupPayment(directDebitTransaction, directDebitTransactionsGroupPayment);
-            Assert.AreEqual(numberOfDirectDebitTransactions, directDebitTransactionsGroupPayment.NumberOfDirectDebitTransactions);
-            Assert.AreEqual(amount, directDebitTransactionsGroupPayment.TotalAmount);
-            ScenarioContext.Current.Add("DirectDebitTransactionsGroupPayment", directDebitTransactionsGroupPayment);
+            DirectDebitPaymentInstruction directDebitPaymentInstruction =
+                directDebitRemittancesManager.CreateAnEmptyDirectDebitPaymentInstruction("PaymentGroup1", "COR1");
+            directDebitRemittancesManager.AddDirectDebitTransactionToGroupPayment(directDebitTransaction, directDebitPaymentInstruction);
+            Assert.AreEqual(numberOfDirectDebitTransactions, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
+            Assert.AreEqual(amount, directDebitPaymentInstruction.TotalAmount);
+            ScenarioContext.Current.Add("DirectDebitPaymentInstruction", directDebitPaymentInstruction);
         }
 
         [When(@"I add a new direct debit transaction with amount of (.*)")]
@@ -307,16 +307,16 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             DirectDebitMandate directDebitmandate = debtor.DirectDebitmandates.Values.ElementAt(0);
             string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitmandate.InternalReferenceNumber);
             SimplifiedBill bill = new SimplifiedBill("0002", "Recibo 2", amount, DateTime.Today, DateTime.Today.AddMonths(2));
-            DirectDebitTransaction directDebitTransaction = directDebitRemittancesManager.CreateANewDirectDebitTransactionFromAGroupOfBills(
+            DirectDebitTransaction directDebitTransaction = directDebitRemittancesManager.CreateADirectDebitTransactionFromAGroupOfBills(
                 internalUniqueInstructionID,
                 mandateID,
                 directDebitmandate,
                 new List<SimplifiedBill>() { bill },
                 null);
             Assert.AreEqual(amount, directDebitTransaction.Amount);
-            DirectDebitPaymentInstruction directDebitTransactionsGroupPayment =
-                (DirectDebitPaymentInstruction)ScenarioContext.Current["DirectDebitTransactionsGroupPayment"];
-            directDebitRemittancesManager.AddDirectDebitTransactionToGroupPayment(directDebitTransaction, directDebitTransactionsGroupPayment);
+            DirectDebitPaymentInstruction directDebitPaymentInstruction =
+                (DirectDebitPaymentInstruction)ScenarioContext.Current["DirectDebitPaymentInstruction"];
+            directDebitRemittancesManager.AddDirectDebitTransactionToGroupPayment(directDebitTransaction, directDebitPaymentInstruction);
         }
 
         [Given(@"I have an empty direct debit remmitance")]
@@ -326,17 +326,17 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
             DateTime requestedCollectionDate = DateTime.Today.AddDays(3);
             DirectDebitInitiationContract directDebitInitiationContract = (DirectDebitInitiationContract)ScenarioContext.Current["DirectDebitInitiationContract"];
-            DirectDebitRemittance directDebitRemmitance = directDebitRemittancesManager.CreateADirectDebitRemmitance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
+            DirectDebitRemittance directDebitRemmitance = directDebitRemittancesManager.CreateAnEmptyDirectDebitRemmitance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
             ScenarioContext.Current.Add("DirectDebitRemittance", directDebitRemmitance);
         }
 
         [When(@"I add the group to the direct debit remittance")]
         public void WhenIAddTheGroupToTheDirectDebitRemittance()
         {
-            DirectDebitPaymentInstruction directDebitTransactionsGroupPayment =
-                (DirectDebitPaymentInstruction)ScenarioContext.Current["DirectDebitTransactionsGroupPayment"];
+            DirectDebitPaymentInstruction directDebitPaymentInstruction =
+                (DirectDebitPaymentInstruction)ScenarioContext.Current["DirectDebitPaymentInstruction"];
             DirectDebitRemittance directDebitRemmitance = (DirectDebitRemittance)ScenarioContext.Current["DirectDebitRemittance"];
-            directDebitRemittancesManager.AddDirectDebitTransactionGroupPaymentToDirectDebitRemittance(directDebitRemmitance, directDebitTransactionsGroupPayment);
+            directDebitRemittancesManager.AddDirectDebitTransactionGroupPaymentToDirectDebitRemittance(directDebitRemmitance, directDebitPaymentInstruction);
         }
 
         [Then(@"The direct debit remittance is updated with (.*) direct debit and total amount of (.*)")]
@@ -354,9 +354,9 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
             DateTime requestedCollectionDate = new DateTime(2013, 11, 12);
             DirectDebitInitiationContract directDebitInitiationContract = (DirectDebitInitiationContract)ScenarioContext.Current["DirectDebitInitiationContract"];
-            DirectDebitRemittance directDebitRemmitance = directDebitRemittancesManager.CreateADirectDebitRemmitance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
-            DirectDebitPaymentInstruction directDebitTransactionsGroupPayment =
-                directDebitRemittancesManager.CreateANewGroupOfDirectDebitTransactions("PaymentGroup1", "COR1");
+            DirectDebitRemittance directDebitRemmitance = directDebitRemittancesManager.CreateAnEmptyDirectDebitRemmitance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
+            DirectDebitPaymentInstruction directDebitPaymentInstruction =
+                directDebitRemittancesManager.CreateAnEmptyDirectDebitPaymentInstruction("PaymentGroup1", "COR1");
             DirectDebitPropietaryCodesGenerator directDebitPropietaryCodesGenerator = new DirectDebitPropietaryCodesGenerator(directDebitInitiationContract);
 
             List<Debtor> debtors = ((Dictionary<string, Debtor>)ScenarioContext.Current["Debtors"]).Values.ToList();
@@ -369,17 +369,17 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
                 mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitmandate.InternalReferenceNumber);
                 internalUniqueInstructionID = "PaymentGroup1" + (transactionsCounter + 1).ToString("00000");
                 DirectDebitTransaction directDebitTransaction =
-                    directDebitRemittancesManager.CreateANewEmptyDirectDebitTransaction(internalUniqueInstructionID, mandateID, directDebitmandate);
+                    directDebitRemittancesManager.CreateAnEmptyDirectDebitTransaction(internalUniqueInstructionID, mandateID, directDebitmandate);
                 transactionsCounter++;
                 foreach (SimplifiedBill bill in debtor.SimplifiedBills.Values)
                 {
                     directDebitRemittancesManager.AddBilllToExistingDirectDebitTransaction(directDebitTransaction, bill);
                 }
                 directDebitRemittancesManager.AddDirectDebitTransactionToGroupPayment(
-                    directDebitTransaction, directDebitTransactionsGroupPayment);
+                    directDebitTransaction, directDebitPaymentInstruction);
             }
             directDebitRemittancesManager.AddDirectDebitTransactionGroupPaymentToDirectDebitRemittance(
-                directDebitRemmitance, directDebitTransactionsGroupPayment);
+                directDebitRemmitance, directDebitPaymentInstruction);
             ScenarioContext.Current.Add("DirectDebitRemittance", directDebitRemmitance);
         }
 
