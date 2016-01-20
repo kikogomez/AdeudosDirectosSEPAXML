@@ -189,18 +189,18 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        public void AnEmptyDirectDebitRemmitanceRejectIsCorrectlyCreated()
+        public void AnEmptyDirectDebiTransactionsGroupPaymentRejectIsCorrectlyCreated()
         {
-            string originalDirectDebitRemmitanceMessageID = "PRE201207010001";
+            string originalDirectDebitTransactionsGroupPaymentPaymentInformationID = "PRE201207010001";
 
             PaymentStatusReportManager paymentStatusReportManager = new PaymentStatusReportManager();
 
-            DirectDebitTransactionsGroupPaymentReject directDebitRemmitanceReject = paymentStatusReportManager.CreateAnEmptyDirectDebitTransactionGroupPaymentReject(originalDirectDebitRemmitanceMessageID);
+            DirectDebitTransactionsGroupPaymentReject directDebitTransactionsGroupPaymentReject = paymentStatusReportManager.CreateAnEmptyDirectDebitTransactionGroupPaymentReject(originalDirectDebitTransactionsGroupPaymentPaymentInformationID);
 
-            Assert.AreEqual(originalDirectDebitRemmitanceMessageID, directDebitRemmitanceReject.OriginalDirectDebitTransactionsGroupPaymentPaymentInformationID);
-            Assert.AreEqual(0, directDebitRemmitanceReject.NumberOfTransactions);
-            Assert.AreEqual(0, directDebitRemmitanceReject.ControlSum);
-            Assert.AreEqual(0, directDebitRemmitanceReject.DirectDebitTransactionsRejects.Count);
+            Assert.AreEqual(originalDirectDebitTransactionsGroupPaymentPaymentInformationID, directDebitTransactionsGroupPaymentReject.OriginalDirectDebitTransactionsGroupPaymentPaymentInformationID);
+            Assert.AreEqual(0, directDebitTransactionsGroupPaymentReject.NumberOfTransactions);
+            Assert.AreEqual(0, directDebitTransactionsGroupPaymentReject.ControlSum);
+            Assert.AreEqual(0, directDebitTransactionsGroupPaymentReject.DirectDebitTransactionsRejects.Count);
         }
 
         [TestMethod]

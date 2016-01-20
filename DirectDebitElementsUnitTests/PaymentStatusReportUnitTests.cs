@@ -179,37 +179,37 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        public void AnEmptyDirectDebitRemmitanceRejectIsCorrectlyCreated()
+        public void AnEmptyDirectDebitTransactionsGroupPaymentRejectIsCorrectlyCreated()
         {
-            string originalDirectDebitRemmitanceMessageID = "PRE201207010001";
+            string originalDirectDebitTransactionsGroupPaymentPaymentInformationID = "PRE201207010001";
             List<DirectDebitTransactionReject> directDebitTransactionRejects = new List<DirectDebitTransactionReject>();
 
-            DirectDebitTransactionsGroupPaymentReject directDebitRemmitanceReject = new DirectDebitTransactionsGroupPaymentReject(
-                originalDirectDebitRemmitanceMessageID,
+            DirectDebitTransactionsGroupPaymentReject directDebitTransactionsGroupPaymentReject = new DirectDebitTransactionsGroupPaymentReject(
+                originalDirectDebitTransactionsGroupPaymentPaymentInformationID,
                 directDebitTransactionRejects);
 
-            Assert.AreEqual(originalDirectDebitRemmitanceMessageID, directDebitRemmitanceReject.OriginalDirectDebitTransactionsGroupPaymentPaymentInformationID);
-            Assert.AreEqual(0, directDebitRemmitanceReject.NumberOfTransactions);
-            Assert.AreEqual(0, directDebitRemmitanceReject.ControlSum);
-            Assert.AreEqual(0, directDebitRemmitanceReject.DirectDebitTransactionsRejects.Count);
+            Assert.AreEqual(originalDirectDebitTransactionsGroupPaymentPaymentInformationID, directDebitTransactionsGroupPaymentReject.OriginalDirectDebitTransactionsGroupPaymentPaymentInformationID);
+            Assert.AreEqual(0, directDebitTransactionsGroupPaymentReject.NumberOfTransactions);
+            Assert.AreEqual(0, directDebitTransactionsGroupPaymentReject.ControlSum);
+            Assert.AreEqual(0, directDebitTransactionsGroupPaymentReject.DirectDebitTransactionsRejects.Count);
         }
 
         [TestMethod]
-        public void ADirectDebitTransactionRejectIsCorrectlyAddedToADirctDebitRemmitanceReject()
+        public void ADirectDebitTransactionRejectIsCorrectlyAddedToADirctDebitTransactionsGroupPaymentReject()
         {
-            string originalDirectDebitRemmitanceMessageID = "PRE201207010001";
+            string originalDirectDebitTransactionsGroupPaymentPaymentInformationID = "PRE201207010001";
             List<DirectDebitTransactionReject> directDebitTransactionRejects = new List<DirectDebitTransactionReject>();
 
-            DirectDebitTransactionsGroupPaymentReject directDebitRemmitanceReject = new DirectDebitTransactionsGroupPaymentReject(
-                originalDirectDebitRemmitanceMessageID,
+            DirectDebitTransactionsGroupPaymentReject directDebitTransactionsGroupPaymentReject = new DirectDebitTransactionsGroupPaymentReject(
+                originalDirectDebitTransactionsGroupPaymentPaymentInformationID,
                 directDebitTransactionRejects);
 
-            directDebitRemmitanceReject.AddDirectDebitTransactionReject(directDebitTransactionReject1);
+            directDebitTransactionsGroupPaymentReject.AddDirectDebitTransactionReject(directDebitTransactionReject1);
 
-            Assert.AreEqual(1, directDebitRemmitanceReject.NumberOfTransactions);
-            Assert.AreEqual(80, directDebitRemmitanceReject.ControlSum);
-            Assert.AreEqual(1, directDebitRemmitanceReject.DirectDebitTransactionsRejects.Count);
-            Assert.AreEqual("2015120100124", directDebitRemmitanceReject.DirectDebitTransactionsRejects[0].OriginalEndtoEndTransactionIdentification);
+            Assert.AreEqual(1, directDebitTransactionsGroupPaymentReject.NumberOfTransactions);
+            Assert.AreEqual(80, directDebitTransactionsGroupPaymentReject.ControlSum);
+            Assert.AreEqual(1, directDebitTransactionsGroupPaymentReject.DirectDebitTransactionsRejects.Count);
+            Assert.AreEqual("2015120100124", directDebitTransactionsGroupPaymentReject.DirectDebitTransactionsRejects[0].OriginalEndtoEndTransactionIdentification);
         }
 
         [TestMethod]

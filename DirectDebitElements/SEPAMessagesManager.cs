@@ -79,7 +79,7 @@ namespace DirectDebitElements
 
             foreach (OriginalPaymentInformation1 originalPaymentInformation1 in customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlPmtInfAndSts)
             {
-                directDebitRemmitanceRejectsList.Add(SEPAElementsReader.CreateDirectDebitRemmitanceReject(originalPaymentInformation1));
+                directDebitRemmitanceRejectsList.Add(SEPAElementsReader.CreateDirectDebitTransactionsGroupPaymentReject(originalPaymentInformation1));
             }
 
             PaymentStatusReportManager paymentStatusReportmanager = new PaymentStatusReportManager();
