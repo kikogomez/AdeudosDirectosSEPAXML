@@ -648,23 +648,23 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        public void ADirecDebitTransactionGroupPaymnetIsCorrectlyCreated()
+        public void AnEmptyDirectDebitPaymentInstructionIsCorrectlyCreated()
         {
             string paymentInformationID = "PaymentGroup1";
             string localInstrument = "COR1";
-            DirectDebitPaymentInstruction dDTxGrpPaymentInfo = new DirectDebitPaymentInstruction(paymentInformationID, localInstrument);
-            Assert.AreEqual("PaymentGroup1", dDTxGrpPaymentInfo.PaymentInformationID);
-            Assert.AreEqual("COR1", dDTxGrpPaymentInfo.LocalInstrument);
-            Assert.AreEqual(0, dDTxGrpPaymentInfo.NumberOfDirectDebitTransactions);
-            Assert.AreEqual(0, dDTxGrpPaymentInfo.TotalAmount);
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, localInstrument);
+            Assert.AreEqual("PaymentGroup1", directDebitPaymentInstruction.PaymentInformationID);
+            Assert.AreEqual("COR1", directDebitPaymentInstruction.LocalInstrument);
+            Assert.AreEqual(0, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
+            Assert.AreEqual(0, directDebitPaymentInstruction.TotalAmount);
         }
 
         [TestMethod]
-        public void ADirectDebitTransactionIsCorrectlyAddedToGroupPayment()
+        public void ADirectDebitTransactionIsCorrectlyAddedToADirectDebitPaymentInstruction()
         {
             string paymentInformationID = "PaymentGroup1";
             string localInstrument = "COR1";
-            DirectDebitPaymentInstruction directDebitTransactionsGroupPayment = new DirectDebitPaymentInstruction(paymentInformationID, localInstrument);
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, localInstrument);
             Debtor debtor = debtors["00002"];
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
             int internalDirectDebitReferenceNumber = directDebitMandate.InternalReferenceNumber;
@@ -683,14 +683,14 @@ namespace DirectDebitElementsUnitTests
                 accountHolderName,
                 null);
 
-            directDebitTransactionsGroupPayment.AddDirectDebitTransaction(directDebitTransaction);
+            directDebitPaymentInstruction.AddDirectDebitTransaction(directDebitTransaction);
 
-            Assert.AreEqual(1, directDebitTransactionsGroupPayment.NumberOfDirectDebitTransactions);
-            Assert.AreEqual((decimal)79, directDebitTransactionsGroupPayment.TotalAmount);
+            Assert.AreEqual(1, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
+            Assert.AreEqual((decimal)79, directDebitPaymentInstruction.TotalAmount);
         }
 
         [TestMethod]
-        public void APaymentGroupIsCorrectlyAddedToADirectDebitRemmitance()
+        public void ADirectDebitPaymentInstructionIsCorrectlyAddedToADirectDebitRemmitance()
         {
             DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
             string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
@@ -699,9 +699,9 @@ namespace DirectDebitElementsUnitTests
             string paymentInformationID = "PaymentGroup1";
             string localInstrument = "COR1";
 
-            DirectDebitPaymentInstruction directDebitTransactionsGroupPayment = new DirectDebitPaymentInstruction(paymentInformationID, localInstrument);
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, localInstrument);
 
-            directDebitRemmitance.AddDirectDebitPaymentInstruction(directDebitTransactionsGroupPayment);
+            directDebitRemmitance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction);
             Assert.AreEqual(1, directDebitRemmitance.DirectDebitPaymentInstructions.Count);
         }
 
@@ -712,7 +712,7 @@ namespace DirectDebitElementsUnitTests
             string paymentInformationID = "0123456789012345678901234567890123456789";
             try
             {
-                DirectDebitPaymentInstruction directDebitTransactionsGroupPayment = new DirectDebitPaymentInstruction(paymentInformationID, "COR1");
+                DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, "COR1");
             }
 
             catch (System.ArgumentOutOfRangeException e)
@@ -729,7 +729,7 @@ namespace DirectDebitElementsUnitTests
         {
             try
             {
-                DirectDebitPaymentInstruction directDebitTransactionsGroupPayment = new DirectDebitPaymentInstruction("", "COR1");
+                DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction("", "COR1");
             }
 
             catch (System.ArgumentException e)
@@ -746,7 +746,7 @@ namespace DirectDebitElementsUnitTests
         {
             try
             {
-                DirectDebitPaymentInstruction directDebitTransactionsGroupPayment = new DirectDebitPaymentInstruction(null, "COR1");
+                DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(null, "COR1");
             }
 
             catch (System.ArgumentNullException e)

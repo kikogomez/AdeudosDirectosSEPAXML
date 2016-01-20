@@ -31,9 +31,9 @@ namespace DirectDebitElements
             List<PaymentInstructionInformation4> paymentInformation_PmtInf_List = new List<PaymentInstructionInformation4>();
 
             List<DirectDebitTransactionInformation9> directDebitTransactionInfoList = new List<DirectDebitTransactionInformation9>();
-            foreach (DirectDebitPaymentInstruction directDebitTransactionsGroupPayment in directDebitRemmitance.DirectDebitPaymentInstructions)
+            foreach (DirectDebitPaymentInstruction directDebitPaymentInstruction in directDebitRemmitance.DirectDebitPaymentInstructions)
             {
-                foreach (DirectDebitTransaction directDebitTransaction in directDebitTransactionsGroupPayment.DirectDebitTransactionsCollection)
+                foreach (DirectDebitTransaction directDebitTransaction in directDebitPaymentInstruction.DirectDebitTransactionsCollection)
                 {
                     DirectDebitTransactionInformation9 directDebitTransactionInfo_DrctDbtTxInf = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
                         creditorAgent,
@@ -46,7 +46,7 @@ namespace DirectDebitElements
                     creditor,
                     creditorAgent,
                     directDebitInitiationContract,
-                    directDebitTransactionsGroupPayment,
+                    directDebitPaymentInstruction,
                     requestedCollectionDate,
                     singleUnstructuredConcept);
 
@@ -77,11 +77,11 @@ namespace DirectDebitElements
             DateTime paymentStatusReport_RejectAccountChargeDateTime = ExtractRejectAccountChargeDateTimeFrom_OrgnlGrpInfAndSts_OrgnlMsgId(customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlMsgId);
             int paymentStatusReport_NumberOfTransactions = Int32.Parse(customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlNbOfTxs);
             decimal paymentStatusReport_ControlSum = customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlCtrlSum;
-            List<DirectDebitPaymentInstructionReject> directDebitRemmitanceRejectsList = new List<DirectDebitPaymentInstructionReject>();
+            List<DirectDebitPaymentInstructionReject> directDebitPaymentInstructionRejects = new List<DirectDebitPaymentInstructionReject>();
 
             foreach (OriginalPaymentInformation1 originalPaymentInformation1 in customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlPmtInfAndSts)
             {
-                directDebitRemmitanceRejectsList.Add(SEPAElementsReader.CreateDirectDebitTransactionsGroupPaymentReject(originalPaymentInformation1));
+                directDebitPaymentInstructionRejects.Add(SEPAElementsReader.CreateDirectDebitPaymentInstructionReject(originalPaymentInformation1));
             }
 
             PaymentStatusReportManager paymentStatusReportmanager = new PaymentStatusReportManager();
@@ -91,7 +91,7 @@ namespace DirectDebitElements
                 paymentStatusReport_RejectAccountChargeDateTime,
                 paymentStatusReport_NumberOfTransactions,
                 paymentStatusReport_ControlSum,
-                directDebitRemmitanceRejectsList);
+                directDebitPaymentInstructionRejects);
 
             return paymentStatusReport;
         }
