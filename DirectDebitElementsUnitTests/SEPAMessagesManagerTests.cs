@@ -75,14 +75,14 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        public void ACustomerDirectDebitRemmitanceXMLStringMessageIsCorrectlyGenerated()
+        public void ACustomerDirectDebitRemittanceXMLStringMessageIsCorrectlyGenerated()
         {
             DateTime creationDate = new DateTime(2015, 01, 10, 7, 15, 0);
             string messageID = "ES26011G123456782015011007:15:00";
             DateTime requestedCollectionDate = new DateTime(2015, 01, 15);
 
-            DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
-            string prefix = directDebitRemmitance.MessageID.Substring(directDebitRemmitance.MessageID.Length - 25);
+            DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
+            string prefix = directDebitRemittance.MessageID.Substring(directDebitRemittance.MessageID.Length - 25);
             string paymentInformationID = prefix + "001";
             DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, "CORE");
 
@@ -113,33 +113,33 @@ namespace DirectDebitElementsUnitTests
                 directDebitPaymentInstruction.AddDirectDebitTransaction(directDebitTransaction);
             }
 
-            directDebitRemmitance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction);
+            directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction);
             bool singleUnstructuredConcept = false;
 
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
             string xMLCustomerDirectDeitInitiationMessage = sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationMessage(
                 creditor,
                 creditorAgent,
-                directDebitRemmitance,
+                directDebitRemittance,
                 singleUnstructuredConcept);
 
             string xMLValidatingErrors = XMLValidator.ValidateXMLStringThroughXSDFile(
                 xMLCustomerDirectDeitInitiationMessage,
                 @"XSDFiles\pain.008.001.02.xsd");
             Assert.AreEqual("", xMLValidatingErrors);
-            string expectedXMLString = File.ReadAllText(@"XML Test Files\pain.008.001.02\BasicDirectDebitRemmitanceExample.xml");
+            string expectedXMLString = File.ReadAllText(@"XML Test Files\pain.008.001.02\BasicDirectDebitRemittanceExample.xml");
             Assert.AreEqual(expectedXMLString, xMLCustomerDirectDeitInitiationMessage);
         }
 
         [TestMethod]
-        public void ACustomerDirectDebitRemmitanceXMLStringMessageWithConceptsJoinedIsCorrectlyGenerated()
+        public void ACustomerDirectDebitRemittanceXMLStringMessageWithConceptsJoinedIsCorrectlyGenerated()
         {
             DateTime creationDate = new DateTime(2015, 01, 10, 7, 15, 0);
             string messageID = "ES26011G123456782015011007:15:00";
             DateTime requestedCollectionDate = new DateTime(2015, 01, 15);
 
-            DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
-            string prefix = directDebitRemmitance.MessageID.Substring(directDebitRemmitance.MessageID.Length - 25);
+            DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
+            string prefix = directDebitRemittance.MessageID.Substring(directDebitRemittance.MessageID.Length - 25);
             string paymentInformationID = prefix + "001";
             DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, "CORE");
 
@@ -170,21 +170,21 @@ namespace DirectDebitElementsUnitTests
                 directDebitPaymentInstruction.AddDirectDebitTransaction(directDebitTransaction);
             }
 
-            directDebitRemmitance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction);
+            directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction);
             bool singleUnstructuredConcept = true;
 
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
             string xMLCustomerDirectDeitInitiationMessage = sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationMessage(
                 creditor,
                 creditorAgent,
-                directDebitRemmitance,
+                directDebitRemittance,
                 singleUnstructuredConcept);
 
             string xMLValidatingErrors = XMLValidator.ValidateXMLStringThroughXSDFile(
                 xMLCustomerDirectDeitInitiationMessage,
                 @"XSDFiles\pain.008.001.02.xsd");
             Assert.AreEqual("", xMLValidatingErrors);
-            string expectedXMLString = File.ReadAllText(@"XML Test Files\pain.008.001.02\BasicDirectDebitRemmitanceExampleWithConceptsJoined.xml");           
+            string expectedXMLString = File.ReadAllText(@"XML Test Files\pain.008.001.02\BasicDirectDebitRemittanceExampleWithConceptsJoined.xml");           
             Assert.AreEqual(expectedXMLString, xMLCustomerDirectDeitInitiationMessage);
         }
 
@@ -209,7 +209,7 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual((decimal)220.30, paymentStatusReport.ControlSum);
             Assert.AreEqual(2, paymentStatusReport.DirectDebitPaymentInstructionRejects.Count);
 
-            //Info from first DirectDectDebitRemmitance
+            //Info from first DirectDectDebitRemittance
             List<string> expectedOriginalEndtoEndTransactionIdentificationList1 = new List<string>()
             {"201207010001/01002", "201207010001/02452"};
             Assert.AreEqual("PRE201207010001", paymentStatusReport.DirectDebitPaymentInstructionRejects[0].OriginalPaymentInformationID);
@@ -217,7 +217,7 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual((decimal)130.30, paymentStatusReport.DirectDebitPaymentInstructionRejects[0].ControlSum);
             CollectionAssert.AreEqual(expectedOriginalEndtoEndTransactionIdentificationList1, paymentStatusReport.DirectDebitPaymentInstructionRejects[0].OriginalEndtoEndTransactionInternalUniqueInstructionIDList);
 
-            //Info from second DirectDectDebitRemmitance
+            //Info from second DirectDectDebitRemittance
             List<string> expectedOriginalEndtoEndTransactionIdentificationList2 = new List<string>()
             {"201205270001/01650"};
             Assert.AreEqual("PRE201205270001", paymentStatusReport.DirectDebitPaymentInstructionRejects[1].OriginalPaymentInformationID);
@@ -246,7 +246,7 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual((decimal)1006.65, paymentStatusReport.ControlSum);
             Assert.AreEqual(3, paymentStatusReport.DirectDebitPaymentInstructionRejects.Count);
 
-            //Info from first DirectDectDebitRemmitance
+            //Info from first DirectDectDebitRemittance
             List<string> expectedOriginalEndtoEndTransactionIdentificationList1 = new List<string>()
             {"15M/025450120151203", "15M/025720120151203"};
             Assert.AreEqual("2015-12-0112205515Rem.150 Ord.1", paymentStatusReport.DirectDebitPaymentInstructionRejects[0].OriginalPaymentInformationID);
@@ -254,7 +254,7 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual((decimal)657.73, paymentStatusReport.DirectDebitPaymentInstructionRejects[0].ControlSum);
             CollectionAssert.AreEqual(expectedOriginalEndtoEndTransactionIdentificationList1, paymentStatusReport.DirectDebitPaymentInstructionRejects[0].OriginalEndtoEndTransactionInternalUniqueInstructionIDList);
 
-            //Info from second DirectDectDebitRemmitance
+            //Info from second DirectDectDebitRemittance
             List<string> expectedOriginalEndtoEndTransactionIdentificationList2 = new List<string>()
             {"15M/022581120151204"};
             Assert.AreEqual("2015-12-0113442815Rem.151 Ord.1", paymentStatusReport.DirectDebitPaymentInstructionRejects[1].OriginalPaymentInformationID);
@@ -262,7 +262,7 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual((decimal)277.45, paymentStatusReport.DirectDebitPaymentInstructionRejects[1].ControlSum);
             CollectionAssert.AreEqual(expectedOriginalEndtoEndTransactionIdentificationList2, paymentStatusReport.DirectDebitPaymentInstructionRejects[1].OriginalEndtoEndTransactionInternalUniqueInstructionIDList);
 
-            //Info from third DirectDectDebitRemmitance
+            //Info from third DirectDectDebitRemittance
             List<string> expectedOriginalEndtoEndTransactionIdentificationList3 = new List<string>()
             {"15M/026530120151204"};
             Assert.AreEqual("2015-12-0115153115Rem.152 Ord.1", paymentStatusReport.DirectDebitPaymentInstructionRejects[2].OriginalPaymentInformationID);

@@ -14,24 +14,24 @@ namespace DirectDebitElements
         public string GenerateISO20022CustomerDirectDebitInitiationMessage(
             Creditor creditor,
             CreditorAgent creditorAgent,
-            DirectDebitRemittance directDebitRemmitance,
+            DirectDebitRemittance directDebitRemittance,
             bool singleUnstructuredConcept)
         {
-            DirectDebitInitiationContract directDebitInitiationContract = directDebitRemmitance.DirectDebitInitiationContract;
-            DateTime generationDateTime = directDebitRemmitance.CreationDate;
-            DateTime requestedCollectionDate = directDebitRemmitance.RequestedCollectionDate;
+            DirectDebitInitiationContract directDebitInitiationContract = directDebitRemittance.DirectDebitInitiationContract;
+            DateTime generationDateTime = directDebitRemittance.CreationDate;
+            DateTime requestedCollectionDate = directDebitRemittance.RequestedCollectionDate;
 
             PartyIdentification32 initiationParty_InitPty = SEPAElementsGenerator.GenerateInitiationParty_InitPty(creditor, directDebitInitiationContract);
             GroupHeader39 groupHeader_GrpHdr = SEPAElementsGenerator.GenerateGroupHeader_GrpHdr(
-                directDebitRemmitance.MessageID,
+                directDebitRemittance.MessageID,
                 generationDateTime,
-                directDebitRemmitance.NumberOfTransactions,
-                directDebitRemmitance.ControlSum,
+                directDebitRemittance.NumberOfTransactions,
+                directDebitRemittance.ControlSum,
                 initiationParty_InitPty);
             List<PaymentInstructionInformation4> paymentInformation_PmtInf_List = new List<PaymentInstructionInformation4>();
 
             List<DirectDebitTransactionInformation9> directDebitTransactionInfoList = new List<DirectDebitTransactionInformation9>();
-            foreach (DirectDebitPaymentInstruction directDebitPaymentInstruction in directDebitRemmitance.DirectDebitPaymentInstructions)
+            foreach (DirectDebitPaymentInstruction directDebitPaymentInstruction in directDebitRemittance.DirectDebitPaymentInstructions)
             {
                 foreach (DirectDebitTransaction directDebitTransaction in directDebitPaymentInstruction.DirectDebitTransactions)
                 {

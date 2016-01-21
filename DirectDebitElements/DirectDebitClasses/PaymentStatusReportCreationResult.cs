@@ -14,20 +14,20 @@ namespace DirectDebitElements
     //    PaymentStatusReport paymentStatusreport;
     //    List<string> errorMessages;
 
-    //    public PaymentStatusReportCreationResult(string messageID, DateTime messageCreationDateTime, DateTime rejectAccountChargeDateTime, int numberOfTransactions, decimal controlSum, List<DirectDebitRemmitanceReject> directDebitRemmitanceRejects)
+    //    public PaymentStatusReportCreationResult(string messageID, DateTime messageCreationDateTime, DateTime rejectAccountChargeDateTime, int numberOfTransactions, decimal controlSum, List<DirectDebitRemittanceReject> directDebitRemittanceRejects)
     //    {
     //        this.paymentStatusreport = new PaymentStatusReport(
     //            messageID,
     //            messageCreationDateTime,
     //            rejectAccountChargeDateTime,
-    //            directDebitRemmitanceRejects);
-    //        CheckForErrors(numberOfTransactions, controlSum, directDebitRemmitanceRejects);
+    //            directDebitRemittanceRejects);
+    //        CheckForErrors(numberOfTransactions, controlSum, directDebitRemittanceRejects);
     //    }
 
-    //    private void CheckForErrors(int numberOfTransactions, decimal controlSum, List<DirectDebitRemmitanceReject> directDebitRemmitanceRejects)
+    //    private void CheckForErrors(int numberOfTransactions, decimal controlSum, List<DirectDebitRemittanceReject> directDebitRemittanceRejects)
     //    {
-    //        int calculatedNumberOfTransactions = directDebitRemmitanceRejects.Select(ddRemmitanceRejects => ddRemmitanceRejects.NumberOfTransactions).Sum();
-    //        decimal calculatedControlSum = directDebitRemmitanceRejects.Select(ddRemmitanceRejects => ddRemmitanceRejects.ControlSum).Sum();
+    //        int calculatedNumberOfTransactions = directDebitRemittanceRejects.Select(ddRemittanceRejects => ddRemittanceRejects.NumberOfTransactions).Sum();
+    //        decimal calculatedControlSum = directDebitRemittanceRejects.Select(ddRemittanceRejects => ddRemittanceRejects.ControlSum).Sum();
     //        errorMessages = new List<string>();
     //        if (numberOfTransactions != calculatedNumberOfTransactions)
     //            errorMessages.Add(AddErroneousNumberOfTransactionsErrorMessage(numberOfTransactions, calculatedNumberOfTransactions));

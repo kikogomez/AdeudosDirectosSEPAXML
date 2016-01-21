@@ -131,9 +131,9 @@ namespace DirectDebitElements
                 null,           //<Ccy> - Not used by creditor in SEPA COR
                 null);          //<Nm> - Not used by creditor in SEPA COR
 
-            string[] remittanceConcepts = BuildUnstructuredRemmitanceInformation(directDebitTransaction, singleUnstructuredConcept);
+            string[] remittanceConcepts = BuildUnstructuredRemittanceInformation(directDebitTransaction, singleUnstructuredConcept);
 
-            RemittanceInformation5 remitanceInformation_RmtInf = new RemittanceInformation5(
+            RemittanceInformation5 RemittanceInformation_RmtInf = new RemittanceInformation5(
                 remittanceConcepts,                                     //<Ustrd>
                 new StructuredRemittanceInformation7[] { null });       //<Strd> - Only <Ustrd> or <Strd>
 
@@ -155,7 +155,7 @@ namespace DirectDebitElements
                 new RegulatoryReporting3[] { null },//<RgltryRptg> - Only needed for big payments from non residents
                 null,                               //<Tax> - Not used by creditor in SEPA COR
                 new RemittanceLocation2[] { null }, //<RltdRmtInf> - Not used by creditor in SEPA COR
-                remitanceInformation_RmtInf);       //<RmtInf>
+                RemittanceInformation_RmtInf);       //<RmtInf>
 
             return directDebitTransactionInfo_DrctDbtTxInf;
         }
@@ -253,7 +253,7 @@ namespace DirectDebitElements
             return paymentInformation_PmtInf;
         }
 
-        private static string[] BuildUnstructuredRemmitanceInformation(DirectDebitTransaction directDebitTransaction, bool singleUnstructuredConcept)
+        private static string[] BuildUnstructuredRemittanceInformation(DirectDebitTransaction directDebitTransaction, bool singleUnstructuredConcept)
         {
             string[] remittanceConcepts = directDebitTransaction.BillsInTransaction.Select
                 (bill => bill.Description + " --- " + bill.Amount.ToString("0.00")).ToArray();

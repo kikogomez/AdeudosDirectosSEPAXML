@@ -12,11 +12,11 @@
         private RemittanceInformation5() { }
 
         public RemittanceInformation5(
-            string[] unstructuredRemitanceInformation,
-            StructuredRemittanceInformation7[] structuredRemitanceInformation)
+            string[] unstructuredRemittanceInformation,
+            StructuredRemittanceInformation7[] structuredRemittanceInformation)
         {
-            this.ustrdField = (string[])unstructuredRemitanceInformation.Clone();
-            this.strdField = (StructuredRemittanceInformation7[])structuredRemitanceInformation.Clone();
+            this.ustrdField = (string[])unstructuredRemittanceInformation.Clone();
+            this.strdField = (StructuredRemittanceInformation7[])structuredRemittanceInformation.Clone();
         }
 
         /// <comentarios/>

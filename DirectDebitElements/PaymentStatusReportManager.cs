@@ -34,13 +34,13 @@ namespace DirectDebitElements
             string messageID,
             DateTime messageCreationDateTime,
             DateTime rejectAccountChargeDateTime,
-            List<DirectDebitPaymentInstructionReject> directDebitRemmitanceRejects)
+            List<DirectDebitPaymentInstructionReject> directDebitRemittanceRejects)
         {
             PaymentStatusReport paymentStatusReport = new PaymentStatusReport(
                 messageID,
                 messageCreationDateTime,
                 rejectAccountChargeDateTime,
-                directDebitRemmitanceRejects);
+                directDebitRemittanceRejects);
 
             return paymentStatusReport;
         }
@@ -76,13 +76,13 @@ namespace DirectDebitElements
             decimal controlSum,
             List<DirectDebitTransactionReject> directDebitTransactionRejects)
         {
-            DirectDebitPaymentInstructionReject directDebitRemmitanceRejectCreationResult = new DirectDebitPaymentInstructionReject(
+            DirectDebitPaymentInstructionReject directDebitRemittanceRejectCreationResult = new DirectDebitPaymentInstructionReject(
                 originalPaymentInformationID,
                 numberOfTransactions,
                 controlSum,
                 directDebitTransactionRejects);
 
-            return directDebitRemmitanceRejectCreationResult;
+            return directDebitRemittanceRejectCreationResult;
         }
 
         public DirectDebitPaymentInstructionReject CreateAnEmptyDirectDebitPaymentInstructionReject(string originalPaymentInformationID)

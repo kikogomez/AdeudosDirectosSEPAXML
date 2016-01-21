@@ -11,10 +11,10 @@ namespace DirectDebitElements
         {
         }
 
-        public DirectDebitRemittance CreateAnEmptyDirectDebitRemmitance(string messageID, DateTime creationDateTime, DateTime requestedCollectionDate, DirectDebitInitiationContract directDebitInitiationContract)
+        public DirectDebitRemittance CreateAnEmptyDirectDebitRemittance(string messageID, DateTime creationDateTime, DateTime requestedCollectionDate, DirectDebitInitiationContract directDebitInitiationContract)
         {
-            DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(messageID, creationDateTime, requestedCollectionDate, directDebitInitiationContract);
-            return directDebitRemmitance;
+            DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(messageID, creationDateTime, requestedCollectionDate, directDebitInitiationContract);
+            return directDebitRemittance;
         }
 
         public DirectDebitPaymentInstruction CreateAnEmptyDirectDebitPaymentInstruction(string paymentInformationID, string localInstrument)
@@ -68,10 +68,10 @@ namespace DirectDebitElements
         }
 
         public void AddDirectDebitTransactionGroupPaymentToDirectDebitRemittance(
-            DirectDebitRemittance directDebitRemmitance,
+            DirectDebitRemittance directDebitRemittance,
             DirectDebitPaymentInstruction directDebitPaymentInstruction)
         {
-            directDebitRemmitance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction);
+            directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction);
         }
     }
 }

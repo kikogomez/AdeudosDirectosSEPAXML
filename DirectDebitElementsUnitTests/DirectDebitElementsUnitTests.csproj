@@ -58,8 +58,8 @@
     <Compile Include="DirectDebitAmendmentInformationUnitTests.cs" />
     <Compile Include="DirectDebitinitiationContractUnitTests.cs" />
     <Compile Include="DirectDebitPropietaryCodesGeneratorUnitTests.cs" />
-    <Compile Include="DirectDebitRemmitancesManagerUnitTests.cs" />
-    <Compile Include="DirectDebitRemmitanceUnitTest.cs" />
+    <Compile Include="DirectDebitRemittancesManagerUnitTests.cs" />
+    <Compile Include="DirectDebitRemittanceUnitTest.cs" />
     <Compile Include="DebtorUnitTests.cs" />
     <Compile Include="DirectDebitMandateUnitTests.cs" />
     <Compile Include="PaymentStatusReportManagerTests.cs" />
@@ -100,10 +100,10 @@
     <Content Include="XML Test Files\pain.002.001.03\LaCaixa_pain00200103_Example1.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="XML Test Files\pain.008.001.02\BasicDirectDebitRemmitanceExampleWithConceptsJoined.XML">
+    <Content Include="XML Test Files\pain.008.001.02\BasicDirectDebitRemittanceExampleWithConceptsJoined.XML">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="XML Test Files\pain.008.001.02\BasicDirectDebitRemmitanceExample.XML">
+    <Content Include="XML Test Files\pain.008.001.02\BasicDirectDebitRemittanceExample.XML">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>

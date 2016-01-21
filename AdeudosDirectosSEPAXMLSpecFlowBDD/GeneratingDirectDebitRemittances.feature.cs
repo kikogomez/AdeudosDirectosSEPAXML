@@ -19,7 +19,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute()]
-    public partial class GeneratingDirectDebitRemmitancesFeature
+    public partial class GeneratingDirectDebitRemittancesFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -31,8 +31,8 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Generating Direct Debit Remmitances", "In order to charge the bills to my debtors\nAs an administrative assistant\nI want " +
-                    "to generate direct debit remitances to bank", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Generating Direct Debit Remittances", "In order to charge the bills to my debtors\nAs an administrative assistant\nI want " +
+                    "to generate direct debit Remittances to bank", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -47,9 +47,9 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
         public virtual void TestInitialize()
         {
             if (((TechTalk.SpecFlow.FeatureContext.Current != null) 
-                        && (TechTalk.SpecFlow.FeatureContext.Current.FeatureInfo.Title != "Generating Direct Debit Remmitances")))
+                        && (TechTalk.SpecFlow.FeatureContext.Current.FeatureInfo.Title != "Generating Direct Debit Remittances")))
             {
-                AdeudosDirectosSEPAXMLSpecFlowBDD.GeneratingDirectDebitRemmitancesFeature.FeatureSetup(null);
+                AdeudosDirectosSEPAXMLSpecFlowBDD.GeneratingDirectDebitRemittancesFeature.FeatureSetup(null);
             }
         }
         
@@ -141,11 +141,11 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Create a new direct debit remmitance")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Generating Direct Debit Remmitances")]
-        public virtual void CreateANewDirectDebitRemmitance()
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Create a new direct debit Remittance")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Generating Direct Debit Remittances")]
+        public virtual void CreateANewDirectDebitRemittance()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a new direct debit remmitance", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a new direct debit Remittance", ((string[])(null)));
 #line 23
 this.ScenarioSetup(scenarioInfo);
 #line 6
@@ -153,16 +153,16 @@ this.FeatureBackground();
 #line 24
  testRunner.Given("I have a I have a direct debit initiation contract", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 25
- testRunner.When("I generate a new direct debit remmitance", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I generate a new direct debit Remittance", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 26
- testRunner.Then("An empty direct debit remmitance is created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("An empty direct debit Remittance is created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Create an empty group of direct debit payments")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Generating Direct Debit Remmitances")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Generating Direct Debit Remittances")]
         public virtual void CreateAnEmptyGroupOfDirectDebitPayments()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create an empty group of direct debit payments", ((string[])(null)));
@@ -183,7 +183,7 @@ this.FeatureBackground();
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Create a Direct Debit Transaction from a bill as specified by a member direct deb" +
             "it mandate")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Generating Direct Debit Remmitances")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Generating Direct Debit Remittances")]
         public virtual void CreateADirectDebitTransactionFromABillAsSpecifiedByAMemberDirectDebitMandate()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a Direct Debit Transaction from a bill as specified by a member direct deb" +
@@ -208,7 +208,7 @@ this.FeatureBackground();
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Add a second bill to a direct debit transaction")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Generating Direct Debit Remmitances")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Generating Direct Debit Remittances")]
         public virtual void AddASecondBillToADirectDebitTransaction()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add a second bill to a direct debit transaction", ((string[])(null)));
@@ -228,7 +228,7 @@ this.FeatureBackground();
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Add a direct debit transaction to an empty group of payments")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Generating Direct Debit Remmitances")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Generating Direct Debit Remittances")]
         public virtual void AddADirectDebitTransactionToAnEmptyGroupOfPayments()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add a direct debit transaction to an empty group of payments", ((string[])(null)));
@@ -250,7 +250,7 @@ this.FeatureBackground();
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Add a second direct debit transaction to a group of payments")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Generating Direct Debit Remmitances")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Generating Direct Debit Remittances")]
         public virtual void AddASecondDirectDebitTransactionToAGroupOfPayments()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add a second direct debit transaction to a group of payments", ((string[])(null)));
@@ -269,17 +269,17 @@ this.FeatureBackground();
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Add a group payments to a direct debit remmitance")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Generating Direct Debit Remmitances")]
-        public virtual void AddAGroupPaymentsToADirectDebitRemmitance()
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Add a group payments to a direct debit Remittance")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Generating Direct Debit Remittances")]
+        public virtual void AddAGroupPaymentsToADirectDebitRemittance()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add a group payments to a direct debit remmitance", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add a group payments to a direct debit Remittance", ((string[])(null)));
 #line 56
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
 #line 57
- testRunner.Given("I have an empty direct debit remmitance", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I have an empty direct debit Remittance", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 58
  testRunner.And("I have a group of payments with 1 direct debit transaction and amount of 79", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 59
@@ -293,18 +293,18 @@ this.FeatureBackground();
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Generating SEPA ISO20022 XML CustomerDirectDebitInitiation Message from a Direct " +
-            "Debit Remmitance")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Generating Direct Debit Remmitances")]
-        public virtual void GeneratingSEPAISO20022XMLCustomerDirectDebitInitiationMessageFromADirectDebitRemmitance()
+            "Debit Remittance")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Generating Direct Debit Remittances")]
+        public virtual void GeneratingSEPAISO20022XMLCustomerDirectDebitInitiationMessageFromADirectDebitRemittance()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Generating SEPA ISO20022 XML CustomerDirectDebitInitiation Message from a Direct " +
-                    "Debit Remmitance", ((string[])(null)));
+                    "Debit Remittance", ((string[])(null)));
 #line 62
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
 #line 63
- testRunner.Given("I have a prepared Direct Debit Remmitance", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I have a prepared Direct Debit Remittance", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 64
  testRunner.When("I generate de SEPA ISO200022 XML CustomerDirectDebitInitiation message", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 65

@@ -44,13 +44,13 @@ namespace DirectDebitElements
                 directDebitTransactionRejects.Add(directDebitTransactionReject);
             }
 
-            DirectDebitPaymentInstructionReject directDebitRemmitanceReject = paymentStatusReportManager.CreateCheckedDirectDebitPaymentInstructionReject(
+            DirectDebitPaymentInstructionReject directDebitRemittanceReject = paymentStatusReportManager.CreateCheckedDirectDebitPaymentInstructionReject(
                 originalPaymentInformationID,
                 numberOfTransactions,
                 controlSum,
                 directDebitTransactionRejects);
 
-            return directDebitRemmitanceReject;
+            return directDebitRemittanceReject;
         }
     }
 }

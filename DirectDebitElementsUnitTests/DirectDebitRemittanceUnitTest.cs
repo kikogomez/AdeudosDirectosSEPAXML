@@ -10,7 +10,7 @@ using ExtensionMethods;
 namespace DirectDebitElementsUnitTests
 {
     [TestClass]
-    public class DirectDebitRemmitanceUnitTest
+    public class DirectDebitRemittanceUnitTest
     {
         static Dictionary<string, Debtor> debtors;
         static Creditor creditor;
@@ -736,23 +736,23 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        public void AnEmptyDirectDebitRemmitanceInstanceIsCorrectlyCreated()
+        public void AnEmptyDirectDebitRemittanceInstanceIsCorrectlyCreated()
         {
             DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
             string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
             DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
 
-            DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
+            DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
 
             string expectedMessageId = "ES26777G123456782013113007:15:00";
-            Assert.AreEqual(expectedMessageId, directDebitRemmitance.MessageID);
-            Assert.AreEqual(creationDate, directDebitRemmitance.CreationDate);
-            Assert.AreEqual(requestedCollectionDate, directDebitRemmitance.RequestedCollectionDate);
+            Assert.AreEqual(expectedMessageId, directDebitRemittance.MessageID);
+            Assert.AreEqual(creationDate, directDebitRemittance.CreationDate);
+            Assert.AreEqual(requestedCollectionDate, directDebitRemittance.RequestedCollectionDate);
         }
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentNullException))]
-        public void MessageIDCantBeNullInADirectDebitRemmitance()
+        public void MessageIDCantBeNullInADirectDebitRemittance()
         {
             DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
             string messageID = null;
@@ -760,7 +760,7 @@ namespace DirectDebitElementsUnitTests
 
             try
             {
-                DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(
+                DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(
                     messageID,
                     creationDate,
                     requestedCollectionDate,
@@ -777,7 +777,7 @@ namespace DirectDebitElementsUnitTests
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentException))]
-        public void MessageIDCantBeEmptyInADirectDebitRemmitance()
+        public void MessageIDCantBeEmptyInADirectDebitRemittance()
         {
             DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
             string messageID = "";
@@ -785,7 +785,7 @@ namespace DirectDebitElementsUnitTests
 
             try
             {
-                DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(
+                DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(
                     messageID,
                     creationDate,
                     requestedCollectionDate,
@@ -802,7 +802,7 @@ namespace DirectDebitElementsUnitTests
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentOutOfRangeException))]
-        public void MessageIDCantBeLongerThan35CharactersInADirectDebitRemmitance()
+        public void MessageIDCantBeLongerThan35CharactersInADirectDebitRemittance()
         {
             DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
             string messageID = "1234567890123456789012345678901234567890";
@@ -810,7 +810,7 @@ namespace DirectDebitElementsUnitTests
 
             try
             {
-                DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(
+                DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(
                     messageID,
                     creationDate,
                     requestedCollectionDate,
@@ -827,7 +827,7 @@ namespace DirectDebitElementsUnitTests
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentNullException))]
-        public void DirectDebitInitiationContractCantBeNullInADirectDebitRemmitance()
+        public void DirectDebitInitiationContractCantBeNullInADirectDebitRemittance()
         {
             DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
             string messageID = "ES26777G123456782013113007:15:00";
@@ -835,7 +835,7 @@ namespace DirectDebitElementsUnitTests
 
             try
             {
-                DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(
+                DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(
                     messageID,
                     creationDate,
                     requestedCollectionDate,
@@ -851,7 +851,7 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        public void AnDirectDebitRemmitanceIsCorrectlyCreatedWithoutProvidingNumberOfTransactionsNorControlSum()
+        public void AnDirectDebitRemittanceIsCorrectlyCreatedWithoutProvidingNumberOfTransactionsNorControlSum()
         {
             DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
             string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
@@ -862,7 +862,7 @@ namespace DirectDebitElementsUnitTests
                 paymentInformationID1, localInstrument, directDebitTransactions);
             List<DirectDebitPaymentInstruction> directDebitPaymentInstructions = new List<DirectDebitPaymentInstruction>() { directDebitPaymentInstruction };
 
-            DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(
+            DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(
                 messageID,
                 creationDate,
                 requestedCollectionDate,
@@ -870,16 +870,16 @@ namespace DirectDebitElementsUnitTests
                 directDebitPaymentInstructions);
 
             string expectedMessageId = "ES26777G123456782013113007:15:00";
-            Assert.AreEqual(expectedMessageId, directDebitRemmitance.MessageID);
-            Assert.AreEqual(creationDate, directDebitRemmitance.CreationDate);
-            Assert.AreEqual(requestedCollectionDate, directDebitRemmitance.RequestedCollectionDate);
-            Assert.AreEqual(1, directDebitRemmitance.DirectDebitPaymentInstructions.Count);
-            Assert.AreEqual(2, directDebitRemmitance.DirectDebitPaymentInstructions[0].NumberOfDirectDebitTransactions);
-            Assert.AreEqual(237, directDebitRemmitance.DirectDebitPaymentInstructions[0].TotalAmount);
+            Assert.AreEqual(expectedMessageId, directDebitRemittance.MessageID);
+            Assert.AreEqual(creationDate, directDebitRemittance.CreationDate);
+            Assert.AreEqual(requestedCollectionDate, directDebitRemittance.RequestedCollectionDate);
+            Assert.AreEqual(1, directDebitRemittance.DirectDebitPaymentInstructions.Count);
+            Assert.AreEqual(2, directDebitRemittance.DirectDebitPaymentInstructions[0].NumberOfDirectDebitTransactions);
+            Assert.AreEqual(237, directDebitRemittance.DirectDebitPaymentInstructions[0].TotalAmount);
         }
 
         [TestMethod]
-        public void IfGivenCorrectNumberOfTransactionsAndControlSumTheDirectDebitRemmitanceIsCorrectlyCreated()
+        public void IfGivenCorrectNumberOfTransactionsAndControlSumTheDirectDebitRemittanceIsCorrectlyCreated()
         {
             DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
             string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
@@ -892,7 +892,7 @@ namespace DirectDebitElementsUnitTests
             int numberOfTransactions = directDebitPaymentInstructions.Select(paymentInstruction => paymentInstruction.NumberOfDirectDebitTransactions).Sum();
             decimal controlSum = directDebitPaymentInstructions.Select(paymentInstruction => paymentInstruction.TotalAmount).Sum();
 
-            DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(
+            DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(
                 messageID,
                 creationDate,
                 requestedCollectionDate,
@@ -909,7 +909,7 @@ namespace DirectDebitElementsUnitTests
 
         [TestMethod]
         [ExpectedException(typeof(System.TypeInitializationException))]
-        public void IfGivenIncorrectNumberOfTransactionsTheDirectDebitRemmitanceThrowsATypeInitializationErrorException()
+        public void IfGivenIncorrectNumberOfTransactionsTheDirectDebitRemittanceThrowsATypeInitializationErrorException()
         {
             DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
             string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
@@ -924,7 +924,7 @@ namespace DirectDebitElementsUnitTests
 
             try
             {
-                DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(
+                DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(
                     messageID,
                     creationDate,
                     requestedCollectionDate,
@@ -949,7 +949,7 @@ namespace DirectDebitElementsUnitTests
 
         [TestMethod]
         [ExpectedException(typeof(System.TypeInitializationException))]
-        public void IfGivenIncorrectControlSumTheDirectDebitRemitanceThrowsATypeInitializationErrorException()
+        public void IfGivenIncorrectControlSumTheDirectDebitRemittanceThrowsATypeInitializationErrorException()
         {
             DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
             string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
@@ -964,7 +964,7 @@ namespace DirectDebitElementsUnitTests
 
             try
             {
-                DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(
+                DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(
                     messageID,
                     creationDate,
                     requestedCollectionDate,
@@ -987,51 +987,51 @@ namespace DirectDebitElementsUnitTests
             }
         }
         [TestMethod]
-        public void ADirectDebitPaymentInstructionIsCorrectlyAddedToADirectDebitRemmitance()
+        public void ADirectDebitPaymentInstructionIsCorrectlyAddedToADirectDebitRemittance()
         {
             DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
             string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
             DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
-            DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
+            DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
             string localInstrument = "COR1";
             List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
             DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
                 paymentInformationID1, localInstrument, directDebitTransactions);
 
-            directDebitRemmitance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction);
+            directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction);
 
-            Assert.AreEqual(1, directDebitRemmitance.DirectDebitPaymentInstructions.Count);
-            Assert.AreEqual(2, directDebitRemmitance.DirectDebitPaymentInstructions[0].NumberOfDirectDebitTransactions);
-            Assert.AreEqual(237, directDebitRemmitance.DirectDebitPaymentInstructions[0].TotalAmount);
+            Assert.AreEqual(1, directDebitRemittance.DirectDebitPaymentInstructions.Count);
+            Assert.AreEqual(2, directDebitRemittance.DirectDebitPaymentInstructions[0].NumberOfDirectDebitTransactions);
+            Assert.AreEqual(237, directDebitRemittance.DirectDebitPaymentInstructions[0].TotalAmount);
         }
 
         [TestMethod]
-        public void ADirectDebitRemmitanceCanHaveMoreThanOnePaymentInstruction()
+        public void ADirectDebitRemittanceCanHaveMoreThanOnePaymentInstruction()
         {
             DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
             string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
             DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
-            DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
+            DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
 
             string localInstrument1 = "COR1";
             List<DirectDebitTransaction> directDebitTransactions1 = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
             DirectDebitPaymentInstruction directDebitPaymentInstruction1 = new DirectDebitPaymentInstruction(
                 paymentInformationID1, localInstrument1, directDebitTransactions1);
-            directDebitRemmitance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction1);
+            directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction1);
             string localInstrument2 = "COR1";
             List<DirectDebitTransaction> directDebitTransactions2 = new List<DirectDebitTransaction>() { directDebitTransaction3 };
             DirectDebitPaymentInstruction directDebitPaymentInstruction2 = new DirectDebitPaymentInstruction(
                 paymentInformationID2, localInstrument2, directDebitTransactions2);
 
-            directDebitRemmitance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction2);
+            directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction2);
 
-            Assert.AreEqual(2, directDebitRemmitance.DirectDebitPaymentInstructions.Count);
-            Assert.AreEqual(3, directDebitRemmitance.NumberOfTransactions);
-            Assert.AreEqual(316, directDebitRemmitance.ControlSum);
-            Assert.AreEqual(2, directDebitRemmitance.DirectDebitPaymentInstructions[0].NumberOfDirectDebitTransactions);
-            Assert.AreEqual(237, directDebitRemmitance.DirectDebitPaymentInstructions[0].TotalAmount);
-            Assert.AreEqual(1, directDebitRemmitance.DirectDebitPaymentInstructions[1].NumberOfDirectDebitTransactions);
-            Assert.AreEqual(79, directDebitRemmitance.DirectDebitPaymentInstructions[1].TotalAmount);
+            Assert.AreEqual(2, directDebitRemittance.DirectDebitPaymentInstructions.Count);
+            Assert.AreEqual(3, directDebitRemittance.NumberOfTransactions);
+            Assert.AreEqual(316, directDebitRemittance.ControlSum);
+            Assert.AreEqual(2, directDebitRemittance.DirectDebitPaymentInstructions[0].NumberOfDirectDebitTransactions);
+            Assert.AreEqual(237, directDebitRemittance.DirectDebitPaymentInstructions[0].TotalAmount);
+            Assert.AreEqual(1, directDebitRemittance.DirectDebitPaymentInstructions[1].NumberOfDirectDebitTransactions);
+            Assert.AreEqual(79, directDebitRemittance.DirectDebitPaymentInstructions[1].TotalAmount);
         }
 
 

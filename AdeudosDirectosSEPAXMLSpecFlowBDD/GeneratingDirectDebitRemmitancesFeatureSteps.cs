@@ -10,13 +10,13 @@ using XMLSerializerValidator;
 
 namespace AdeudosDirectosSEPAXMLSpecFlowBDD
 {
-    [Binding, Scope(Feature = "Generating Direct Debit Remmitances")]
-    public class GeneratingDirectDebitRemmitancesFeatureSteps
+    [Binding, Scope(Feature = "Generating Direct Debit Remittances")]
+    public class GeneratingDirectDebitRemittancesFeatureSteps
     {
         private readonly DebtorsManagementContextData membersManagementContextData;
         private DirectDebitRemittancesManager directDebitRemittancesManager;
 
-        public GeneratingDirectDebitRemmitancesFeatureSteps(
+        public GeneratingDirectDebitRemittancesFeatureSteps(
             DebtorsManagementContextData membersManagementContextData)
         {
             this.membersManagementContextData = membersManagementContextData;
@@ -96,38 +96,38 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             Assert.AreEqual("ES5621001111301111111111", directDebitInitiationContract.CreditorAcount.IBAN.IBAN);
         }
         
-        [When(@"I generate a new direct debit remmitance")]
-        public void WhenIGenerateANewDirectDebitRemmitance()
+        [When(@"I generate a new direct debit Remittance")]
+        public void WhenIGenerateANewDirectDebitRemittance()
         {           
             DateTime creationDate = new DateTime(2013, 11, 11);
             string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
             DateTime requestedCollectionDate = new DateTime(2013, 11, 12);
             DirectDebitInitiationContract directDebitInitiationContract = (DirectDebitInitiationContract)ScenarioContext.Current["DirectDebitInitiationContract"];
 
-            DirectDebitRemittance directDebitRemmitance = directDebitRemittancesManager.CreateAnEmptyDirectDebitRemmitance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
+            DirectDebitRemittance directDebitRemittance = directDebitRemittancesManager.CreateAnEmptyDirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
             ScenarioContext.Current.Add("CreationDate", creationDate);
             ScenarioContext.Current.Add("RequestedCollectionDate", requestedCollectionDate);
             ScenarioContext.Current.Add("MessageID", messageID);
-            ScenarioContext.Current.Add("DirectDebitRemittance", directDebitRemmitance);
+            ScenarioContext.Current.Add("DirectDebitRemittance", directDebitRemittance);
         }
         
-        [Then(@"An empty direct debit remmitance is created")]
-        public void ThenAnEmptyDirectDebitRemmitanceIsCreated()
+        [Then(@"An empty direct debit Remittance is created")]
+        public void ThenAnEmptyDirectDebitRemittanceIsCreated()
         {
             string messageID = (string)ScenarioContext.Current["MessageID"];
             DateTime creationDate = (DateTime)ScenarioContext.Current["CreationDate"];
             DateTime requestedCollectionDate = (DateTime)ScenarioContext.Current["RequestedCollectionDate"];
             DirectDebitInitiationContract directDebitInitiationContract = (DirectDebitInitiationContract)ScenarioContext.Current["DirectDebitInitiationContract"];
-            DirectDebitRemittance directDebitRemmitance = (DirectDebitRemittance)ScenarioContext.Current["DirectDebitRemittance"];
+            DirectDebitRemittance directDebitRemittance = (DirectDebitRemittance)ScenarioContext.Current["DirectDebitRemittance"];
             List<DirectDebitPaymentInstruction> emptyDirectDebitPaymentInstructionsList = new List<DirectDebitPaymentInstruction>();
 
-            Assert.AreEqual(messageID, directDebitRemmitance.MessageID);
-            Assert.AreEqual(creationDate, directDebitRemmitance.CreationDate);
-            Assert.AreEqual(requestedCollectionDate, directDebitRemmitance.RequestedCollectionDate);
-            Assert.AreEqual(directDebitInitiationContract, directDebitRemmitance.DirectDebitInitiationContract);
-            Assert.AreEqual(0, directDebitRemmitance.NumberOfTransactions);
-            Assert.AreEqual(0, directDebitRemmitance.ControlSum);
-            CollectionAssert.AreEqual(emptyDirectDebitPaymentInstructionsList, directDebitRemmitance.DirectDebitPaymentInstructions);
+            Assert.AreEqual(messageID, directDebitRemittance.MessageID);
+            Assert.AreEqual(creationDate, directDebitRemittance.CreationDate);
+            Assert.AreEqual(requestedCollectionDate, directDebitRemittance.RequestedCollectionDate);
+            Assert.AreEqual(directDebitInitiationContract, directDebitRemittance.DirectDebitInitiationContract);
+            Assert.AreEqual(0, directDebitRemittance.NumberOfTransactions);
+            Assert.AreEqual(0, directDebitRemittance.ControlSum);
+            CollectionAssert.AreEqual(emptyDirectDebitPaymentInstructionsList, directDebitRemittance.DirectDebitPaymentInstructions);
         }
 
         [Given(@"I will send the payments using ""(.*)"" local instrument")]
@@ -319,15 +319,15 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             directDebitRemittancesManager.AddDirectDebitTransactionToGroupPayment(directDebitTransaction, directDebitPaymentInstruction);
         }
 
-        [Given(@"I have an empty direct debit remmitance")]
-        public void GivenIHaveAnEmptyDirectDebitRemmitance()
+        [Given(@"I have an empty direct debit Remittance")]
+        public void GivenIHaveAnEmptyDirectDebitRemittance()
         {
             DateTime creationDate = DateTime.Today;
             string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
             DateTime requestedCollectionDate = DateTime.Today.AddDays(3);
             DirectDebitInitiationContract directDebitInitiationContract = (DirectDebitInitiationContract)ScenarioContext.Current["DirectDebitInitiationContract"];
-            DirectDebitRemittance directDebitRemmitance = directDebitRemittancesManager.CreateAnEmptyDirectDebitRemmitance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
-            ScenarioContext.Current.Add("DirectDebitRemittance", directDebitRemmitance);
+            DirectDebitRemittance directDebitRemittance = directDebitRemittancesManager.CreateAnEmptyDirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
+            ScenarioContext.Current.Add("DirectDebitRemittance", directDebitRemittance);
         }
 
         [When(@"I add the group to the direct debit remittance")]
@@ -335,26 +335,26 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
         {
             DirectDebitPaymentInstruction directDebitPaymentInstruction =
                 (DirectDebitPaymentInstruction)ScenarioContext.Current["DirectDebitPaymentInstruction"];
-            DirectDebitRemittance directDebitRemmitance = (DirectDebitRemittance)ScenarioContext.Current["DirectDebitRemittance"];
-            directDebitRemittancesManager.AddDirectDebitTransactionGroupPaymentToDirectDebitRemittance(directDebitRemmitance, directDebitPaymentInstruction);
+            DirectDebitRemittance directDebitRemittance = (DirectDebitRemittance)ScenarioContext.Current["DirectDebitRemittance"];
+            directDebitRemittancesManager.AddDirectDebitTransactionGroupPaymentToDirectDebitRemittance(directDebitRemittance, directDebitPaymentInstruction);
         }
 
         [Then(@"The direct debit remittance is updated with (.*) direct debit and total amount of (.*)")]
         public void ThenTheDirectDebitRemittanceIsUpdatedWithDirectDebitAndTotalAmountOf(int numberOfTransactions, decimal controlSum)
         {
-            DirectDebitRemittance directDebitRemmitance = (DirectDebitRemittance)ScenarioContext.Current["DirectDebitRemittance"];
-            Assert.AreEqual(numberOfTransactions, directDebitRemmitance.NumberOfTransactions);
-            Assert.AreEqual(controlSum, directDebitRemmitance.ControlSum);
+            DirectDebitRemittance directDebitRemittance = (DirectDebitRemittance)ScenarioContext.Current["DirectDebitRemittance"];
+            Assert.AreEqual(numberOfTransactions, directDebitRemittance.NumberOfTransactions);
+            Assert.AreEqual(controlSum, directDebitRemittance.ControlSum);
         }
 
-        [Given(@"I have a prepared Direct Debit Remmitance")]
-        public void GivenIHaveAPreparedDirectDebitRemmitance()
+        [Given(@"I have a prepared Direct Debit Remittance")]
+        public void GivenIHaveAPreparedDirectDebitRemittance()
         {
             DateTime creationDate = new DateTime(2013, 11, 11);
             string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
             DateTime requestedCollectionDate = new DateTime(2013, 11, 12);
             DirectDebitInitiationContract directDebitInitiationContract = (DirectDebitInitiationContract)ScenarioContext.Current["DirectDebitInitiationContract"];
-            DirectDebitRemittance directDebitRemmitance = directDebitRemittancesManager.CreateAnEmptyDirectDebitRemmitance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
+            DirectDebitRemittance directDebitRemittance = directDebitRemittancesManager.CreateAnEmptyDirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
             DirectDebitPaymentInstruction directDebitPaymentInstruction =
                 directDebitRemittancesManager.CreateAnEmptyDirectDebitPaymentInstruction("PaymentGroup1", "COR1");
             DirectDebitPropietaryCodesGenerator directDebitPropietaryCodesGenerator = new DirectDebitPropietaryCodesGenerator(directDebitInitiationContract);
@@ -379,8 +379,8 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
                     directDebitTransaction, directDebitPaymentInstruction);
             }
             directDebitRemittancesManager.AddDirectDebitTransactionGroupPaymentToDirectDebitRemittance(
-                directDebitRemmitance, directDebitPaymentInstruction);
-            ScenarioContext.Current.Add("DirectDebitRemittance", directDebitRemmitance);
+                directDebitRemittance, directDebitPaymentInstruction);
+            ScenarioContext.Current.Add("DirectDebitRemittance", directDebitRemittance);
         }
 
         [When(@"I generate de SEPA ISO(.*) XML CustomerDirectDebitInitiation message")]

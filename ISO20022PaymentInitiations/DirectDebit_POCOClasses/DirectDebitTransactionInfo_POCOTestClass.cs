@@ -6,7 +6,7 @@ namespace ISO20022PaymentInitiations.DirectDebitPOCOClasses
     {
         string debtorName;
         string txInternalId;
-        string[] remitanceInformation;
+        string[] remittanceInformation;
         double amount;
         string mandateID;
         string iBAN;
@@ -17,7 +17,7 @@ namespace ISO20022PaymentInitiations.DirectDebitPOCOClasses
         public DirectDebitTransactionInfo_POCOClass(
             string debtorName,
             string txInternalId,
-            string[] remitanceInformation,
+            string[] remittanceInformation,
             double amount,
             string mandateID,
             string iBAN,
@@ -27,7 +27,7 @@ namespace ISO20022PaymentInitiations.DirectDebitPOCOClasses
         {
             this.debtorName = debtorName;
             this.txInternalId = txInternalId;
-            this.remitanceInformation=(string[])remitanceInformation.Clone();
+            this.remittanceInformation=(string[])remittanceInformation.Clone();
             this.amount = amount;
             this.mandateID = mandateID;
             this.iBAN = iBAN;
@@ -46,9 +46,9 @@ namespace ISO20022PaymentInitiations.DirectDebitPOCOClasses
             get { return txInternalId; }
         }
 
-        public string[] RemitanceInformation
+        public string[] RemittanceInformation
         {
-            get { return remitanceInformation; }
+            get { return remittanceInformation; }
         }
 
         public double Amount
@@ -80,7 +80,5 @@ namespace ISO20022PaymentInitiations.DirectDebitPOCOClasses
         {
             get { return previuosIBAN; }
         }
-
-
     }
 }

@@ -72,7 +72,7 @@ namespace ISO20022PaymentInitiationsUnitTests
             string mandateRelatedInformation_MandateID = originalTransactionReference.MndtRltdInf.MndtId;
             DateTime mandateRelatedInformation_DateOfSignature = originalTransactionReference.MndtRltdInf.DtOfSgntr;
             bool mandateRelatedInformation_DateOfSignatureSpecified = originalTransactionReference.MndtRltdInf.DtOfSgntrSpecified;
-            string remmitanceInformation = originalTransactionReference.RmtInf.Ustrd[0];
+            string RemittanceInformation = originalTransactionReference.RmtInf.Ustrd[0];
             string debtor_Name = originalTransactionReference.Dbtr.Nm;
             string debtor_PostalAddress_Country = originalTransactionReference.Dbtr.PstlAdr.Ctry;
             string debtor_PostalAddres_AddressLine = originalTransactionReference.Dbtr.PstlAdr.AdrLine[0];
@@ -97,7 +97,7 @@ namespace ISO20022PaymentInitiationsUnitTests
             DateTime expectedDateOfSignature = DateTime.Parse("2011-09-27");
             Assert.AreEqual(expectedDateOfSignature, mandateRelatedInformation_DateOfSignature);
             Assert.IsTrue(mandateRelatedInformation_DateOfSignatureSpecified);
-            Assert.AreEqual("FACTURA NUM 7877", remmitanceInformation);
+            Assert.AreEqual("FACTURA NUM 7877", RemittanceInformation);
             Assert.AreEqual("NURIA SAULER PORTAL", debtor_Name);
             Assert.AreEqual("ES", debtor_PostalAddress_Country);
             Assert.AreEqual("CALLE ANDRADE, 80  08013 BARCELONA", debtor_PostalAddres_AddressLine);

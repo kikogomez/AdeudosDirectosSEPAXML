@@ -4,18 +4,18 @@
 	-> Añadir un checkeo de numero de transacciones y suma de control que lance una excepcion (OK)
 	-> Añadir la funcion al 'Manager'
 	-> Tests del ''Manager'
-- Permitir inicializar DirectDebitRemmitance con una lista de PaymentInstructions, en vez de solo poder empezar vacia y añadir posteriormente. Conm esto evitamos recalcular el numero de transacciones y la suma de las mismas en cada iteración 
+- Permitir inicializar DirectDebitRemittance con una lista de PaymentInstructions, en vez de solo poder empezar vacia y añadir posteriormente. Conm esto evitamos recalcular el numero de transacciones y la suma de las mismas en cada iteración 
 	-> Crear el constructor, que tambien incluya numero de transacciones y suma de control. (OK)
 	-> Añadir los tests unitarios basicos (Ok)
 	-> Añadir un checkeo de numero de transacciones y suma de control que lance una excepcion (Ok)
 	-> Añadir la fuincion al 'Manager'
 	-> Añadir los tests al 'Manager'
-- Si se añade una transaccion a un PaymentInstruction que ya esté dentro de un Remitance, que este último se entere para actualizar su suma de control
-	-> Crear un evento 'PaymentInstructionChanged' al que debe suscribirse el Remmitance
-- Si se añade una factura a una transaccion que ya este en un PaymentInstructio, que este se entere, e igualmente lo haga el Remmitance (evento al que suscribirse, y que se lancen en)
-    -> Crear un evento 'TransactionChanged' al que debe suscribirse el PaymentInstruction. Cuando PaymentInstruction se actualice, debe señalizar a su vez 'PaymentInstructionChanged' para que lo tome el Remmitance.
-	-> No se debe suscribir el Remmitance al evento 'TransactionChanged', ya que no se garantiza el orden de ejecucion de los consumidores, y PaymentInstruction debe procesar el evento primero. Es por ello la actualizacion 'en cascada'
-- Los constructores de DirectDebitPaymentInstruction, DirectDebitPaymentInstructionReject, DirectDebitRemmitance y paymentStatusReport se ejecuten en cascada si es necesario, para evitar duplicidades de código
+- Si se añade una transaccion a un PaymentInstruction que ya esté dentro de un Remittance, que este último se entere para actualizar su suma de control
+	-> Crear un evento 'PaymentInstructionChanged' al que debe suscribirse el Remittance
+- Si se añade una factura a una transaccion que ya este en un PaymentInstructio, que este se entere, e igualmente lo haga el Remittance (evento al que suscribirse, y que se lancen en)
+    -> Crear un evento 'TransactionChanged' al que debe suscribirse el PaymentInstruction. Cuando PaymentInstruction se actualice, debe señalizar a su vez 'PaymentInstructionChanged' para que lo tome el Remittance.
+	-> No se debe suscribir el Remittance al evento 'TransactionChanged', ya que no se garantiza el orden de ejecucion de los consumidores, y PaymentInstruction debe procesar el evento primero. Es por ello la actualizacion 'en cascada'
+- Los constructores de DirectDebitPaymentInstruction, DirectDebitPaymentInstructionReject, DirectDebitRemittance y paymentStatusReport se ejecuten en cascada si es necesario, para evitar duplicidades de código
 - Chequear que los InternalUIniqueInstructionID son realmente unicos (no se pueden repetir dentro de un PaymentInstruction)
 
 - Añadir la gestión de Amendment Information
@@ -29,7 +29,7 @@
 	-> Incluir el campo AmendmentInformation en DirectdebitTransaction:
 		- Puede ser nulo
 		- Testear ('DirectDebitTransactionsUnitTests') que se puede crear un DirectDebitTransaction con AmendmendInformation nulo o que tenga componentes nulos.
-		- Modificar los métodos de DirectDebitRemitancesManager y testearlos (DirectDebitRemmittancesManagerUnitTest)
+		- Modificar los métodos de DirectDebitRemittancesManager y testearlos (DirectDebitRemmittancesManagerUnitTest)
 		- Comprobar que se crean correctamente las clase serializables (SEPAElementsGenerator y SEPAElementsGeneratorUnitTests)
 			* AmendmentInformationDetails6
 			* DirectDebitTransactionInformation9 gestiona bien el AmendmentInformation
@@ -66,10 +66,10 @@
 	-> Probar a eliminar la clase 'BankAccount' y quedarnos con un simple 'string' que contenga el IBAN.
 	-> Simplificar la clase DirectdebitMandate para que solo contenga un MandateID, la fecha de creación del mismo, y un 'string' con el IBAN.
 	-> En el momento de inicializar la serializacion tenemos DOS copias completas de cada remesa en memoria:
-		* Los DirectDebitElements: Un DirectDebitRemmitance con su lista de DirectDebitPaymentInstrucions, cada una con su lista de DirectDebitTransations
+		* Los DirectDebitElements: Un DirectDebitRemittance con su lista de DirectDebitPaymentInstrucions, cada una con su lista de DirectDebitTransations
 		* Los objetos ISO20022 serializables: Un CustomerDirectDebitInitiationV02 con su array de PaymentInstructionInformation4 cada uno con un array de DirectDebitTransactionInformation9 
 		Podemos probar a:
-			* Destruir (set=nothing) el DirectDebitRemmitance una vez creado el CustomerDirectdebitInitiationV02.
+			* Destruir (set=nothing) el DirectDebitRemittance una vez creado el CustomerDirectdebitInitiationV02.
 			* Ir destruyendo los DirectDebitElements a medida que vamos creando su equivalente ISO20022
 	-> Si aún así no tira
 		-> Crear paso a paso cada elemento DirectDebit, luego convertir a clase ISO20022, serializar a nodo XML, y añadir el nodo al XMLDocument, de esta manera:
@@ -82,11 +82,11 @@
 		- SEPAMessagesManager usa:
 			* DirectDebitRemmittancesManager y PaymentStatusReportManager para acceder a las clases DirectDebitElements
 			* SEPAElementsReader y SEPAElementsGenerator para acceder a las clases serializables de ISO20022
-		- SEPAElementsGenerator y SEPAElementsReader deben usar DirectdebitRemmitancesaManager y PaymentStatusReport? Quizá NO... Podria acceder directamente a las clases DirectDebit Elements
+		- SEPAElementsGenerator y SEPAElementsReader deben usar DirectdebitRemittancesaManager y PaymentStatusReport? Quizá NO... Podria acceder directamente a las clases DirectDebit Elements
 		- DirectDebitRemmittancesManager tiene métodos para cerar y gestionar SOLO las clases principales:
 			* DirectDebitTransaction
 			* DirectDebitPaymentInstruction
-			* DirectDebitRemmitance
+			* DirectDebitRemittance
 		- PaymentStatusReport tiene métodos para cerar y gestionar SOLO las clases principales:
 			* DirectDebitTransactionReject
 			* DirectDebitPaymentInstructionReject

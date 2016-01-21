@@ -234,7 +234,7 @@ namespace DirectDebitElementsUnitTests
                 originalPaymentInformationID2,
                 directDebitTransactionsRejectsList2);
 
-            List<DirectDebitPaymentInstructionReject> directDebitRemmitanceRejectsList = new List<DirectDebitPaymentInstructionReject>()
+            List<DirectDebitPaymentInstructionReject> directDebitRemittanceRejectsList = new List<DirectDebitPaymentInstructionReject>()
             { directDebitPaymentInstructionReject1, directDebitPaymentInstructionReject2 };
 
             string messageID = "DATIR00112G12345678100";
@@ -251,14 +251,14 @@ namespace DirectDebitElementsUnitTests
                 rejectAccountChargeDateTime,
                 numberOfTransactions,
                 controlSum,
-                directDebitRemmitanceRejectsList);
+                directDebitRemittanceRejectsList);
 
             Assert.AreEqual("DATIR00112G12345678100", paymentStatusReport.MessageID);
             Assert.AreEqual(messageCreationDateTime, paymentStatusReport.MessageCreationDateTime);
             Assert.AreEqual(rejectAccountChargeDateTime, paymentStatusReport.RejectAccountChargeDateTime);
             Assert.AreEqual(numberOfTransactions, paymentStatusReport.NumberOfTransactions);
             Assert.AreEqual(controlSum, paymentStatusReport.ControlSum);
-            CollectionAssert.AreEqual(directDebitRemmitanceRejectsList, paymentStatusReport.DirectDebitPaymentInstructionRejects);
+            CollectionAssert.AreEqual(directDebitRemittanceRejectsList, paymentStatusReport.DirectDebitPaymentInstructionRejects);
         }
 
         [TestMethod]
@@ -273,7 +273,7 @@ namespace DirectDebitElementsUnitTests
                 originalPaymentInformationID2,
                 directDebitTransactionsRejectsList2);
 
-            List<DirectDebitPaymentInstructionReject> directDebitRemmitanceRejectsList = new List<DirectDebitPaymentInstructionReject>()
+            List<DirectDebitPaymentInstructionReject> directDebitRemittanceRejectsList = new List<DirectDebitPaymentInstructionReject>()
             { directDebitPaymentInstructionReject1, directDebitPaymentInstructionReject2 };
 
             string messageID = "DATIR00112G12345678100";
@@ -292,7 +292,7 @@ namespace DirectDebitElementsUnitTests
                     rejectAccountChargeDateTime,
                     numberOfTransactions,
                     controlSum,
-                    directDebitRemmitanceRejectsList);
+                    directDebitRemittanceRejectsList);
             }
             catch (TypeInitializationException typeInitializationException)
             {
@@ -318,7 +318,7 @@ namespace DirectDebitElementsUnitTests
                 originalPaymentInformationID2,
                 directDebitTransactionsRejectsList2);
 
-            List<DirectDebitPaymentInstructionReject> directDebitRemmitanceRejectsList = new List<DirectDebitPaymentInstructionReject>()
+            List<DirectDebitPaymentInstructionReject> directDebitRemittanceRejectsList = new List<DirectDebitPaymentInstructionReject>()
             { directDebitPaymentInstructionReject1, directDebitPaymentInstructionReject2 };
 
             string messageID = "DATIR00112G12345678100";
@@ -337,7 +337,7 @@ namespace DirectDebitElementsUnitTests
                     rejectAccountChargeDateTime,
                     numberOfTransactions,
                     controlSum,
-                    directDebitRemmitanceRejectsList);
+                    directDebitRemittanceRejectsList);
             }
             catch (TypeInitializationException typeInitializationException)
             {
@@ -362,7 +362,7 @@ namespace DirectDebitElementsUnitTests
                 originalPaymentInformationID2,
                 directDebitTransactionsRejectsList2);
 
-            List<DirectDebitPaymentInstructionReject> directDebitRemmitanceRejectsList = new List<DirectDebitPaymentInstructionReject>()
+            List<DirectDebitPaymentInstructionReject> directDebitRemittanceRejectsList = new List<DirectDebitPaymentInstructionReject>()
             { directDebitPaymentInstructionReject1, directDebitPaymentInstructionReject2 };
 
             string messageID = "DATIR00112G12345678100";
@@ -377,14 +377,14 @@ namespace DirectDebitElementsUnitTests
                 messageID,
                 messageCreationDateTime,
                 rejectAccountChargeDateTime,
-                directDebitRemmitanceRejectsList);
+                directDebitRemittanceRejectsList);
 
             Assert.AreEqual("DATIR00112G12345678100", paymentStatusReport.MessageID);
             Assert.AreEqual(messageCreationDateTime, paymentStatusReport.MessageCreationDateTime);
             Assert.AreEqual(rejectAccountChargeDateTime, paymentStatusReport.RejectAccountChargeDateTime);
             Assert.AreEqual(numberOfTransactions, paymentStatusReport.NumberOfTransactions);
             Assert.AreEqual(controlSum, paymentStatusReport.ControlSum);
-            CollectionAssert.AreEqual(directDebitRemmitanceRejectsList, paymentStatusReport.DirectDebitPaymentInstructionRejects);
+            CollectionAssert.AreEqual(directDebitRemittanceRejectsList, paymentStatusReport.DirectDebitPaymentInstructionRejects);
         }
 
         [TestMethod]

@@ -181,7 +181,7 @@ namespace ISO20022PaymentInitiationsUnitTests
                 DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Unspecified).Truncate(TimeSpan.FromSeconds(1));
 
             GroupHeader39 groupHeader_grpHdr = new GroupHeader39(
-                "TestSEPARemitance0001",    //<MsgID>
+                "TestSEPARemittance0001",    //<MsgID>
                 creatingdDateTime,          //<CreDtTm>
                 authorisation_authstn,      //<Authstn> - Not used in SEPA. Array of null instead of null to avoid null reference exception
                 "2",                        //<NbOfTxs>
@@ -200,7 +200,7 @@ namespace ISO20022PaymentInitiationsUnitTests
         public void GroupHeader_GrpHdr_IsCorrectlyDeserialized()
         {
             GroupHeader39 groupHeader = XMLSerializer.XMLDeserializeFromFile<GroupHeader39>(@"XML Test Files\pain.008.001.02\GroupHeader.xml", "GrpHdr", xMLNamespace);
-            Assert.AreEqual("TestSEPARemitance0001", groupHeader.MsgId);
+            Assert.AreEqual("TestSEPARemittance0001", groupHeader.MsgId);
             string deserializedDateToISO0861DateString = groupHeader.CreDtTm.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
             Assert.AreEqual("2013-10-28T11:45:54", deserializedDateToISO0861DateString);
             Assert.AreEqual(Convert.ToDecimal("237"), groupHeader.CtrlSum);
@@ -414,13 +414,13 @@ namespace ISO20022PaymentInitiationsUnitTests
         }
 
         [TestMethod]
-        public void RemitanceInformation_RmtInf_IsCorrectlyCreated()
+        public void RemittanceInformation_RmtInf_IsCorrectlyCreated()
         {
-            RemittanceInformation5 remitanceInformation_RmtInf = new RemittanceInformation5(
-                directDebitMandateInfo1.RemitanceInformation,       //<Ustrd>
+            RemittanceInformation5 RemittanceInformation_RmtInf = new RemittanceInformation5(
+                directDebitMandateInfo1.RemittanceInformation,       //<Ustrd>
                 new StructuredRemittanceInformation7[] { null });   //<Strd> - Only <Ustrd> or <Strd>
 
-            string xmlString = XMLSerializer.XMLSerializeToString<RemittanceInformation5>(remitanceInformation_RmtInf, "RmtInf", xMLNamespace);
+            string xmlString = XMLSerializer.XMLSerializeToString<RemittanceInformation5>(RemittanceInformation_RmtInf, "RmtInf", xMLNamespace);
             string validatingErrors = XMLValidator.ValidateXMLNodeThroughModifiedXSD(
                 "RmtInf", "RemittanceInformation5", xMLNamespace, xmlString, xSDFilePath);
             Assert.AreEqual("", validatingErrors);
@@ -470,8 +470,8 @@ namespace ISO20022PaymentInitiationsUnitTests
             CashAccount16 debtorAccount_DbtrAcct = new CashAccount16(
                 accountID_Id, null, null, null);
 
-            RemittanceInformation5 remitanceInformation_RmtInf = new RemittanceInformation5(
-                directDebitMandateInfo1.RemitanceInformation,
+            RemittanceInformation5 RemittanceInformation_RmtInf = new RemittanceInformation5(
+                directDebitMandateInfo1.RemittanceInformation,
                 new StructuredRemittanceInformation7[] { null });
 
             DirectDebitTransactionInformation9 directDebitTransactionInfo_DrctDbtTxInf = new DirectDebitTransactionInformation9(
@@ -492,7 +492,7 @@ namespace ISO20022PaymentInitiationsUnitTests
                 new RegulatoryReporting3[] { null },//<RgltryRptg> - Only needed for big payments from non residents
                 null,                               //<Tax> - Not used by creditor in SEPA COR
                 new RemittanceLocation2[] { null }, //<RltdRmtInf> - Not used by creditor in SEPA COR
-                remitanceInformation_RmtInf);       //<RmtInf>
+                RemittanceInformation_RmtInf);       //<RmtInf>
 
             string xmlString = XMLSerializer.XMLSerializeToString<DirectDebitTransactionInformation9>(directDebitTransactionInfo_DrctDbtTxInf, "DrctDbtTxInf", xMLNamespace);
             string validatingErrors = XMLValidator.ValidateXMLNodeThroughModifiedXSD(

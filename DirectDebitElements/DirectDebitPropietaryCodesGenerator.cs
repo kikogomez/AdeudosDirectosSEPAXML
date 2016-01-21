@@ -28,7 +28,7 @@ namespace DirectDebitElements
             return "0000" + directDebitInitiationContract.CreditorBussinessCode + mandateInternalReferenceNumber.ToString("00000");
         }
 
-        public string GenerateRemmitanceID(DateTime creationDateTime)
+        public string GenerateRemittanceID(DateTime creationDateTime)
         {
             return directDebitInitiationContract.CreditorID + creationDateTime.ToString("yyyyMMddHH:mm:ss");
         }

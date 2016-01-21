@@ -41,12 +41,12 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        public void TheDirectDebitRemmitanceMessageIDIsCorrectlyCalculatedGivenAGenrationDate()
+        public void TheDirectDebitRemittanceMessageIDIsCorrectlyCalculatedGivenAGenrationDate()
         {
             DirectDebitPropietaryCodesGenerator directDebitPropietaryCodesGenerator = new DirectDebitPropietaryCodesGenerator(directDebitInitiationContract);
 
             DateTime generationDate = DateTime.Parse("30-10-2015");
-            Assert.AreEqual("ES26777G123456782015103000:00:00", directDebitPropietaryCodesGenerator.GenerateRemmitanceID(generationDate));
+            Assert.AreEqual("ES26777G123456782015103000:00:00", directDebitPropietaryCodesGenerator.GenerateRemittanceID(generationDate));
         }
     }
 }

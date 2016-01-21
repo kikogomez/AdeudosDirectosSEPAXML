@@ -9,7 +9,7 @@ using ReferencesAndTools;
 namespace DirectDebitElementsUnitTests
 {
     [TestClass]
-    public class DirectDebitRemmitancesManagerUnitTests
+    public class DirectDebitRemittancesManagerUnitTests
     {
         static Dictionary<string, Debtor> debtors;
         static Creditor creditor;

@@ -115,7 +115,7 @@ namespace DirectDebitElementsUnitTests
                 directDebitTransactionRejectsList1);
 
             int numberOfTransactions = directDebitTransactionRejectsList1.Count;
-            decimal controlSum = directDebitTransactionRejectsList1.Select(ddRemmitanceReject => ddRemmitanceReject.Amount).Sum();
+            decimal controlSum = directDebitTransactionRejectsList1.Select(ddRemittanceReject => ddRemittanceReject.Amount).Sum();
             Assert.AreEqual(originalPaymentInformationID1, directDebitPaymentInstructionReject.OriginalPaymentInformationID);
             Assert.AreEqual(numberOfTransactions, directDebitPaymentInstructionReject.NumberOfTransactions);
             Assert.AreEqual(controlSum, directDebitPaymentInstructionReject.ControlSum);
@@ -127,7 +127,7 @@ namespace DirectDebitElementsUnitTests
         public void ADirectDebitPaymentInstructionRejectIsCorrectlyCreatedGivenACorrectNumberOfTransactionsAndControlSum()
         {
             int numberOfTransactions = directDebitTransactionRejectsList1.Count;
-            decimal controlSum = directDebitTransactionRejectsList1.Select(ddRemmitanceReject => ddRemmitanceReject.Amount).Sum();
+            decimal controlSum = directDebitTransactionRejectsList1.Select(ddRemittanceReject => ddRemittanceReject.Amount).Sum();
             DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject = new DirectDebitPaymentInstructionReject(
                 originalPaymentInformationID1,
                 numberOfTransactions,
@@ -409,7 +409,7 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        public void ICanAddMoreRemmitanceRejectsToAnExistingPaymentStatusReport()
+        public void ICanAddMoreRemittanceRejectsToAnExistingPaymentStatusReport()
         {
             DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject1 = new DirectDebitPaymentInstructionReject(
                 originalPaymentInformationID1,
