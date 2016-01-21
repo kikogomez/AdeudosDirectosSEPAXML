@@ -15,15 +15,20 @@ namespace DirectDebitElements
 
         public DirectDebitPaymentInstruction(string paymentInformationID, string localInstrument)
         {
-            this.paymentInformationID = CheckPaymentInformationID(paymentInformationID);
+            CheckPaymentInformationID(paymentInformationID);
+            this.paymentInformationID = paymentInformationID;
             this.localInstrument = localInstrument;
             directDebitTransactions = new List<DirectDebitTransaction>();
+            numberOfTransactions = 0;
+            controlSum = 0;
         }
 
-        public DirectDebitPaymentInstruction(string paymentInformationID, string localInstrument, List<DirectDebitTransaction> directDebitTransactions)
+        public DirectDebitPaymentInstruction(
+            string paymentInformationID,
+            string localInstrument,
+            List<DirectDebitTransaction> directDebitTransactions)
+            :this(paymentInformationID, localInstrument)
         {
-            this.paymentInformationID = CheckPaymentInformationID(paymentInformationID);
-            this.localInstrument = localInstrument;
             this.directDebitTransactions = directDebitTransactions;
             UpdateNumberOfDirectDebitTransactionsAndAmount();
         }
@@ -36,10 +41,6 @@ namespace DirectDebitElements
             decimal controlSum)
             :this(paymentInformationID, localInstrument, directDebitTransactions)
         {
-            //this.paymentInformationID = CheckPaymentInformationID(paymentInformationID);
-            //this.localInstrument = localInstrument;
-            //this.directDebitTransactions = directDebitTransactions;
-            //UpdateNumberOfDirectDebitTransactionsAndAmount();
             try
             {
                 CheckNumberOfTransactionsAndAmount(numberOfTransactions, controlSum);
@@ -75,24 +76,17 @@ namespace DirectDebitElements
             get { return directDebitTransactions; }
         }
 
-        public void UpdateNumberOfDirectDebitTransactionsAndAmount()
-        {
-            this.numberOfTransactions = directDebitTransactions.Count;
-            this.controlSum = directDebitTransactions.Select(directDebitTransaction => directDebitTransaction.Amount).Sum();
-        }
-
         public void AddDirectDebitTransaction(DirectDebitTransaction directDebitTransaction)
         {
             directDebitTransactions.Add(directDebitTransaction);
             UpdateNumberOfDirectDebitTransactionsAndAmount();
         }
 
-        private string CheckPaymentInformationID(string paymentInformationID)
+        private void CheckPaymentInformationID(string paymentInformationID)
         {
             if (paymentInformationID == null) throw new System.ArgumentNullException("PaymentInformationID", "PaymentInformationID can't be null");
             if (paymentInformationID.Trim().Length > 35) throw new System.ArgumentOutOfRangeException("PaymentInformationID", "PaymentInformationID lenght can't exceed 35 characters");
             if (paymentInformationID.Trim().Length == 0) throw new System.ArgumentException("PaymentInformationID lenght can't be empty", "PaymentInformationID");
-            return paymentInformationID;
         }
 
         private void CheckNumberOfTransactionsAndAmount(int numberOfTransactions, decimal controlSum)
@@ -107,6 +101,12 @@ namespace DirectDebitElements
                 string errorMessage = string.Format("The {0} is wrong. It should be {1}, but {2} is provided", "Control Sum", this.controlSum, controlSum);
                 throw new ArgumentException(errorMessage, "controlSum");
             }
+        }
+
+        private void UpdateNumberOfDirectDebitTransactionsAndAmount()
+        {
+            this.numberOfTransactions = directDebitTransactions.Count;
+            this.controlSum = directDebitTransactions.Select(directDebitTransaction => directDebitTransaction.Amount).Sum();
         }
     }
 }

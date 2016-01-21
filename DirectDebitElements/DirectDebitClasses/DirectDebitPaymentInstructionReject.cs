@@ -8,21 +8,28 @@ namespace DirectDebitElements
 {
     public class DirectDebitPaymentInstructionReject
     {
-        public event EventHandler<decimal> AddedNewDirectDebitTransactionReject;
+        public event EventHandler<decimal> ANewDirectDebitTransactionRejectHasBeenAdded;
 
         string originalPaymentInformationID;
         int numberOfTransactions;
         decimal controlSum;
         List<DirectDebitTransactionReject> directDebitTransactionsRejects;
 
+        public DirectDebitPaymentInstructionReject(string originalPaymentInformationID)
+        {
+            this.originalPaymentInformationID = originalPaymentInformationID;
+            this.directDebitTransactionsRejects = new List<DirectDebitTransactionReject>();
+            this.numberOfTransactions = 0;
+            this.controlSum = 0;
+        }
+
         public DirectDebitPaymentInstructionReject(
             string originalPaymentInformationID,
             List<DirectDebitTransactionReject> directDebitTransactionsRejects)
+            :this(originalPaymentInformationID)
         {
-            this.originalPaymentInformationID = originalPaymentInformationID;
-            this.numberOfTransactions = directDebitTransactionsRejects.Count;
-            this.controlSum = directDebitTransactionsRejects.Select(ddTransactionReject => ddTransactionReject.Amount).Sum();
             this.directDebitTransactionsRejects = directDebitTransactionsRejects;
+            UpdateNumberOfDirectDebitTransactionRejectsAndAmount();
         }
 
         public DirectDebitPaymentInstructionReject(
@@ -30,11 +37,8 @@ namespace DirectDebitElements
             int numberOfTransactions,
             decimal controlSum,
             List<DirectDebitTransactionReject> directDebitTransactionsRejects)
+            :this(originalPaymentInformationID, directDebitTransactionsRejects)
         {
-            this.originalPaymentInformationID = originalPaymentInformationID;
-            this.numberOfTransactions = directDebitTransactionsRejects.Count;
-            this.controlSum = directDebitTransactionsRejects.Select(ddTransactionReject => ddTransactionReject.Amount).Sum();
-            this.directDebitTransactionsRejects = directDebitTransactionsRejects;
             try
             {
                 CheckNumberOfTransactionsAndAmount(numberOfTransactions, controlSum);
@@ -79,11 +83,17 @@ namespace DirectDebitElements
             SignalANewDirectDebitTransactionRejectHasBeenAdded(directDebitTransactionReject);
         }
 
+        private void UpdateNumberOfDirectDebitTransactionRejectsAndAmount()
+        {
+            this.numberOfTransactions = this.directDebitTransactionsRejects.Count;
+            this.controlSum = this.directDebitTransactionsRejects.Select(ddTransactionReject => ddTransactionReject.Amount).Sum();
+        }
+
         private void SignalANewDirectDebitTransactionRejectHasBeenAdded(DirectDebitTransactionReject directDebitTransactionReject)
         {
-            if (AddedNewDirectDebitTransactionReject != null)
+            if (ANewDirectDebitTransactionRejectHasBeenAdded != null)
             {
-                AddedNewDirectDebitTransactionReject(this, directDebitTransactionReject.Amount);
+                ANewDirectDebitTransactionRejectHasBeenAdded(this, directDebitTransactionReject.Amount);
             }
         }
 

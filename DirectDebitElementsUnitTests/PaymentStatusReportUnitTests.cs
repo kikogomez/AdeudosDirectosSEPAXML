@@ -90,6 +90,23 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
+        public void AnEmptyDirectDebitPaymentInstructionRejectIsCorrectlyCreated()
+        {
+            string originalPaymentInformationID = "PRE201207010001";
+            List<DirectDebitTransactionReject> directDebitTransactionRejects = new List<DirectDebitTransactionReject>();
+
+            DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject = new DirectDebitPaymentInstructionReject(
+                originalPaymentInformationID,
+                directDebitTransactionRejects);
+
+            Assert.AreEqual(originalPaymentInformationID, directDebitPaymentInstructionReject.OriginalPaymentInformationID);
+            Assert.AreEqual(0, directDebitPaymentInstructionReject.NumberOfTransactions);
+            Assert.AreEqual(0, directDebitPaymentInstructionReject.ControlSum);
+            Assert.AreEqual(0, directDebitPaymentInstructionReject.DirectDebitTransactionsRejects.Count);
+        }
+
+
+        [TestMethod]
         public void ADirectDebitPaymentInstructionRejectIsCorrectlyCreated()
         {
 
@@ -180,22 +197,6 @@ namespace DirectDebitElementsUnitTests
                 Assert.AreEqual(expectedErrorMessage, exceptionMessage);
                 throw typeInitializationException;
             }
-        }
-
-        [TestMethod]
-        public void AnEmptyDirectDebitPaymentInstructionRejectIsCorrectlyCreated()
-        {
-            string originalPaymentInformationID = "PRE201207010001";
-            List<DirectDebitTransactionReject> directDebitTransactionRejects = new List<DirectDebitTransactionReject>();
-
-            DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject = new DirectDebitPaymentInstructionReject(
-                originalPaymentInformationID,
-                directDebitTransactionRejects);
-
-            Assert.AreEqual(originalPaymentInformationID, directDebitPaymentInstructionReject.OriginalPaymentInformationID);
-            Assert.AreEqual(0, directDebitPaymentInstructionReject.NumberOfTransactions);
-            Assert.AreEqual(0, directDebitPaymentInstructionReject.ControlSum);
-            Assert.AreEqual(0, directDebitPaymentInstructionReject.DirectDebitTransactionsRejects.Count);
         }
 
         [TestMethod]

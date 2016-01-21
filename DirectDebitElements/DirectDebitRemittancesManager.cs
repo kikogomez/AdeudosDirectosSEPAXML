@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Billing;
-using System.Linq;
-using ISO20022PaymentInitiations.SchemaSerializableClasses.DDInitiation;
-using XMLSerializerValidator;
-using ExtensionMethods;
+
 
 namespace DirectDebitElements
 {

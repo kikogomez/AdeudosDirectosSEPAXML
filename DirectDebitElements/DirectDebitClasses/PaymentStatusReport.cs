@@ -140,7 +140,7 @@ namespace DirectDebitElements
         {
             foreach (DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject in directDebitPaymentInstructionRejects)
             {
-                directDebitPaymentInstructionReject.AddedNewDirectDebitTransactionReject += AddDirectDebitTransactionRejectEventHandler;
+                directDebitPaymentInstructionReject.ANewDirectDebitTransactionRejectHasBeenAdded += AddDirectDebitTransactionRejectEventHandler;
             }
 
         }

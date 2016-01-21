@@ -58,6 +58,7 @@
     <Compile Include="DirectDebitAmendmentInformationUnitTests.cs" />
     <Compile Include="DirectDebitinitiationContractUnitTests.cs" />
     <Compile Include="DirectDebitPropietaryCodesGeneratorUnitTests.cs" />
+    <Compile Include="DirectDebitRemmitancesManagerUnitTests.cs" />
     <Compile Include="DirectDebitRemmitanceUnitTest.cs" />
     <Compile Include="DebtorUnitTests.cs" />
     <Compile Include="DirectDebitMandateUnitTests.cs" />
