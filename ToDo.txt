@@ -1,12 +1,3 @@
-- Cambiar DirectDebitTransactionsGroupPayment por DirectDebitPaymentInstruction, y hace lo mismo con el 'Reject'
-	-> Cambiar el nombre del fichero
-	-> Cambiar el nombre de la clase
-	-> Cambiar los nombres de las instancias de objetos creados
-	-> Cambiar los nombres de los tests que lo utilizan
-
-- IMPORTANTE!! ERROR DETECTADO!! El método SEPAElementsGenerator.GeneratePaymentInformation_PmtInf usa una RequestedCollectionDate fija de prueba
-	-> Añadir RequestedCollectionDate en el constructor, tomandolo de DirectDebitRemitance.RequestedCollectionDate
-
 - Permitir inicializar DirectDebitPaymentInstruction con una lista de Transacciones, en vez de solo poder empezar vacia y añadir posteriormente. Conm esto evitamos recalcular el numero de transacciones y la suma de las mismas en cada iteración
 	-> Crear el constructor, que tambien incluya numero de transacciones y suma de control.
 	-> Añadir los tests unitarios basicos
@@ -15,6 +6,12 @@
 	-> Crear el constructor, que tambien incluya numero de transacciones y suma de control.
 	-> Añadir los tests unitarios basicos
 	-> Añadir un checkeo de numero de transacciones y suma de control que lance una excepcion
+- Si se añade una transaccion a un PaymentInstruction que ya esté dentro de un Remitance, que este último se entere para actualizar su suma de control
+	-> Crear un evento 'PaymentInstructionChanged' al que debe suscribirse el Remmitance
+- Si se añade una factura a una transaccion que ya este en un PaymentInstructio, que este se entere, e igualmente lo haga el Remmitance (evento al que suscribirse, y que se lancen en)
+    -> Crear un evento 'TransactionChanged' al que debe suscribirse el PaymentInstruction. Cuando PaymentInstruction se actualice, debe señalizar a su vez 'PaymentInstructionChanged' para que lo tome el Remmitance.
+	-> No se debe suscribir el Remmitance al evento 'TransactionChanged', ya que no se garantiza el orden de ejecucion de los consumidores, y PaymentInstruction debe procesar el evento primero. Es por ello la actualizacion 'en cascada'
+- Chequear que los InternalUIniqueInstructionID son realmente unicos (no se pueden repetir dentro de un PaymentInstruction)
 
 - Añadir la gestión de Amendment Information
 	-> Añadir la clase con dos campos:

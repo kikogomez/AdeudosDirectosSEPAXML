@@ -171,7 +171,7 @@ namespace DirectDebitElements
             string paymentInformationIdentificaction_PmtInfId = directDebitPaymentInstruction.PaymentInformationID;  //Private unique ID for payment group
             DateTime reqCollectionDate_ReqdColltnDt = requestedCollectionDate;
             List<DirectDebitTransactionInformation9> directDebitTransactionInfo_DrctDbtTxInfList = new List<DirectDebitTransactionInformation9>();
-            foreach (DirectDebitTransaction directDebitTransaction in directDebitPaymentInstruction.DirectDebitTransactionsCollection)
+            foreach (DirectDebitTransaction directDebitTransaction in directDebitPaymentInstruction.DirectDebitTransactions)
             {
                 DirectDebitTransactionInformation9 directDebitTransactionInfo_DrctDbtTxInf = GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
                     creditorAgent,

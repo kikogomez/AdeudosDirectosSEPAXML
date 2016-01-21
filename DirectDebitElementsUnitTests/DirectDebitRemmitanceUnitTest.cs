@@ -17,7 +17,14 @@ namespace DirectDebitElementsUnitTests
         static CreditorAgent creditorAgent;
         static DirectDebitInitiationContract directDebitInitiationContract;
         static DirectDebitPropietaryCodesGenerator directDebitPropietaryCodesGenerator;
-        static BankCodes spanishBankCodes;
+        static DirectDebitTransaction directDebitTransaction1;
+        static DirectDebitTransaction directDebitTransaction2;
+        static DirectDebitTransaction directDebitTransaction3;
+        static string paymentInformationID1;
+        //static string paymentInformationID2;
+
+
+        //static BankCodes spanishBankCodes;
 
         [ClassInitialize]
         public static void ClassInit(TestContext context)
@@ -74,7 +81,37 @@ namespace DirectDebitElementsUnitTests
                 debtor.AddSimplifiedBill(bills);
             }
 
-            spanishBankCodes = new BankCodes(@"XMLFiles\SpanishBankCodes.xml", BankCodes.BankCodesFileFormat.XML);
+            directDebitTransaction1 = new DirectDebitTransaction(
+                debtors["00001"].SimplifiedBills.Values.ToList(),
+                "PaymentInstruction1-00001",
+                directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(debtors["00001"].DirectDebitmandates[1234].InternalReferenceNumber),
+                debtors["00001"].DirectDebitmandates[1234].DirectDebitMandateCreationDate,
+                debtors["00001"].DirectDebitmandates[1234].BankAccount,
+                debtors["00001"].FullName,
+                null);
+
+            directDebitTransaction2 = new DirectDebitTransaction(
+                debtors["00002"].SimplifiedBills.Values.ToList(),
+                "PaymentInstruction1-00002",
+                directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(debtors["00002"].DirectDebitmandates[1235].InternalReferenceNumber),
+                debtors["00002"].DirectDebitmandates[1235].DirectDebitMandateCreationDate,
+                debtors["00002"].DirectDebitmandates[1235].BankAccount,
+                debtors["00002"].FullName,
+                null);
+
+            directDebitTransaction3 = new DirectDebitTransaction(
+                debtors["00001"].SimplifiedBills.Values.ToList(),
+                "PaymentInstruction2-00001",
+                directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(debtors["00001"].DirectDebitmandates[1234].InternalReferenceNumber),
+                debtors["00001"].DirectDebitmandates[1234].DirectDebitMandateCreationDate,
+                debtors["00001"].DirectDebitmandates[1234].BankAccount,
+                debtors["00001"].FullName,
+                null);
+
+            paymentInformationID1 = "PRE201512010001";
+            //paymentInformationID2 = "PRE201511150001";
+
+            //spanishBankCodes = new BankCodes(@"XMLFiles\SpanishBankCodes.xml", BankCodes.BankCodesFileFormat.XML);
         }
 
         [TestMethod]
@@ -191,6 +228,243 @@ namespace DirectDebitElementsUnitTests
                 throw;
             }
         }
+
+        [TestMethod]
+        public void AnEmptyDirectDebitPaymentInstructionIsCorrectlyCreated()
+        {
+            string localInstrument = "COR1";
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID1, localInstrument);
+            Assert.AreEqual("PRE201512010001", directDebitPaymentInstruction.PaymentInformationID);
+            Assert.AreEqual("COR1", directDebitPaymentInstruction.LocalInstrument);
+            Assert.AreEqual(0, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
+            Assert.AreEqual(0, directDebitPaymentInstruction.TotalAmount);
+        }
+
+        [TestMethod]
+        public void ADirectDebitPaymentInstructionIsCorrectlyCreatedWithoutProvidingNumberOfTransactionsNorControlSum()
+        {
+            string localInstrument = "COR1";
+            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
+
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
+                paymentInformationID1, localInstrument, directDebitTransactions);
+
+            Assert.AreEqual("PRE201512010001", directDebitPaymentInstruction.PaymentInformationID);
+            Assert.AreEqual("COR1", directDebitPaymentInstruction.LocalInstrument);
+            Assert.AreEqual(2, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
+            Assert.AreEqual(237, directDebitPaymentInstruction.TotalAmount);
+        }
+
+        [TestMethod]
+        public void IfGivenCorrectNumberOfTransactionsAndControlSumTheDirectDebitPaymentInstructionIsCorrectlyCreated()
+        {
+            string localInstrument = "COR1";
+            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
+            int numberOfTransactions = directDebitTransactions.Count;
+            decimal controlSum = directDebitTransactions.Select(directDebitTransaction => directDebitTransaction.Amount).Sum();
+
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
+                paymentInformationID1, localInstrument,directDebitTransactions, numberOfTransactions, controlSum);
+
+            Assert.AreEqual("PRE201512010001", directDebitPaymentInstruction.PaymentInformationID);
+            Assert.AreEqual("COR1", directDebitPaymentInstruction.LocalInstrument);
+            Assert.AreEqual(2, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
+            Assert.AreEqual(237, directDebitPaymentInstruction.TotalAmount);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.TypeInitializationException))]
+        public void IfGivenIncorrectNumberOfTransactionsTheDirectDebitPaymentInstructionThrowsATypeInitializationErrorException()
+        {
+            string localInstrument = "COR1";
+            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
+            int numberOfTransactions = 1;
+            decimal controlSum = directDebitTransactions.Select(directDebitTransaction => directDebitTransaction.Amount).Sum();
+
+            try
+            {
+                DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
+                    paymentInformationID1, localInstrument, directDebitTransactions, numberOfTransactions, controlSum);
+            }
+            catch (TypeInitializationException typeInitializationException)
+            {
+                Assert.AreEqual("DirectDebitPaymentInstruction", typeInitializationException.TypeName);
+
+                string expectedErrorMessage = "The Number of Transactions is wrong. It should be 2, but 1 is provided";
+                ArgumentException argumentException = (ArgumentException)typeInitializationException.InnerException;
+                string paramName = argumentException.ParamName;
+                string exceptionMessage = argumentException.GetMessageWithoutParamName();
+                Assert.AreEqual("numberOfTransactions", paramName);
+                Assert.AreEqual(expectedErrorMessage, exceptionMessage);
+                throw typeInitializationException;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.TypeInitializationException))]
+        public void IfGivenIncorrectControlSumTheDirectDebitPaymentInstructionThrowsATypeInitializationErrorException()
+        {
+            string localInstrument = "COR1";
+            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
+            int numberOfTransactions = directDebitTransactions.Count;
+            decimal controlSum = 0;
+
+            try
+            {
+                DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
+                    paymentInformationID1, localInstrument, directDebitTransactions, numberOfTransactions, controlSum);
+            }
+            catch (TypeInitializationException typeInitializationException)
+            {
+                Assert.AreEqual("DirectDebitPaymentInstruction", typeInitializationException.TypeName);
+
+                string expectedErrorMessage = "The Control Sum is wrong. It should be 237, but 0 is provided";
+                ArgumentException argumentException = (ArgumentException)typeInitializationException.InnerException;
+                string paramName = argumentException.ParamName;
+                string exceptionMessage = argumentException.GetMessageWithoutParamName();
+                Assert.AreEqual("controlSum", paramName);
+                Assert.AreEqual(expectedErrorMessage, exceptionMessage);
+                throw typeInitializationException;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentOutOfRangeException))]
+        public void CantAssignAPaymentInformationIDLongerThan35Characters()
+        {
+            string paymentInformationID = "0123456789012345678901234567890123456789";
+            try
+            {
+                DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, "COR1");
+            }
+
+            catch (System.ArgumentOutOfRangeException e)
+            {
+                Assert.AreEqual("PaymentInformationID", e.ParamName);
+                Assert.AreEqual("PaymentInformationID lenght can't exceed 35 characters", e.GetMessageWithoutParamName());
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void CantAssignAnEmptyPaymentInformationID()
+        {
+            try
+            {
+                DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction("", "COR1");
+            }
+
+            catch (System.ArgumentException e)
+            {
+                Assert.AreEqual("PaymentInformationID", e.ParamName);
+                Assert.AreEqual("PaymentInformationID lenght can't be empty", e.GetMessageWithoutParamName());
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentNullException))]
+        public void CantAssignANullPaymentInformationID()
+        {
+            try
+            {
+                DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(null, "COR1");
+            }
+
+            catch (System.ArgumentNullException e)
+            {
+                Assert.AreEqual("PaymentInformationID", e.ParamName);
+                Assert.AreEqual("PaymentInformationID can't be null", e.GetMessageWithoutParamName());
+                throw;
+            }
+        }
+
+        [TestMethod]
+        public void ADirectDebitTransactionIsCorrectlyAddedToADirectDebitPaymentInstruction()
+        {
+            string localInstrument = "COR1";
+            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1 };
+
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
+                paymentInformationID1, localInstrument, directDebitTransactions);
+
+            directDebitPaymentInstruction.AddDirectDebitTransaction(directDebitTransaction2);
+
+            Assert.AreEqual(2, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
+            Assert.AreEqual(237, directDebitPaymentInstruction.TotalAmount);
+        }
+
+        [TestMethod]
+        public void ADirectDebitPaymentInstructionIsCorrectlyAddedToADirectDebitRemmitance()
+        {
+            //DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
+            //string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
+            //DateTime requestedCollectionDate = new DateTime(2013, 12,1);
+            //DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
+
+            DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
+            string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
+            DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
+            DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
+            string localInstrument = "COR1";
+            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
+                paymentInformationID1, localInstrument, directDebitTransactions);
+
+
+            //DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
+            //string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
+            //DateTime requestedCollectionDate = new DateTime(2013, 12,1);
+            //DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
+            //string paymentInformationID = "PaymentGroup1";
+            //string localInstrument = "COR1";
+
+            //DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, localInstrument);
+
+            directDebitRemmitance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction);
+
+            Assert.AreEqual(1, directDebitRemmitance.DirectDebitPaymentInstructions.Count);
+            Assert.AreEqual(2, directDebitRemmitance.DirectDebitPaymentInstructions[0].NumberOfDirectDebitTransactions);
+            Assert.AreEqual(237, directDebitRemmitance.DirectDebitPaymentInstructions[0].TotalAmount);
+        }
+
+        [TestMethod]
+        public void ADirectDebitRemmitanceCanHaveMoreThanOnePaymentInstruction()
+        {
+            //DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
+            //string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
+            //DateTime requestedCollectionDate = new DateTime(2013, 12,1);
+            //DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
+
+            DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
+            string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
+            DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
+            DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
+            string localInstrument = "COR1";
+            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
+                paymentInformationID1, localInstrument, directDebitTransactions);
+
+
+            //DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
+            //string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
+            //DateTime requestedCollectionDate = new DateTime(2013, 12,1);
+            //DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
+            //string paymentInformationID = "PaymentGroup1";
+            //string localInstrument = "COR1";
+
+            //DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, localInstrument);
+
+            directDebitRemmitance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction);
+
+            Assert.AreEqual(1, directDebitRemmitance.DirectDebitPaymentInstructions.Count);
+            Assert.AreEqual(2, directDebitRemmitance.DirectDebitPaymentInstructions[0].NumberOfDirectDebitTransactions);
+            Assert.AreEqual(237, directDebitRemmitance.DirectDebitPaymentInstructions[0].TotalAmount);
+        }
+
+
+
 
         [TestMethod]
         public void ADirectDebitTransactionIsCorrectlyCreated()
@@ -647,114 +921,7 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual(2, directDebitTransaction.NumberOfBills);
         }
 
-        [TestMethod]
-        public void AnEmptyDirectDebitPaymentInstructionIsCorrectlyCreated()
-        {
-            string paymentInformationID = "PaymentGroup1";
-            string localInstrument = "COR1";
-            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, localInstrument);
-            Assert.AreEqual("PaymentGroup1", directDebitPaymentInstruction.PaymentInformationID);
-            Assert.AreEqual("COR1", directDebitPaymentInstruction.LocalInstrument);
-            Assert.AreEqual(0, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
-            Assert.AreEqual(0, directDebitPaymentInstruction.TotalAmount);
-        }
 
-        [TestMethod]
-        public void ADirectDebitTransactionIsCorrectlyAddedToADirectDebitPaymentInstruction()
-        {
-            string paymentInformationID = "PaymentGroup1";
-            string localInstrument = "COR1";
-            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, localInstrument);
-            Debtor debtor = debtors["00002"];
-            DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
-            int internalDirectDebitReferenceNumber = directDebitMandate.InternalReferenceNumber;
-            string internalUniqueInstructionID = "00001";
-            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
-            DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
-            BankAccount debtorAccount = directDebitMandate.BankAccount;
-            string accountHolderName = directDebitMandate.AccountHolderName;
-            List<SimplifiedBill> bills = new List<SimplifiedBill> { debtor.SimplifiedBills.ElementAt(0).Value };
-            DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
-                bills,
-                internalUniqueInstructionID,
-                mandateID,
-                mandateSignatureDate,
-                debtorAccount,
-                accountHolderName,
-                null);
 
-            directDebitPaymentInstruction.AddDirectDebitTransaction(directDebitTransaction);
-
-            Assert.AreEqual(1, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
-            Assert.AreEqual((decimal)79, directDebitPaymentInstruction.TotalAmount);
-        }
-
-        [TestMethod]
-        public void ADirectDebitPaymentInstructionIsCorrectlyAddedToADirectDebitRemmitance()
-        {
-            DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
-            string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
-            DateTime requestedCollectionDate = new DateTime(2013, 12,1);
-            DirectDebitRemittance directDebitRemmitance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
-            string paymentInformationID = "PaymentGroup1";
-            string localInstrument = "COR1";
-
-            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, localInstrument);
-
-            directDebitRemmitance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction);
-            Assert.AreEqual(1, directDebitRemmitance.DirectDebitPaymentInstructions.Count);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(System.ArgumentOutOfRangeException))]
-        public void CantAssignAPaymentInformationIDLongerThan35Characters()
-        {
-            string paymentInformationID = "0123456789012345678901234567890123456789";
-            try
-            {
-                DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, "COR1");
-            }
-
-            catch (System.ArgumentOutOfRangeException e)
-            {
-                Assert.AreEqual("PaymentInformationID", e.ParamName);
-                Assert.AreEqual("PaymentInformationID lenght can't exceed 35 characters", e.GetMessageWithoutParamName());
-                throw;
-            }
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(System.ArgumentException))]
-        public void CantAssignAnEmptyPaymentInformationID()
-        {
-            try
-            {
-                DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction("", "COR1");
-            }
-
-            catch (System.ArgumentException e)
-            {
-                Assert.AreEqual("PaymentInformationID", e.ParamName);
-                Assert.AreEqual("PaymentInformationID lenght can't be empty", e.GetMessageWithoutParamName());
-                throw;
-            }
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(System.ArgumentNullException))]
-        public void CantAssignANullPaymentInformationID()
-        {
-            try
-            {
-                DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(null, "COR1");
-            }
-
-            catch (System.ArgumentNullException e)
-            {
-                Assert.AreEqual("PaymentInformationID", e.ParamName);
-                Assert.AreEqual("PaymentInformationID can't be null", e.GetMessageWithoutParamName());
-                throw;
-            }
-        }
     }
 }

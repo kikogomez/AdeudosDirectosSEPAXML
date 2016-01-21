@@ -141,6 +141,8 @@ namespace DirectDebitElementsUnitTests
             }
             catch (TypeInitializationException typeInitializationException)
             {
+                Assert.AreEqual("DirectDebitPaymentInstructionReject", typeInitializationException.TypeName);
+
                 string expectedErrorMessage = "The Number of Transactions is wrong. It should be 2, but 1 is provided";
                 ArgumentException argumentException = (ArgumentException)typeInitializationException.InnerException;
                 string paramName = argumentException.ParamName;
@@ -168,6 +170,8 @@ namespace DirectDebitElementsUnitTests
             }
             catch (TypeInitializationException typeInitializationException)
             {
+                Assert.AreEqual("DirectDebitPaymentInstructionReject", typeInitializationException.TypeName);
+
                 string expectedErrorMessage = "The Control Sum is wrong. It should be 150, but 100 is provided";
                 ArgumentException argumentException = (ArgumentException)typeInitializationException.InnerException;
                 string paramName = argumentException.ParamName;

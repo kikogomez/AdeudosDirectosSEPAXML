@@ -41,7 +41,7 @@ namespace DirectDebitElements
             }
             catch (ArgumentException argumentException)
             {
-                throw new TypeInitializationException("DirectDebitRemmitanceReject", argumentException);
+                throw new TypeInitializationException("DirectDebitPaymentInstructionReject", argumentException);
             }
         }
 

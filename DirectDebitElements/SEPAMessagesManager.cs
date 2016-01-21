@@ -33,7 +33,7 @@ namespace DirectDebitElements
             List<DirectDebitTransactionInformation9> directDebitTransactionInfoList = new List<DirectDebitTransactionInformation9>();
             foreach (DirectDebitPaymentInstruction directDebitPaymentInstruction in directDebitRemmitance.DirectDebitPaymentInstructions)
             {
-                foreach (DirectDebitTransaction directDebitTransaction in directDebitPaymentInstruction.DirectDebitTransactionsCollection)
+                foreach (DirectDebitTransaction directDebitTransaction in directDebitPaymentInstruction.DirectDebitTransactions)
                 {
                     DirectDebitTransactionInformation9 directDebitTransactionInfo_DrctDbtTxInf = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
                         creditorAgent,
