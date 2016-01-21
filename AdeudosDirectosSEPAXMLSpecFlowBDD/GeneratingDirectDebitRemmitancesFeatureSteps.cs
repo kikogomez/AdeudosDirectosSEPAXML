@@ -369,7 +369,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
                 mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitmandate.InternalReferenceNumber);
                 internalUniqueInstructionID = "PaymentGroup1" + (transactionsCounter + 1).ToString("00000");
                 DirectDebitTransaction directDebitTransaction =
-                    directDebitRemittancesManager.CreateAnEmptyDirectDebitTransaction(internalUniqueInstructionID, mandateID, directDebitmandate);
+                    directDebitRemittancesManager.CreateAnEmptyDirectDebitTransaction(internalUniqueInstructionID, mandateID, directDebitmandate, null);
                 transactionsCounter++;
                 foreach (SimplifiedBill bill in debtor.SimplifiedBills.Values)
                 {

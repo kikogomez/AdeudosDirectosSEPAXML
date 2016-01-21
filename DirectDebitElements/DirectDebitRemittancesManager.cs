@@ -23,8 +23,13 @@ namespace DirectDebitElements
             return directDebitPaymentInstruction;
         }
 
-        public DirectDebitTransaction CreateAnEmptyDirectDebitTransaction(string internalUniqueInstructionID, string mandateID, DirectDebitMandate directDebitmandate)
+        public DirectDebitTransaction CreateAnEmptyDirectDebitTransaction(
+            string internalUniqueInstructionID,
+            string mandateID,
+            DirectDebitMandate directDebitmandate,
+            DirectDebitAmendmentInformation amendmentInformation)
         {
+            if (directDebitmandate == null) throw new ArgumentNullException("directDebitMandate", "DirectDebitMandate can't be null");
 
             DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                 new List<SimplifiedBill>(),
@@ -33,7 +38,7 @@ namespace DirectDebitElements
                 directDebitmandate.DirectDebitMandateCreationDate,
                 directDebitmandate.BankAccount,
                 directDebitmandate.AccountHolderName,
-                null);
+                amendmentInformation);
             return directDebitTransaction;
         }
 
@@ -73,5 +78,6 @@ namespace DirectDebitElements
         {
             directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction);
         }
+
     }
 }
