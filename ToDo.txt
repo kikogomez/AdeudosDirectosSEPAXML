@@ -29,7 +29,7 @@
 	-> Incluir el campo AmendmentInformation en DirectdebitTransaction:
 		- Puede ser nulo
 		- Testear ('DirectDebitTransactionsUnitTests') que se puede crear un DirectDebitTransaction con AmendmendInformation nulo o que tenga componentes nulos.
-		- Modificar los métodos de DirectDebitRemittancesManager y testearlos (DirectDebitRemmittancesManagerUnitTest)
+		- Modificar los métodos de DirectDebitRemittancesManager y testearlos (DirectDebitRemittancesManagerUnitTest)
 		- Comprobar que se crean correctamente las clase serializables (SEPAElementsGenerator y SEPAElementsGeneratorUnitTests)
 			* AmendmentInformationDetails6
 			* DirectDebitTransactionInformation9 gestiona bien el AmendmentInformation
@@ -80,10 +80,10 @@
 - ¿Hacer que todas las instanciaciones de objetos DirectDebitElements pasen a través de una clase o clases controladoras?
 	-> Internamente:
 		- SEPAMessagesManager usa:
-			* DirectDebitRemmittancesManager y PaymentStatusReportManager para acceder a las clases DirectDebitElements
+			* DirectDebitRemittancesManager y PaymentStatusReportManager para acceder a las clases DirectDebitElements
 			* SEPAElementsReader y SEPAElementsGenerator para acceder a las clases serializables de ISO20022
 		- SEPAElementsGenerator y SEPAElementsReader deben usar DirectdebitRemittancesaManager y PaymentStatusReport? Quizá NO... Podria acceder directamente a las clases DirectDebit Elements
-		- DirectDebitRemmittancesManager tiene métodos para cerar y gestionar SOLO las clases principales:
+		- DirectDebitRemittancesManager tiene métodos para cerar y gestionar SOLO las clases principales:
 			* DirectDebitTransaction
 			* DirectDebitPaymentInstruction
 			* DirectDebitRemittance
