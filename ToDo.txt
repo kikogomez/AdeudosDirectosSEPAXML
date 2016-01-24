@@ -1,4 +1,14 @@
-- Permitir un constructor de PaymentStatusReport sin PaymentInstrucions
+- Revisar PaymentInstructionReject, para que tengan la misma estructura que PaymentInstruction
+	-> Han de permitir crearse vacios, con lista de elementos, y con lista y checksums (OK)
+	-> Revisar TODOS los tests
+	-> Añadirse al Manager
+	-> Revisar los tests del manager
+
+- Revisar PaymentStatusReport, para que tengan la misma estructura que DirectDebitRemmitance
+	-> Han de permitir crearse vacios, con lista de elementos, y con lista y checksums (OK)
+	-> Revisar TODOS los tests
+	-> Añadirse al Manager
+	-> Revisar los tests del manager
 
 
 - Si se añade una transaccion a un PaymentInstruction que ya esté dentro de un Remittance, que este último se entere para actualizar su suma de control

@@ -41,7 +41,7 @@ namespace DirectDebitElements
         {
             this.directDebitPaymentInstructions = directDebitPaymentInstructions;
             UpdateNumberOfDirectDebitTransactionsAndAmount();
-            SuscribeTo_ANewDirectDebitTransactionHasBeenAdded_FromAllPaymentsInstructions();
+            //SuscribeTo_ANewDirectDebitTransactionHasBeenAdded_FromAllPaymentsInstructions();
         }
 
         public DirectDebitRemittance(
@@ -103,6 +103,7 @@ namespace DirectDebitElements
         {
             directDebitPaymentInstructions.Add(directDebitPaymentInstruction);
             UpdateNumberOfDirectDebitTransactionsAndAmount();
+            //Suscribirse al evento ANewDirectDebitTransactionHasBeenAdded
         }
 
         private void UpdateNumberOfDirectDebitTransactionsAndAmount()
@@ -135,18 +136,18 @@ namespace DirectDebitElements
             }
         }
 
-        private void ANewDirectDebitTransactionHasBeenAddedEventHandler(Object sender, decimal directDebitTransactionAmount)
-        {
-            numberOfTransactions++;
-            controlSum += directDebitTransactionAmount;
-        }
+        //private void ANewDirectDebitTransactionHasBeenAddedEventHandler(Object sender, decimal directDebitTransactionAmount)
+        //{
+        //    numberOfTransactions++;
+        //    controlSum += directDebitTransactionAmount;
+        //}
 
-        private void SuscribeTo_ANewDirectDebitTransactionHasBeenAdded_FromAllPaymentsInstructions()
-        {
-            foreach (DirectDebitPaymentInstruction directDebitPaymentInstruction in directDebitPaymentInstructions)
-            {
-                directDebitPaymentInstruction.ANewDirectDebitTransactionHasBeenAdded += ANewDirectDebitTransactionHasBeenAddedEventHandler;
-            }
-        }
+        //private void SuscribeTo_ANewDirectDebitTransactionHasBeenAdded_FromAllPaymentsInstructions()
+        //{
+        //    foreach (DirectDebitPaymentInstruction directDebitPaymentInstruction in directDebitPaymentInstructions)
+        //    {
+        //        directDebitPaymentInstruction.ANewDirectDebitTransactionHasBeenAdded += ANewDirectDebitTransactionHasBeenAddedEventHandler;
+        //    }
+        //}
     }
 }

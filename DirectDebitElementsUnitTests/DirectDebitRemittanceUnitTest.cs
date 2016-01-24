@@ -23,9 +23,6 @@ namespace DirectDebitElementsUnitTests
         static string paymentInformationID1;
         static string paymentInformationID2;
 
-
-        //static BankCodes spanishBankCodes;
-
         [ClassInitialize]
         public static void ClassInit(TestContext context)
         {

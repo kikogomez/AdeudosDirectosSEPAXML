@@ -89,15 +89,156 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual(rejectReason, directDebitTransactionReject.RejectReason);
         }
 
+        //[TestMethod]
+        //[ExpectedException(typeof(System.ArgumentNullException))]
+        //public void InternalUniqueInstructionIDOfADirectDebitTransactionCantBeNull()
+        //{
+        //    Debtor debtor = debtors["00002"];
+        //    DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
+        //    string internalUniqueInstructionID = null;
+        //    string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
+        //    DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
+        //    BankAccount debtorAccount = directDebitMandate.BankAccount;
+        //    string accountHolderName = directDebitMandate.AccountHolderName;
+        //    List<SimplifiedBill> bills = debtor.SimplifiedBills.Values.ToList();
+
+        //    try
+        //    {
+        //        DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
+        //            bills,
+        //            internalUniqueInstructionID,
+        //            mandateID,
+        //            mandateSignatureDate,
+        //            debtorAccount,
+        //            accountHolderName,
+        //            null);
+        //    }
+
+        //    catch (System.ArgumentNullException e)
+        //    {
+        //        Assert.AreEqual("InternalUniqueInstructionID", e.ParamName);
+        //        Assert.AreEqual("InternalUniqueInstructionID can't be null", e.GetMessageWithoutParamName());
+        //        throw;
+        //    }
+        //}
+
+        //[TestMethod]
+        //[ExpectedException(typeof(System.ArgumentException))]
+        //public void InternalUniqueInstructionIDOfADirectDebitTransactionCantBeEmpty()
+        //{
+        //    Debtor debtor = debtors["00002"];
+        //    DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
+        //    string internalUniqueInstructionID = "";
+        //    string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
+        //    DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
+        //    BankAccount debtorAccount = directDebitMandate.BankAccount;
+        //    string accountHolderName = directDebitMandate.AccountHolderName;
+        //    List<SimplifiedBill> bills = debtor.SimplifiedBills.Values.ToList();
+
+        //    try
+        //    {
+        //        DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
+        //            bills,
+        //            internalUniqueInstructionID,
+        //            mandateID,
+        //            mandateSignatureDate,
+        //            debtorAccount,
+        //            accountHolderName,
+        //            null);
+        //    }
+
+        //    catch (System.ArgumentException e)
+        //    {
+        //        Assert.AreEqual("InternalUniqueInstructionID", e.ParamName);
+        //        Assert.AreEqual("InternalUniqueInstructionID can't be empty", e.GetMessageWithoutParamName());
+        //        throw;
+        //    }
+        //}
+
+        //[TestMethod]
+        //[ExpectedException(typeof(System.ArgumentException))]
+        //public void InternalUniqueInstructionIDOfADirectDebitTransactionCantBeOnlySpaces()
+        //{
+        //    Debtor debtor = debtors["00002"];
+        //    DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
+        //    string internalUniqueInstructionID = "   ";
+        //    string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
+        //    DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
+        //    BankAccount debtorAccount = directDebitMandate.BankAccount;
+        //    string accountHolderName = directDebitMandate.AccountHolderName;
+        //    List<SimplifiedBill> bills = debtor.SimplifiedBills.Values.ToList();
+
+        //    try
+        //    {
+        //        DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
+        //            bills,
+        //            internalUniqueInstructionID,
+        //            mandateID,
+        //            mandateSignatureDate,
+        //            debtorAccount,
+        //            accountHolderName,
+        //            null);
+        //    }
+
+        //    catch (System.ArgumentException e)
+        //    {
+        //        Assert.AreEqual("InternalUniqueInstructionID", e.ParamName);
+        //        Assert.AreEqual("InternalUniqueInstructionID can't be empty", e.GetMessageWithoutParamName());
+        //        throw;
+        //    }
+        //}
+
+        //[TestMethod]
+        //[ExpectedException(typeof(System.ArgumentOutOfRangeException))]
+        //public void InternalUniqueInstructionIDOfADirectDebitTransactionCantBeLongerThan35Characters()
+        //{
+        //    Debtor debtor = debtors["00002"];
+        //    DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
+        //    string internalUniqueInstructionID = "1234567890123456789012345678901234567890";
+        //    string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
+        //    DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
+        //    BankAccount debtorAccount = directDebitMandate.BankAccount;
+        //    string accountHolderName = directDebitMandate.AccountHolderName;
+        //    List<SimplifiedBill> bills = debtor.SimplifiedBills.Values.ToList();
+
+        //    try
+        //    {
+        //        DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
+        //            bills,
+        //            internalUniqueInstructionID,
+        //            mandateID,
+        //            mandateSignatureDate,
+        //            debtorAccount,
+        //            accountHolderName,
+        //            null);
+        //    }
+
+        //    catch (System.ArgumentOutOfRangeException e)
+        //    {
+        //        Assert.AreEqual("InternalUniqueInstructionID", e.ParamName);
+        //        Assert.AreEqual("InternalUniqueInstructionID can't be longer than 35 characters", e.GetMessageWithoutParamName());
+        //        throw;
+        //    }
+        //}
+
+
+
+
+
+        //
+        //
+        // DEBERIAMOS COMPROBAR LA VALIDEZ DE TODOS LOS PARAMETROS DE ENTRADA,
+        // PERO NO ES URGENTE YA QUE SE SUPONE QUE LEEMOS UN FICHERO BANCARIO QUE DEBE INCLUIR TODO
+        // SOLO REVISAMOS ORIGINALENDTOENDTRANSACTIONIDENTIFICATION, QUE ES LO QUE USAREMOS PRINCIPALMENTE
+        //
+
         [TestMethod]
         public void AnEmptyDirectDebitPaymentInstructionRejectIsCorrectlyCreated()
         {
             string originalPaymentInformationID = "PRE201207010001";
-            List<DirectDebitTransactionReject> directDebitTransactionRejects = new List<DirectDebitTransactionReject>();
 
             DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject = new DirectDebitPaymentInstructionReject(
-                originalPaymentInformationID,
-                directDebitTransactionRejects);
+                originalPaymentInformationID);
 
             Assert.AreEqual(originalPaymentInformationID, directDebitPaymentInstructionReject.OriginalPaymentInformationID);
             Assert.AreEqual(0, directDebitPaymentInstructionReject.NumberOfTransactions);
