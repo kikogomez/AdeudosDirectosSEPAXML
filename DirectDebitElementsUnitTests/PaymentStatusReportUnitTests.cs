@@ -89,141 +89,101 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual(rejectReason, directDebitTransactionReject.RejectReason);
         }
 
-        //[TestMethod]
-        //[ExpectedException(typeof(System.ArgumentNullException))]
-        //public void transactionIDOfADirectDebitTransactionCantBeNull()
-        //{
-        //    Debtor debtor = debtors["00002"];
-        //    DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
-        //    string transactionID = null;
-        //    string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
-        //    DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
-        //    BankAccount debtorAccount = directDebitMandate.BankAccount;
-        //    string accountHolderName = directDebitMandate.AccountHolderName;
-        //    List<SimplifiedBill> bills = debtor.SimplifiedBills.Values.ToList();
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentNullException))]
+        public void OriginalEndToEndTransactionIdentificationOfADirectDebitTransactionRejectCantBeNull()
+        {
+            try
+            {
+                DirectDebitTransactionReject DirectDebitTransactionReject = new DirectDebitTransactionReject(
+                    null,
+                    null,
+                    DateTime.Now.AddDays(3),
+                    100,
+                    "000001112345",
+                    new BankAccount(new InternationalAccountBankNumberIBAN("ES7621000000650000000001")),
+                    "MS01");
+            }
 
-        //    try
-        //    {
-        //        DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
-        //            bills,
-        //            transactionID,
-        //            mandateID,
-        //            mandateSignatureDate,
-        //            debtorAccount,
-        //            accountHolderName,
-        //            null);
-        //    }
+            catch (System.ArgumentNullException e)
+            {
+                Assert.AreEqual("originalEndtoEndTransactionIdentification", e.ParamName);
+                Assert.AreEqual("OriginalEndtoEndTransactionIdentification can't be null", e.GetMessageWithoutParamName());
+                throw;
+            }
+        }
 
-        //    catch (System.ArgumentNullException e)
-        //    {
-        //        Assert.AreEqual("transactionID", e.ParamName);
-        //        Assert.AreEqual("transactionID can't be null", e.GetMessageWithoutParamName());
-        //        throw;
-        //    }
-        //}
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void OriginalEndToEndTransactionIdentificationOfADirectDebitTransactionRejectCantBeEmpty()
+        {
+            try
+            {
+                DirectDebitTransactionReject DirectDebitTransactionReject = new DirectDebitTransactionReject(
+                    null,
+                    "",
+                    DateTime.Now.AddDays(3),
+                    100,
+                    "000001112345",
+                    new BankAccount(new InternationalAccountBankNumberIBAN("ES7621000000650000000001")),
+                    "MS01");
+            }
 
-        //[TestMethod]
-        //[ExpectedException(typeof(System.ArgumentException))]
-        //public void transactionIDOfADirectDebitTransactionCantBeEmpty()
-        //{
-        //    Debtor debtor = debtors["00002"];
-        //    DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
-        //    string transactionID = "";
-        //    string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
-        //    DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
-        //    BankAccount debtorAccount = directDebitMandate.BankAccount;
-        //    string accountHolderName = directDebitMandate.AccountHolderName;
-        //    List<SimplifiedBill> bills = debtor.SimplifiedBills.Values.ToList();
+            catch (System.ArgumentException e)
+            {
+                Assert.AreEqual("originalEndtoEndTransactionIdentification", e.ParamName);
+                Assert.AreEqual("OriginalEndtoEndTransactionIdentification can't be empty", e.GetMessageWithoutParamName());
+                throw;
+            }
+        }
 
-        //    try
-        //    {
-        //        DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
-        //            bills,
-        //            transactionID,
-        //            mandateID,
-        //            mandateSignatureDate,
-        //            debtorAccount,
-        //            accountHolderName,
-        //            null);
-        //    }
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void OriginalEndToEndTransactionIdentificationOfADirectDebitTransactionRejectCantBeOnlySpaces()
+        {
+            try
+            {
+                DirectDebitTransactionReject DirectDebitTransactionReject = new DirectDebitTransactionReject(
+                    null,
+                    "  ",
+                    DateTime.Now.AddDays(3),
+                    100,
+                    "000001112345",
+                    new BankAccount(new InternationalAccountBankNumberIBAN("ES7621000000650000000001")),
+                    "MS01");
+            }
 
-        //    catch (System.ArgumentException e)
-        //    {
-        //        Assert.AreEqual("transactionID", e.ParamName);
-        //        Assert.AreEqual("transactionID can't be empty", e.GetMessageWithoutParamName());
-        //        throw;
-        //    }
-        //}
+            catch (System.ArgumentException e)
+            {
+                Assert.AreEqual("originalEndtoEndTransactionIdentification", e.ParamName);
+                Assert.AreEqual("OriginalEndtoEndTransactionIdentification can't be empty", e.GetMessageWithoutParamName());
+                throw;
+            }
+        }
 
-        //[TestMethod]
-        //[ExpectedException(typeof(System.ArgumentException))]
-        //public void transactionIDOfADirectDebitTransactionCantBeOnlySpaces()
-        //{
-        //    Debtor debtor = debtors["00002"];
-        //    DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
-        //    string transactionID = "   ";
-        //    string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
-        //    DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
-        //    BankAccount debtorAccount = directDebitMandate.BankAccount;
-        //    string accountHolderName = directDebitMandate.AccountHolderName;
-        //    List<SimplifiedBill> bills = debtor.SimplifiedBills.Values.ToList();
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentOutOfRangeException))]
+        public void OriginalEndToEndTransactionIdentificationOfADirectDebitTransactionRejectCantBeLongerThan35characters()
+        {
+            try
+            {
+                DirectDebitTransactionReject DirectDebitTransactionReject = new DirectDebitTransactionReject(
+                    null,
+                    "1234567890123456789012345678901234567890",
+                    DateTime.Now.AddDays(3),
+                    100,
+                    "000001112345",
+                    new BankAccount(new InternationalAccountBankNumberIBAN("ES7621000000650000000001")),
+                    "MS01");
+            }
 
-        //    try
-        //    {
-        //        DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
-        //            bills,
-        //            transactionID,
-        //            mandateID,
-        //            mandateSignatureDate,
-        //            debtorAccount,
-        //            accountHolderName,
-        //            null);
-        //    }
-
-        //    catch (System.ArgumentException e)
-        //    {
-        //        Assert.AreEqual("transactionID", e.ParamName);
-        //        Assert.AreEqual("transactionID can't be empty", e.GetMessageWithoutParamName());
-        //        throw;
-        //    }
-        //}
-
-        //[TestMethod]
-        //[ExpectedException(typeof(System.ArgumentOutOfRangeException))]
-        //public void transactionIDOfADirectDebitTransactionCantBeLongerThan35Characters()
-        //{
-        //    Debtor debtor = debtors["00002"];
-        //    DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
-        //    string transactionID = "1234567890123456789012345678901234567890";
-        //    string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
-        //    DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
-        //    BankAccount debtorAccount = directDebitMandate.BankAccount;
-        //    string accountHolderName = directDebitMandate.AccountHolderName;
-        //    List<SimplifiedBill> bills = debtor.SimplifiedBills.Values.ToList();
-
-        //    try
-        //    {
-        //        DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
-        //            bills,
-        //            transactionID,
-        //            mandateID,
-        //            mandateSignatureDate,
-        //            debtorAccount,
-        //            accountHolderName,
-        //            null);
-        //    }
-
-        //    catch (System.ArgumentOutOfRangeException e)
-        //    {
-        //        Assert.AreEqual("transactionID", e.ParamName);
-        //        Assert.AreEqual("transactionID can't be longer than 35 characters", e.GetMessageWithoutParamName());
-        //        throw;
-        //    }
-        //}
-
-
-
-
+            catch (System.ArgumentOutOfRangeException e)
+            {
+                Assert.AreEqual("originalEndtoEndTransactionIdentification", e.ParamName);
+                Assert.AreEqual("OriginalEndtoEndTransactionIdentification can't be longer than 35 characters", e.GetMessageWithoutParamName());
+                throw;
+            }
+        }
 
         //
         //
@@ -246,9 +206,65 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual(0, directDebitPaymentInstructionReject.DirectDebitTransactionsRejects.Count);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentNullException))]
+        public void CantAssignANullOriginalPaymentInformationIDWhenCreatingAnEmptyDirectDebitPaymentIOnstructionReject()
+        {
+            string originalPaymentInformationID = null;
+            try
+            {
+                DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject = new DirectDebitPaymentInstructionReject(
+                    originalPaymentInformationID);
+            }
+
+            catch (System.ArgumentNullException e)
+            {
+                Assert.AreEqual("originalPaymentInformationID", e.ParamName);
+                Assert.AreEqual("OriginalPaymentInformationID can't be null", e.GetMessageWithoutParamName());
+                throw;
+            }
+        }
 
         [TestMethod]
-        public void ADirectDebitPaymentInstructionRejectIsCorrectlyCreated()
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void CantAssignAnEmptyOriginalPaymentInformationIDWhenCreatingAnEmptyDirectDebitPaymentIOnstructionReject()
+        {
+            string originalPaymentInformationID = " ";
+            try
+            {
+                DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject = new DirectDebitPaymentInstructionReject(
+                    originalPaymentInformationID);
+            }
+
+            catch (System.ArgumentException e)
+            {
+                Assert.AreEqual("originalPaymentInformationID", e.ParamName);
+                Assert.AreEqual("OriginalPaymentInformationID can't be empty", e.GetMessageWithoutParamName());
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentOutOfRangeException))]
+        public void CantAssignAnOriginalPaymentInformationIDLongerThan35CharactersWhenCreatingAnEmptyDirectDebitPaymentIOnstructionReject()
+        {
+            string originalPaymentInformationID = "0123456789012345678901234567890123456789";
+            try
+            {
+                DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject = new DirectDebitPaymentInstructionReject(
+                    originalPaymentInformationID);
+            }
+
+            catch (System.ArgumentOutOfRangeException e)
+            {
+                Assert.AreEqual("originalPaymentInformationID", e.ParamName);
+                Assert.AreEqual("OriginalPaymentInformationID lenght can't exceed 35 characters", e.GetMessageWithoutParamName());
+                throw;
+            }
+        }
+
+        [TestMethod]
+        public void ADirectDebitPaymentInstructionRejectIsCorrectlyCreatedWithoutProvidingNumberOfTransactionsNorControlSum()
         {
 
             DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject = new DirectDebitPaymentInstructionReject(
@@ -262,6 +278,66 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual(controlSum, directDebitPaymentInstructionReject.ControlSum);
             Assert.AreEqual("2015120100124", directDebitPaymentInstructionReject.DirectDebitTransactionsRejects[0].OriginalEndtoEndTransactionIdentification);
             Assert.AreEqual("2015120100312", directDebitPaymentInstructionReject.DirectDebitTransactionsRejects[1].OriginalEndtoEndTransactionIdentification);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentNullException))]
+        public void CantAssignANullOriginalPaymentInformationIDWhenCreatingADirectDebitPaymentInstructionReject()
+        {
+            string originalPaymentInformationID = null;
+            try
+            {
+                DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject = new DirectDebitPaymentInstructionReject(
+                    originalPaymentInformationID,
+                    directDebitTransactionRejectsList1);
+            }
+
+            catch (System.ArgumentNullException e)
+            {
+                Assert.AreEqual("originalPaymentInformationID", e.ParamName);
+                Assert.AreEqual("OriginalPaymentInformationID can't be null", e.GetMessageWithoutParamName());
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void CantAssignAnEmptyOriginalPaymentInformationIDWhenCreatingADirectDebitPaymentInstructionReject()
+        {
+            string originalPaymentInformationID = " ";
+            try
+            {
+                DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject = new DirectDebitPaymentInstructionReject(
+                    originalPaymentInformationID,
+                    directDebitTransactionRejectsList1);
+            }
+
+            catch (System.ArgumentException e)
+            {
+                Assert.AreEqual("originalPaymentInformationID", e.ParamName);
+                Assert.AreEqual("OriginalPaymentInformationID can't be empty", e.GetMessageWithoutParamName());
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentOutOfRangeException))]
+        public void CantAssignAnOriginalPaymentInformationIDLongerThan35CharactersWhenCreatingADirectDebitPaymentInstructionReject()
+        {
+            string originalPaymentInformationID = "0123456789012345678901234567890123456789";
+            try
+            {
+                DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject = new DirectDebitPaymentInstructionReject(
+                    originalPaymentInformationID,
+                    directDebitTransactionRejectsList1);
+            }
+
+            catch (System.ArgumentOutOfRangeException e)
+            {
+                Assert.AreEqual("originalPaymentInformationID", e.ParamName);
+                Assert.AreEqual("OriginalPaymentInformationID lenght can't exceed 35 characters", e.GetMessageWithoutParamName());
+                throw;
+            }
         }
 
         [TestMethod]
@@ -370,6 +446,32 @@ namespace DirectDebitElementsUnitTests
 
             CollectionAssert.AreEqual(expectedOriginalEndtoEndTransactionIdentificationList, directDebitPaymentInstructionReject.OriginalEndtoEndTransactiontransactionIDList);
         }
+
+        [TestMethod]
+        public void AnEmptyPaymentStatusReportIsCorrectlyCreated()
+        {
+            string messageID = "DATIR00112G12345678100";
+            DateTime messageCreationDateTime = DateTime.Parse("2012-07-18T06:00:01");
+            DateTime rejectAccountChargeDateTime = DateTime.Parse("2012-07-18");
+
+            PaymentStatusReport paymentStatusReport = new PaymentStatusReport(
+                messageID,
+                messageCreationDateTime,
+                rejectAccountChargeDateTime);
+
+            List<DirectDebitPaymentInstruction> emptyDirectDebitPaymentInstructions = new List<DirectDebitPaymentInstruction>();
+            Assert.AreEqual("DATIR00112G12345678100", paymentStatusReport.MessageID);
+            Assert.AreEqual(messageCreationDateTime, paymentStatusReport.MessageCreationDateTime);
+            Assert.AreEqual(rejectAccountChargeDateTime, paymentStatusReport.RejectAccountChargeDateTime);
+            Assert.AreEqual(0, paymentStatusReport.NumberOfTransactions);
+            Assert.AreEqual(0, paymentStatusReport.ControlSum);
+            CollectionAssert.AreEqual(emptyDirectDebitPaymentInstructions, paymentStatusReport.DirectDebitPaymentInstructionRejects);
+        }
+
+        //
+        // DEBERIAMOS COMPROBAR LA VALIDEZ DE TODOS LOS PARAMETROS DE ENTRADA,
+        // PERO NO ES URGENTE YA QUE SE SUPONE QUE LEEMOS UN FICHERO BANCARIO QUE DEBE INCLUIR TODO
+        //
 
         [TestMethod]
         public void APaymentStatusReportIsCorrectlyCreated()
@@ -528,29 +630,41 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        public void AnEmptyPaymentStatusReportIsCorrectlyCreated()
+        public void ICanAddAPaymentInstructionRejectsToAnExistingPaymentStatusReport()
         {
+            DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject1 = new DirectDebitPaymentInstructionReject(
+                originalPaymentInformationID1,
+                directDebitTransactionRejectsList1);
+
+
+
             string messageID = "DATIR00112G12345678100";
             DateTime messageCreationDateTime = DateTime.Parse("2012-07-18T06:00:01");
             DateTime rejectAccountChargeDateTime = DateTime.Parse("2012-07-18");
-            List<DirectDebitPaymentInstructionReject> directDebitPaymentInstructionRejects = new List<DirectDebitPaymentInstructionReject>();
 
             PaymentStatusReport paymentStatusReport = new PaymentStatusReport(
                 messageID,
                 messageCreationDateTime,
-                rejectAccountChargeDateTime,
-                directDebitPaymentInstructionRejects);
+                rejectAccountChargeDateTime);
 
+            DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject = new DirectDebitPaymentInstructionReject(
+                originalPaymentInformationID1,
+                directDebitTransactionRejectsList1);
+
+            paymentStatusReport.AddDirectDebitPaymentInstructionReject(directDebitPaymentInstructionReject);
+
+            List<DirectDebitPaymentInstructionReject> expectedDirectDebitPaymentInstructionRejects =
+                new List<DirectDebitPaymentInstructionReject>() { directDebitPaymentInstructionReject };
             Assert.AreEqual("DATIR00112G12345678100", paymentStatusReport.MessageID);
             Assert.AreEqual(messageCreationDateTime, paymentStatusReport.MessageCreationDateTime);
             Assert.AreEqual(rejectAccountChargeDateTime, paymentStatusReport.RejectAccountChargeDateTime);
-            Assert.AreEqual(0, paymentStatusReport.NumberOfTransactions);
-            Assert.AreEqual(0, paymentStatusReport.ControlSum);
-            CollectionAssert.AreEqual(directDebitPaymentInstructionRejects, paymentStatusReport.DirectDebitPaymentInstructionRejects);
+            Assert.AreEqual(2, paymentStatusReport.NumberOfTransactions);
+            Assert.AreEqual(150, paymentStatusReport.ControlSum);
+            CollectionAssert.AreEqual(expectedDirectDebitPaymentInstructionRejects, paymentStatusReport.DirectDebitPaymentInstructionRejects);
         }
 
         [TestMethod]
-        public void ICanAddMoreRemittanceRejectsToAnExistingPaymentStatusReport()
+        public void APaymentStatusReportCanHaveMoreThanOnePaymentInstructionReject()
         {
             DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject1 = new DirectDebitPaymentInstructionReject(
                 originalPaymentInformationID1,
@@ -587,7 +701,7 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        public void IfIAddANewDirecDebitTransactionRejectTheTotalNumberOfTransactionsAndAmountOfAPaymentStatusReportIsUpdated()
+        public void WhenAddingAnotherTransactionRejectToADirectDebitPaymentInstructionRejectInsideAPaymentStatusReportTheAmmountAndNumberOfBillsOfThePaymentStatusReportAreCorrectlyUpdated()
         {
             DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject1 = new DirectDebitPaymentInstructionReject(
                 originalPaymentInformationID1,

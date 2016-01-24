@@ -171,7 +171,7 @@ namespace DirectDebitElementsUnitTests
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentNullException))]
-        public void transactionIDCantBeNullWhenCreatingAnEmptyDirectDebitTransaction()
+        public void TransactionIDCantBeNullWhenCreatingAnEmptyDirectDebitTransaction()
         {
             List<SimplifiedBill> emptyBillsList = new List<SimplifiedBill>();
             string transactionID = null;
@@ -191,14 +191,14 @@ namespace DirectDebitElementsUnitTests
             catch (System.ArgumentNullException e)
             {
                 Assert.AreEqual("transactionID", e.ParamName);
-                Assert.AreEqual("transactionID can't be null", e.GetMessageWithoutParamName());
+                Assert.AreEqual("TransactionID can't be null", e.GetMessageWithoutParamName());
                 throw;
             }
         }
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentException))]
-        public void transactionIDCantBeEmptyWhenCreatingAnEmptyDirectDebitTransaction()
+        public void TransactionIDCantBeEmptyWhenCreatingAnEmptyDirectDebitTransaction()
         {
             List<SimplifiedBill> emptyBillsList = new List<SimplifiedBill>();
             string transactionID = "";
@@ -359,7 +359,7 @@ namespace DirectDebitElementsUnitTests
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentNullException))]
-        public void transactionIDCantBeNullWhenCreatingADirectDebitTransaction()
+        public void TransactionIDCantBeNullWhenCreatingADirectDebitTransaction()
         {
             List<SimplifiedBill> billsList = debtors["00001"].SimplifiedBills.Values.ToList();
             string transactionID = null;
@@ -380,14 +380,14 @@ namespace DirectDebitElementsUnitTests
             catch (System.ArgumentNullException e)
             {
                 Assert.AreEqual("transactionID", e.ParamName);
-                Assert.AreEqual("transactionID can't be null", e.GetMessageWithoutParamName());
+                Assert.AreEqual("TransactionID can't be null", e.GetMessageWithoutParamName());
                 throw;
             }
         }
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentException))]
-        public void transactionIDCantBeEmptyWhenCreatingADirectDebitTransactionFromAGroupOfBills()
+        public void TransactionIDCantBeEmptyWhenCreatingADirectDebitTransactionFromAGroupOfBills()
         {
             List<SimplifiedBill> billsList = debtors["00001"].SimplifiedBills.Values.ToList();
             string transactionID = "";
@@ -553,7 +553,7 @@ namespace DirectDebitElementsUnitTests
 
             catch (System.ArgumentOutOfRangeException e)
             {
-                Assert.AreEqual("PaymentInformationID", e.ParamName);
+                Assert.AreEqual("paymentInformationID", e.ParamName);
                 Assert.AreEqual("PaymentInformationID lenght can't exceed 35 characters", e.GetMessageWithoutParamName());
                 throw;
             }
@@ -571,8 +571,8 @@ namespace DirectDebitElementsUnitTests
 
             catch (System.ArgumentException e)
             {
-                Assert.AreEqual("PaymentInformationID", e.ParamName);
-                Assert.AreEqual("PaymentInformationID lenght can't be empty", e.GetMessageWithoutParamName());
+                Assert.AreEqual("paymentInformationID", e.ParamName);
+                Assert.AreEqual("PaymentInformationID can't be empty", e.GetMessageWithoutParamName());
                 throw;
             }
         }
@@ -589,7 +589,7 @@ namespace DirectDebitElementsUnitTests
 
             catch (System.ArgumentNullException e)
             {
-                Assert.AreEqual("PaymentInformationID", e.ParamName);
+                Assert.AreEqual("paymentInformationID", e.ParamName);
                 Assert.AreEqual("PaymentInformationID can't be null", e.GetMessageWithoutParamName());
                 throw;
             }

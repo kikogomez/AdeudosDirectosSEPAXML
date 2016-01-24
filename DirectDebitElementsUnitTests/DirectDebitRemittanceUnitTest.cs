@@ -177,7 +177,7 @@ namespace DirectDebitElementsUnitTests
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentNullException))]
-        public void transactionIDOfADirectDebitTransactionCantBeNull()
+        public void TransactionIDOfADirectDebitTransactionCantBeNull()
         {
             Debtor debtor = debtors["00002"];
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
@@ -210,7 +210,7 @@ namespace DirectDebitElementsUnitTests
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentException))]
-        public void transactionIDOfADirectDebitTransactionCantBeEmpty()
+        public void TransactionIDOfADirectDebitTransactionCantBeEmpty()
         {
             Debtor debtor = debtors["00002"];
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
@@ -243,7 +243,7 @@ namespace DirectDebitElementsUnitTests
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentException))]
-        public void transactionIDOfADirectDebitTransactionCantBeOnlySpaces()
+        public void TransactionIDOfADirectDebitTransactionCantBeOnlySpaces()
         {
             Debtor debtor = debtors["00002"];
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
@@ -276,7 +276,7 @@ namespace DirectDebitElementsUnitTests
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentOutOfRangeException))]
-        public void transactionIDOfADirectDebitTransactionCantBeLongerThan35Characters()
+        public void TransactionIDOfADirectDebitTransactionCantBeLongerThan35Characters()
         {
             Debtor debtor = debtors["00002"];
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
@@ -302,7 +302,7 @@ namespace DirectDebitElementsUnitTests
             catch (System.ArgumentOutOfRangeException e)
             {
                 Assert.AreEqual("transactionID", e.ParamName);
-                Assert.AreEqual("transactionID can't be longer than 35 characters", e.GetMessageWithoutParamName());
+                Assert.AreEqual("TransactionID can't be longer than 35 characters", e.GetMessageWithoutParamName());
                 throw;
             }
         }
@@ -589,7 +589,7 @@ namespace DirectDebitElementsUnitTests
 
             catch (System.ArgumentOutOfRangeException e)
             {
-                Assert.AreEqual("PaymentInformationID", e.ParamName);
+                Assert.AreEqual("paymentInformationID", e.ParamName);
                 Assert.AreEqual("PaymentInformationID lenght can't exceed 35 characters", e.GetMessageWithoutParamName());
                 throw;
             }
@@ -606,8 +606,8 @@ namespace DirectDebitElementsUnitTests
 
             catch (System.ArgumentException e)
             {
-                Assert.AreEqual("PaymentInformationID", e.ParamName);
-                Assert.AreEqual("PaymentInformationID lenght can't be empty", e.GetMessageWithoutParamName());
+                Assert.AreEqual("paymentInformationID", e.ParamName);
+                Assert.AreEqual("PaymentInformationID can't be empty", e.GetMessageWithoutParamName());
                 throw;
             }
         }
@@ -623,25 +623,10 @@ namespace DirectDebitElementsUnitTests
 
             catch (System.ArgumentNullException e)
             {
-                Assert.AreEqual("PaymentInformationID", e.ParamName);
+                Assert.AreEqual("paymentInformationID", e.ParamName);
                 Assert.AreEqual("PaymentInformationID can't be null", e.GetMessageWithoutParamName());
                 throw;
             }
-        }
-
-        [TestMethod]
-        public void ADirectDebitTransactionIsCorrectlyAddedToADirectDebitPaymentInstruction()
-        {
-            string localInstrument = "COR1";
-            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1 };
-
-            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
-                paymentInformationID1, localInstrument, directDebitTransactions);
-
-            directDebitPaymentInstruction.AddDirectDebitTransaction(directDebitTransaction2);
-
-            Assert.AreEqual(2, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
-            Assert.AreEqual(237, directDebitPaymentInstruction.TotalAmount);
         }
 
         [TestMethod]
@@ -730,6 +715,21 @@ namespace DirectDebitElementsUnitTests
                 Assert.AreEqual(expectedErrorMessage, exceptionMessage);
                 throw typeInitializationException;
             }
+        }
+
+        [TestMethod]
+        public void ADirectDebitTransactionIsCorrectlyAddedToADirectDebitPaymentInstruction()
+        {
+            string localInstrument = "COR1";
+            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1 };
+
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
+                paymentInformationID1, localInstrument, directDebitTransactions);
+
+            directDebitPaymentInstruction.AddDirectDebitTransaction(directDebitTransaction2);
+
+            Assert.AreEqual(2, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
+            Assert.AreEqual(237, directDebitPaymentInstruction.TotalAmount);
         }
 
         [TestMethod]
@@ -848,7 +848,7 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        public void AnDirectDebitRemittanceIsCorrectlyCreatedWithoutProvidingNumberOfTransactionsNorControlSum()
+        public void ADirectDebitRemittanceIsCorrectlyCreatedWithoutProvidingNumberOfTransactionsNorControlSum()
         {
             DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
             string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
@@ -983,6 +983,7 @@ namespace DirectDebitElementsUnitTests
                 throw typeInitializationException;
             }
         }
+
         [TestMethod]
         public void ADirectDebitPaymentInstructionIsCorrectlyAddedToADirectDebitRemittance()
         {

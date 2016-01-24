@@ -17,6 +17,7 @@ namespace DirectDebitElements
 
         public DirectDebitPaymentInstructionReject(string originalPaymentInformationID)
         {
+            CheckOriginalPaymentInformationID(originalPaymentInformationID);
             this.originalPaymentInformationID = originalPaymentInformationID;
             this.directDebitTransactionsRejects = new List<DirectDebitTransactionReject>();
             this.numberOfTransactions = 0;
@@ -101,6 +102,13 @@ namespace DirectDebitElements
         {
             List<string> originalEndtoEndTransactiontransactionIDList = directDebitTransactionsRejects.Select(directDebitTransactionReject => directDebitTransactionReject.OriginalEndtoEndTransactionIdentification).ToList();
             return originalEndtoEndTransactiontransactionIDList;
+        }
+
+        private void CheckOriginalPaymentInformationID(string originalPaymentInformationID)
+        {
+            if (originalPaymentInformationID == null) throw new System.ArgumentNullException("originalPaymentInformationID", "OriginalPaymentInformationID can't be null");
+            if (originalPaymentInformationID.Trim().Length > 35) throw new System.ArgumentOutOfRangeException("originalPaymentInformationID", "OriginalPaymentInformationID lenght can't exceed 35 characters");
+            if (originalPaymentInformationID.Trim().Length == 0) throw new System.ArgumentException("OriginalPaymentInformationID can't be empty", "originalPaymentInformationID");
         }
 
         private void CheckNumberOfTransactionsAndAmount(int numberOfTransactions, decimal controlSum)

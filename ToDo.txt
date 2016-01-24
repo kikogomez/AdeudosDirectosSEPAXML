@@ -21,7 +21,6 @@
 
 
 - Chequear que los InternalUIniqueInstructionID son realmente unicos (no se pueden repetir dentro de un PaymentInstruction)
-- ¿Renombrar InternalUIniqueInstructionID como TransactionID, sin mas?
 
 - Añadir la gestión de Amendment Information
 	-> Añadir la clase con dos campos:

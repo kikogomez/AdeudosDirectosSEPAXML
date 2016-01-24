@@ -109,9 +109,9 @@ namespace DirectDebitElements
 
         private void CheckMandatoryFields(string transactionID, string mandateID, BankAccount debtorAccount)
         {
-            if (transactionID == null) throw new ArgumentNullException("transactionID", "transactionID can't be null");
+            if (transactionID == null) throw new ArgumentNullException("transactionID", "TransactionID can't be null");
             if (transactionID.Trim().Length==0) throw new ArgumentException("TransactionID can't be empty", "transactionID");
-            if (transactionID.Trim().Length > 35) throw new ArgumentOutOfRangeException("transactionID", "transactionID can't be longer than 35 characters");
+            if (transactionID.Trim().Length > 35) throw new ArgumentOutOfRangeException("transactionID", "TransactionID can't be longer than 35 characters");
             if (mandateID == null) throw new ArgumentNullException("MandateID", "MandateID can't be null");
             if (mandateID.Trim().Length == 0) throw new ArgumentException("MandateID can't be empty", "MandateID");
             if (mandateID.Trim().Length > 35) throw new ArgumentOutOfRangeException("MandateID", "MandateID can't be longer than 35 characters");
