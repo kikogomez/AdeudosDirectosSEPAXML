@@ -96,7 +96,7 @@ namespace DirectDebitElementsUnitTests
         {
             PaymentStatusReportManager paymentStatusReportManager = new PaymentStatusReportManager();
 
-            DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject = paymentStatusReportManager.CreateDirectDebitPaymentInstructionReject(
+            DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject = paymentStatusReportManager.CreateADirectDebitPaymentInstructionReject(
                 originalPaymentInformationID1,
                 directDebitTransactionsRejectsList1);
 
@@ -116,7 +116,7 @@ namespace DirectDebitElementsUnitTests
             int numberofTransactions = 2;
             decimal controlSum = 150;
 
-            DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject = paymentStatusReportManager.CreateCheckedDirectDebitPaymentInstructionReject(
+            DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject = paymentStatusReportManager.CreateADirectDebitPaymentInstructionReject(
                 originalPaymentInformationID1,
                 numberofTransactions,
                 controlSum,
@@ -141,7 +141,7 @@ namespace DirectDebitElementsUnitTests
 
             try
             {
-                DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject = paymentStatusReportManager.CreateCheckedDirectDebitPaymentInstructionReject(
+                DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject = paymentStatusReportManager.CreateADirectDebitPaymentInstructionReject(
                     originalPaymentInformationID1,
                     numberofTransactions,
                     controlSum,
@@ -170,7 +170,7 @@ namespace DirectDebitElementsUnitTests
 
             try
             {
-                DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject = paymentStatusReportManager.CreateCheckedDirectDebitPaymentInstructionReject(
+                DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject = paymentStatusReportManager.CreateADirectDebitPaymentInstructionReject(
                     originalPaymentInformationID1,
                     numberofTransactions,
                     controlSum,
@@ -215,7 +215,7 @@ namespace DirectDebitElementsUnitTests
 
             PaymentStatusReportManager paymentStatusReportManager = new PaymentStatusReportManager();
 
-            paymentStatusReportManager.AddRejectedTransactionToPaymentInstructionReject(directDebitPaymentInstructionReject, directDebitTransactionReject1);
+            paymentStatusReportManager.AddTransactionRejectToPaymentInstructionReject(directDebitPaymentInstructionReject, directDebitTransactionReject1);
 
             Assert.AreEqual(originalPaymentInformationID, directDebitPaymentInstructionReject.OriginalPaymentInformationID);
             Assert.AreEqual(1, directDebitPaymentInstructionReject.NumberOfTransactions);
@@ -245,7 +245,7 @@ namespace DirectDebitElementsUnitTests
 
             PaymentStatusReportManager paymentStatusReportManager = new PaymentStatusReportManager();
 
-            PaymentStatusReport paymentStatusReport = paymentStatusReportManager.CreateCheckedPaymentStatusReport(
+            PaymentStatusReport paymentStatusReport = paymentStatusReportManager.CreateAPaymentStatusReport(
                 messageID,
                 messageCreationDateTime,
                 rejectAccountChargeDateTime,
@@ -286,7 +286,7 @@ namespace DirectDebitElementsUnitTests
 
             try
             {
-                PaymentStatusReport paymentStatusReport = paymentStatusReportManager.CreateCheckedPaymentStatusReport(
+                PaymentStatusReport paymentStatusReport = paymentStatusReportManager.CreateAPaymentStatusReport(
                     messageID,
                     messageCreationDateTime,
                     rejectAccountChargeDateTime,
@@ -331,7 +331,7 @@ namespace DirectDebitElementsUnitTests
 
             try
             {
-                PaymentStatusReport paymentStatusReport = paymentStatusReportManager.CreateCheckedPaymentStatusReport(
+                PaymentStatusReport paymentStatusReport = paymentStatusReportManager.CreateAPaymentStatusReport(
                     messageID,
                     messageCreationDateTime,
                     rejectAccountChargeDateTime,
@@ -373,7 +373,7 @@ namespace DirectDebitElementsUnitTests
 
             PaymentStatusReportManager paymentStatusReportManager = new PaymentStatusReportManager();
 
-            PaymentStatusReport paymentStatusReport = paymentStatusReportManager.CreatePaymentStatusReport(
+            PaymentStatusReport paymentStatusReport = paymentStatusReportManager.CreateAPaymentStatusReport(
                 messageID,
                 messageCreationDateTime,
                 rejectAccountChargeDateTime,

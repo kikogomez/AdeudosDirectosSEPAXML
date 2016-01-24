@@ -44,7 +44,7 @@ namespace DirectDebitElements
                 directDebitTransactionRejects.Add(directDebitTransactionReject);
             }
 
-            DirectDebitPaymentInstructionReject directDebitRemittanceReject = paymentStatusReportManager.CreateCheckedDirectDebitPaymentInstructionReject(
+            DirectDebitPaymentInstructionReject directDebitRemittanceReject = paymentStatusReportManager.CreateADirectDebitPaymentInstructionReject(
                 originalPaymentInformationID,
                 numberOfTransactions,
                 controlSum,

@@ -85,7 +85,7 @@ namespace DirectDebitElements
             }
 
             PaymentStatusReportManager paymentStatusReportmanager = new PaymentStatusReportManager();
-            PaymentStatusReport paymentStatusReport = paymentStatusReportmanager.CreateCheckedPaymentStatusReport(
+            PaymentStatusReport paymentStatusReport = paymentStatusReportmanager.CreateAPaymentStatusReport(
                 paymentStatusReport_MessageID,
                 paymentStatusReport_MessageCreationDateTime,
                 paymentStatusReport_RejectAccountChargeDateTime,
