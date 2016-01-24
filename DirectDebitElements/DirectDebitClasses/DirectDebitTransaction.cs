@@ -11,7 +11,7 @@ namespace DirectDebitElements
         List<SimplifiedBill> billsInTransaction;
         decimal totalAmount;
         int numberOfBills;
-        string internalUniqueInstructionID;
+        string transactionID;
         string mandateID;
         DateTime mandateSignatureDate;
         BankAccount debtorAccount;
@@ -20,14 +20,14 @@ namespace DirectDebitElements
 
         public DirectDebitTransaction(
             List<SimplifiedBill> billsInTransaction,
-            string internalUniqueInstructionID,
+            string transactionID,
             string mandateID,
             DateTime mandateSignatureDate,
             BankAccount debtorAccount,
             string accountHolderName, 
             DirectDebitAmendmentInformation amendmentInformation)
         {
-            InitializeFields(internalUniqueInstructionID, mandateID, mandateSignatureDate, debtorAccount, accountHolderName, amendmentInformation);
+            InitializeFields(transactionID, mandateID, mandateSignatureDate, debtorAccount, accountHolderName, amendmentInformation);
             this.billsInTransaction = billsInTransaction;
             UpdateAmountAndNumberOfBills();
         }
@@ -47,9 +47,9 @@ namespace DirectDebitElements
             get { return numberOfBills; }
         }
 
-        public string InternalUniqueInstructionID
+        public string TransactionID
         {
-            get { return internalUniqueInstructionID; }
+            get { return transactionID; }
         }
 
         public string MandateID
@@ -84,16 +84,16 @@ namespace DirectDebitElements
         }
 
         private void InitializeFields(
-            string internalUniqueInstructionID,
+            string transactionID,
             string mandateID,
             DateTime mandateSignatureDate,
             BankAccount debtorAccount,
             string accountHolderName,
             DirectDebitAmendmentInformation amendmentInformation)
         {
-            CheckMandatoryFields(internalUniqueInstructionID, mandateID, debtorAccount);
+            CheckMandatoryFields(transactionID, mandateID, debtorAccount);
 
-            this.internalUniqueInstructionID = internalUniqueInstructionID.Trim();
+            this.transactionID = transactionID.Trim();
             this.mandateID = mandateID.Trim();
             this.mandateSignatureDate = mandateSignatureDate;
             this.debtorAccount = debtorAccount;
@@ -107,11 +107,11 @@ namespace DirectDebitElements
             numberOfBills = billsInTransaction.Count;
         }
 
-        private void CheckMandatoryFields(string internalUniqueInstructionID, string mandateID, BankAccount debtorAccount)
+        private void CheckMandatoryFields(string transactionID, string mandateID, BankAccount debtorAccount)
         {
-            if (internalUniqueInstructionID == null) throw new ArgumentNullException("InternalUniqueInstructionID", "InternalUniqueInstructionID can't be null");
-            if (internalUniqueInstructionID.Trim().Length==0) throw new ArgumentException("InternalUniqueInstructionID can't be empty", "InternalUniqueInstructionID");
-            if (internalUniqueInstructionID.Trim().Length > 35) throw new ArgumentOutOfRangeException("InternalUniqueInstructionID", "InternalUniqueInstructionID can't be longer than 35 characters");
+            if (transactionID == null) throw new ArgumentNullException("transactionID", "transactionID can't be null");
+            if (transactionID.Trim().Length==0) throw new ArgumentException("TransactionID can't be empty", "transactionID");
+            if (transactionID.Trim().Length > 35) throw new ArgumentOutOfRangeException("transactionID", "transactionID can't be longer than 35 characters");
             if (mandateID == null) throw new ArgumentNullException("MandateID", "MandateID can't be null");
             if (mandateID.Trim().Length == 0) throw new ArgumentException("MandateID can't be empty", "MandateID");
             if (mandateID.Trim().Length > 35) throw new ArgumentOutOfRangeException("MandateID", "MandateID can't be longer than 35 characters");

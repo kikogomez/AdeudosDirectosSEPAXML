@@ -87,7 +87,7 @@ namespace DirectDebitElementsUnitTests
             DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, "CORE");
 
             List<SimplifiedBill> simplifiedBills;
-            string internalUniqueInstructionID;
+            string transactionID;
             string mandateID;
             DateTime mandateSignatureDate;
             BankAccount debtorAccount;
@@ -96,14 +96,14 @@ namespace DirectDebitElementsUnitTests
             foreach (Debtor debtor in debtors.Values)
             {
                 simplifiedBills = debtor.SimplifiedBills.Select(dictionaryElement => dictionaryElement.Value).ToList();
-                internalUniqueInstructionID = (transactionsCounter + 1).ToString("000000");
+                transactionID = (transactionsCounter + 1).ToString("000000");
                 mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(debtor.DirectDebitmandates.First().Value.InternalReferenceNumber);
                 mandateSignatureDate = debtor.DirectDebitmandates.First().Value.DirectDebitMandateCreationDate;
                 debtorAccount = debtor.DirectDebitmandates.First().Value.BankAccount;
                 debtorFullName = debtor.FullName;
                 DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                     simplifiedBills,
-                    internalUniqueInstructionID,
+                    transactionID,
                     mandateID,
                     mandateSignatureDate,
                     debtorAccount,
@@ -144,7 +144,7 @@ namespace DirectDebitElementsUnitTests
             DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, "CORE");
 
             List<SimplifiedBill> simplifiedBills;
-            string internalUniqueInstructionID;
+            string transactionID;
             string mandateID;
             DateTime mandateSignatureDate;
             BankAccount debtorAccount;
@@ -153,14 +153,14 @@ namespace DirectDebitElementsUnitTests
             foreach (Debtor debtor in debtors.Values)
             {
                 simplifiedBills = debtor.SimplifiedBills.Select(dictionaryElement => dictionaryElement.Value).ToList();
-                internalUniqueInstructionID = (transactionsCounter + 1).ToString("000000");
+                transactionID = (transactionsCounter + 1).ToString("000000");
                 mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(debtor.DirectDebitmandates.First().Value.InternalReferenceNumber);
                 mandateSignatureDate = debtor.DirectDebitmandates.First().Value.DirectDebitMandateCreationDate;
                 debtorAccount = debtor.DirectDebitmandates.First().Value.BankAccount;
                 debtorFullName = debtor.FullName;
                 DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                     simplifiedBills,
-                    internalUniqueInstructionID,
+                    transactionID,
                     mandateID,
                     mandateSignatureDate,
                     debtorAccount,
@@ -215,7 +215,7 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual("PRE201207010001", paymentStatusReport.DirectDebitPaymentInstructionRejects[0].OriginalPaymentInformationID);
             Assert.AreEqual(2, paymentStatusReport.DirectDebitPaymentInstructionRejects[0].NumberOfTransactions);
             Assert.AreEqual((decimal)130.30, paymentStatusReport.DirectDebitPaymentInstructionRejects[0].ControlSum);
-            CollectionAssert.AreEqual(expectedOriginalEndtoEndTransactionIdentificationList1, paymentStatusReport.DirectDebitPaymentInstructionRejects[0].OriginalEndtoEndTransactionInternalUniqueInstructionIDList);
+            CollectionAssert.AreEqual(expectedOriginalEndtoEndTransactionIdentificationList1, paymentStatusReport.DirectDebitPaymentInstructionRejects[0].OriginalEndtoEndTransactiontransactionIDList);
 
             //Info from second DirectDectDebitRemittance
             List<string> expectedOriginalEndtoEndTransactionIdentificationList2 = new List<string>()
@@ -223,7 +223,7 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual("PRE201205270001", paymentStatusReport.DirectDebitPaymentInstructionRejects[1].OriginalPaymentInformationID);
             Assert.AreEqual(1, paymentStatusReport.DirectDebitPaymentInstructionRejects[1].NumberOfTransactions);
             Assert.AreEqual((decimal)90, paymentStatusReport.DirectDebitPaymentInstructionRejects[1].ControlSum);
-            CollectionAssert.AreEqual(expectedOriginalEndtoEndTransactionIdentificationList2, paymentStatusReport.DirectDebitPaymentInstructionRejects[1].OriginalEndtoEndTransactionInternalUniqueInstructionIDList);
+            CollectionAssert.AreEqual(expectedOriginalEndtoEndTransactionIdentificationList2, paymentStatusReport.DirectDebitPaymentInstructionRejects[1].OriginalEndtoEndTransactiontransactionIDList);
         }
 
         [TestMethod]
@@ -252,7 +252,7 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual("2015-12-0112205515Rem.150 Ord.1", paymentStatusReport.DirectDebitPaymentInstructionRejects[0].OriginalPaymentInformationID);
             Assert.AreEqual(2, paymentStatusReport.DirectDebitPaymentInstructionRejects[0].NumberOfTransactions);
             Assert.AreEqual((decimal)657.73, paymentStatusReport.DirectDebitPaymentInstructionRejects[0].ControlSum);
-            CollectionAssert.AreEqual(expectedOriginalEndtoEndTransactionIdentificationList1, paymentStatusReport.DirectDebitPaymentInstructionRejects[0].OriginalEndtoEndTransactionInternalUniqueInstructionIDList);
+            CollectionAssert.AreEqual(expectedOriginalEndtoEndTransactionIdentificationList1, paymentStatusReport.DirectDebitPaymentInstructionRejects[0].OriginalEndtoEndTransactiontransactionIDList);
 
             //Info from second DirectDectDebitRemittance
             List<string> expectedOriginalEndtoEndTransactionIdentificationList2 = new List<string>()
@@ -260,7 +260,7 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual("2015-12-0113442815Rem.151 Ord.1", paymentStatusReport.DirectDebitPaymentInstructionRejects[1].OriginalPaymentInformationID);
             Assert.AreEqual(1, paymentStatusReport.DirectDebitPaymentInstructionRejects[1].NumberOfTransactions);
             Assert.AreEqual((decimal)277.45, paymentStatusReport.DirectDebitPaymentInstructionRejects[1].ControlSum);
-            CollectionAssert.AreEqual(expectedOriginalEndtoEndTransactionIdentificationList2, paymentStatusReport.DirectDebitPaymentInstructionRejects[1].OriginalEndtoEndTransactionInternalUniqueInstructionIDList);
+            CollectionAssert.AreEqual(expectedOriginalEndtoEndTransactionIdentificationList2, paymentStatusReport.DirectDebitPaymentInstructionRejects[1].OriginalEndtoEndTransactiontransactionIDList);
 
             //Info from third DirectDectDebitRemittance
             List<string> expectedOriginalEndtoEndTransactionIdentificationList3 = new List<string>()
@@ -268,7 +268,7 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual("2015-12-0115153115Rem.152 Ord.1", paymentStatusReport.DirectDebitPaymentInstructionRejects[2].OriginalPaymentInformationID);
             Assert.AreEqual(1, paymentStatusReport.DirectDebitPaymentInstructionRejects[1].NumberOfTransactions);
             Assert.AreEqual((decimal)71.47, paymentStatusReport.DirectDebitPaymentInstructionRejects[2].ControlSum);
-            CollectionAssert.AreEqual(expectedOriginalEndtoEndTransactionIdentificationList2, paymentStatusReport.DirectDebitPaymentInstructionRejects[1].OriginalEndtoEndTransactionInternalUniqueInstructionIDList);
+            CollectionAssert.AreEqual(expectedOriginalEndtoEndTransactionIdentificationList2, paymentStatusReport.DirectDebitPaymentInstructionRejects[1].OriginalEndtoEndTransactiontransactionIDList);
         }
     }
 }

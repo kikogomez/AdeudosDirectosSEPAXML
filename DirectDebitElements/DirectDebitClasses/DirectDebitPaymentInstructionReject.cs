@@ -70,9 +70,9 @@ namespace DirectDebitElements
             get { return directDebitTransactionsRejects; }
         }
 
-        public List<string> OriginalEndtoEndTransactionInternalUniqueInstructionIDList
+        public List<string> OriginalEndtoEndTransactiontransactionIDList
         {
-            get { return GetAllOriginalEndtoEndTransactionInternalUniqueInstructionIDs(); }
+            get { return GetAllOriginalEndtoEndTransactiontransactionIDs(); }
         }
 
         public void AddDirectDebitTransactionReject(DirectDebitTransactionReject directDebitTransactionReject)
@@ -97,10 +97,10 @@ namespace DirectDebitElements
             }
         }
 
-        private List<string> GetAllOriginalEndtoEndTransactionInternalUniqueInstructionIDs()
+        private List<string> GetAllOriginalEndtoEndTransactiontransactionIDs()
         {
-            List<string> originalEndtoEndTransactionInternalUniqueInstructionIDList = directDebitTransactionsRejects.Select(directDebitTransactionReject => directDebitTransactionReject.OriginalEndtoEndTransactionIdentification).ToList();
-            return originalEndtoEndTransactionInternalUniqueInstructionIDList;
+            List<string> originalEndtoEndTransactiontransactionIDList = directDebitTransactionsRejects.Select(directDebitTransactionReject => directDebitTransactionReject.OriginalEndtoEndTransactionIdentification).ToList();
+            return originalEndtoEndTransactiontransactionIDList;
         }
 
         private void CheckNumberOfTransactionsAndAmount(int numberOfTransactions, decimal controlSum)

@@ -97,8 +97,8 @@ namespace DirectDebitElements
         }
 
         public DirectDebitTransactionReject CreateDirectDebitTransactionReject(
-            string originalTransactionInternalUniqueInstructionID,
-            string originalEndtoEndTransactionInternalUniqueInstructionID,
+            string originalTransactiontransactionID,
+            string originalEndtoEndTransactiontransactionID,
             DateTime requestedCollectionDate,
             decimal amount,
             string mandateID,
@@ -106,8 +106,8 @@ namespace DirectDebitElements
             string rejectReason)
         {
             DirectDebitTransactionReject directDebitTransactionReject = new DirectDebitTransactionReject(
-                originalTransactionInternalUniqueInstructionID,
-                originalEndtoEndTransactionInternalUniqueInstructionID,
+                originalTransactiontransactionID,
+                originalEndtoEndTransactiontransactionID,
                 requestedCollectionDate,
                 amount,
                 mandateID,

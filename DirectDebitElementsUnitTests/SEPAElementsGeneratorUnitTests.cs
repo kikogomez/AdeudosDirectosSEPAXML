@@ -125,7 +125,7 @@ namespace DirectDebitElementsUnitTests
         [TestMethod]
         public void ADirectDebitTransactionInformation9WithoutAmmendmentInformationIsCorrectlyGenerated()
         {
-            string internalUniqueInstructionID = "00001";
+            string transactionID = "00001";
             Debtor debtor = debtors["00002"];
             List<SimplifiedBill> bills = debtor.SimplifiedBills.Values.ToList();
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
@@ -135,7 +135,7 @@ namespace DirectDebitElementsUnitTests
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                 bills,
-                internalUniqueInstructionID,
+                transactionID,
                 mandateID,
                 mandateSignatureDate,
                 debtorAccount,
@@ -148,8 +148,8 @@ namespace DirectDebitElementsUnitTests
                 directDebitTransaction,
                 singleUnstructuredConcept);
 
-            Assert.AreEqual(directDebitTransaction.InternalUniqueInstructionID, directDebitTransactionInformation.PmtId.InstrId);
-            Assert.AreEqual(directDebitTransaction.InternalUniqueInstructionID, directDebitTransactionInformation.PmtId.EndToEndId);
+            Assert.AreEqual(directDebitTransaction.TransactionID, directDebitTransactionInformation.PmtId.InstrId);
+            Assert.AreEqual(directDebitTransaction.TransactionID, directDebitTransactionInformation.PmtId.EndToEndId);
             Assert.AreEqual(directDebitTransaction.Amount, directDebitTransactionInformation.InstdAmt.Value);
             Assert.AreEqual("EUR", directDebitTransactionInformation.InstdAmt.Ccy);
             Assert.AreEqual(directDebitTransaction.MandateID, directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.MndtId);
@@ -173,7 +173,7 @@ namespace DirectDebitElementsUnitTests
         [TestMethod]
         public void ADirectDebitTransactionInformation9WithAmmendmentInformationIsCorrectlyGenerated()
         {
-            string internalUniqueInstructionID = "00001";
+            string transactionID = "00001";
             Debtor debtor = debtors["00002"];
             List<SimplifiedBill> bills = debtor.SimplifiedBills.Values.ToList();
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
@@ -183,7 +183,7 @@ namespace DirectDebitElementsUnitTests
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                 bills,
-                internalUniqueInstructionID,
+                transactionID,
                 mandateID,
                 mandateSignatureDate,
                 debtorAccount,
@@ -196,8 +196,8 @@ namespace DirectDebitElementsUnitTests
                 directDebitTransaction,
                 singleUnstructuredConcept);
 
-            Assert.AreEqual(directDebitTransaction.InternalUniqueInstructionID, directDebitTransactionInformation.PmtId.InstrId);
-            Assert.AreEqual(directDebitTransaction.InternalUniqueInstructionID, directDebitTransactionInformation.PmtId.EndToEndId);
+            Assert.AreEqual(directDebitTransaction.TransactionID, directDebitTransactionInformation.PmtId.InstrId);
+            Assert.AreEqual(directDebitTransaction.TransactionID, directDebitTransactionInformation.PmtId.EndToEndId);
             Assert.AreEqual(directDebitTransaction.Amount, directDebitTransactionInformation.InstdAmt.Value);
             Assert.AreEqual("EUR", directDebitTransactionInformation.InstdAmt.Ccy);
             Assert.AreEqual(directDebitTransaction.MandateID, directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.MndtId);
@@ -221,7 +221,7 @@ namespace DirectDebitElementsUnitTests
         [TestMethod]
         public void ADirectDebitTransactionInformation9WithAllConceptsJoinedIsCorrectlyGenrated()
         {
-            string internalUniqueInstructionID = "00001";
+            string transactionID = "00001";
             Debtor debtor = debtors["00002"];
             List<SimplifiedBill> bills = debtor.SimplifiedBills.Values.ToList();
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
@@ -232,7 +232,7 @@ namespace DirectDebitElementsUnitTests
             bool singleUnstructuredConcept = true;
             DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                 bills,
-                internalUniqueInstructionID,
+                transactionID,
                 mandateID,
                 mandateSignatureDate,
                 debtorAccount,

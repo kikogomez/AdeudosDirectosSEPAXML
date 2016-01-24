@@ -12,7 +12,7 @@ namespace DirectDebitElements
         }
 
         public DirectDebitTransaction CreateAnEmptyDirectDebitTransaction(
-            string internalUniqueInstructionID,
+            string transactionID,
             string mandateID,
             DirectDebitMandate directDebitmandate,
             DirectDebitAmendmentInformation amendmentInformation)
@@ -21,7 +21,7 @@ namespace DirectDebitElements
 
             DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                 new List<SimplifiedBill>(),
-                internalUniqueInstructionID,
+                transactionID,
                 mandateID,
                 directDebitmandate.DirectDebitMandateCreationDate,
                 directDebitmandate.BankAccount,
@@ -31,7 +31,7 @@ namespace DirectDebitElements
         }
 
         public DirectDebitTransaction CreateADirectDebitTransaction(
-            string internalUniqueInstructionID,
+            string transactionID,
             string mandateID,
             DirectDebitMandate directDebitmandate,
             List<SimplifiedBill> billsList,
@@ -41,7 +41,7 @@ namespace DirectDebitElements
 
             DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                 billsList,
-                internalUniqueInstructionID,
+                transactionID,
                 mandateID,
                 directDebitmandate.DirectDebitMandateCreationDate,
                 directDebitmandate.BankAccount,

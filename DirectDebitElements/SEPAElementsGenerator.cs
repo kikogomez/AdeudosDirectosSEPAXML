@@ -75,8 +75,8 @@ namespace DirectDebitElements
             bool singleUnstructuredConcept)
         {
             PaymentIdentification1 paymentIdentification_PmtID = new PaymentIdentification1(
-                directDebitTransaction.InternalUniqueInstructionID,    //<InstrID>
-                directDebitTransaction.InternalUniqueInstructionID);   //<EndToEndID>
+                directDebitTransaction.TransactionID,    //<InstrID>
+                directDebitTransaction.TransactionID);   //<EndToEndID>
 
             ActiveOrHistoricCurrencyAndAmount instructedAmount_InstdAmt = new ActiveOrHistoricCurrencyAndAmount(
                 "EUR",                                      //<InstdAmt> ""CCY" atribute value

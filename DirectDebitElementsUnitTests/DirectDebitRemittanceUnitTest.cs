@@ -116,7 +116,7 @@ namespace DirectDebitElementsUnitTests
         {
             Debtor debtor = debtors["00002"];
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
-            string internalUniqueInstructionID = "00001";
+            string transactionID = "00001";
             string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             BankAccount debtorAccount = directDebitMandate.BankAccount;
@@ -127,14 +127,14 @@ namespace DirectDebitElementsUnitTests
 
             DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                 bills,
-                internalUniqueInstructionID,
+                transactionID,
                 mandateID,
                 mandateSignatureDate,
                 debtorAccount,
                 accountHolderName,
                 amendmentinformation);
 
-            Assert.AreEqual(internalUniqueInstructionID, directDebitTransaction.InternalUniqueInstructionID);
+            Assert.AreEqual(transactionID, directDebitTransaction.TransactionID);
             Assert.AreEqual("000077701235", directDebitTransaction.MandateID);
             Assert.AreEqual(mandateSignatureDate, directDebitTransaction.MandateSigatureDate);
             Assert.AreEqual(debtorAccount, directDebitTransaction.DebtorAccount);
@@ -149,7 +149,7 @@ namespace DirectDebitElementsUnitTests
         {
             Debtor debtor = debtors["00002"];
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
-            string internalUniqueInstructionID = "00001";
+            string transactionID = "00001";
             string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             BankAccount debtorAccount = directDebitMandate.BankAccount;
@@ -158,14 +158,14 @@ namespace DirectDebitElementsUnitTests
 
             DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                 bills,
-                internalUniqueInstructionID,
+                transactionID,
                 mandateID,
                 mandateSignatureDate,
                 debtorAccount,
                 accountHolderName,
                 null);
 
-            Assert.AreEqual(internalUniqueInstructionID, directDebitTransaction.InternalUniqueInstructionID);
+            Assert.AreEqual(transactionID, directDebitTransaction.TransactionID);
             Assert.AreEqual("000077701235", directDebitTransaction.MandateID);
             Assert.AreEqual(mandateSignatureDate, directDebitTransaction.MandateSigatureDate);
             Assert.AreEqual(debtorAccount, directDebitTransaction.DebtorAccount);
@@ -177,11 +177,11 @@ namespace DirectDebitElementsUnitTests
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentNullException))]
-        public void InternalUniqueInstructionIDOfADirectDebitTransactionCantBeNull()
+        public void transactionIDOfADirectDebitTransactionCantBeNull()
         {
             Debtor debtor = debtors["00002"];
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
-            string internalUniqueInstructionID = null;
+            string transactionID = null;
             string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             BankAccount debtorAccount = directDebitMandate.BankAccount;
@@ -192,7 +192,7 @@ namespace DirectDebitElementsUnitTests
             {
                 DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                     bills,
-                    internalUniqueInstructionID,
+                    transactionID,
                     mandateID,
                     mandateSignatureDate,
                     debtorAccount,
@@ -202,19 +202,19 @@ namespace DirectDebitElementsUnitTests
 
             catch (System.ArgumentNullException e)
             {
-                Assert.AreEqual("InternalUniqueInstructionID", e.ParamName);
-                Assert.AreEqual("InternalUniqueInstructionID can't be null", e.GetMessageWithoutParamName());
+                Assert.AreEqual("transactionID", e.ParamName);
+                Assert.AreEqual("TransactionID can't be null", e.GetMessageWithoutParamName());
                 throw;
             }
         }
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentException))]
-        public void InternalUniqueInstructionIDOfADirectDebitTransactionCantBeEmpty()
+        public void transactionIDOfADirectDebitTransactionCantBeEmpty()
         {
             Debtor debtor = debtors["00002"];
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
-            string internalUniqueInstructionID = "";
+            string transactionID = "";
             string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             BankAccount debtorAccount = directDebitMandate.BankAccount;
@@ -225,7 +225,7 @@ namespace DirectDebitElementsUnitTests
             {
                 DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                     bills,
-                    internalUniqueInstructionID,
+                    transactionID,
                     mandateID,
                     mandateSignatureDate,
                     debtorAccount,
@@ -235,19 +235,19 @@ namespace DirectDebitElementsUnitTests
 
             catch (System.ArgumentException e)
             {
-                Assert.AreEqual("InternalUniqueInstructionID", e.ParamName);
-                Assert.AreEqual("InternalUniqueInstructionID can't be empty", e.GetMessageWithoutParamName());
+                Assert.AreEqual("transactionID", e.ParamName);
+                Assert.AreEqual("TransactionID can't be empty", e.GetMessageWithoutParamName());
                 throw;
             }
         }
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentException))]
-        public void InternalUniqueInstructionIDOfADirectDebitTransactionCantBeOnlySpaces()
+        public void transactionIDOfADirectDebitTransactionCantBeOnlySpaces()
         {
             Debtor debtor = debtors["00002"];
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
-            string internalUniqueInstructionID = "   ";
+            string transactionID = "   ";
             string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             BankAccount debtorAccount = directDebitMandate.BankAccount;
@@ -258,7 +258,7 @@ namespace DirectDebitElementsUnitTests
             {
                 DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                     bills,
-                    internalUniqueInstructionID,
+                    transactionID,
                     mandateID,
                     mandateSignatureDate,
                     debtorAccount,
@@ -268,19 +268,19 @@ namespace DirectDebitElementsUnitTests
 
             catch (System.ArgumentException e)
             {
-                Assert.AreEqual("InternalUniqueInstructionID", e.ParamName);
-                Assert.AreEqual("InternalUniqueInstructionID can't be empty", e.GetMessageWithoutParamName());
+                Assert.AreEqual("transactionID", e.ParamName);
+                Assert.AreEqual("TransactionID can't be empty", e.GetMessageWithoutParamName());
                 throw;
             }
         }
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentOutOfRangeException))]
-        public void InternalUniqueInstructionIDOfADirectDebitTransactionCantBeLongerThan35Characters()
+        public void transactionIDOfADirectDebitTransactionCantBeLongerThan35Characters()
         {
             Debtor debtor = debtors["00002"];
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
-            string internalUniqueInstructionID = "1234567890123456789012345678901234567890";
+            string transactionID = "1234567890123456789012345678901234567890";
             string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             BankAccount debtorAccount = directDebitMandate.BankAccount;
@@ -291,7 +291,7 @@ namespace DirectDebitElementsUnitTests
             {
                 DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                     bills,
-                    internalUniqueInstructionID,
+                    transactionID,
                     mandateID,
                     mandateSignatureDate,
                     debtorAccount,
@@ -301,8 +301,8 @@ namespace DirectDebitElementsUnitTests
 
             catch (System.ArgumentOutOfRangeException e)
             {
-                Assert.AreEqual("InternalUniqueInstructionID", e.ParamName);
-                Assert.AreEqual("InternalUniqueInstructionID can't be longer than 35 characters", e.GetMessageWithoutParamName());
+                Assert.AreEqual("transactionID", e.ParamName);
+                Assert.AreEqual("transactionID can't be longer than 35 characters", e.GetMessageWithoutParamName());
                 throw;
             }
         }
@@ -313,7 +313,7 @@ namespace DirectDebitElementsUnitTests
         {
             Debtor debtor = debtors["00002"];
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
-            string internalUniqueInstructionID = "00001";
+            string transactionID = "00001";
             string mandateID = null;
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             BankAccount debtorAccount = directDebitMandate.BankAccount;
@@ -324,7 +324,7 @@ namespace DirectDebitElementsUnitTests
             {
                 DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                     bills,
-                    internalUniqueInstructionID,
+                    transactionID,
                     mandateID,
                     mandateSignatureDate,
                     debtorAccount,
@@ -346,7 +346,7 @@ namespace DirectDebitElementsUnitTests
         {
             Debtor debtor = debtors["00002"];
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
-            string internalUniqueInstructionID = "00001";
+            string transactionID = "00001";
             string mandateID = "";
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             BankAccount debtorAccount = directDebitMandate.BankAccount;
@@ -357,7 +357,7 @@ namespace DirectDebitElementsUnitTests
             {
                 DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                     bills,
-                    internalUniqueInstructionID,
+                    transactionID,
                     mandateID,
                     mandateSignatureDate,
                     debtorAccount,
@@ -379,7 +379,7 @@ namespace DirectDebitElementsUnitTests
         {
             Debtor debtor = debtors["00002"];
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
-            string internalUniqueInstructionID = "00001";
+            string transactionID = "00001";
             string mandateID = " ";
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             BankAccount debtorAccount = directDebitMandate.BankAccount;
@@ -390,7 +390,7 @@ namespace DirectDebitElementsUnitTests
             {
                 DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                     bills,
-                    internalUniqueInstructionID,
+                    transactionID,
                     mandateID,
                     mandateSignatureDate,
                     debtorAccount,
@@ -412,7 +412,7 @@ namespace DirectDebitElementsUnitTests
         {
             Debtor debtor = debtors["00002"];
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
-            string internalUniqueInstructionID = "00001";
+            string transactionID = "00001";
             string mandateID = "1234567890123456789012345678901234567890";
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             BankAccount debtorAccount = directDebitMandate.BankAccount;
@@ -423,7 +423,7 @@ namespace DirectDebitElementsUnitTests
             {
                 DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                     bills,
-                    internalUniqueInstructionID,
+                    transactionID,
                     mandateID,
                     mandateSignatureDate,
                     debtorAccount,
@@ -445,7 +445,7 @@ namespace DirectDebitElementsUnitTests
         {
             Debtor debtor = debtors["00002"];
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
-            string internalUniqueInstructionID = "00001";
+            string transactionID = "00001";
             string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             BankAccount debtorAccount = null;
@@ -456,7 +456,7 @@ namespace DirectDebitElementsUnitTests
             {
                 DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                     bills,
-                    internalUniqueInstructionID,
+                    transactionID,
                     mandateID,
                     mandateSignatureDate,
                     debtorAccount,
@@ -478,7 +478,7 @@ namespace DirectDebitElementsUnitTests
         {
             Debtor debtor = debtors["00002"];
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
-            string internalUniqueInstructionID = "00001";
+            string transactionID = "00001";
             string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             BankAccount debtorAccount = new BankAccount(new BankAccountFields("1111", "1111", "11", "1111111111"));
@@ -489,7 +489,7 @@ namespace DirectDebitElementsUnitTests
             {
                 DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                     bills,
-                    internalUniqueInstructionID,
+                    transactionID,
                     mandateID,
                     mandateSignatureDate,
                     debtorAccount,
@@ -510,7 +510,7 @@ namespace DirectDebitElementsUnitTests
         {
             Debtor debtor = debtors["00002"];
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
-            string internalUniqueInstructionID = "00001";
+            string transactionID = "00001";
             string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             BankAccount debtorAccount = directDebitMandate.BankAccount;
@@ -518,7 +518,7 @@ namespace DirectDebitElementsUnitTests
 
             DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                 new List<SimplifiedBill>(),
-                internalUniqueInstructionID,
+                transactionID,
                 mandateID,
                 mandateSignatureDate,
                 debtorAccount,
@@ -526,7 +526,7 @@ namespace DirectDebitElementsUnitTests
                 null);
 
             List<SimplifiedBill> expectedEmptyList = new List<SimplifiedBill>();
-            Assert.AreEqual(internalUniqueInstructionID, directDebitTransaction.InternalUniqueInstructionID);
+            Assert.AreEqual(transactionID, directDebitTransaction.TransactionID);
             Assert.AreEqual("000077701235", directDebitTransaction.MandateID);
             Assert.AreEqual(mandateSignatureDate, directDebitTransaction.MandateSigatureDate);
             Assert.AreEqual(debtorAccount, directDebitTransaction.DebtorAccount);
@@ -542,7 +542,7 @@ namespace DirectDebitElementsUnitTests
             Debtor debtor = debtors["00002"];
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
             int internalDirectDebitReferenceNumber = directDebitMandate.InternalReferenceNumber;
-            string internalUniqueInstructionID = "00001";
+            string transactionID = "00001";
             string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             BankAccount debtorAccount = directDebitMandate.BankAccount;
@@ -550,7 +550,7 @@ namespace DirectDebitElementsUnitTests
             List<SimplifiedBill> bills = new List<SimplifiedBill> { debtor.SimplifiedBills.ElementAt(0).Value };
             DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                 bills,
-                internalUniqueInstructionID,
+                transactionID,
                 mandateID,
                 mandateSignatureDate,
                 debtorAccount,
@@ -1038,7 +1038,7 @@ namespace DirectDebitElementsUnitTests
         //    Debtor debtor = debtors["00002"];
         //    DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
         //    int internalDirectDebitReferenceNumber = directDebitMandate.InternalReferenceNumber;
-        //    string internalUniqueInstructionID = "00001";
+        //    string transactionID = "00001";
         //    string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
         //    DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
         //    BankAccount debtorAccount = directDebitMandate.BankAccount;
@@ -1046,7 +1046,7 @@ namespace DirectDebitElementsUnitTests
         //    List<SimplifiedBill> bills = new List<SimplifiedBill> { debtor.SimplifiedBills.ElementAt(0).Value };
         //    DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
         //        bills,
-        //        internalUniqueInstructionID,
+        //        transactionID,
         //        mandateID,
         //        mandateSignatureDate,
         //        debtorAccount,
@@ -1068,7 +1068,7 @@ namespace DirectDebitElementsUnitTests
         //    Debtor debtor = debtors["00002"];
         //    DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
         //    int internalDirectDebitReferenceNumber = directDebitMandate.InternalReferenceNumber;
-        //    string internalUniqueInstructionID = "00001";
+        //    string transactionID = "00001";
         //    string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
         //    DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
         //    BankAccount debtorAccount = directDebitMandate.BankAccount;
@@ -1076,7 +1076,7 @@ namespace DirectDebitElementsUnitTests
         //    List<SimplifiedBill> bills = new List<SimplifiedBill> { debtor.SimplifiedBills.ElementAt(0).Value };
         //    DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
         //        bills,
-        //        internalUniqueInstructionID,
+        //        transactionID,
         //        mandateID,
         //        mandateSignatureDate,
         //        debtorAccount,
@@ -1098,7 +1098,7 @@ namespace DirectDebitElementsUnitTests
         //    Debtor debtor = debtors["00002"];
         //    DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
         //    int internalDirectDebitReferenceNumber = directDebitMandate.InternalReferenceNumber;
-        //    string internalUniqueInstructionID = "00001";
+        //    string transactionID = "00001";
         //    string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
         //    DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
         //    BankAccount debtorAccount = directDebitMandate.BankAccount;
@@ -1106,7 +1106,7 @@ namespace DirectDebitElementsUnitTests
         //    List<SimplifiedBill> bills = new List<SimplifiedBill> { debtor.SimplifiedBills.ElementAt(0).Value };
         //    DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
         //        bills,
-        //        internalUniqueInstructionID,
+        //        transactionID,
         //        mandateID,
         //        mandateSignatureDate,
         //        debtorAccount,
