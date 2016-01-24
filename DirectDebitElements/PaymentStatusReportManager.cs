@@ -119,7 +119,7 @@ namespace DirectDebitElements
             return paymentStatusReport;
         }
 
-        public void AddRejectedDirectDebitPaymentInstructionToPaymentStatusReport(
+        public void AddDirectDebitPaymentInstructionRejectToPaymentStatusReport(
             PaymentStatusReport paymentStatusReport,
             DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject)
         {
