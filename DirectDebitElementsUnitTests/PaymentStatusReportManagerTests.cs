@@ -683,7 +683,6 @@ namespace DirectDebitElementsUnitTests
             CollectionAssert.AreEqual(expectedDirectDebitPaymentInstructionRejects, paymentStatusReport.DirectDebitPaymentInstructionRejects);
         }
 
-
         [TestMethod]
         public void WhenAddingAnotherTransactionRejectToADirectDebitPaymentInstructionRejectInsideAPaymentStatusReportTheAmmountAndNumberOfBillsOfThePaymentStatusReportAreCorrectlyUpdated()
         {
