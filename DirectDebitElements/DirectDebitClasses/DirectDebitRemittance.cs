@@ -41,6 +41,7 @@ namespace DirectDebitElements
         {
             this.directDebitPaymentInstructions = directDebitPaymentInstructions;
             UpdateNumberOfDirectDebitTransactionsAndAmount();
+            SuscribeTo_ANewDirectDebitTransactionHasBeenAdded_FromAllPaymentsInstructions();
         }
 
         public DirectDebitRemittance(
@@ -131,6 +132,20 @@ namespace DirectDebitElements
             {
                 string errorMessage = string.Format("The {0} is wrong. It should be {1}, but {2} is provided", "Control Sum", this.controlSum, controlSum);
                 throw new ArgumentException(errorMessage, "controlSum");
+            }
+        }
+
+        private void ANewDirectDebitTransactionHasBeenAddedEventHandler(Object sender, decimal directDebitTransactionAmount)
+        {
+            numberOfTransactions++;
+            controlSum += directDebitTransactionAmount;
+        }
+
+        private void SuscribeTo_ANewDirectDebitTransactionHasBeenAdded_FromAllPaymentsInstructions()
+        {
+            foreach (DirectDebitPaymentInstruction directDebitPaymentInstruction in directDebitPaymentInstructions)
+            {
+                directDebitPaymentInstruction.ANewDirectDebitTransactionHasBeenAdded += ANewDirectDebitTransactionHasBeenAddedEventHandler;
             }
         }
     }

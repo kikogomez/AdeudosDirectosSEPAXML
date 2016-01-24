@@ -6,6 +6,8 @@ namespace DirectDebitElements
 {
     public class DirectDebitPaymentInstruction
     {
+        public event EventHandler<decimal> ANewDirectDebitTransactionHasBeenAdded;
+
         string paymentInformationID;
         string localInstrument;
         List<DirectDebitTransaction> directDebitTransactions;
@@ -107,6 +109,14 @@ namespace DirectDebitElements
         {
             this.numberOfTransactions = directDebitTransactions.Count;
             this.controlSum = directDebitTransactions.Select(directDebitTransaction => directDebitTransaction.Amount).Sum();
+        }
+
+        private void SignalANewDirectDebitTransactiontHasBeenAdded(DirectDebitTransaction directDebitTransaction)
+        {
+            if (ANewDirectDebitTransactionHasBeenAdded != null)
+            {
+                ANewDirectDebitTransactionHasBeenAdded(this, directDebitTransaction.Amount);
+            }
         }
     }
 }

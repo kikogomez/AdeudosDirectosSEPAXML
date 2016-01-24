@@ -25,17 +25,7 @@ namespace DirectDebitElements
             List<DirectDebitPaymentInstructionReject> directDebitPaymentInstructionRejects)
         {
             InitializeFields(messageID, messageCreationDateTime, rejectAccountChargeDateTime, numberOfTransactions, controlSum, directDebitPaymentInstructionRejects);
-            //this.messageID = messageID;
-            //this.messageCreationDateTime = messageCreationDateTime;
-            //this.rejectAccountChargeDateTime = rejectAccountChargeDateTime;
-            //this.numberOfTransactions = directDebitPaymentInstructionRejects.Select(ddPaymentInstructionReject => ddPaymentInstructionReject.NumberOfTransactions).Sum();
-            //this.controlSum = directDebitPaymentInstructionRejects.Select(ddPaymentInstructionReject => ddPaymentInstructionReject.ControlSum).Sum();
-            //this.directDebitPaymentInstructionRejects = directDebitPaymentInstructionRejects;
-            SuscribePaymentsInstructionsRejectsTo_AddedNewTransactionEvent(directDebitPaymentInstructionRejects);
-            //foreach (DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject in directDebitPaymentInstructionRejects)
-            //{
-            //    SuscribeTo_AddedNewTransactionEvent(directDebitPaymentInstructionReject);
-            //}
+            SuscribeTo_ANewDirectDebitTransactionRejectHasBeenAdded_FromAllPaymentsInstructionsRejects(directDebitPaymentInstructionRejects);
         }
 
         public PaymentStatusReport(
@@ -45,16 +35,8 @@ namespace DirectDebitElements
             int numberOfTransactions,
             decimal controlSum,
             List<DirectDebitPaymentInstructionReject> directDebitPaymentInstructionRejects)
+            :this(messageID, messageCreationDateTime, rejectAccountChargeDateTime, directDebitPaymentInstructionRejects)
         {
-            InitializeFields(messageID, messageCreationDateTime, rejectAccountChargeDateTime, numberOfTransactions, controlSum, directDebitPaymentInstructionRejects);
-            
-            //this.messageID = messageID;
-            //this.messageCreationDateTime = messageCreationDateTime;
-            //this.rejectAccountChargeDateTime = rejectAccountChargeDateTime;
-            //this.numberOfTransactions = directDebitPaymentInstructionRejects.Select(ddPaymentInstructionReject => ddPaymentInstructionReject.NumberOfTransactions).Sum();
-            //this.controlSum = directDebitPaymentInstructionRejects.Select(ddPaymentInstructionReject => ddPaymentInstructionReject.ControlSum).Sum();
-            //this.directDebitPaymentInstructionRejects = directDebitPaymentInstructionRejects;
-
             try
             {
                 CheckNumberOfTransactionsAndAmount(numberOfTransactions, controlSum);
@@ -63,13 +45,6 @@ namespace DirectDebitElements
             {
                 throw new TypeInitializationException("PaymentStatusReport", argumentException);
             }
-
-            SuscribePaymentsInstructionsRejectsTo_AddedNewTransactionEvent(directDebitPaymentInstructionRejects);
-
-            //foreach (DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject in directDebitPaymentInstructionRejects)
-            //{
-            //    SuscribeTo_AddedNewTransactionEvent(directDebitPaymentInstructionReject);
-            //}
         }
 
         public string MessageID
@@ -109,17 +84,6 @@ namespace DirectDebitElements
             controlSum += directDebitPaymentInstructionReject.ControlSum;
         }
 
-        //private void SuscribeTo_AddedNewTransactionEvent(DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject)
-        //{
-        //    directDebitPaymentInstructionReject.AddedNewDirectDebitTransactionReject += AddDirectDebitTransactionRejectEventHandler;
-        //}
-
-        private void AddDirectDebitTransactionRejectEventHandler(Object sender, decimal directDebitTransactionRejectAmount)
-        {
-            numberOfTransactions++;
-            controlSum += directDebitTransactionRejectAmount;
-        }
-
         private void InitializeFields(
             string messageID,
             DateTime messageCreationDateTime,
@@ -136,15 +100,6 @@ namespace DirectDebitElements
             this.directDebitPaymentInstructionRejects = directDebitPaymentInstructionRejects;
         }
 
-        private void SuscribePaymentsInstructionsRejectsTo_AddedNewTransactionEvent(List<DirectDebitPaymentInstructionReject> directDebitPaymentInstructionRejects)
-        {
-            foreach (DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject in directDebitPaymentInstructionRejects)
-            {
-                directDebitPaymentInstructionReject.ANewDirectDebitTransactionRejectHasBeenAdded += AddDirectDebitTransactionRejectEventHandler;
-            }
-
-        }
-
         private void CheckNumberOfTransactionsAndAmount(int numberOfTransactions, decimal controlSum)
         {
             if (this.numberOfTransactions != numberOfTransactions)
@@ -156,6 +111,20 @@ namespace DirectDebitElements
             {
                 string errorMessage = string.Format("The {0} is wrong. It should be {1}, but {2} is provided", "Control Sum", this.controlSum, controlSum);
                 throw new ArgumentException(errorMessage, "controlSum");
+            }
+        }
+
+        private void ANewDirectDebitTransactionRejectHasBeenAddedEventHandler(Object sender, decimal directDebitTransactionRejectAmount)
+        {
+            numberOfTransactions++;
+            controlSum += directDebitTransactionRejectAmount;
+        }
+
+        private void SuscribeTo_ANewDirectDebitTransactionRejectHasBeenAdded_FromAllPaymentsInstructionsRejects(List<DirectDebitPaymentInstructionReject> directDebitPaymentInstructionRejects)
+        {
+            foreach (DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject in directDebitPaymentInstructionRejects)
+            {
+                directDebitPaymentInstructionReject.ANewDirectDebitTransactionRejectHasBeenAdded += ANewDirectDebitTransactionRejectHasBeenAddedEventHandler;
             }
         }
     }

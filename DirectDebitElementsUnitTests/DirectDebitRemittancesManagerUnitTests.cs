@@ -521,126 +521,527 @@ namespace DirectDebitElementsUnitTests
             CollectionAssert.AreEqual(billsList, directDebitTransaction.BillsInTransaction);
         }
 
-        //[TestMethod]
-        //public void AnEmptyADirectDebitPaymentInstructionInCorrectlyCreated()
-        //{
-        //    DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
+        [TestMethod]
+        public void AnEmptyADirectDebitPaymentInstructionInCorrectlyCreated()
+        {
+            string localInstrument = "COR1";
 
-        //    string localInstrument = "COR1";
-        //    List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1 };
+            DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = directDebitRemittancesManager.CreateAnEmptyDirectDebitPaymentInstruction(
+                paymentInformationID1,
+                localInstrument);
+
+            Assert.AreEqual("PRE201512010001", directDebitPaymentInstruction.PaymentInformationID);
+            Assert.AreEqual("COR1", directDebitPaymentInstruction.LocalInstrument);
+            Assert.AreEqual(0, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
+            Assert.AreEqual(0, directDebitPaymentInstruction.TotalAmount);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentOutOfRangeException))]
+        public void CantAssignAPaymentInformationIDLongerThan35Characters()
+        {
+            string paymentInformationID = "0123456789012345678901234567890123456789";
+
+            DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
+            try
+            {
+                DirectDebitPaymentInstruction directDebitPaymentInstruction = directDebitRemittancesManager.CreateAnEmptyDirectDebitPaymentInstruction(
+                    paymentInformationID,
+                    "COR1");
+            }
+
+            catch (System.ArgumentOutOfRangeException e)
+            {
+                Assert.AreEqual("PaymentInformationID", e.ParamName);
+                Assert.AreEqual("PaymentInformationID lenght can't exceed 35 characters", e.GetMessageWithoutParamName());
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void CantAssignAnEmptyPaymentInformationID()
+        {
+            DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
+            try
+            {             
+                DirectDebitPaymentInstruction directDebitPaymentInstruction = directDebitRemittancesManager.CreateAnEmptyDirectDebitPaymentInstruction("", "COR1");
+            }
+
+            catch (System.ArgumentException e)
+            {
+                Assert.AreEqual("PaymentInformationID", e.ParamName);
+                Assert.AreEqual("PaymentInformationID lenght can't be empty", e.GetMessageWithoutParamName());
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentNullException))]
+        public void CantAssignANullPaymentInformationID()
+        {
+            DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
+            try
+            {
+                DirectDebitPaymentInstruction directDebitPaymentInstruction = directDebitRemittancesManager.CreateAnEmptyDirectDebitPaymentInstruction(null, "COR1");
+            }
+
+            catch (System.ArgumentNullException e)
+            {
+                Assert.AreEqual("PaymentInformationID", e.ParamName);
+                Assert.AreEqual("PaymentInformationID can't be null", e.GetMessageWithoutParamName());
+                throw;
+            }
+        }
+
+        [TestMethod]
+        public void ADirectDebitTransactionIsCorrectlyAddedToADirectDebitPaymentInstruction()
+        {
+            string localInstrument = "COR1";
+            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1 };
+
+            DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = directDebitRemittancesManager.CreateADirectDebitPaymentInstruction(
+                paymentInformationID1,
+                localInstrument,
+                directDebitTransactions);
+
+            directDebitPaymentInstruction.AddDirectDebitTransaction(directDebitTransaction2);
+
+            Assert.AreEqual(2, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
+            Assert.AreEqual(237, directDebitPaymentInstruction.TotalAmount);
+        }
+
+        [TestMethod]
+        public void ADirectDebitPaymentInstructionIsCorrectlyCreatedWithoutProvidingNumberOfTransactionsNorControlSum()
+        {
+            string localInstrument = "COR1";
+            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
+
+            DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = directDebitRemittancesManager.CreateADirectDebitPaymentInstruction(
+                paymentInformationID1,
+                localInstrument,
+                directDebitTransactions);
+
+            Assert.AreEqual("PRE201512010001", directDebitPaymentInstruction.PaymentInformationID);
+            Assert.AreEqual("COR1", directDebitPaymentInstruction.LocalInstrument);
+            Assert.AreEqual(2, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
+            Assert.AreEqual(237, directDebitPaymentInstruction.TotalAmount);
+        }
+
+        [TestMethod]
+        public void IfGivenCorrectNumberOfTransactionsAndControlSumTheDirectDebitPaymentInstructionIsCorrectlyCreated()
+        {
+            string localInstrument = "COR1";
+            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
+            int numberOfTransactions = directDebitTransactions.Count;
+            decimal controlSum = directDebitTransactions.Select(directDebitTransaction => directDebitTransaction.Amount).Sum();
+
+            DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = directDebitRemittancesManager.CreateADirectDebitPaymentInstruction(
+                paymentInformationID1,
+                localInstrument,
+                directDebitTransactions,
+                numberOfTransactions,
+                controlSum);
+
+            Assert.AreEqual("PRE201512010001", directDebitPaymentInstruction.PaymentInformationID);
+            Assert.AreEqual("COR1", directDebitPaymentInstruction.LocalInstrument);
+            Assert.AreEqual(2, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
+            Assert.AreEqual(237, directDebitPaymentInstruction.TotalAmount);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.TypeInitializationException))]
+        public void IfGivenIncorrectNumberOfTransactionsTheDirectDebitPaymentInstructionThrowsATypeInitializationErrorException()
+        {
+            string localInstrument = "COR1";
+            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
+            int numberOfTransactions = 1;
+            decimal controlSum = directDebitTransactions.Select(directDebitTransaction => directDebitTransaction.Amount).Sum();
+
+            DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
+            try
+            {
+                DirectDebitPaymentInstruction directDebitPaymentInstruction = directDebitRemittancesManager.CreateADirectDebitPaymentInstruction(
+                    paymentInformationID1,
+                    localInstrument,
+                    directDebitTransactions,
+                    numberOfTransactions,
+                    controlSum);
+            }
+            catch (TypeInitializationException typeInitializationException)
+            {
+                Assert.AreEqual("DirectDebitPaymentInstruction", typeInitializationException.TypeName);
+
+                string expectedErrorMessage = "The Number of Transactions is wrong. It should be 2, but 1 is provided";
+                ArgumentException argumentException = (ArgumentException)typeInitializationException.InnerException;
+                string paramName = argumentException.ParamName;
+                string exceptionMessage = argumentException.GetMessageWithoutParamName();
+                Assert.AreEqual("numberOfTransactions", paramName);
+                Assert.AreEqual(expectedErrorMessage, exceptionMessage);
+                throw typeInitializationException;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.TypeInitializationException))]
+        public void IfGivenIncorrectControlSumTheDirectDebitPaymentInstructionThrowsATypeInitializationErrorException()
+        {
+            string localInstrument = "COR1";
+            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
+            int numberOfTransactions = directDebitTransactions.Count;
+            decimal controlSum = 0;
+
+            DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
+            try
+            {
+                DirectDebitPaymentInstruction directDebitPaymentInstruction = directDebitRemittancesManager.CreateADirectDebitPaymentInstruction(
+                    paymentInformationID1,
+                    localInstrument,
+                    directDebitTransactions,
+                    numberOfTransactions,
+                    controlSum);
+            }
+            catch (TypeInitializationException typeInitializationException)
+            {
+                Assert.AreEqual("DirectDebitPaymentInstruction", typeInitializationException.TypeName);
+
+                string expectedErrorMessage = "The Control Sum is wrong. It should be 237, but 0 is provided";
+                ArgumentException argumentException = (ArgumentException)typeInitializationException.InnerException;
+                string paramName = argumentException.ParamName;
+                string exceptionMessage = argumentException.GetMessageWithoutParamName();
+                Assert.AreEqual("controlSum", paramName);
+                Assert.AreEqual(expectedErrorMessage, exceptionMessage);
+                throw typeInitializationException;
+            }
+        }
+
+        [TestMethod]
+        public void AnEmptyDirectDebitRemittanceInstanceIsCorrectlyCreated()
+        {
+            DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
+            string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
+            DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
+
+            DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
+            DirectDebitRemittance directDebitRemittance = directDebitRemittancesManager.CreateAnEmptyDirectDebitRemittance(
+                messageID,
+                creationDate,
+                requestedCollectionDate,
+                directDebitInitiationContract);
+
+            string expectedMessageId = "ES26777G123456782013113007:15:00";
+            Assert.AreEqual(expectedMessageId, directDebitRemittance.MessageID);
+            Assert.AreEqual(creationDate, directDebitRemittance.CreationDate);
+            Assert.AreEqual(requestedCollectionDate, directDebitRemittance.RequestedCollectionDate);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentNullException))]
+        public void MessageIDCantBeNullInADirectDebitRemittance()
+        {
+            DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
+            string messageID = null;
+            DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
+
+            DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
+            try
+            {
+                DirectDebitRemittance directDebitRemittance = directDebitRemittancesManager.CreateAnEmptyDirectDebitRemittance(
+                    messageID,
+                    creationDate,
+                    requestedCollectionDate,
+                    directDebitInitiationContract);
+            }
+
+            catch (System.ArgumentNullException e)
+            {
+                Assert.AreEqual("MessageID", e.ParamName);
+                Assert.AreEqual("MessageID can't be null", e.GetMessageWithoutParamName());
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void MessageIDCantBeEmptyInADirectDebitRemittance()
+        {
+            DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
+            string messageID = "";
+            DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
+
+            DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
+            try
+            {
+                DirectDebitRemittance directDebitRemittance = directDebitRemittancesManager.CreateAnEmptyDirectDebitRemittance(
+                    messageID,
+                    creationDate,
+                    requestedCollectionDate,
+                    directDebitInitiationContract);
+            }
+
+            catch (System.ArgumentException e)
+            {
+                Assert.AreEqual("MessageID", e.ParamName);
+                Assert.AreEqual("MessageID can't be empty", e.GetMessageWithoutParamName());
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentOutOfRangeException))]
+        public void MessageIDCantBeLongerThan35CharactersInADirectDebitRemittance()
+        {
+            DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
+            string messageID = "1234567890123456789012345678901234567890";
+            DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
+
+            DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
+            try
+            {
+                DirectDebitRemittance directDebitRemittance = directDebitRemittancesManager.CreateAnEmptyDirectDebitRemittance(
+                    messageID,
+                    creationDate,
+                    requestedCollectionDate,
+                    directDebitInitiationContract);
+            }
+
+            catch (System.ArgumentOutOfRangeException e)
+            {
+                Assert.AreEqual("MessageID", e.ParamName);
+                Assert.AreEqual("MessageID can't be longer than 35 characters", e.GetMessageWithoutParamName());
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentNullException))]
+        public void DirectDebitInitiationContractCantBeNullInADirectDebitRemittance()
+        {
+            DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
+            string messageID = "ES26777G123456782013113007:15:00";
+            DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
+
+            DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
+            try
+            {
+                DirectDebitRemittance directDebitRemittance = directDebitRemittancesManager.CreateAnEmptyDirectDebitRemittance(
+                    messageID,
+                    creationDate,
+                    requestedCollectionDate,
+                    null);
+            }
+
+            catch (System.ArgumentNullException e)
+            {
+                Assert.AreEqual("DirectDebitInitiationContract", e.ParamName);
+                Assert.AreEqual("DirectDebitInitiationContract can't be null", e.GetMessageWithoutParamName());
+                throw;
+            }
+        }
+
+        [TestMethod]
+        public void AnDirectDebitRemittanceIsCorrectlyCreatedWithoutProvidingNumberOfTransactionsNorControlSum()
+        {
+            DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
+            string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
+            DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
+            string localInstrument = "COR1";
+            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
+                paymentInformationID1, localInstrument, directDebitTransactions);
+            List<DirectDebitPaymentInstruction> directDebitPaymentInstructions = new List<DirectDebitPaymentInstruction>() { directDebitPaymentInstruction };
+
+            DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
+            DirectDebitRemittance directDebitRemittance = directDebitRemittancesManager.CreateADirectDebitRemittance(
+                messageID,
+                creationDate,
+                requestedCollectionDate,
+                directDebitInitiationContract,
+                directDebitPaymentInstructions);
+
+            string expectedMessageId = "ES26777G123456782013113007:15:00";
+            Assert.AreEqual(expectedMessageId, directDebitRemittance.MessageID);
+            Assert.AreEqual(creationDate, directDebitRemittance.CreationDate);
+            Assert.AreEqual(requestedCollectionDate, directDebitRemittance.RequestedCollectionDate);
+            Assert.AreEqual(1, directDebitRemittance.DirectDebitPaymentInstructions.Count);
+            Assert.AreEqual(2, directDebitRemittance.DirectDebitPaymentInstructions[0].NumberOfDirectDebitTransactions);
+            Assert.AreEqual(237, directDebitRemittance.DirectDebitPaymentInstructions[0].TotalAmount);
+        }
+
+        [TestMethod]
+        public void IfGivenCorrectNumberOfTransactionsAndControlSumTheDirectDebitRemittanceIsCorrectlyCreated()
+        {
+            DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
+            string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
+            DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
+            string localInstrument = "COR1";
+            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
+                paymentInformationID1, localInstrument, directDebitTransactions);
+            List<DirectDebitPaymentInstruction> directDebitPaymentInstructions = new List<DirectDebitPaymentInstruction>() { directDebitPaymentInstruction };
+            int numberOfTransactions = directDebitPaymentInstructions.Select(paymentInstruction => paymentInstruction.NumberOfDirectDebitTransactions).Sum();
+            decimal controlSum = directDebitPaymentInstructions.Select(paymentInstruction => paymentInstruction.TotalAmount).Sum();
+
+            DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
+            DirectDebitRemittance directDebitRemittance = directDebitRemittancesManager.CreateADirectDebitRemittance(
+                messageID,
+                creationDate,
+                requestedCollectionDate,
+                directDebitInitiationContract,
+                directDebitPaymentInstructions,
+                numberOfTransactions,
+                controlSum);
+
+            Assert.AreEqual("PRE201512010001", directDebitPaymentInstruction.PaymentInformationID);
+            Assert.AreEqual("COR1", directDebitPaymentInstruction.LocalInstrument);
+            Assert.AreEqual(2, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
+            Assert.AreEqual(237, directDebitPaymentInstruction.TotalAmount);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.TypeInitializationException))]
+        public void IfGivenIncorrectNumberOfTransactionsTheDirectDebitRemittanceThrowsATypeInitializationErrorException()
+        {
+            DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
+            string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
+            DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
+            string localInstrument = "COR1";
+            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
+                paymentInformationID1, localInstrument, directDebitTransactions);
+            List<DirectDebitPaymentInstruction> directDebitPaymentInstructions = new List<DirectDebitPaymentInstruction>() { directDebitPaymentInstruction };
+            int numberOfTransactions = 1;
+            decimal controlSum = directDebitPaymentInstructions.Select(paymentInstruction => paymentInstruction.TotalAmount).Sum();
+
+            DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
+            try
+            {
+                DirectDebitRemittance directDebitRemittance = directDebitRemittancesManager.CreateADirectDebitRemittance(
+                    messageID,
+                    creationDate,
+                    requestedCollectionDate,
+                    directDebitInitiationContract,
+                    directDebitPaymentInstructions,
+                    numberOfTransactions,
+                    controlSum);
+            }
+            catch (TypeInitializationException typeInitializationException)
+            {
+                Assert.AreEqual("DirectDebitRemittance", typeInitializationException.TypeName);
+
+                string expectedErrorMessage = "The Number of Transactions is wrong. It should be 2, but 1 is provided";
+                ArgumentException argumentException = (ArgumentException)typeInitializationException.InnerException;
+                string paramName = argumentException.ParamName;
+                string exceptionMessage = argumentException.GetMessageWithoutParamName();
+                Assert.AreEqual("numberOfTransactions", paramName);
+                Assert.AreEqual(expectedErrorMessage, exceptionMessage);
+                throw typeInitializationException;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.TypeInitializationException))]
+        public void IfGivenIncorrectControlSumTheDirectDebitRemittanceThrowsATypeInitializationErrorException()
+        {
+            DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
+            string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
+            DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
+            string localInstrument = "COR1";
+            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
+                paymentInformationID1, localInstrument, directDebitTransactions);
+            List<DirectDebitPaymentInstruction> directDebitPaymentInstructions = new List<DirectDebitPaymentInstruction>() { directDebitPaymentInstruction };
+            int numberOfTransactions = directDebitPaymentInstructions.Select(paymentInstruction => paymentInstruction.NumberOfDirectDebitTransactions).Sum();
+            decimal controlSum = 100;
+
+            DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
+            try
+            {
+                DirectDebitRemittance directDebitRemittance = directDebitRemittancesManager.CreateADirectDebitRemittance(
+                    messageID,
+                    creationDate,
+                    requestedCollectionDate,
+                    directDebitInitiationContract,
+                    directDebitPaymentInstructions,
+                    numberOfTransactions,
+                    controlSum);
+            }
+            catch (TypeInitializationException typeInitializationException)
+            {
+                Assert.AreEqual("DirectDebitRemittance", typeInitializationException.TypeName);
+
+                string expectedErrorMessage = "The Control Sum is wrong. It should be 237, but 100 is provided";
+                ArgumentException argumentException = (ArgumentException)typeInitializationException.InnerException;
+                string paramName = argumentException.ParamName;
+                string exceptionMessage = argumentException.GetMessageWithoutParamName();
+                Assert.AreEqual("controlSum", paramName);
+                Assert.AreEqual(expectedErrorMessage, exceptionMessage);
+                throw typeInitializationException;
+            }
+        }
 
 
-        //    DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
-        //        paymentInformationID1, localInstrument, directDebitTransactions);
 
-        //    directDebitPaymentInstruction.AddDirectDebitTransaction(directDebitTransaction2);
+        [TestMethod]
+        public void ADirectDebitPaymentInstructionIsCorrectlyAddedToADirectDebitRemittance()
+        {
+            DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
+            string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
+            DateTime requestedCollectionDate = new DateTime(2013, 12, 1);          
+            DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
+            string localInstrument = "COR1";
+            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
+                paymentInformationID1, localInstrument, directDebitTransactions);
 
-        //    Assert.AreEqual(2, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
-        //    Assert.AreEqual(237, directDebitPaymentInstruction.TotalAmount);
-        //}
+            DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
+            directDebitRemittancesManager.AddDirectDebitPaymentInstructionToDirectDebitRemittance(
+                directDebitRemittance,
+                directDebitPaymentInstruction);
 
-        //[TestMethod]
-        //public void ADirectDebitTransactionIsCorrectlyAddedToADirectDebitPaymentInstruction()
-        //{
-        //    string localInstrument = "COR1";
-        //    List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1 };
+            Assert.AreEqual(1, directDebitRemittance.DirectDebitPaymentInstructions.Count);
+            Assert.AreEqual(2, directDebitRemittance.DirectDebitPaymentInstructions[0].NumberOfDirectDebitTransactions);
+            Assert.AreEqual(237, directDebitRemittance.DirectDebitPaymentInstructions[0].TotalAmount);
+        }
 
-        //    DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
-        //        paymentInformationID1, localInstrument, directDebitTransactions);
+        [TestMethod]
+        public void ADirectDebitRemittanceCanHaveMoreThanOnePaymentInstruction()
+        {
+            string localInstrument1 = "COR1";
+            List<DirectDebitTransaction> directDebitTransactions1 = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
+            DirectDebitPaymentInstruction directDebitPaymentInstruction1 = new DirectDebitPaymentInstruction(
+                paymentInformationID1, localInstrument1, directDebitTransactions1);
+            DateTime creationDate = new DateTime(2013, 11, 30, 7, 15, 0);
+            string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
+            DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
+            DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(
+                messageID,
+                creationDate,
+                requestedCollectionDate,
+                directDebitInitiationContract,
+                new List<DirectDebitPaymentInstruction>() { directDebitPaymentInstruction1 });
+            string localInstrument2 = "COR1";
+            List<DirectDebitTransaction> directDebitTransactions2 = new List<DirectDebitTransaction>() { directDebitTransaction3 };
+            DirectDebitPaymentInstruction directDebitPaymentInstruction2 = new DirectDebitPaymentInstruction(
+                paymentInformationID2, localInstrument2, directDebitTransactions2);
 
-        //    directDebitPaymentInstruction.AddDirectDebitTransaction(directDebitTransaction2);
+            DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
+            directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction2);
 
-        //    Assert.AreEqual(2, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
-        //    Assert.AreEqual(237, directDebitPaymentInstruction.TotalAmount);
-        //}
+            Assert.AreEqual(2, directDebitRemittance.DirectDebitPaymentInstructions.Count);
+            Assert.AreEqual(3, directDebitRemittance.NumberOfTransactions);
+            Assert.AreEqual(316, directDebitRemittance.ControlSum);
+            Assert.AreEqual(2, directDebitRemittance.DirectDebitPaymentInstructions[0].NumberOfDirectDebitTransactions);
+            Assert.AreEqual(237, directDebitRemittance.DirectDebitPaymentInstructions[0].TotalAmount);
+            Assert.AreEqual(1, directDebitRemittance.DirectDebitPaymentInstructions[1].NumberOfDirectDebitTransactions);
+            Assert.AreEqual(79, directDebitRemittance.DirectDebitPaymentInstructions[1].TotalAmount);
+        }
 
-        //[TestMethod]
-        //public void ADirectDebitPaymentInstructionIsCorrectlyCreatedWithoutProvidingNumberOfTransactionsNorControlSum()
-        //{
-        //    string localInstrument = "COR1";
-        //    List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
 
-        //    DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
-        //        paymentInformationID1, localInstrument, directDebitTransactions);
-
-        //    Assert.AreEqual("PRE201512010001", directDebitPaymentInstruction.PaymentInformationID);
-        //    Assert.AreEqual("COR1", directDebitPaymentInstruction.LocalInstrument);
-        //    Assert.AreEqual(2, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
-        //    Assert.AreEqual(237, directDebitPaymentInstruction.TotalAmount);
-        //}
-
-        //[TestMethod]
-        //public void IfGivenCorrectNumberOfTransactionsAndControlSumTheDirectDebitPaymentInstructionIsCorrectlyCreated()
-        //{
-        //    string localInstrument = "COR1";
-        //    List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
-        //    int numberOfTransactions = directDebitTransactions.Count;
-        //    decimal controlSum = directDebitTransactions.Select(directDebitTransaction => directDebitTransaction.Amount).Sum();
-
-        //    DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
-        //        paymentInformationID1, localInstrument, directDebitTransactions, numberOfTransactions, controlSum);
-
-        //    Assert.AreEqual("PRE201512010001", directDebitPaymentInstruction.PaymentInformationID);
-        //    Assert.AreEqual("COR1", directDebitPaymentInstruction.LocalInstrument);
-        //    Assert.AreEqual(2, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
-        //    Assert.AreEqual(237, directDebitPaymentInstruction.TotalAmount);
-        //}
-
-        //[TestMethod]
-        //[ExpectedException(typeof(System.TypeInitializationException))]
-        //public void IfGivenIncorrectNumberOfTransactionsTheDirectDebitPaymentInstructionThrowsATypeInitializationErrorException()
-        //{
-        //    string localInstrument = "COR1";
-        //    List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
-        //    int numberOfTransactions = 1;
-        //    decimal controlSum = directDebitTransactions.Select(directDebitTransaction => directDebitTransaction.Amount).Sum();
-
-        //    try
-        //    {
-        //        DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
-        //            paymentInformationID1, localInstrument, directDebitTransactions, numberOfTransactions, controlSum);
-        //    }
-        //    catch (TypeInitializationException typeInitializationException)
-        //    {
-        //        Assert.AreEqual("DirectDebitPaymentInstruction", typeInitializationException.TypeName);
-
-        //        string expectedErrorMessage = "The Number of Transactions is wrong. It should be 2, but 1 is provided";
-        //        ArgumentException argumentException = (ArgumentException)typeInitializationException.InnerException;
-        //        string paramName = argumentException.ParamName;
-        //        string exceptionMessage = argumentException.GetMessageWithoutParamName();
-        //        Assert.AreEqual("numberOfTransactions", paramName);
-        //        Assert.AreEqual(expectedErrorMessage, exceptionMessage);
-        //        throw typeInitializationException;
-        //    }
-        //}
-
-        //[TestMethod]
-        //[ExpectedException(typeof(System.TypeInitializationException))]
-        //public void IfGivenIncorrectControlSumTheDirectDebitPaymentInstructionThrowsATypeInitializationErrorException()
-        //{
-        //    string localInstrument = "COR1";
-        //    List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
-        //    int numberOfTransactions = directDebitTransactions.Count;
-        //    decimal controlSum = 0;
-
-        //    try
-        //    {
-        //        DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
-        //            paymentInformationID1, localInstrument, directDebitTransactions, numberOfTransactions, controlSum);
-        //    }
-        //    catch (TypeInitializationException typeInitializationException)
-        //    {
-        //        Assert.AreEqual("DirectDebitPaymentInstruction", typeInitializationException.TypeName);
-
-        //        string expectedErrorMessage = "The Control Sum is wrong. It should be 237, but 0 is provided";
-        //        ArgumentException argumentException = (ArgumentException)typeInitializationException.InnerException;
-        //        string paramName = argumentException.ParamName;
-        //        string exceptionMessage = argumentException.GetMessageWithoutParamName();
-        //        Assert.AreEqual("controlSum", paramName);
-        //        Assert.AreEqual(expectedErrorMessage, exceptionMessage);
-        //        throw typeInitializationException;
-        //    }
-        //}
 
 
 

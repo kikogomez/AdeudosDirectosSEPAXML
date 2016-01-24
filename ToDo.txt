@@ -1,20 +1,14 @@
-- Permitir inicializar DirectDebitPaymentInstruction con una lista de Transacciones, en vez de solo poder empezar vacia y añadir posteriormente. Conm esto evitamos recalcular el numero de transacciones y la suma de las mismas en cada iteración
-	-> Crear el constructor, que tambien incluya numero de transacciones y suma de control. (OK)
-	-> Añadir los tests unitarios basicos (OK)
-	-> Añadir un checkeo de numero de transacciones y suma de control que lance una excepcion (OK)
-	-> Añadir la funcion al 'Manager'
-	-> Tests del ''Manager'
-- Permitir inicializar DirectDebitRemittance con una lista de PaymentInstructions, en vez de solo poder empezar vacia y añadir posteriormente. Conm esto evitamos recalcular el numero de transacciones y la suma de las mismas en cada iteración 
-	-> Crear el constructor, que tambien incluya numero de transacciones y suma de control. (OK)
-	-> Añadir los tests unitarios basicos (Ok)
-	-> Añadir un checkeo de numero de transacciones y suma de control que lance una excepcion (Ok)
-	-> Añadir la fuincion al 'Manager'
-	-> Añadir los tests al 'Manager'
+- Permitir un constructor de PaymentStatusReport sin PaymentInstrucions
+
+
 - Si se añade una transaccion a un PaymentInstruction que ya esté dentro de un Remittance, que este último se entere para actualizar su suma de control
 	-> Crear un evento 'PaymentInstructionChanged' al que debe suscribirse el Remittance
 - Si se añade una factura a una transaccion que ya este en un PaymentInstructio, que este se entere, e igualmente lo haga el Remittance (evento al que suscribirse, y que se lancen en)
     -> Crear un evento 'TransactionChanged' al que debe suscribirse el PaymentInstruction. Cuando PaymentInstruction se actualice, debe señalizar a su vez 'PaymentInstructionChanged' para que lo tome el Remittance.
 	-> No se debe suscribir el Remittance al evento 'TransactionChanged', ya que no se garantiza el orden de ejecucion de los consumidores, y PaymentInstruction debe procesar el evento primero. Es por ello la actualizacion 'en cascada'
+
+- ¡Al añadir un nuevo transaction o bill, no olvidar que hay hay que suscribirse al evento conrrepondiente, no solo desde el contructor!
+
 - Los constructores de DirectDebitPaymentInstruction, DirectDebitPaymentInstructionReject, DirectDebitRemittance y paymentStatusReport se ejecuten en cascada si es necesario, para evitar duplicidades de código
 - Chequear que los InternalUIniqueInstructionID son realmente unicos (no se pueden repetir dentro de un PaymentInstruction)
 

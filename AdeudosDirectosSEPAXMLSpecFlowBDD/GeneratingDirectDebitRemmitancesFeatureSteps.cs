@@ -261,7 +261,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             DirectDebitPaymentInstruction directDebitPaymentInstruction =
                 (DirectDebitPaymentInstruction)ScenarioContext.Current["DirectDebitPaymentInstruction"];
             DirectDebitTransaction directDebitTransaction = (DirectDebitTransaction)ScenarioContext.Current["DirectDebitTransaction"];
-            directDebitRemittancesManager.AddDirectDebitTransactionToGroupPayment(directDebitTransaction, directDebitPaymentInstruction);
+            directDebitRemittancesManager.AddDirectDebitTransactionToDirectDebitPaymentInstruction(directDebitTransaction, directDebitPaymentInstruction);
         }
 
         [Then(@"The group of payments is updated with (.*) direct debit and total amount of (.*)")]
@@ -291,7 +291,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
                 null);
             DirectDebitPaymentInstruction directDebitPaymentInstruction =
                 directDebitRemittancesManager.CreateAnEmptyDirectDebitPaymentInstruction("PaymentGroup1", "COR1");
-            directDebitRemittancesManager.AddDirectDebitTransactionToGroupPayment(directDebitTransaction, directDebitPaymentInstruction);
+            directDebitRemittancesManager.AddDirectDebitTransactionToDirectDebitPaymentInstruction(directDebitTransaction, directDebitPaymentInstruction);
             Assert.AreEqual(numberOfDirectDebitTransactions, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
             Assert.AreEqual(amount, directDebitPaymentInstruction.TotalAmount);
             ScenarioContext.Current.Add("DirectDebitPaymentInstruction", directDebitPaymentInstruction);
@@ -316,7 +316,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             Assert.AreEqual(amount, directDebitTransaction.Amount);
             DirectDebitPaymentInstruction directDebitPaymentInstruction =
                 (DirectDebitPaymentInstruction)ScenarioContext.Current["DirectDebitPaymentInstruction"];
-            directDebitRemittancesManager.AddDirectDebitTransactionToGroupPayment(directDebitTransaction, directDebitPaymentInstruction);
+            directDebitRemittancesManager.AddDirectDebitTransactionToDirectDebitPaymentInstruction(directDebitTransaction, directDebitPaymentInstruction);
         }
 
         [Given(@"I have an empty direct debit Remittance")]
@@ -336,7 +336,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             DirectDebitPaymentInstruction directDebitPaymentInstruction =
                 (DirectDebitPaymentInstruction)ScenarioContext.Current["DirectDebitPaymentInstruction"];
             DirectDebitRemittance directDebitRemittance = (DirectDebitRemittance)ScenarioContext.Current["DirectDebitRemittance"];
-            directDebitRemittancesManager.AddDirectDebitTransactionGroupPaymentToDirectDebitRemittance(directDebitRemittance, directDebitPaymentInstruction);
+            directDebitRemittancesManager.AddDirectDebitPaymentInstructionToDirectDebitRemittance(directDebitRemittance, directDebitPaymentInstruction);
         }
 
         [Then(@"The direct debit remittance is updated with (.*) direct debit and total amount of (.*)")]
@@ -375,10 +375,10 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
                 {
                     directDebitRemittancesManager.AddBilllToExistingDirectDebitTransaction(directDebitTransaction, bill);
                 }
-                directDebitRemittancesManager.AddDirectDebitTransactionToGroupPayment(
+                directDebitRemittancesManager.AddDirectDebitTransactionToDirectDebitPaymentInstruction(
                     directDebitTransaction, directDebitPaymentInstruction);
             }
-            directDebitRemittancesManager.AddDirectDebitTransactionGroupPaymentToDirectDebitRemittance(
+            directDebitRemittancesManager.AddDirectDebitPaymentInstructionToDirectDebitRemittance(
                 directDebitRemittance, directDebitPaymentInstruction);
             ScenarioContext.Current.Add("DirectDebitRemittance", directDebitRemittance);
         }

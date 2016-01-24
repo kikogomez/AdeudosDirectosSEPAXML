@@ -1035,8 +1035,94 @@ namespace DirectDebitElementsUnitTests
         }
 
 
+        //[TestMethod]
+        //public void WhenAddingAnotherBillToADirectDebitTransactionInsideAPaymentInstructionTheAmmountAndNumberOfBillsOfThePaymentInstructionAreCorrectlyUpdated()
+        //{
+        //    Debtor debtor = debtors["00002"];
+        //    DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
+        //    int internalDirectDebitReferenceNumber = directDebitMandate.InternalReferenceNumber;
+        //    string internalUniqueInstructionID = "00001";
+        //    string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
+        //    DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
+        //    BankAccount debtorAccount = directDebitMandate.BankAccount;
+        //    string accountHolderName = directDebitMandate.AccountHolderName;
+        //    List<SimplifiedBill> bills = new List<SimplifiedBill> { debtor.SimplifiedBills.ElementAt(0).Value };
+        //    DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
+        //        bills,
+        //        internalUniqueInstructionID,
+        //        mandateID,
+        //        mandateSignatureDate,
+        //        debtorAccount,
+        //        accountHolderName,
+        //        null);
+        //    Assert.AreEqual((decimal)79, directDebitTransaction.Amount);
+        //    Assert.AreEqual(1, directDebitTransaction.NumberOfBills);
+        //    SimplifiedBill bill = debtor.SimplifiedBills.ElementAt(1).Value;
 
+        //    directDebitTransaction.AddBill(bill);
 
+        //    Assert.AreEqual((decimal)158, directDebitTransaction.Amount);
+        //    Assert.AreEqual(2, directDebitTransaction.NumberOfBills);
+        //}
 
+        //[TestMethod]
+        //public void WhenAddingAnotherBillToADirectDebitTransactionInsideARemmitanceTheAmmountAndNumberOfBillsOfTheRemmitanceAreCorrectlyUpdated()
+        //{
+        //    Debtor debtor = debtors["00002"];
+        //    DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
+        //    int internalDirectDebitReferenceNumber = directDebitMandate.InternalReferenceNumber;
+        //    string internalUniqueInstructionID = "00001";
+        //    string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
+        //    DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
+        //    BankAccount debtorAccount = directDebitMandate.BankAccount;
+        //    string accountHolderName = directDebitMandate.AccountHolderName;
+        //    List<SimplifiedBill> bills = new List<SimplifiedBill> { debtor.SimplifiedBills.ElementAt(0).Value };
+        //    DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
+        //        bills,
+        //        internalUniqueInstructionID,
+        //        mandateID,
+        //        mandateSignatureDate,
+        //        debtorAccount,
+        //        accountHolderName,
+        //        null);
+        //    Assert.AreEqual((decimal)79, directDebitTransaction.Amount);
+        //    Assert.AreEqual(1, directDebitTransaction.NumberOfBills);
+        //    SimplifiedBill bill = debtor.SimplifiedBills.ElementAt(1).Value;
+
+        //    directDebitTransaction.AddBill(bill);
+
+        //    Assert.AreEqual((decimal)158, directDebitTransaction.Amount);
+        //    Assert.AreEqual(2, directDebitTransaction.NumberOfBills);
+        //}
+
+        //[TestMethod]
+        //public void WhenAddingAnotherTransactionToADirectDebitPaymentInstructionInsideARemmitanceTheAmmountAndNumberOfBillsOfTheRemmitanceAreCorrectlyUpdated()
+        //{
+        //    Debtor debtor = debtors["00002"];
+        //    DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
+        //    int internalDirectDebitReferenceNumber = directDebitMandate.InternalReferenceNumber;
+        //    string internalUniqueInstructionID = "00001";
+        //    string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
+        //    DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
+        //    BankAccount debtorAccount = directDebitMandate.BankAccount;
+        //    string accountHolderName = directDebitMandate.AccountHolderName;
+        //    List<SimplifiedBill> bills = new List<SimplifiedBill> { debtor.SimplifiedBills.ElementAt(0).Value };
+        //    DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
+        //        bills,
+        //        internalUniqueInstructionID,
+        //        mandateID,
+        //        mandateSignatureDate,
+        //        debtorAccount,
+        //        accountHolderName,
+        //        null);
+        //    Assert.AreEqual((decimal)79, directDebitTransaction.Amount);
+        //    Assert.AreEqual(1, directDebitTransaction.NumberOfBills);
+        //    SimplifiedBill bill = debtor.SimplifiedBills.ElementAt(1).Value;
+
+        //    directDebitTransaction.AddBill(bill);
+
+        //    Assert.AreEqual((decimal)158, directDebitTransaction.Amount);
+        //    Assert.AreEqual(2, directDebitTransaction.NumberOfBills);
+        //}
     }
 }

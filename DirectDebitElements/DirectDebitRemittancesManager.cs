@@ -50,7 +50,9 @@ namespace DirectDebitElements
             return directDebitTransaction;
         }
 
-        public void AddBilllToExistingDirectDebitTransaction(DirectDebitTransaction directDebitTransaction, SimplifiedBill bill)
+        public void AddBilllToExistingDirectDebitTransaction(
+            DirectDebitTransaction directDebitTransaction,
+            SimplifiedBill bill)
         {
             directDebitTransaction.AddBill(bill);
         }
@@ -65,16 +67,35 @@ namespace DirectDebitElements
             return directDebitPaymentInstruction;
         }
 
-        //public DirectDebitPaymentInstruction CreateADirectDebitPaymentInstruction(
-        //    string paymentInformationID,
-        //    string localInstrument,
-        //    List<DirectDebitTransaction> directDebitTransactions )
-        //{
-        //    DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, localInstrument, directDebitTransactions);
-        //    return directDebitPaymentInstruction;
-        //}
+        public DirectDebitPaymentInstruction CreateADirectDebitPaymentInstruction(
+            string paymentInformationID,
+            string localInstrument,
+            List<DirectDebitTransaction> directDebitTransactions)
+        {
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
+                paymentInformationID,
+                localInstrument,
+                directDebitTransactions);
+            return directDebitPaymentInstruction;
+        }
 
-        public void AddDirectDebitTransactionToGroupPayment(
+        public DirectDebitPaymentInstruction CreateADirectDebitPaymentInstruction(
+            string paymentInformationID,
+            string localInstrument,
+            List<DirectDebitTransaction> directDebitTransactions,
+            int numberOfTransactions,
+            decimal controlSum)
+        {
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
+                paymentInformationID,
+                localInstrument,
+                directDebitTransactions,
+                numberOfTransactions,
+                controlSum);
+            return directDebitPaymentInstruction;
+        }
+
+        public void AddDirectDebitTransactionToDirectDebitPaymentInstruction(
             DirectDebitTransaction directDebitTransaction,
             DirectDebitPaymentInstruction directDebitPaymentInstruction)
         {
@@ -95,23 +116,43 @@ namespace DirectDebitElements
             return directDebitRemittance;
         }
 
-        //public DirectDebitRemittance CreateADirectDebitRemittance(
-        //    string messageID,
-        //    DateTime creationDateTime,
-        //    DateTime requestedCollectionDate,
-        //    DirectDebitInitiationContract directDebitInitiationContract,
-        //    List<DirectDebitPaymentInstruction> directDebitPaymentInstructions)
-        //{
-        //    DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(
-        //        messageID,
-        //        creationDateTime,
-        //        requestedCollectionDate,
-        //        directDebitInitiationContract,
-        //        directDebitPaymentInstructions);
-        //    return directDebitRemittance;
-        //}
+        public DirectDebitRemittance CreateADirectDebitRemittance(
+            string messageID,
+            DateTime creationDateTime,
+            DateTime requestedCollectionDate,
+            DirectDebitInitiationContract directDebitInitiationContract,
+            List<DirectDebitPaymentInstruction> directDebitPaymentInstructions)
+        {
+            DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(
+                messageID,
+                creationDateTime,
+                requestedCollectionDate,
+                directDebitInitiationContract,
+                directDebitPaymentInstructions);
+            return directDebitRemittance;
+        }
 
-        public void AddDirectDebitTransactionGroupPaymentToDirectDebitRemittance(
+        public DirectDebitRemittance CreateADirectDebitRemittance(
+            string messageID,
+            DateTime creationDateTime,
+            DateTime requestedCollectionDate,
+            DirectDebitInitiationContract directDebitInitiationContract,
+            List<DirectDebitPaymentInstruction> directDebitPaymentInstructions,
+            int numberOfTransactions,
+            decimal controlSum)
+        {
+            DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(
+                messageID,
+                creationDateTime,
+                requestedCollectionDate,
+                directDebitInitiationContract,
+                numberOfTransactions,
+                controlSum,
+                directDebitPaymentInstructions);
+            return directDebitRemittance;
+        }
+
+        public void AddDirectDebitPaymentInstructionToDirectDebitRemittance(
             DirectDebitRemittance directDebitRemittance,
             DirectDebitPaymentInstruction directDebitPaymentInstruction)
         {
