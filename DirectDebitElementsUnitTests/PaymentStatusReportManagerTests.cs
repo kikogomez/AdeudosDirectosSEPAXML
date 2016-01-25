@@ -10,17 +10,28 @@ namespace DirectDebitElementsUnitTests
     [TestClass]
     public class PaymentStatusReportManagerTests
     {
-        static DirectDebitTransactionReject directDebitTransactionReject1;
-        static DirectDebitTransactionReject directDebitTransactionReject2;
-        static DirectDebitTransactionReject directDebitTransactionReject3;
-        static List<DirectDebitTransactionReject> directDebitTransactionsRejectsList1;
-        static List<DirectDebitTransactionReject> directDebitTransactionsRejectsList2;
+        DirectDebitTransactionReject directDebitTransactionReject1;
+        DirectDebitTransactionReject directDebitTransactionReject2;
+        DirectDebitTransactionReject directDebitTransactionReject3;
+        List<DirectDebitTransactionReject> directDebitTransactionsRejectsList1;
+        List<DirectDebitTransactionReject> directDebitTransactionsRejectsList2;
+
         static string originalPaymentInformationID1;
         static string originalPaymentInformationID2;
 
         [ClassInitialize]
         public static void ClassInit(TestContext context)
         {
+            originalPaymentInformationID1 = "PRE201512010001";
+            originalPaymentInformationID2 = "PRE201511150001";
+        }
+
+        [TestInitialize]
+        public void InitializeTransacions()
+        {
+            // La inicializacion de las transacciones no se hace con variables estáticas
+            // pues la suscripcion a eventos interacciona entre los tests
+
             directDebitTransactionReject1 = new DirectDebitTransactionReject(
                 "0123456788",
                 "2015120100124",
@@ -55,9 +66,6 @@ namespace DirectDebitElementsUnitTests
             directDebitTransactionsRejectsList2 =
                 new List<DirectDebitTransactionReject>()
                 { directDebitTransactionReject3};
-
-            originalPaymentInformationID1 = "PRE201512010001";
-            originalPaymentInformationID2 = "PRE201511150001";
         }
 
         [TestMethod]
@@ -703,6 +711,30 @@ namespace DirectDebitElementsUnitTests
 
             PaymentStatusReportManager paymentStatusReportManager = new PaymentStatusReportManager();
             paymentStatusReportManager.AddTransactionRejectToPaymentInstructionReject(directDebitPaymentInstructionReject1, newDirectDebitTransactionReject);
+
+            Assert.AreEqual(3, paymentStatusReport.NumberOfTransactions);
+            Assert.AreEqual(230, paymentStatusReport.ControlSum);
+        }
+
+        [TestMethod]
+        public void WhenAddingAnotherTransactionRejectToADirectDebitPaymentInstructionRejectRecentlyAddedToAPaymentStatusReportTheAmmountAndNumberOfBillsOfThePaymentStatusReportAreCorrectlyUpdated()
+        {
+            string messageID = "DATIR00112G12345678100";
+            DateTime messageCreationDateTime = DateTime.Parse("2012-07-18T06:00:01");
+            DateTime rejectAccountChargeDateTime = DateTime.Parse("2012-07-18");
+            PaymentStatusReport paymentStatusReport = new PaymentStatusReport(
+                messageID,
+                messageCreationDateTime,
+                rejectAccountChargeDateTime);
+            DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject1 = new DirectDebitPaymentInstructionReject(
+                originalPaymentInformationID1,
+                directDebitTransactionsRejectsList1);
+            paymentStatusReport.AddDirectDebitPaymentInstructionReject(directDebitPaymentInstructionReject1);
+            DirectDebitTransactionReject newDirectDebitTransactionReject = directDebitTransactionsRejectsList2[0];
+
+            PaymentStatusReportManager paymentStatusReportManager = new PaymentStatusReportManager();
+            paymentStatusReportManager.AddTransactionRejectToPaymentInstructionReject(directDebitPaymentInstructionReject1, newDirectDebitTransactionReject);
+            //paymentStatusReport.DirectDebitPaymentInstructionRejects[0].AddDirectDebitTransactionReject(newDirectDebitTransactionReject);
 
             Assert.AreEqual(3, paymentStatusReport.NumberOfTransactions);
             Assert.AreEqual(230, paymentStatusReport.ControlSum);

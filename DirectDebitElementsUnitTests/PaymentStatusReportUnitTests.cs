@@ -10,17 +10,28 @@ namespace DirectDebitElementsUnitTests
     [TestClass]
     public class PaymentStatusReportUnitTests
     {
-        static DirectDebitTransactionReject directDebitTransactionReject1;
-        static DirectDebitTransactionReject directDebitTransactionReject2;
-        static DirectDebitTransactionReject directDebitTransactionReject3;
-        static List<DirectDebitTransactionReject> directDebitTransactionRejectsList1;
-        static List<DirectDebitTransactionReject> directDebitTransactionRejectsList2;
+        DirectDebitTransactionReject directDebitTransactionReject1;
+        DirectDebitTransactionReject directDebitTransactionReject2;
+        DirectDebitTransactionReject directDebitTransactionReject3;
+        List<DirectDebitTransactionReject> directDebitTransactionRejectsList1;
+        List<DirectDebitTransactionReject> directDebitTransactionRejectsList2;
+
         static string originalPaymentInformationID1;
         static string originalPaymentInformationID2;
 
         [ClassInitialize]
         public static void ClassInit(TestContext context)
         {
+            originalPaymentInformationID1 = "PRE201512010001";
+            originalPaymentInformationID2 = "PRE201511150001";
+        }
+
+        [TestInitialize]
+        public void InitializeTransacions()
+        {
+            // La inicializacion de las transacciones no se hace con variables estáticas
+            // pues la suscripcion a eventos interacciona entre los tests
+
             directDebitTransactionReject1 = new DirectDebitTransactionReject(
                 "0123456788",
                 "2015120100124",
@@ -55,9 +66,6 @@ namespace DirectDebitElementsUnitTests
             directDebitTransactionRejectsList2 =
                 new List<DirectDebitTransactionReject>()
                 { directDebitTransactionReject3};
-
-            originalPaymentInformationID1 = "PRE201512010001";
-            originalPaymentInformationID2 = "PRE201511150001";
         }
 
         [TestMethod]

@@ -1,3 +1,5 @@
+- ¡Cuidado con las instancias estáticas!¡Los contenidos se pueden modificar entre los test! Por ejemplo, la suscripcion a sus eventos se ha duplicado, por lo que se se lanza solo un test o se lanzan todos, la cosa cambia.
+
 - Si se añade una transaccion a un PaymentInstruction que ya esté dentro de un Remittance, que este último se entere para actualizar su suma de control
 	-> Crear un evento 'PaymentInstructionChanged' al que debe suscribirse el Remittance
 - Si se añade una factura a una transaccion que ya este en un PaymentInstructio, que este se entere, e igualmente lo haga el Remittance (evento al que suscribirse, y que se lancen en)
