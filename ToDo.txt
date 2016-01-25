@@ -17,6 +17,7 @@
 			* AmendmentInformationDetails6 (Ok)
 			* DirectDebitTransactionInformation9 gestiona bien el AmendmentInformation (Ok)
 			* Mirar los casos: (Ok)
+				-> Cambio de MandateID
 				-> Cambio de cuenta en el mismo banco se pone el nuevo banco (Etiqueta <OrgnlDbtrAcct>)
 				-> Cambio de cuenta a otro banco NO se pone el nuev banco, sino SMNDA en <OrgnlDbtrAgt>
 			* Tests de SEPAElementsGenerator
