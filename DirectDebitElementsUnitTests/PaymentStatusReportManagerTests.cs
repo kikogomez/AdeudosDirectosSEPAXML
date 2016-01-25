@@ -730,11 +730,9 @@ namespace DirectDebitElementsUnitTests
                 originalPaymentInformationID1,
                 directDebitTransactionsRejectsList1);
             paymentStatusReport.AddDirectDebitPaymentInstructionReject(directDebitPaymentInstructionReject1);
-            DirectDebitTransactionReject newDirectDebitTransactionReject = directDebitTransactionsRejectsList2[0];
 
             PaymentStatusReportManager paymentStatusReportManager = new PaymentStatusReportManager();
-            paymentStatusReportManager.AddTransactionRejectToPaymentInstructionReject(directDebitPaymentInstructionReject1, newDirectDebitTransactionReject);
-            //paymentStatusReport.DirectDebitPaymentInstructionRejects[0].AddDirectDebitTransactionReject(newDirectDebitTransactionReject);
+            paymentStatusReportManager.AddTransactionRejectToPaymentInstructionReject(directDebitPaymentInstructionReject1, directDebitTransactionReject3);
 
             Assert.AreEqual(3, paymentStatusReport.NumberOfTransactions);
             Assert.AreEqual(230, paymentStatusReport.ControlSum);

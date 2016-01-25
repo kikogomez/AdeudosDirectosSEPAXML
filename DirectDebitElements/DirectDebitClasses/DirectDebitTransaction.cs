@@ -8,6 +8,8 @@ namespace DirectDebitElements
 {
     public class DirectDebitTransaction
     {
+        public event EventHandler<decimal> ANewBillHasBeenAdded;
+
         List<SimplifiedBill> billsInTransaction;
         decimal totalAmount;
         int numberOfBills;
@@ -81,6 +83,7 @@ namespace DirectDebitElements
         {
             this.billsInTransaction.Add(bill);
             UpdateAmountAndNumberOfBills();
+            SignalANewBillHasBeenAdded(bill);
         }
 
         private void InitializeFields(
@@ -117,6 +120,14 @@ namespace DirectDebitElements
             if (mandateID.Trim().Length > 35) throw new ArgumentOutOfRangeException("MandateID", "MandateID can't be longer than 35 characters");
             if (debtorAccount == null) throw new ArgumentNullException("DebtorAccount", "DebtorAccount can't be null");
             if (!debtorAccount.HasValidIBAN) throw new ArgumentException("DebtorAccount", "DebtorAccount must be a valid IBAN");
+        }
+
+        private void SignalANewBillHasBeenAdded(SimplifiedBill bill)
+        {
+            if (ANewBillHasBeenAdded != null)
+            {
+                ANewBillHasBeenAdded(this, bill.Amount);
+            }
         }
     }
 }

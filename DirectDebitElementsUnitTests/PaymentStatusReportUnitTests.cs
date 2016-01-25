@@ -724,9 +724,8 @@ namespace DirectDebitElementsUnitTests
                 messageCreationDateTime,
                 rejectAccountChargeDateTime,
                 directDebitPaymentInstructionRejects);
-            DirectDebitTransactionReject newDirectDebitTransactionReject = directDebitTransactionRejectsList2[0];
 
-            paymentStatusReport.DirectDebitPaymentInstructionRejects[0].AddDirectDebitTransactionReject(newDirectDebitTransactionReject);
+            directDebitPaymentInstructionReject1.AddDirectDebitTransactionReject(directDebitTransactionReject3);
 
             Assert.AreEqual(3, paymentStatusReport.NumberOfTransactions);
             Assert.AreEqual(230, paymentStatusReport.ControlSum);
@@ -746,9 +745,8 @@ namespace DirectDebitElementsUnitTests
                 originalPaymentInformationID1,
                 directDebitTransactionRejectsList1);
             paymentStatusReport.AddDirectDebitPaymentInstructionReject(directDebitPaymentInstructionReject1);
-            DirectDebitTransactionReject newDirectDebitTransactionReject = directDebitTransactionRejectsList2[0];
 
-            paymentStatusReport.DirectDebitPaymentInstructionRejects[0].AddDirectDebitTransactionReject(newDirectDebitTransactionReject);
+            directDebitPaymentInstructionReject1.AddDirectDebitTransactionReject(directDebitTransactionReject3);
 
             Assert.AreEqual(3, paymentStatusReport.NumberOfTransactions);
             Assert.AreEqual(230, paymentStatusReport.ControlSum);

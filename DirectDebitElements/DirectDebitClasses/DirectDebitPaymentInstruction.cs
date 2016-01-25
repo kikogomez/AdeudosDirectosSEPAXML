@@ -7,6 +7,7 @@ namespace DirectDebitElements
     public class DirectDebitPaymentInstruction
     {
         public event EventHandler<decimal> ANewDirectDebitTransactionHasBeenAdded;
+        public event EventHandler<decimal> ABillHasBeenAdddedToAnExistingDirectDebitTransacion;
 
         string paymentInformationID;
         string localInstrument;
@@ -33,6 +34,7 @@ namespace DirectDebitElements
         {
             this.directDebitTransactions = directDebitTransactions;
             UpdateNumberOfDirectDebitTransactionsAndAmount();
+            SuscribeTo_ANewBillHasBeenAddedEvent_FromAllTransactions();
         }
 
         public DirectDebitPaymentInstruction(
@@ -82,6 +84,8 @@ namespace DirectDebitElements
         {
             directDebitTransactions.Add(directDebitTransaction);
             UpdateNumberOfDirectDebitTransactionsAndAmount();
+            SuscribeTo_ANewBillHasBeenAddedEvent(directDebitTransaction);
+            SignalANewDirectDebitTransactiontHasBeenAdded(directDebitTransaction.Amount);
         }
 
         private void CheckPaymentInformationID(string paymentInformationID)
@@ -111,11 +115,39 @@ namespace DirectDebitElements
             this.controlSum = directDebitTransactions.Select(directDebitTransaction => directDebitTransaction.Amount).Sum();
         }
 
-        private void SignalANewDirectDebitTransactiontHasBeenAdded(DirectDebitTransaction directDebitTransaction)
+        private void ANewBillHasBeenAddedEventHandler(Object sender, decimal billAmout)
+        {
+            //numberOfTransactions++;
+            controlSum += billAmout;
+            SignalABillHasBeenAdddedToAnExistingDirectDebitTransacion(billAmout);
+        }
+
+        private void SuscribeTo_ANewBillHasBeenAddedEvent_FromAllTransactions()
+        {
+            foreach (DirectDebitTransaction directDebitTransaction in directDebitTransactions)
+            {
+                SuscribeTo_ANewBillHasBeenAddedEvent(directDebitTransaction);
+            }
+        }
+
+        private void SuscribeTo_ANewBillHasBeenAddedEvent(DirectDebitTransaction directDebitTransaction)
+        {
+            directDebitTransaction.ANewBillHasBeenAdded += ANewBillHasBeenAddedEventHandler;
+        }
+
+        private void SignalANewDirectDebitTransactiontHasBeenAdded(decimal amount)
         {
             if (ANewDirectDebitTransactionHasBeenAdded != null)
             {
-                ANewDirectDebitTransactionHasBeenAdded(this, directDebitTransaction.Amount);
+                ANewDirectDebitTransactionHasBeenAdded(this, amount);
+            }
+        }
+
+        private void SignalABillHasBeenAdddedToAnExistingDirectDebitTransacion(decimal amount)
+        {
+            if (ABillHasBeenAdddedToAnExistingDirectDebitTransacion != null)
+            {
+                ABillHasBeenAdddedToAnExistingDirectDebitTransacion(this, amount);
             }
         }
     }

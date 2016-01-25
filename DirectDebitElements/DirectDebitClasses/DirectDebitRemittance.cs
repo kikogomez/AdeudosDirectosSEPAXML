@@ -41,7 +41,8 @@ namespace DirectDebitElements
         {
             this.directDebitPaymentInstructions = directDebitPaymentInstructions;
             UpdateNumberOfDirectDebitTransactionsAndAmount();
-            //SuscribeTo_ANewDirectDebitTransactionHasBeenAdded_FromAllPaymentsInstructions();
+            SuscribeTo_ANewDirectDebitTransactionHasBeenAddedEvent_FromAllPaymentsInstructions();
+            SuscribeTo_ABillHasBeenAdddedToAnExistingDirectDebitTransacionEvent_FromAllPaymentsInstructions();
         }
 
         public DirectDebitRemittance(
@@ -103,7 +104,8 @@ namespace DirectDebitElements
         {
             directDebitPaymentInstructions.Add(directDebitPaymentInstruction);
             UpdateNumberOfDirectDebitTransactionsAndAmount();
-            //Suscribirse al evento ANewDirectDebitTransactionHasBeenAdded
+            SuscribeTo_ANewDirectDebitTransactionHasBeenAddedEvent(directDebitPaymentInstruction);
+            SuscribeTo_ABillHasBeenAdddedToAnExistingDirectDebitTransacionEvent(directDebitPaymentInstruction);
         }
 
         private void UpdateNumberOfDirectDebitTransactionsAndAmount()
@@ -136,18 +138,41 @@ namespace DirectDebitElements
             }
         }
 
-        //private void ANewDirectDebitTransactionHasBeenAddedEventHandler(Object sender, decimal directDebitTransactionAmount)
-        //{
-        //    numberOfTransactions++;
-        //    controlSum += directDebitTransactionAmount;
-        //}
+        private void ANewDirectDebitTransactionHasBeenAddedEventHandler(Object sender, decimal directDebitTransactionAmount)
+        {
+            numberOfTransactions++;
+            controlSum += directDebitTransactionAmount;
+        }
 
-        //private void SuscribeTo_ANewDirectDebitTransactionHasBeenAdded_FromAllPaymentsInstructions()
-        //{
-        //    foreach (DirectDebitPaymentInstruction directDebitPaymentInstruction in directDebitPaymentInstructions)
-        //    {
-        //        directDebitPaymentInstruction.ANewDirectDebitTransactionHasBeenAdded += ANewDirectDebitTransactionHasBeenAddedEventHandler;
-        //    }
-        //}
+        private void ABillHasBeenAdddedToAnExistingDirectDebitTransacionEventHandler(Object sender, decimal billAmount)
+        {
+            controlSum += billAmount;
+        }
+
+        private void SuscribeTo_ANewDirectDebitTransactionHasBeenAddedEvent_FromAllPaymentsInstructions()
+        {
+            foreach (DirectDebitPaymentInstruction directDebitPaymentInstruction in directDebitPaymentInstructions)
+            {
+                SuscribeTo_ANewDirectDebitTransactionHasBeenAddedEvent(directDebitPaymentInstruction);
+            }
+        }
+
+        private void SuscribeTo_ANewDirectDebitTransactionHasBeenAddedEvent(DirectDebitPaymentInstruction directDebitPaymentInstruction)
+        {
+            directDebitPaymentInstruction.ANewDirectDebitTransactionHasBeenAdded += ANewDirectDebitTransactionHasBeenAddedEventHandler;
+        }
+
+        private void SuscribeTo_ABillHasBeenAdddedToAnExistingDirectDebitTransacionEvent_FromAllPaymentsInstructions()
+        {
+            foreach (DirectDebitPaymentInstruction directDebitPaymentInstruction in directDebitPaymentInstructions)
+            {
+                SuscribeTo_ABillHasBeenAdddedToAnExistingDirectDebitTransacionEvent(directDebitPaymentInstruction);
+            }
+        }
+
+        private void SuscribeTo_ABillHasBeenAdddedToAnExistingDirectDebitTransacionEvent(DirectDebitPaymentInstruction directDebitPaymentInstruction)
+        {
+            directDebitPaymentInstruction.ABillHasBeenAdddedToAnExistingDirectDebitTransacion += ABillHasBeenAdddedToAnExistingDirectDebitTransacionEventHandler;
+        }
     }
 }
