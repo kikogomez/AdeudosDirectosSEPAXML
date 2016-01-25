@@ -94,7 +94,14 @@ namespace DirectDebitElements
             string accountHolderName,
             DirectDebitAmendmentInformation amendmentInformation)
         {
-            CheckMandatoryFields(transactionID, mandateID, debtorAccount);
+            try
+            {
+                CheckMandatoryFields(transactionID, mandateID, debtorAccount);
+            }
+            catch (Exception ex) when (ex is ArgumentException || ex is ArgumentNullException || ex is ArgumentOutOfRangeException)
+            {
+                throw new TypeInitializationException("DirectDebitTransaction", ex);
+            }
 
             this.transactionID = transactionID.Trim();
             this.mandateID = mandateID.Trim();
@@ -112,6 +119,15 @@ namespace DirectDebitElements
 
         private void CheckMandatoryFields(string transactionID, string mandateID, BankAccount debtorAccount)
         {
+            //if (transactionID == null) throw new TypeInitializationException("DirectDebitTransaction", new ArgumentNullException("transactionID", "TransactionID can't be null"));
+            //if (transactionID.Trim().Length == 0) throw new TypeInitializationException("DirectDebitTransaction", new ArgumentException("TransactionID can't be empty", "transactionID"));
+            //if (transactionID.Trim().Length > 35) throw new TypeInitializationException("DirectDebitTransaction", new ArgumentOutOfRangeException("transactionID", "TransactionID can't be longer than 35 characters"));
+            //if (mandateID == null) throw new TypeInitializationException("DirectDebitTransaction", new ArgumentNullException("MandateID", "MandateID can't be null"));
+            //if (mandateID.Trim().Length == 0) throw new TypeInitializationException("DirectDebitTransaction", new ArgumentException("MandateID can't be empty", "MandateID"));
+            //if (mandateID.Trim().Length > 35) throw new TypeInitializationException("DirectDebitTransaction", new ArgumentOutOfRangeException("MandateID", "MandateID can't be longer than 35 characters"));
+            //if (debtorAccount == null) throw new TypeInitializationException("DirectDebitTransaction", new ArgumentNullException("DebtorAccount can't be null", "DebtorAccount"));
+            //if (!debtorAccount.HasValidIBAN) throw new TypeInitializationException("DirectDebitTransaction", new ArgumentException("DebtorAccount must be a valid IBAN", "DebtorAccount"));
+
             if (transactionID == null) throw new ArgumentNullException("transactionID", "TransactionID can't be null");
             if (transactionID.Trim().Length==0) throw new ArgumentException("TransactionID can't be empty", "transactionID");
             if (transactionID.Trim().Length > 35) throw new ArgumentOutOfRangeException("transactionID", "TransactionID can't be longer than 35 characters");
@@ -119,7 +135,7 @@ namespace DirectDebitElements
             if (mandateID.Trim().Length == 0) throw new ArgumentException("MandateID can't be empty", "MandateID");
             if (mandateID.Trim().Length > 35) throw new ArgumentOutOfRangeException("MandateID", "MandateID can't be longer than 35 characters");
             if (debtorAccount == null) throw new ArgumentNullException("DebtorAccount", "DebtorAccount can't be null");
-            if (!debtorAccount.HasValidIBAN) throw new ArgumentException("DebtorAccount", "DebtorAccount must be a valid IBAN");
+            if (!debtorAccount.HasValidIBAN) throw new ArgumentException("DebtorAccount must be a valid IBAN", "DebtorAccount");
         }
 
         private void SignalANewBillHasBeenAdded(SimplifiedBill bill)

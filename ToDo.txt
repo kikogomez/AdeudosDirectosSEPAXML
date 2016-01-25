@@ -1,25 +1,25 @@
-- Chequear que los InternalUIniqueInstructionID son realmente unicos (no se pueden repetir dentro de un PaymentInstruction)
 - Unificar las excepciones. Todas las excepciones que se lanzan desde un constructor deberian ser TypeinitializationException (y dentro el subtipo - Argumento, ArgumentNull...-)
 
 
 - Añadir la gestión de Amendment Information
 	-> Añadir la clase con dos campos:
-		- oldMandateId
-		- oldBankAccount
+		- oldMandateId (Ok)
+		- oldBankAccount (Ok)
 	-> Testear que se aceptan:
-		- Cualquiera de los dos puede ser nulo, incluso ambos.
-		- Si se especifica, MandateID no puede ser cadena vacía o solo espacios
-		- Si se especifica, oldBankAccount nopuede tener un IBAN invalido
+		- Cualquiera de los dos puede ser nulo, incluso ambos. (Ok)
+		- Si se especifica, MandateID no puede ser cadena vacía o solo espacios (Ok)
+		- Si se especifica, oldBankAccount nopuede tener un IBAN invalido (Ok)
 	-> Incluir el campo AmendmentInformation en DirectdebitTransaction:
-		- Puede ser nulo
-		- Testear ('DirectDebitTransactionsUnitTests') que se puede crear un DirectDebitTransaction con AmendmendInformation nulo o que tenga componentes nulos.
-		- Modificar los métodos de DirectDebitRemittancesManager y testearlos (DirectDebitRemittancesManagerUnitTest)
+		- Testear que se puede crear un DirectDebitTransaction con AmendmendInformation nulo o que tenga componentes nulos.
+			* En DirectDebitRemmitanceUnitTests (Ok)
+			* En DirectDebitRemmitanceManagerTests (Ok)
 		- Comprobar que se crean correctamente las clase serializables (SEPAElementsGenerator y SEPAElementsGeneratorUnitTests)
-			* AmendmentInformationDetails6
-			* DirectDebitTransactionInformation9 gestiona bien el AmendmentInformation
-			* Mirar los casos:
+			* AmendmentInformationDetails6 (Ok)
+			* DirectDebitTransactionInformation9 gestiona bien el AmendmentInformation (Ok)
+			* Mirar los casos: (Ok)
 				-> Cambio de cuenta en el mismo banco se pone el nuevo banco (Etiqueta <OrgnlDbtrAcct>)
 				-> Cambio de cuenta a otro banco NO se pone el nuev banco, sino SMNDA en <OrgnlDbtrAgt>
+			* Tests de SEPAElementsGenerator
 		- Comprobar la serializazion (pruebas en ISO20022PaymentInitiations):
 			* De un AmendmentInformationDetails6 es necesario, o basta mirar el DirectDebitTransactionInformation9 siguiente?
 			* De un DirectDebitTransactionInformation9 que incluya amendment information ('DirectDebitTransactionInfo.xml')
