@@ -90,14 +90,6 @@ namespace DirectDebitElements
             this.controlSum = this.directDebitTransactionsRejects.Select(ddTransactionReject => ddTransactionReject.Amount).Sum();
         }
 
-        private void SignalANewDirectDebitTransactionRejectHasBeenAdded(DirectDebitTransactionReject directDebitTransactionReject)
-        {
-            if (ANewDirectDebitTransactionRejectHasBeenAdded != null)
-            {
-                ANewDirectDebitTransactionRejectHasBeenAdded(this, directDebitTransactionReject.Amount);
-            }
-        }
-
         private List<string> GetAllOriginalEndtoEndTransactiontransactionIDs()
         {
             List<string> originalEndtoEndTransactiontransactionIDList = directDebitTransactionsRejects.Select(directDebitTransactionReject => directDebitTransactionReject.OriginalEndtoEndTransactionIdentification).ToList();
@@ -125,5 +117,12 @@ namespace DirectDebitElements
             }
         }
 
+        private void SignalANewDirectDebitTransactionRejectHasBeenAdded(DirectDebitTransactionReject directDebitTransactionReject)
+        {
+            if (ANewDirectDebitTransactionRejectHasBeenAdded != null)
+            {
+                ANewDirectDebitTransactionRejectHasBeenAdded(this, directDebitTransactionReject.Amount);
+            }
+        }
     }
 }

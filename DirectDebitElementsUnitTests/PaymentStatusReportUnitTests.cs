@@ -723,5 +723,27 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual(3, paymentStatusReport.NumberOfTransactions);
             Assert.AreEqual(230, paymentStatusReport.ControlSum);
         }
+
+        [TestMethod]
+        public void WhenAddingAnotherTransactionRejectToADirectDebitPaymentInstructionRejectRecentlyAddedToAPaymentStatusReportTheAmmountAndNumberOfBillsOfThePaymentStatusReportAreCorrectlyUpdated()
+        {
+            string messageID = "DATIR00112G12345678100";
+            DateTime messageCreationDateTime = DateTime.Parse("2012-07-18T06:00:01");
+            DateTime rejectAccountChargeDateTime = DateTime.Parse("2012-07-18");
+            PaymentStatusReport paymentStatusReport = new PaymentStatusReport(
+                messageID,
+                messageCreationDateTime,
+                rejectAccountChargeDateTime);
+            DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject1 = new DirectDebitPaymentInstructionReject(
+                originalPaymentInformationID1,
+                directDebitTransactionRejectsList1);
+            paymentStatusReport.AddDirectDebitPaymentInstructionReject(directDebitPaymentInstructionReject1);
+            DirectDebitTransactionReject newDirectDebitTransactionReject = directDebitTransactionRejectsList2[0];
+
+            paymentStatusReport.DirectDebitPaymentInstructionRejects[0].AddDirectDebitTransactionReject(newDirectDebitTransactionReject);
+
+            Assert.AreEqual(3, paymentStatusReport.NumberOfTransactions);
+            Assert.AreEqual(230, paymentStatusReport.ControlSum);
+        }
     }
 }

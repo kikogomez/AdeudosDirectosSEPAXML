@@ -40,7 +40,7 @@ namespace DirectDebitElements
         {
             this.directDebitPaymentInstructionRejects = directDebitPaymentInstructionRejects;
             UpdateNumberOfDirectDebitTransactionRejectsAndAmount();
-            SuscribeTo_ANewDirectDebitTransactionRejectHasBeenAdded_FromAllPaymentsInstructionsRejects(directDebitPaymentInstructionRejects);
+            SuscribeTo_ANewDirectDebitTransactionRejectHasBeenAddedEvent_FromAllPaymentsInstructionsRejects(directDebitPaymentInstructionRejects);
         }
 
         public PaymentStatusReport(
@@ -97,7 +97,7 @@ namespace DirectDebitElements
             directDebitPaymentInstructionRejects.Add(directDebitPaymentInstructionReject);
             numberOfTransactions += directDebitPaymentInstructionReject.NumberOfTransactions;
             controlSum += directDebitPaymentInstructionReject.ControlSum;
-            //Suscribirse al evento ANewDirectDebitTransactionRejectHasBeenAdded
+            SuscribeTo_ANewDirectDebitTransactionRejectHasBeenAddedEvent(directDebitPaymentInstructionReject);
         }
 
         private void UpdateNumberOfDirectDebitTransactionRejectsAndAmount()
@@ -128,12 +128,17 @@ namespace DirectDebitElements
             controlSum += directDebitTransactionRejectAmount;
         }
 
-        private void SuscribeTo_ANewDirectDebitTransactionRejectHasBeenAdded_FromAllPaymentsInstructionsRejects(List<DirectDebitPaymentInstructionReject> directDebitPaymentInstructionRejects)
+        private void SuscribeTo_ANewDirectDebitTransactionRejectHasBeenAddedEvent_FromAllPaymentsInstructionsRejects(List<DirectDebitPaymentInstructionReject> directDebitPaymentInstructionRejects)
         {
             foreach (DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject in directDebitPaymentInstructionRejects)
             {
-                directDebitPaymentInstructionReject.ANewDirectDebitTransactionRejectHasBeenAdded += ANewDirectDebitTransactionRejectHasBeenAddedEventHandler;
+                SuscribeTo_ANewDirectDebitTransactionRejectHasBeenAddedEvent(directDebitPaymentInstructionReject);
             }
+        }
+
+        private void SuscribeTo_ANewDirectDebitTransactionRejectHasBeenAddedEvent(DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject)
+        {
+            directDebitPaymentInstructionReject.ANewDirectDebitTransactionRejectHasBeenAdded += ANewDirectDebitTransactionRejectHasBeenAddedEventHandler;
         }
     }
 }
