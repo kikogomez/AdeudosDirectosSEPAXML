@@ -1,4 +1,6 @@
 - Chequear que los InternalUIniqueInstructionID son realmente unicos (no se pueden repetir dentro de un PaymentInstruction)
+- Unificar las excepciones. Todas las excepciones que se lanzan desde un constructor deberian ser TypeinitializationException (y dentro el subtipo - Argumento, ArgumentNull...-)
+
 
 - Añadir la gestión de Amendment Information
 	-> Añadir la clase con dos campos:

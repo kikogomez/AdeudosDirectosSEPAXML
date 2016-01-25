@@ -292,6 +292,31 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(TypeInitializationException))]
+        public void IfTheOriginalEndToEndTransactionIDInsideAPaymentInstructionRejectAreNotUniqueTheDirectDebitPaymentInstructionRejectThrowsATypeInitializationErrorException()
+        {
+            List<DirectDebitTransactionReject> directDebitTransactionRejects =
+                new List<DirectDebitTransactionReject>() { directDebitTransactionReject1, directDebitTransactionReject1 };
+
+            PaymentStatusReportManager paymentStatusReportManager = new PaymentStatusReportManager();
+            try
+            {
+                DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject = paymentStatusReportManager.CreateADirectDebitPaymentInstructionReject(
+                    originalPaymentInformationID1,
+                    directDebitTransactionRejects);
+            }
+
+            catch (TypeInitializationException typeInitializationException)
+            {
+                Assert.AreEqual("DirectDebitPaymentInstructionReject", typeInitializationException.TypeName);
+                ArgumentException argumentException = (ArgumentException)typeInitializationException.InnerException;
+                Assert.AreEqual("originalEndtoEndTransactionIdentification", argumentException.ParamName);
+                Assert.AreEqual("The OriginalEndtoEndTransactionIdentifications are not unique", argumentException.GetMessageWithoutParamName());
+                throw typeInitializationException;
+            }
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(System.ArgumentNullException))]
         public void CantAssignANullOriginalPaymentInformationIDWhenCreatingADirectDebitPaymentInstructionReject()
         {
@@ -452,6 +477,30 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual(1, directDebitPaymentInstructionReject.NumberOfTransactions);
             Assert.AreEqual(80, directDebitPaymentInstructionReject.ControlSum);
             Assert.AreEqual(1, directDebitPaymentInstructionReject.DirectDebitTransactionsRejects.Count);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void IfTheOriginalEndToEndTransactionIDOfAnAddedTransactionRejectIsDuplicatedTheDirectDebitPaymentInstructionREjectThrowsAnArgumentException()
+        {
+            List<DirectDebitTransactionReject> directDebitTransactionRejects =
+                new List<DirectDebitTransactionReject>() { directDebitTransactionReject1 };
+            DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject = new DirectDebitPaymentInstructionReject(
+                originalPaymentInformationID1,
+                directDebitTransactionRejects);
+
+            PaymentStatusReportManager paymentStatusReportManager = new PaymentStatusReportManager();
+            try
+            {
+                paymentStatusReportManager.AddTransactionRejectToPaymentInstructionReject(directDebitPaymentInstructionReject, directDebitTransactionReject1);
+            }
+
+            catch (ArgumentException argumentException)
+            {
+                Assert.AreEqual("originalEndtoEndTransactionIdentification", argumentException.ParamName);
+                Assert.AreEqual("The OriginalEndtoEndTransactionIdentification already exists", argumentException.GetMessageWithoutParamName());
+                throw;
+            }
         }
 
         [TestMethod]

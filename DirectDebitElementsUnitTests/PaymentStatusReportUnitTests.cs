@@ -329,7 +329,7 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(System.ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void CantAssignAnOriginalPaymentInformationIDLongerThan35CharactersWhenCreatingADirectDebitPaymentInstructionReject()
         {
             string originalPaymentInformationID = "0123456789012345678901234567890123456789";
@@ -345,6 +345,29 @@ namespace DirectDebitElementsUnitTests
                 Assert.AreEqual("originalPaymentInformationID", e.ParamName);
                 Assert.AreEqual("OriginalPaymentInformationID lenght can't exceed 35 characters", e.GetMessageWithoutParamName());
                 throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TypeInitializationException))]
+        public void IfTheOriginalEndToEndTransactionIDInsideAPaymentInstructionRejectAreNotUniqueTheDirectDebitPaymentInstructionRejectThrowsATypeInitializationErrorException()
+        {
+            List<DirectDebitTransactionReject> directDebitTransactionRejects =
+                new List<DirectDebitTransactionReject>() { directDebitTransactionReject1, directDebitTransactionReject1 };
+            try
+            {
+                DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject = new DirectDebitPaymentInstructionReject(
+                    originalPaymentInformationID1,
+                    directDebitTransactionRejects);
+            }
+
+            catch (TypeInitializationException typeInitializationException)
+            {
+                Assert.AreEqual("DirectDebitPaymentInstructionReject", typeInitializationException.TypeName);
+                ArgumentException argumentException = (ArgumentException)typeInitializationException.InnerException;
+                Assert.AreEqual("originalEndtoEndTransactionIdentification", argumentException.ParamName);
+                Assert.AreEqual("The OriginalEndtoEndTransactionIdentifications are not unique", argumentException.GetMessageWithoutParamName());
+                throw typeInitializationException;
             }
         }
 
@@ -440,6 +463,28 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual(80, directDebitPaymentInstructionReject.ControlSum);
             Assert.AreEqual(1, directDebitPaymentInstructionReject.DirectDebitTransactionsRejects.Count);
             Assert.AreEqual("2015120100124", directDebitPaymentInstructionReject.DirectDebitTransactionsRejects[0].OriginalEndtoEndTransactionIdentification);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void IfTheOriginalEndToEndTransactionIDOfAnAddedTransactionRejectIsDuplicatedTheDirectDebitPaymentInstructionREjectThrowsAnArgumentException()
+        {
+            List<DirectDebitTransactionReject> directDebitTransactionRejects =
+                new List<DirectDebitTransactionReject>() { directDebitTransactionReject1 };
+            DirectDebitPaymentInstructionReject directDebitPaymentInstructionReject = new DirectDebitPaymentInstructionReject(
+                originalPaymentInformationID1,
+                directDebitTransactionRejects);
+            try
+            {
+                directDebitPaymentInstructionReject.AddDirectDebitTransactionReject(directDebitTransactionReject1);
+            }
+
+            catch (ArgumentException argumentException)
+            {
+                Assert.AreEqual("originalEndtoEndTransactionIdentification", argumentException.ParamName);
+                Assert.AreEqual("The OriginalEndtoEndTransactionIdentification already exists", argumentException.GetMessageWithoutParamName());
+                throw;
+            }
         }
 
         [TestMethod]

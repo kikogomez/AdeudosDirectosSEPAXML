@@ -30,6 +30,14 @@ namespace DirectDebitElements
             :this(originalPaymentInformationID)
         {
             this.directDebitTransactionsRejects = directDebitTransactionsRejects;
+            try
+            {
+                CheckDuplicateOriginalEndtoEndTransactionIdentifications();
+            }
+            catch (ArgumentException argumentException)
+            {
+                throw new TypeInitializationException("DirectDebitPaymentInstructionReject", argumentException);
+            }
             UpdateNumberOfDirectDebitTransactionRejectsAndAmount();
         }
 
@@ -78,10 +86,28 @@ namespace DirectDebitElements
 
         public void AddDirectDebitTransactionReject(DirectDebitTransactionReject directDebitTransactionReject)
         {
+            CheckOriginalEndtoEndTransactionIdentificationDoesntExists(directDebitTransactionReject.OriginalEndtoEndTransactionIdentification);
             directDebitTransactionsRejects.Add(directDebitTransactionReject);
             numberOfTransactions++;
             controlSum += directDebitTransactionReject.Amount;
             SignalANewDirectDebitTransactionRejectHasBeenAdded(directDebitTransactionReject);
+        }
+
+        private void CheckDuplicateOriginalEndtoEndTransactionIdentifications()
+        {
+            List<string> originalEndtoEndTransactionIdentifications = this.directDebitTransactionsRejects.Select(
+                directDebitTransactionReject => directDebitTransactionReject.OriginalEndtoEndTransactionIdentification).ToList();
+            int distinctIDsCount = originalEndtoEndTransactionIdentifications.Distinct().Count();
+            if (distinctIDsCount != originalEndtoEndTransactionIdentifications.Count())
+                throw new ArgumentException("The OriginalEndtoEndTransactionIdentifications are not unique", "originalEndtoEndTransactionIdentification");
+        }
+
+        private void CheckOriginalEndtoEndTransactionIdentificationDoesntExists(string originalEndtoEndTransactionIdentification)
+        {
+            List<string> originalEndtoEndTransactionIdentifications =
+                directDebitTransactionsRejects.Select(directDebitTransactionReject => directDebitTransactionReject.OriginalEndtoEndTransactionIdentification).ToList();
+            if (originalEndtoEndTransactionIdentifications.Contains(originalEndtoEndTransactionIdentification))
+                throw new ArgumentException("The OriginalEndtoEndTransactionIdentification already exists", "originalEndtoEndTransactionIdentification");
         }
 
         private void UpdateNumberOfDirectDebitTransactionRejectsAndAmount()
