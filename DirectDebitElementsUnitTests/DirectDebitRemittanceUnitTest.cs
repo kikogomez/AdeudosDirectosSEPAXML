@@ -729,6 +729,34 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(System.TypeInitializationException))]
+        public void IfTheTransactionsIDInsideAPaymentInstructionsAreNotUniqueTheDirectDebitPaymentInstructionThrowsATypeInitializationErrorException()
+        {
+            string localInstrument = "COR1";
+            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction1 };
+            int numberOfTransactions = directDebitTransactions.Count;
+            decimal controlSum = directDebitTransactions.Select(directDebitTransaction => directDebitTransaction.Amount).Sum();
+
+            try
+            {
+                DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
+                    paymentInformationID1, localInstrument, directDebitTransactions, numberOfTransactions, controlSum);
+            }
+            catch (TypeInitializationException typeInitializationException)
+            {
+                Assert.AreEqual("DirectDebitPaymentInstruction", typeInitializationException.TypeName);
+
+                string expectedErrorMessage = "The TransactionIDs are not unique";
+                ArgumentException argumentException = (ArgumentException)typeInitializationException.InnerException;
+                string paramName = argumentException.ParamName;
+                string exceptionMessage = argumentException.GetMessageWithoutParamName();
+                Assert.AreEqual("transactionID", paramName);
+                Assert.AreEqual(expectedErrorMessage, exceptionMessage);
+                throw typeInitializationException;
+            }
+        }
+
+        [TestMethod]
         public void ADirectDebitTransactionIsCorrectlyAddedToADirectDebitPaymentInstruction()
         {
             string localInstrument = "COR1";
@@ -741,6 +769,32 @@ namespace DirectDebitElementsUnitTests
 
             Assert.AreEqual(2, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
             Assert.AreEqual(237, directDebitPaymentInstruction.TotalAmount);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void IfTheTransactionsIDOfAnAddedTransactionIsDuplicatedTheDirectDebitPaymentInstructionThrowsAnArgumentException()
+        {
+            string localInstrument = "COR1";
+            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1 };
+            int numberOfTransactions = directDebitTransactions.Count;
+            decimal controlSum = directDebitTransactions.Select(directDebitTransaction => directDebitTransaction.Amount).Sum();
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
+                    paymentInformationID1, localInstrument, directDebitTransactions, numberOfTransactions, controlSum);
+
+            try
+            {
+                directDebitPaymentInstruction.AddDirectDebitTransaction(directDebitTransaction1);
+            }
+            catch (ArgumentException argumentException)
+            {
+                string expectedErrorMessage = "The TransactionID already exists";
+                string paramName = argumentException.ParamName;
+                string exceptionMessage = argumentException.GetMessageWithoutParamName();
+                Assert.AreEqual("transactionID", paramName);
+                Assert.AreEqual(expectedErrorMessage, exceptionMessage);
+                throw argumentException;
+            }
         }
 
         [TestMethod]

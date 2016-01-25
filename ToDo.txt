@@ -1,14 +1,3 @@
-- ¡Cuidado con las instancias estáticas!¡Los contenidos se pueden modificar entre los test! Por ejemplo, la suscripcion a sus eventos se ha duplicado, por lo que se se lanza solo un test o se lanzan todos, la cosa cambia.
-
-- Si se añade una transaccion a un PaymentInstruction que ya esté dentro de un Remittance, que este último se entere para actualizar su suma de control
-	-> Crear un evento 'PaymentInstructionChanged' al que debe suscribirse el Remittance
-- Si se añade una factura a una transaccion que ya este en un PaymentInstructio, que este se entere, e igualmente lo haga el Remittance (evento al que suscribirse, y que se lancen en)
-    -> Crear un evento 'TransactionChanged' al que debe suscribirse el PaymentInstruction. Cuando PaymentInstruction se actualice, debe señalizar a su vez 'PaymentInstructionChanged' para que lo tome el Remittance.
-	-> No se debe suscribir el Remittance al evento 'TransactionChanged', ya que no se garantiza el orden de ejecucion de los consumidores, y PaymentInstruction debe procesar el evento primero. Es por ello la actualizacion 'en cascada'
-
-- ¡Al añadir un nuevo transaction o bill, no olvidar que hay hay que suscribirse al evento conrrepondiente, no solo desde el contructor!
-
-
 - Chequear que los InternalUIniqueInstructionID son realmente unicos (no se pueden repetir dentro de un PaymentInstruction)
 
 - Añadir la gestión de Amendment Information

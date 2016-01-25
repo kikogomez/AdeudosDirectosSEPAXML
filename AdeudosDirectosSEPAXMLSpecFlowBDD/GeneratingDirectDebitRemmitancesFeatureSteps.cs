@@ -300,7 +300,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
         [When(@"I add a new direct debit transaction with amount of (.*)")]
         public void WhenIAddANewDirectDebitTransactionWithAmountOf(decimal amount)
         {
-            string transactionID = "00001";
+            string transactionID = "00002";
             DirectDebitInitiationContract directDebitInitiationContract = (DirectDebitInitiationContract)ScenarioContext.Current["DirectDebitInitiationContract"];
             DirectDebitPropietaryCodesGenerator directDebitPropietaryCodesGenerator = new DirectDebitPropietaryCodesGenerator(directDebitInitiationContract);
             Debtor debtor = ((Dictionary<string, Debtor>)ScenarioContext.Current["Debtors"])["00002"];
