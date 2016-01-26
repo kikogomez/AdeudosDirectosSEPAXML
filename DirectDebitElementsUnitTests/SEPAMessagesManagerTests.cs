@@ -108,7 +108,8 @@ namespace DirectDebitElementsUnitTests
                     mandateSignatureDate,
                     debtorAccount,
                     debtorFullName,
-                    null);
+                    null,
+                    false);
                 transactionsCounter++;
                 directDebitPaymentInstruction.AddDirectDebitTransaction(directDebitTransaction);
             }
@@ -165,7 +166,8 @@ namespace DirectDebitElementsUnitTests
                     mandateSignatureDate,
                     debtorAccount,
                     debtorFullName,
-                    null);
+                    null,
+                    false);
                 transactionsCounter++;
                 directDebitPaymentInstruction.AddDirectDebitTransaction(directDebitTransaction);
             }

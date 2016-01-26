@@ -19,6 +19,7 @@ namespace DirectDebitElements
         BankAccount debtorAccount;
         string accountHolderName;
         DirectDebitAmendmentInformation amendmentInformation;
+        bool firstDebit;
 
         public DirectDebitTransaction(
             List<SimplifiedBill> billsInTransaction,
@@ -27,9 +28,10 @@ namespace DirectDebitElements
             DateTime mandateSignatureDate,
             BankAccount debtorAccount,
             string accountHolderName, 
-            DirectDebitAmendmentInformation amendmentInformation)
+            DirectDebitAmendmentInformation amendmentInformation,
+            bool firstDebit)
         {
-            InitializeFields(transactionID, mandateID, mandateSignatureDate, debtorAccount, accountHolderName, amendmentInformation);
+            InitializeFields(transactionID, mandateID, mandateSignatureDate, debtorAccount, accountHolderName, amendmentInformation, firstDebit);
             this.billsInTransaction = billsInTransaction;
             UpdateAmountAndNumberOfBills();
         }
@@ -79,6 +81,11 @@ namespace DirectDebitElements
             get { return amendmentInformation; }
         }
 
+        public bool FirstDebit
+        {
+            get { return firstDebit; }
+        }
+
         public void AddBill(SimplifiedBill bill)
         {
             this.billsInTransaction.Add(bill);
@@ -92,7 +99,8 @@ namespace DirectDebitElements
             DateTime mandateSignatureDate,
             BankAccount debtorAccount,
             string accountHolderName,
-            DirectDebitAmendmentInformation amendmentInformation)
+            DirectDebitAmendmentInformation amendmentInformation,
+            bool firstDebit)
         {
             try
             {
@@ -109,6 +117,7 @@ namespace DirectDebitElements
             this.debtorAccount = debtorAccount;
             this.accountHolderName = accountHolderName;
             this.amendmentInformation = amendmentInformation;
+            this.firstDebit = firstDebit;
         }
 
         private void UpdateAmountAndNumberOfBills()
@@ -136,6 +145,10 @@ namespace DirectDebitElements
             if (mandateID.Trim().Length > 35) throw new ArgumentOutOfRangeException("MandateID", "MandateID can't be longer than 35 characters");
             if (debtorAccount == null) throw new ArgumentNullException("DebtorAccount", "DebtorAccount can't be null");
             if (!debtorAccount.HasValidIBAN) throw new ArgumentException("DebtorAccount must be a valid IBAN", "DebtorAccount");
+
+            //
+            //Chequear si el tipo 'firstDebit' es compatible con el amendmentInformation (no puede ser first=False si hay cambio de cuenta a otro banco)
+            //
         }
 
         private void SignalANewBillHasBeenAdded(SimplifiedBill bill)

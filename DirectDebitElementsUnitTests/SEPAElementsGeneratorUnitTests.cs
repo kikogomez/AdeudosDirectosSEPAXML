@@ -140,7 +140,8 @@ namespace DirectDebitElementsUnitTests
                 mandateSignatureDate,
                 debtorAccount,
                 accountHolderName,
-                null);
+                null,
+                false);
             bool singleUnstructuredConcept = false;
 
             DirectDebitTransactionInformation9 directDebitTransactionInformation = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
@@ -190,7 +191,8 @@ namespace DirectDebitElementsUnitTests
                 mandateSignatureDate,
                 debtorAccount,
                 accountHolderName,
-                directDebitAmendmentInformation);
+                directDebitAmendmentInformation,
+                false);
             bool singleUnstructuredConcept = true;
 
             DirectDebitTransactionInformation9 directDebitTransactionInformation = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
@@ -229,7 +231,8 @@ namespace DirectDebitElementsUnitTests
                 mandateSignatureDate,
                 debtorAccount,
                 accountHolderName,
-                directDebitAmendmentInformation);
+                directDebitAmendmentInformation,
+                false);
             bool singleUnstructuredConcept = true;
 
             DirectDebitTransactionInformation9 directDebitTransactionInformation = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
@@ -266,7 +269,8 @@ namespace DirectDebitElementsUnitTests
                 mandateSignatureDate,
                 debtorAccount,
                 accountHolderName,
-                directDebitAmendmentInformation);
+                directDebitAmendmentInformation,
+                false);
             bool singleUnstructuredConcept = true;
 
             DirectDebitTransactionInformation9 directDebitTransactionInformation = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
@@ -301,7 +305,8 @@ namespace DirectDebitElementsUnitTests
                 mandateSignatureDate,
                 debtorAccount,
                 accountHolderName,
-                null);
+                null,
+                false);
 
             DirectDebitTransactionInformation9 directDebitTransactionInformation = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
                 creditorAgent,

@@ -196,7 +196,8 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
                 mandateID,
                 directDebitmandate,
                 new List<SimplifiedBill>() { bill },
-                null);
+                null,
+                false);
             ScenarioContext.Current.Add("DirectDebitTransaction", directDebitTransaction);
         }
 
@@ -224,7 +225,8 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
                 mandateID,
                 directDebitmandate,
                 new List<SimplifiedBill>() { bill },
-                null);
+                null,
+                false);
             Assert.AreEqual(numberOfBills, directDebitTransaction.NumberOfBills);
             Assert.AreEqual(amount, directDebitTransaction.Amount);
             ScenarioContext.Current.Add("DirectDebitTransaction", directDebitTransaction);
@@ -288,7 +290,8 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
                 mandateID,
                 directDebitmandate,
                 new List<SimplifiedBill>() { bill },
-                null);
+                null,
+                false);
             DirectDebitPaymentInstruction directDebitPaymentInstruction =
                 directDebitRemittancesManager.CreateAnEmptyDirectDebitPaymentInstruction("PaymentGroup1", "COR1");
             directDebitRemittancesManager.AddDirectDebitTransactionToDirectDebitPaymentInstruction(directDebitTransaction, directDebitPaymentInstruction);
@@ -312,7 +315,8 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
                 mandateID,
                 directDebitmandate,
                 new List<SimplifiedBill>() { bill },
-                null);
+                null,
+                false);
             Assert.AreEqual(amount, directDebitTransaction.Amount);
             DirectDebitPaymentInstruction directDebitPaymentInstruction =
                 (DirectDebitPaymentInstruction)ScenarioContext.Current["DirectDebitPaymentInstruction"];
@@ -369,7 +373,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
                 mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitmandate.InternalReferenceNumber);
                 transactionID = "PaymentGroup1" + (transactionsCounter + 1).ToString("00000");
                 DirectDebitTransaction directDebitTransaction =
-                    directDebitRemittancesManager.CreateAnEmptyDirectDebitTransaction(transactionID, mandateID, directDebitmandate, null);
+                    directDebitRemittancesManager.CreateAnEmptyDirectDebitTransaction(transactionID, mandateID, directDebitmandate, null,false);
                 transactionsCounter++;
                 foreach (SimplifiedBill bill in debtor.SimplifiedBills.Values)
                 {

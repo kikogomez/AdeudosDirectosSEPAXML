@@ -15,7 +15,8 @@ namespace DirectDebitElements
             string transactionID,
             string mandateID,
             DirectDebitMandate directDebitmandate,
-            DirectDebitAmendmentInformation amendmentInformation)
+            DirectDebitAmendmentInformation amendmentInformation,
+            bool firstDebit)
         {
             if (directDebitmandate == null) throw new ArgumentNullException("directDebitMandate", "DirectDebitMandate can't be null");
 
@@ -26,7 +27,8 @@ namespace DirectDebitElements
                 directDebitmandate.DirectDebitMandateCreationDate,
                 directDebitmandate.BankAccount,
                 directDebitmandate.AccountHolderName,
-                amendmentInformation);
+                amendmentInformation,
+                firstDebit);
             return directDebitTransaction;
         }
 
@@ -35,7 +37,8 @@ namespace DirectDebitElements
             string mandateID,
             DirectDebitMandate directDebitmandate,
             List<SimplifiedBill> billsList,
-            DirectDebitAmendmentInformation amendmentInformation)
+            DirectDebitAmendmentInformation amendmentInformation,
+            bool firstDebit)
         {
             if (directDebitmandate == null) throw new ArgumentNullException("directDebitMandate", "DirectDebitMandate can't be null");
 
@@ -46,7 +49,8 @@ namespace DirectDebitElements
                 directDebitmandate.DirectDebitMandateCreationDate,
                 directDebitmandate.BankAccount,
                 directDebitmandate.AccountHolderName,
-                amendmentInformation);
+                amendmentInformation,
+                firstDebit);
             return directDebitTransaction;
         }
 

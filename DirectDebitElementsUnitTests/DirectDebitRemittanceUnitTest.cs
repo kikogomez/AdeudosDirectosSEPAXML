@@ -101,7 +101,8 @@ namespace DirectDebitElementsUnitTests
                 debtors["00001"].DirectDebitmandates[1234].DirectDebitMandateCreationDate,
                 debtors["00001"].DirectDebitmandates[1234].BankAccount,
                 debtors["00001"].FullName,
-                null);
+                null,
+                false);
 
             directDebitTransaction2 = new DirectDebitTransaction(
                 debtors["00002"].SimplifiedBills.Values.ToList(),
@@ -110,7 +111,8 @@ namespace DirectDebitElementsUnitTests
                 debtors["00002"].DirectDebitmandates[1235].DirectDebitMandateCreationDate,
                 debtors["00002"].DirectDebitmandates[1235].BankAccount,
                 debtors["00002"].FullName,
-                null);
+                null,
+                false);
 
             directDebitTransaction3 = new DirectDebitTransaction(
                 debtors["00001"].SimplifiedBills.Values.ToList(),
@@ -119,7 +121,8 @@ namespace DirectDebitElementsUnitTests
                 debtors["00001"].DirectDebitmandates[1234].DirectDebitMandateCreationDate,
                 debtors["00001"].DirectDebitmandates[1234].BankAccount,
                 debtors["00001"].FullName,
-                null);
+                null,
+                false);
         }
 
         [TestMethod]
@@ -133,8 +136,9 @@ namespace DirectDebitElementsUnitTests
             BankAccount debtorAccount = directDebitMandate.BankAccount;
             string accountHolderName = directDebitMandate.AccountHolderName;
             List<SimplifiedBill> bills = debtor.SimplifiedBills.Values.ToList();
-            DirectDebitAmendmentInformation amendmentinformation = new DirectDebitAmendmentInformation(
+            DirectDebitAmendmentInformation amendmentInformation = new DirectDebitAmendmentInformation(
                 "02121", new BankAccount(new InternationalAccountBankNumberIBAN("ES5621001111301111111111")));
+            bool firstDebit = false;
 
             DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                 bills,
@@ -143,13 +147,16 @@ namespace DirectDebitElementsUnitTests
                 mandateSignatureDate,
                 debtorAccount,
                 accountHolderName,
-                amendmentinformation);
+                amendmentInformation,
+                firstDebit);
 
             Assert.AreEqual(transactionID, directDebitTransaction.TransactionID);
             Assert.AreEqual("000077701235", directDebitTransaction.MandateID);
             Assert.AreEqual(mandateSignatureDate, directDebitTransaction.MandateSigatureDate);
             Assert.AreEqual(debtorAccount, directDebitTransaction.DebtorAccount);
             Assert.AreEqual(accountHolderName, directDebitTransaction.AccountHolderName);
+            Assert.AreEqual(amendmentInformation, directDebitTransaction.AmendmentInformation);
+            Assert.AreEqual(firstDebit, directDebitTransaction.FirstDebit);
             Assert.AreEqual(bills, directDebitTransaction.BillsInTransaction);
             Assert.AreEqual(2, directDebitTransaction.NumberOfBills);
             Assert.AreEqual(158, directDebitTransaction.Amount);
@@ -174,7 +181,8 @@ namespace DirectDebitElementsUnitTests
                 mandateSignatureDate,
                 debtorAccount,
                 accountHolderName,
-                null);
+                null,
+                false);
 
             Assert.AreEqual(null, directDebitTransaction.AmendmentInformation);
         }
@@ -199,7 +207,8 @@ namespace DirectDebitElementsUnitTests
                 mandateSignatureDate,
                 debtorAccount,
                 accountHolderName,
-                directDebitAmendmentInformation);
+                directDebitAmendmentInformation,
+                false);
 
             Assert.AreEqual(null, directDebitTransaction.AmendmentInformation.OldBankAccount);
             Assert.AreEqual(null, directDebitTransaction.AmendmentInformation.OldMandateID);
@@ -227,7 +236,8 @@ namespace DirectDebitElementsUnitTests
                     mandateSignatureDate,
                     debtorAccount,
                     accountHolderName,
-                    null);
+                    null,
+                    false);
             }
 
             catch (System.TypeInitializationException typeInitializationException)
@@ -261,7 +271,8 @@ namespace DirectDebitElementsUnitTests
                     mandateSignatureDate,
                     debtorAccount,
                     accountHolderName,
-                    null);
+                    null,
+                    false);
             }
 
             catch (System.TypeInitializationException typeInitializationException)
@@ -295,7 +306,8 @@ namespace DirectDebitElementsUnitTests
                     mandateSignatureDate,
                     debtorAccount,
                     accountHolderName,
-                    null);
+                    null,
+                    false);
             }
 
             catch (System.TypeInitializationException typeInitializationException)
@@ -329,7 +341,8 @@ namespace DirectDebitElementsUnitTests
                     mandateSignatureDate,
                     debtorAccount,
                     accountHolderName,
-                    null);
+                    null,
+                    false);
             }
 
             catch (System.TypeInitializationException typeInitializationException)
@@ -363,7 +376,8 @@ namespace DirectDebitElementsUnitTests
                     mandateSignatureDate,
                     debtorAccount,
                     accountHolderName,
-                    null);
+                    null,
+                    false);
             }
 
             catch (System.TypeInitializationException typeInitializationException)
@@ -397,7 +411,8 @@ namespace DirectDebitElementsUnitTests
                     mandateSignatureDate,
                     debtorAccount,
                     accountHolderName,
-                    null);
+                    null,
+                    false);
             }
 
             catch (System.TypeInitializationException typeInitializationException)
@@ -431,7 +446,8 @@ namespace DirectDebitElementsUnitTests
                     mandateSignatureDate,
                     debtorAccount,
                     accountHolderName,
-                    null);
+                    null,
+                    false);
             }
 
             catch (System.TypeInitializationException typeInitializationException)
@@ -465,7 +481,8 @@ namespace DirectDebitElementsUnitTests
                     mandateSignatureDate,
                     debtorAccount,
                     accountHolderName,
-                    null);
+                    null,
+                    false);
             }
 
             catch (System.TypeInitializationException typeInitializationException)
@@ -499,7 +516,8 @@ namespace DirectDebitElementsUnitTests
                     mandateSignatureDate,
                     debtorAccount,
                     accountHolderName,
-                    null);
+                    null,
+                    false);
             }
 
             catch (System.TypeInitializationException typeInitializationException)
@@ -533,7 +551,8 @@ namespace DirectDebitElementsUnitTests
                     mandateSignatureDate,
                     debtorAccount,
                     accountHolderName,
-                    null);
+                    null,
+                    false);
             }
 
             catch (System.TypeInitializationException typeInitializationException)
@@ -563,7 +582,8 @@ namespace DirectDebitElementsUnitTests
                 mandateSignatureDate,
                 debtorAccount,
                 accountHolderName,
-                null);
+                null,
+                false);
 
             List<SimplifiedBill> expectedEmptyList = new List<SimplifiedBill>();
             Assert.AreEqual(transactionID, directDebitTransaction.TransactionID);
@@ -595,7 +615,8 @@ namespace DirectDebitElementsUnitTests
                 mandateSignatureDate,
                 debtorAccount,
                 accountHolderName,
-                null);
+                null,
+                false);
             Assert.AreEqual((decimal)79, directDebitTransaction.Amount);
             Assert.AreEqual(1, directDebitTransaction.NumberOfBills);
             SimplifiedBill bill = debtor.SimplifiedBills.ElementAt(1).Value;
