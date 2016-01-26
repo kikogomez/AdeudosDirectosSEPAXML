@@ -171,7 +171,7 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        public void ADirectDebitTransactionInformation9WithAmmendmentInformationIsCorrectlyGenerated()
+        public void ADirectDebitTransactionInformation9WithAmmendmentInformation_ChangeMandateID_IsCorrectlyGenerated()
         {
             string transactionID = "00001";
             Debtor debtor = debtors["00002"];
@@ -181,6 +181,8 @@ namespace DirectDebitElementsUnitTests
             BankAccount debtorAccount = directDebitMandate.BankAccount;
             string accountHolderName = directDebitMandate.AccountHolderName;
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
+            string oldMandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(1000);
+            DirectDebitAmendmentInformation directDebitAmendmentInformation = new DirectDebitAmendmentInformation(oldMandateID, null);
             DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                 bills,
                 transactionID,
@@ -188,34 +190,96 @@ namespace DirectDebitElementsUnitTests
                 mandateSignatureDate,
                 debtorAccount,
                 accountHolderName,
-                null);
-            bool singleUnstructuredConcept = false;
+                directDebitAmendmentInformation);
+            bool singleUnstructuredConcept = true;
 
             DirectDebitTransactionInformation9 directDebitTransactionInformation = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
                 creditorAgent,
                 directDebitTransaction,
                 singleUnstructuredConcept);
 
-            Assert.AreEqual(directDebitTransaction.TransactionID, directDebitTransactionInformation.PmtId.InstrId);
-            Assert.AreEqual(directDebitTransaction.TransactionID, directDebitTransactionInformation.PmtId.EndToEndId);
-            Assert.AreEqual(directDebitTransaction.Amount, directDebitTransactionInformation.InstdAmt.Value);
-            Assert.AreEqual("EUR", directDebitTransactionInformation.InstdAmt.Ccy);
-            Assert.AreEqual(directDebitTransaction.MandateID, directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.MndtId);
-            Assert.AreEqual(directDebitTransaction.MandateSigatureDate, directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.DtOfSgntr);
-            Assert.IsTrue(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.DtOfSgntrSpecified);
-            Assert.AreEqual(creditorAgent.BankBIC, directDebitTransactionInformation.DbtrAgt.FinInstnId.BIC);
-            Assert.AreEqual(directDebitTransaction.AccountHolderName, directDebitTransactionInformation.Dbtr.Nm);
-            Assert.AreEqual(directDebitTransaction.DebtorAccount.IBAN.IBAN, (string)directDebitTransactionInformation.DbtrAcct.Id.Item);
-            string[] expectedConcepts = new string[] { "Cuota Social Octubre 2013 --- 79,00", "Cuota Social Noviembre 2013 --- 79,00" };
-            CollectionAssert.AreEqual(expectedConcepts, directDebitTransactionInformation.RmtInf.Ustrd);
-            Assert.AreEqual(ChargeBearerType1Code.SLEV, directDebitTransactionInformation.ChrgBr);
-            Assert.IsFalse(directDebitTransactionInformation.ChrgBrSpecified);                              //ChargeBearer se especifica una sola vez por remesa, en el PaymentInformation
+            Assert.IsTrue(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInd);              //AmmendmentInformationInd es 'false'
+            Assert.IsTrue(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntIndSpecified);     //Si AmmendmentInformationInd es 'false', no hace falta ni siquiera incluirlo
 
-            Assert.IsFalse(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInd);              //AmmendmentInformationInd es 'false'
-            Assert.IsFalse(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntIndSpecified);     //Si AmmendmentInformationInd es 'false', no hace falta ni siquiera incluirlo
-            Assert.IsNull(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInfDtls);
+            Assert.IsNull(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInfDtls.OrgnlDbtrAcct);
+            Assert.IsNull(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInfDtls.OrgnlDbtrAgt);
+            Assert.AreEqual(oldMandateID, directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInfDtls.OrgnlMndtId);
 
-            AssertUnusedDirectDebitTransactionInformation9(directDebitTransactionInformation);
+            AssertUnusedDirectDebitAmendmentInformation(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInfDtls);
+        }
+
+        [TestMethod]
+        public void ADirectDebitTransactionInformation9WithAmmendmentInformation_ChangeDebtorAccountSameDebtorAgent_IsCorrectlyGenerated()
+        {
+            string transactionID = "00001";
+            Debtor debtor = debtors["00002"];
+            List<SimplifiedBill> bills = debtor.SimplifiedBills.Values.ToList();
+            DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
+            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
+            BankAccount debtorAccount = directDebitMandate.BankAccount;
+            string accountHolderName = directDebitMandate.AccountHolderName;
+            DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
+            BankAccount oldBankAcount = new BankAccount(new InternationalAccountBankNumberIBAN(new ClientAccountCodeCCC("21002222002222222222")));
+
+            DirectDebitAmendmentInformation directDebitAmendmentInformation = new DirectDebitAmendmentInformation(null, oldBankAcount);
+            DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
+                bills,
+                transactionID,
+                mandateID,
+                mandateSignatureDate,
+                debtorAccount,
+                accountHolderName,
+                directDebitAmendmentInformation);
+            bool singleUnstructuredConcept = true;
+
+            DirectDebitTransactionInformation9 directDebitTransactionInformation = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
+                creditorAgent,
+                directDebitTransaction,
+                singleUnstructuredConcept);
+
+            Assert.IsTrue(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInd);              //AmmendmentInformationInd es 'false'
+            Assert.IsTrue(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntIndSpecified);     //Si AmmendmentInformationInd es 'false', no hace falta ni siquiera incluirlo
+
+            Assert.AreEqual(oldBankAcount.IBAN.IBAN, (string)directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInfDtls.OrgnlDbtrAcct.Id.Item);
+            Assert.IsNull(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInfDtls.OrgnlDbtrAgt);
+            Assert.IsNull(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInfDtls.OrgnlMndtId);
+        }
+
+        [TestMethod]
+        public void ADirectDebitTransactionInformation9WithAmmendmentInformation_ChangeDebtorAccountDifferentDebtorAgent_IsCorrectlyGenerated()
+        {
+            string transactionID = "00001";
+            Debtor debtor = debtors["00002"];
+            List<SimplifiedBill> bills = debtor.SimplifiedBills.Values.ToList();
+            DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
+            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
+            BankAccount debtorAccount = directDebitMandate.BankAccount;
+            string accountHolderName = directDebitMandate.AccountHolderName;
+            DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
+            BankAccount oldBankAcount = new BankAccount(new InternationalAccountBankNumberIBAN(new ClientAccountCodeCCC("12345678061234567890")));
+
+            DirectDebitAmendmentInformation directDebitAmendmentInformation = new DirectDebitAmendmentInformation(null, oldBankAcount);
+            DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
+                bills,
+                transactionID,
+                mandateID,
+                mandateSignatureDate,
+                debtorAccount,
+                accountHolderName,
+                directDebitAmendmentInformation);
+            bool singleUnstructuredConcept = true;
+
+            DirectDebitTransactionInformation9 directDebitTransactionInformation = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
+                creditorAgent,
+                directDebitTransaction,
+                singleUnstructuredConcept);
+
+            Assert.IsTrue(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInd);
+            Assert.IsTrue(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntIndSpecified);
+
+            Assert.IsNull(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInfDtls.OrgnlDbtrAcct);
+            Assert.AreEqual("SMNDA", directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInfDtls.OrgnlDbtrAgt.FinInstnId.Othr.Id);
+            Assert.IsNull(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInfDtls.OrgnlMndtId);
         }
 
         [TestMethod]
@@ -282,6 +346,19 @@ namespace DirectDebitElementsUnitTests
             Assert.IsNull(directDebitTransactionInformation.Tax);
             Assert.IsNull(directDebitTransactionInformation.UltmtCdtr);
             Assert.IsNull(directDebitTransactionInformation.UltmtDbtr);
+        }
+
+        private void AssertUnusedDirectDebitAmendmentInformation(AmendmentInformationDetails6 amendmentInformationDetails)
+        {
+            Assert.IsNull(amendmentInformationDetails.OrgnlCdtrAgt);
+            Assert.IsNull(amendmentInformationDetails.OrgnlCdtrAgtAcct);
+            Assert.IsNull(amendmentInformationDetails.OrgnlCdtrSchmeId);
+            Assert.IsNull(amendmentInformationDetails.OrgnlDbtr);
+            Assert.IsNull(amendmentInformationDetails.OrgnlDbtrAgtAcct);
+            Assert.AreEqual(DateTime.MinValue, amendmentInformationDetails.OrgnlFnlColltnDt);   //dateTime can't be null
+            Assert.IsFalse(amendmentInformationDetails.OrgnlFnlColltnDtSpecified);
+            Assert.AreEqual(Frequency1Code.MNTH, amendmentInformationDetails.OrgnlFrqcy);       //enum can't be null
+            Assert.IsFalse(amendmentInformationDetails.OrgnlFrqcySpecified);
         }
     }
 }

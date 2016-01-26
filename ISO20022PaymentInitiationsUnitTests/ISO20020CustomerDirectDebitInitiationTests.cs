@@ -239,7 +239,30 @@ namespace ISO20022PaymentInitiationsUnitTests
         }
 
         [TestMethod]
-        public void AmendmentInformationDetails_AmdmntInfDtls_IsCorrectlyCreated()
+        public void AmendmentInformationDetails_AmdmntInfDtls_OnlyChangeMandateID_IsCorrectlyCreated()
+        {
+            AmendmentInformationDetails6 ammendmentInformationDetails_AmdmntInfDtls = new AmendmentInformationDetails6(
+                directDebitMandateInfo1.PreviousMandateID,  //<OrgnlMndtId>
+                null,                                       //<OrgnlCdtrSchemeId> keep original creditor data
+                null,                                       //<OrgnlCreditorAgent> - Not used by creditor in SEPA COR
+                null,                                       //<OrgnlCreditorAgentAccount> - Not used by creditor in SEPA COR
+                null,                                       //<OrgnlDbtr> - Not used by creditor in SEPA COR
+                null,                                       //<OrgnlDbtrAcc>
+                null,                                       //<OrgnlaDbtrAgt> - Not necessario. It's not the BIC
+                null,                                       //<OrgnlDbtrAgtAcct> - Not used by creditor in SEPA COR
+                DateTime.MaxValue,                          //<OrgnlFnlColltnDt> - Not used by creditor in SEPA COR
+                false,                                      //<OrgnlFnlColltnDt> will not be serialized
+                Frequency1Code.MNTH,                        //<OrgnlFrqcy> - Not used by creditor in SEPA COR
+                false);                                     //<OrgnlFrqcy> will not be serialized
+
+            string xmlString = XMLSerializer.XMLSerializeToString<AmendmentInformationDetails6>(ammendmentInformationDetails_AmdmntInfDtls, "AmdmntInfDtls", xMLNamespace);
+            string validatingErrors = XMLValidator.ValidateXMLNodeThroughModifiedXSD(
+                "AmdmntInfDtls", "AmendmentInformationDetails6", xMLNamespace, xmlString, xSDFilePath);
+            Assert.AreEqual("", validatingErrors);
+        }
+
+        [TestMethod]
+        public void AmendmentInformationDetails_AmdmntInfDtls_ChangeDebtorAccountSameAgent_IsCorrectlyCreated()
         {
             AccountIdentification4Choice originalAccountID_Id = new AccountIdentification4Choice(
                 directDebitMandateInfo1.PreviuosIBAN);   //<IBAN>
@@ -251,13 +274,42 @@ namespace ISO20022PaymentInitiationsUnitTests
                 null);          //<Nm> - Not used by creditor in SEPA COR
 
             AmendmentInformationDetails6 ammendmentInformationDetails_AmdmntInfDtls = new AmendmentInformationDetails6(
-                directDebitMandateInfo1.PreviousMandateID,  //<OrgnlMndtId>
+                null,                                       //<OrgnlMndtId>
                 null,                                       //<OrgnlCdtrSchemeId> keep original creditor data
                 null,                                       //<OrgnlCreditorAgent> - Not used by creditor in SEPA COR
                 null,                                       //<OrgnlCreditorAgentAccount> - Not used by creditor in SEPA COR
                 null,                                       //<OrgnlDbtr> - Not used by creditor in SEPA COR
                 originalDebtorAccount_OrgnlDbtrAcct,        //<OrgnlDbtrAcc>
                 null,                                       //<OrgnlaDbtrAgt> - Not necessario. It's not the BIC
+                null,                                       //<OrgnlDbtrAgtAcct> - Not used by creditor in SEPA COR
+                DateTime.MaxValue,                          //<OrgnlFnlColltnDt> - Not used by creditor in SEPA COR
+                false,                                      //<OrgnlFnlColltnDt> will not be serialized
+                Frequency1Code.MNTH,                        //<OrgnlFrqcy> - Not used by creditor in SEPA COR
+                false);                                     //<OrgnlFrqcy> will not be serialized
+
+            string xmlString = XMLSerializer.XMLSerializeToString<AmendmentInformationDetails6>(ammendmentInformationDetails_AmdmntInfDtls, "AmdmntInfDtls", xMLNamespace);
+            string validatingErrors = XMLValidator.ValidateXMLNodeThroughModifiedXSD(
+                "AmdmntInfDtls", "AmendmentInformationDetails6", xMLNamespace, xmlString, xSDFilePath);
+            Assert.AreEqual("", validatingErrors);
+        }
+
+        [TestMethod]
+        public void AmendmentInformationDetails_AmdmntInfDtls_ChangeDebtorAgentSMNDA_IsCorrectlyCreated()
+        {
+            FinancialInstitutionIdentification7 financialInstitutuinIdentification_FinInstnID = new FinancialInstitutionIdentification7(
+                null, null, null, null, new GenericFinancialIdentification1("SMNDA", null, null));
+            BranchAndFinancialInstitutionIdentification4 originalDebtorAgent_OrgnlDbtrAgt = new BranchAndFinancialInstitutionIdentification4(
+                financialInstitutuinIdentification_FinInstnID,
+                null);
+
+            AmendmentInformationDetails6 ammendmentInformationDetails_AmdmntInfDtls = new AmendmentInformationDetails6(
+                null,                                       //<OrgnlMndtId>
+                null,                                       //<OrgnlCdtrSchemeId> keep original creditor data
+                null,                                       //<OrgnlCreditorAgent> - Not used by creditor in SEPA COR
+                null,                                       //<OrgnlCreditorAgentAccount> - Not used by creditor in SEPA COR
+                null,                                       //<OrgnlDbtr> - Not used by creditor in SEPA COR
+                null,                                       //<OrgnlDbtrAcc>
+                originalDebtorAgent_OrgnlDbtrAgt,           //<OrgnlaDbtrAgt> - Not necessario. It's not the BIC
                 null,                                       //<OrgnlDbtrAgtAcct> - Not used by creditor in SEPA COR
                 DateTime.MaxValue,                          //<OrgnlFnlColltnDt> - Not used by creditor in SEPA COR
                 false,                                      //<OrgnlFnlColltnDt> will not be serialized
@@ -305,7 +357,49 @@ namespace ISO20022PaymentInitiationsUnitTests
         }
 
         [TestMethod]
-        public void DirectDebitTransaction_DrctDbtTx_IsCorrectlyCreated()
+        public void DirectDebitTransaction_DrctDbtTx_WithoutAmendmentInformation_AmendmentIndicatorNotSpecified_IsCorrectlyCreated()
+        {
+            MandateRelatedInformation6 mandateRelatedInformation_MndtRltdInf = new MandateRelatedInformation6(
+                directDebitMandateInfo1.MandateID, directDebitMandateInfo1.MandateSignatureDate, true, false, false,
+                null, null, DateTime.MinValue, false,
+                DateTime.MaxValue, false, Frequency1Code.MNTH, false);
+
+            DirectDebitTransaction6 directDebitTransaction_DrctDbtTx = new DirectDebitTransaction6(
+                mandateRelatedInformation_MndtRltdInf,  //<MndtRltdInf>
+                null,                                   //<CdtrSchmeId> - No. Only one creditor scheme per payment information <PmtInf> group  
+                null,                                   //<PreNtfctnId> - Not used by creditor in SEPA COR
+                DateTime.MinValue,                      //<PreNtfctnDt> - Not used by creditor in SEPA COR, but can't be null
+                false);                                 //<PreNtfctnDt> will not be serialized 
+
+            string xmlString = XMLSerializer.XMLSerializeToString<DirectDebitTransaction6>(directDebitTransaction_DrctDbtTx, "DrctDbtTx", xMLNamespace);
+            string validatingErrors = XMLValidator.ValidateXMLNodeThroughModifiedXSD(
+                "DrctDbtTx", "DirectDebitTransaction6", xMLNamespace, xmlString, xSDFilePath);
+            Assert.AreEqual("", validatingErrors);
+        }
+
+        [TestMethod]
+        public void DirectDebitTransaction_DrctDbtTx_WithoutAmendmentInformation_AmendmentIndicatorSpecified_IsCorrectlyCreated()
+        {
+            MandateRelatedInformation6 mandateRelatedInformation_MndtRltdInf = new MandateRelatedInformation6(
+                directDebitMandateInfo1.MandateID, directDebitMandateInfo1.MandateSignatureDate, true, false, true,
+                null, null, DateTime.MinValue, false,
+                DateTime.MaxValue, false, Frequency1Code.MNTH, false);
+
+            DirectDebitTransaction6 directDebitTransaction_DrctDbtTx = new DirectDebitTransaction6(
+                mandateRelatedInformation_MndtRltdInf,  //<MndtRltdInf>
+                null,                                   //<CdtrSchmeId> - No. Only one creditor scheme per payment information <PmtInf> group  
+                null,                                   //<PreNtfctnId> - Not used by creditor in SEPA COR
+                DateTime.MinValue,                      //<PreNtfctnDt> - Not used by creditor in SEPA COR, but can't be null
+                false);                                 //<PreNtfctnDt> will not be serialized 
+
+            string xmlString = XMLSerializer.XMLSerializeToString<DirectDebitTransaction6>(directDebitTransaction_DrctDbtTx, "DrctDbtTx", xMLNamespace);
+            string validatingErrors = XMLValidator.ValidateXMLNodeThroughModifiedXSD(
+                "DrctDbtTx", "DirectDebitTransaction6", xMLNamespace, xmlString, xSDFilePath);
+            Assert.AreEqual("", validatingErrors);
+        }
+
+        [TestMethod]
+        public void DirectDebitTransaction_DrctDbtTx_WithAmendmentInformation_IsCorrectlyCreated()
         {
             AccountIdentification4Choice originalAccountID_Id = new AccountIdentification4Choice(
                 directDebitMandateInfo1.PreviuosIBAN);

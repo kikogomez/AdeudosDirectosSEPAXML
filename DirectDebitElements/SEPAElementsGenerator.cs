@@ -86,12 +86,20 @@ namespace DirectDebitElements
             bool amendmentInformationExists = (
                 directDebitAmendmentInformation != null && 
                 (directDebitAmendmentInformation.OldBankAccount != null || directDebitAmendmentInformation.OldMandateID != null));
-            bool debtorAgentChanged = (
-                directDebitTransaction.DebtorAccount.BankAccountFieldCodes.BankCode != 
+            bool debtorAgentChanged = false;
+            if (amendmentInformationExists && directDebitAmendmentInformation.OldBankAccount != null)
+            {
+                debtorAgentChanged = (
+                directDebitTransaction.DebtorAccount.BankAccountFieldCodes.BankCode !=
                 directDebitAmendmentInformation.OldBankAccount.BankAccountFieldCodes.BankCode);
+            }
 
-            AmendmentInformationDetails6 amendmentInformationDetails_AmdmntInfDtls = GenerateAmendmentInformationDetails(
-                amendmentInformationExists, debtorAgentChanged, directDebitAmendmentInformation);
+            AmendmentInformationDetails6 amendmentInformationDetails_AmdmntInfDtls = null;
+            if (amendmentInformationExists)
+            {
+                amendmentInformationDetails_AmdmntInfDtls = GenerateAmendmentInformationDetails(debtorAgentChanged, directDebitAmendmentInformation);
+            }
+
 
             MandateRelatedInformation6 mandateRelatedInformation_MndtRltdInf = new MandateRelatedInformation6(
                 directDebitTransaction.MandateID,               //<MndtID>
@@ -273,32 +281,32 @@ namespace DirectDebitElements
         }
 
         private static AmendmentInformationDetails6 GenerateAmendmentInformationDetails(
-            bool amendmentInformationExists,
             bool debtorAgentChanged,
             DirectDebitAmendmentInformation directDebitAmendmentInformation)
         {
-            if (!amendmentInformationExists) return null;
-
             CashAccount16 originalDebtorAccount_OrgnlDbtrAcct = null;
             BranchAndFinancialInstitutionIdentification4 originalDebtorAgent_OrgnlDbtrAgt = null;
-            if (debtorAgentChanged)
+            if (directDebitAmendmentInformation.OldBankAccount != null)
             {
-                FinancialInstitutionIdentification7 financialInstitutuinIdentification_FinInstnID = new FinancialInstitutionIdentification7(
-                    null, null, null, null, new GenericFinancialIdentification1("SMNDA", null, null));
-                originalDebtorAgent_OrgnlDbtrAgt = new BranchAndFinancialInstitutionIdentification4(
-                    financialInstitutuinIdentification_FinInstnID,
-                    null);
-            }
-            else
-            {
-                AccountIdentification4Choice accountID_Id = new AccountIdentification4Choice(
-                    directDebitAmendmentInformation.OldBankAccount.IBAN.IBAN);
+                if (debtorAgentChanged)
+                {
+                    FinancialInstitutionIdentification7 financialInstitutuinIdentification_FinInstnID = new FinancialInstitutionIdentification7(
+                        null, null, null, null, new GenericFinancialIdentification1("SMNDA", null, null));
+                    originalDebtorAgent_OrgnlDbtrAgt = new BranchAndFinancialInstitutionIdentification4(
+                        financialInstitutuinIdentification_FinInstnID,
+                        null);
+                }
+                else
+                {
+                    AccountIdentification4Choice accountID_Id = new AccountIdentification4Choice(
+                        directDebitAmendmentInformation.OldBankAccount.IBAN.IBAN);
 
-                originalDebtorAccount_OrgnlDbtrAcct = new CashAccount16(
-                    accountID_Id,   //<Id>
-                    null,           //<Tp> - Not used by creditor in SEPA COR
-                    null,           //<Ccy> - Not used by creditor in SEPA COR
-                    null);          //<Nm> - Not used by creditor in SEPA COR
+                    originalDebtorAccount_OrgnlDbtrAcct = new CashAccount16(
+                        accountID_Id,   //<Id>
+                        null,           //<Tp> - Not used by creditor in SEPA COR
+                        null,           //<Ccy> - Not used by creditor in SEPA COR
+                        null);          //<Nm> - Not used by creditor in SEPA COR
+                }
             }
 
             AmendmentInformationDetails6 amendmentInformationdetails = new AmendmentInformationDetails6(
@@ -310,9 +318,9 @@ namespace DirectDebitElements
                 originalDebtorAccount_OrgnlDbtrAcct,            //<OrgnalDbtrAcct> Fill with old account if debtor keeps same DebtorAgent
                 originalDebtorAgent_OrgnlDbtrAgt,               //<OrgnlDbtrAgt> Fill with 'SMNDA' if debtor changes DebtorAgent
                 null,                                           //<OrgnlDbtrAgtAcct> Not used in SEPA COR1
-                DateTime.MinValue,                              //<OrgnlFnlColltnDt> Not used in SEPA COR1
+                DateTime.MinValue,                              //<OrgnlFnlColltnDt> Not used in SEPA COR1 - DateTime doesn't admit null
                 false,                                          //<OrgnlFnlColltnDt> specified -> false
-                Frequency1Code.MNTH,                            //<OrgnlFrqcy> Not used in SEPA COR1
+                Frequency1Code.MNTH,                            //<OrgnlFrqcy> Not used in SEPA COR1 - enum does't admit null
                 false);                                         //<OrgnlFrqcy> Specified -> false
             return amendmentInformationdetails;
         }
