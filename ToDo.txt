@@ -1,32 +1,6 @@
 - Unificar las excepciones. Todas las excepciones que se lanzan desde un constructor deberian ser TypeinitializationException (y dentro el subtipo - Argumento, ArgumentNull...-)
 
 
-- Añadir la gestión de Amendment Information
-	-> Añadir la clase con dos campos:
-		- oldMandateId (Ok)
-		- oldBankAccount (Ok)
-	-> Testear que se aceptan:
-		- Cualquiera de los dos puede ser nulo, incluso ambos. (Ok)
-		- Si se especifica, MandateID no puede ser cadena vacía o solo espacios (Ok)
-		- Si se especifica, oldBankAccount nopuede tener un IBAN invalido (Ok)
-	-> Incluir el campo AmendmentInformation en DirectdebitTransaction:
-		- Testear que se puede crear un DirectDebitTransaction con AmendmendInformation nulo o que tenga componentes nulos.
-			* En DirectDebitRemmitanceUnitTests (Ok)
-			* En DirectDebitRemmitanceManagerTests (Ok)
-		- Comprobar que se crean correctamente las clase serializables (SEPAElementsGenerator y SEPAElementsGeneratorUnitTests)
-			* AmendmentInformationDetails6 (Ok)
-			* DirectDebitTransactionInformation9 gestiona bien el AmendmentInformation (Ok)
-			* Mirar los casos: (Ok)
-				-> Cambio de MandateID (Ok)
-				-> Cambio de cuenta en el mismo banco se pone el nuevo banco (Etiqueta <OrgnlDbtrAcct>) (Ok)
-				-> Cambio de cuenta a otro banco NO se pone el nuev banco, sino SMNDA en <OrgnlDbtrAgt> (Ok)
-			* Tests de SEPAElementsGenerator (Ok)
-		- Comprobar la serializazion (pruebas en ISO20022PaymentInitiations):
-		    * De un AmendmentInformationDetails6 en los diferentes 3 casos (cambio de mandato, cambio de cuenta, cambio de banco)
-			* De un DirectDebitTransactionInformation9 que incluya amendment information
-				* Revisar que el campo <AmendmntInd> aparece a 'true' cuando hay AmendmentInformation
-				* Revisar que el campo <AmendmentInd> NO APARECE si no hay AmandmentInformation
-				* AmendmentInformationDetails6 esta correctamente incluido (solo un caso, por ejemplo, el de SMNDA)
 - Añadir a la gestión de los adeudos el campo FRST
 	-> Añadir a DirectDebitTransaction el campo booleano 'First' (modificar los test unitarios de DirectDebitTransaction para que comprueben este valor)
 	-> Comprobar si existe AmendmentInformation al instanciar DirectDebitTransaction
@@ -36,19 +10,37 @@
 		* En el método .AddRejectedTransactionToTransactionsGroupPaymentReject
 		* Al crear una instancia de DirectDebitTransacionsGroupPayment con una lista de DirectDebitTransaction incluida
 	-> Comprobar que se crea correctamente un CustomerDirectDebitInitiation con los DirectDebitPaymentInstruction 'FRST' y 'RCUR'
+
 - Completar los tests de SEPAElementsGenerator (creacion de clases serializables para el ENVIO)
+	-> PartyIdentification32 GenerateInitiationParty_InitPty (Ok)
+	-> GroupHeader39 GenerateGroupHeader_GrpHdr (Ok)
+	-> DirectDebitTransactionInformation9 GenerateDirectDebitTransactionInfo_DrctDbtTxInf (Ok)
+		* Sin AmendmentInformation (Ok)
+		* Con AmendmentInformation (Ok)
+			-> Cambio de mandateID (Ok)
+			-> Cambio de cuenta (Ok)
+			-> Cambio de banco (Ok)
+	-> PaymentInstructionInformation4 GeneratePaymentInformation_PmtInf 
+		* (¡Cuidado! GeneratePaymentInformation_PmtInf usa unos valores fijos en su inicializacion!) (Corregido)
+		* (Cuidado, se nicializa siempre SeqTp a RCUR) -> Implementar la lectura de DirectDebitPaymentInstruction.SequenceType cuando este completo
+
+
 - Completar los tests de SEPAElementsReader (lectura de las clases deserializadas de una devolucíon)
+
 - En este punto debemos haber testeados los 3 veles:
 	-> Las clases serializables crean nodos XML conformes con es esquema  ---> Test de ISO20022PaymentInitiations
 	-> Los objetos serializables se crean bien a partit de los DirectDebitElements (al crear una remesa) y el reves (al leer una devolucion)  ---> Tests de SEPAElementGenerator y SEPAElementsReader
 	-> Los DirectDebitElements funcionan bien  ---> Tests de DirectDebitElements
+
 - Dejamos <CtgryPurp>? Lo pondríamos SIEMPRE a 'TRAD'.
+
 - Al deserializar un PaymentStatusReport, hay que revisar los contenidos de(que campos existen y sus valores), para diferenciar entre Devolucion y Rechazo
-- Serializar a UTF-8?
+
 - Realizar un test de CARGA: Generar unos ficheros de prueba de CustomerDirectDebitInitiation de 100, 500, 1000, 3000 y 6000 adeudos, a ver si 'peta' por falta de memoria o va muy lento.
 	-> ¡OJO! El PC de desarrollo tiene 16 gigas. Controlar el uso de memoria (preguntar en 'stackoverflow')
 	-> ¡OJO! El PC de desarrollo es RAPIDO. Hay que estimar cuanto tardaría en un PC normal
 	-> Los test hay que marcarlos para que no se ejecuten mas que cuando se pidan lanzar individualmente. Podemos probar a DESACTIVARLOS, y activarlos solo para la ocasión.
+
 - Si en los test nos comemos la memoria, pensar una alternativa:
 	-> Probar a eliminar la clase 'BankAccount' y quedarnos con un simple 'string' que contenga el IBAN.
 	-> Simplificar la clase DirectdebitMandate para que solo contenga un MandateID, la fecha de creación del mismo, y un 'string' con el IBAN.
@@ -64,6 +56,7 @@
 			* Luego se van añadiendo uno a uno los DirectDebitTransactions, añadiendo los nodos al documento XML
 			* Las sumas de control se pueden poner desde el principio o dejar vacíos. ¡OJO! ¡Esto significa que no deben saltar las excepciones de las sumas de control!
 	-> ¿Leer directamente de un DataSet e ir creando directamente las instancias de las clases serializables, pasando por alto todo el trabajo que hemos hecho con DirectDebitElements? Sería una putada...
+
 - ¿Hacer que todas las instanciaciones de objetos DirectDebitElements pasen a través de una clase o clases controladoras?
 	-> Internamente:
 		- SEPAMessagesManager usa:

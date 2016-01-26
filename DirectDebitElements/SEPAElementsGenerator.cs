@@ -188,6 +188,8 @@ namespace DirectDebitElements
             bool singleUnstructuredConcept)
         {
             string paymentInformationIdentificaction_PmtInfId = directDebitPaymentInstruction.PaymentInformationID;  //Private unique ID for payment group
+            string paymentInformationIdentificaction_NbOfTxs = directDebitPaymentInstruction.NumberOfDirectDebitTransactions.ToString();
+            decimal paymentInformationIdentificaction_CtrlSum = directDebitPaymentInstruction.TotalAmount;
             DateTime reqCollectionDate_ReqdColltnDt = requestedCollectionDate;
             List<DirectDebitTransactionInformation9> directDebitTransactionInfo_DrctDbtTxInfList = new List<DirectDebitTransactionInformation9>();
             foreach (DirectDebitTransaction directDebitTransaction in directDebitPaymentInstruction.DirectDebitTransactions)
@@ -203,7 +205,7 @@ namespace DirectDebitElements
 
             LocalInstrument2Choice localInstrument_LclInstrm = new LocalInstrument2Choice(directDebitPaymentInstruction.LocalInstrument, ItemChoiceType.Cd);
 
-            CategoryPurpose1Choice categoryOfPurpose_CtgyPurp = new CategoryPurpose1Choice("TRAD", ItemChoiceType.Cd);
+            CategoryPurpose1Choice categoryOfPurpose_CtgyPurp = new CategoryPurpose1Choice("TRAD", ItemChoiceType.Cd);  //Allways use TRAD
 
             PaymentTypeInformation20 paymentTypeInformation_PmtTpInf = new PaymentTypeInformation20(
                 Priority2Code.NORM,                 //<InstrPrty> Not used in SEPA COR1, but can't be null
@@ -236,11 +238,11 @@ namespace DirectDebitElements
             GenericOrganisationIdentification1 genericOrganisationIdentification_othr = new GenericOrganisationIdentification1(
                 directDebitInitiationContract.CreditorID, orgIDSchemeNameChoice_schmeNm, null);
 
-            OrganisationIdentification4 organisationIdentification_orgiD = new OrganisationIdentification4(
+            OrganisationIdentification4 organisationIdentification_orgID = new OrganisationIdentification4(
                 null,
                 new GenericOrganisationIdentification1[] { genericOrganisationIdentification_othr });
 
-            Party6Choice organisationOrPrivateIdentification_id = new Party6Choice(organisationIdentification_orgiD);
+            Party6Choice organisationOrPrivateIdentification_id = new Party6Choice(organisationIdentification_orgID);
 
             PartyIdentification32 creditorSchemeIdentification_CdtrSchemeId = new PartyIdentification32(
                 null, null, organisationOrPrivateIdentification_id, null, null);
@@ -249,11 +251,11 @@ namespace DirectDebitElements
 
             PaymentInstructionInformation4 paymentInformation_PmtInf = new PaymentInstructionInformation4(
                 paymentInformationIdentificaction_PmtInfId, //<PmtInfId>
-                PaymentMethod2Code.DD,                       //<PmtMtd>
-                true,                                       //<BtchBookg> Only one account entry for all payments
-                true,                                       //<BtchBookg> Will be serialized
-                "2",                                        //<NbOfTxs>
-                (decimal)237,                               //<CtrlSum>
+                PaymentMethod2Code.DD,                      //<PmtMtd>
+                false,                                      //<BtchBookg> Only one account entry for all payments
+                false,                                      //<BtchBookg> Will be serialized
+                paymentInformationIdentificaction_NbOfTxs,  //<NbOfTxs>
+                paymentInformationIdentificaction_CtrlSum,  //<CtrlSum>
                 true,                                       //<CtrlSum> will be specified
                 paymentTypeInformation_PmtTpInf,            //<PmtTpInf>
                 reqCollectionDate_ReqdColltnDt,             //<ReqdColltnDt>
