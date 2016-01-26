@@ -216,6 +216,43 @@ namespace DirectDebitElementsUnitTests
 
         [TestMethod]
         [ExpectedException(typeof(System.TypeInitializationException))]
+        public void TransactionWithAnAmendmentWithABankChangeMustBeFirstDebit_IfNotItThrowsAnException()
+        {
+            Debtor debtor = debtors["00002"];
+            DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
+            string transactionID = "00001";
+            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
+            DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
+            BankAccount debtorAccount = directDebitMandate.BankAccount;
+            string accountHolderName = directDebitMandate.AccountHolderName;
+            List<SimplifiedBill> bills = debtor.SimplifiedBills.Values.ToList();
+            BankAccount oldBankAccount = new BankAccount(new BankAccountFields("1234", "5678", "06", "1234567890"));
+            DirectDebitAmendmentInformation directDebitAmendmentInformation = new DirectDebitAmendmentInformation(null, oldBankAccount);
+
+            try
+            {
+                DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
+                    bills,
+                    transactionID,
+                    mandateID,
+                    mandateSignatureDate,
+                    debtorAccount,
+                    accountHolderName,
+                    directDebitAmendmentInformation,
+                    false);
+            }
+
+            catch (System.TypeInitializationException typeInitializationException)
+            {
+                ArgumentException argumentException = (ArgumentException)typeInitializationException.InnerException;
+                Assert.AreEqual("firstDebit", argumentException.ParamName);
+                Assert.AreEqual("FirstDebit must be true when changing debtor bank", argumentException.GetMessageWithoutParamName());
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.TypeInitializationException))]
         public void TransactionIDOfADirectDebitTransactionCantBeNull()
         {
             Debtor debtor = debtors["00002"];

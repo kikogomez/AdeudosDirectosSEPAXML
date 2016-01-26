@@ -104,7 +104,7 @@ namespace DirectDebitElements
         {
             try
             {
-                CheckMandatoryFields(transactionID, mandateID, debtorAccount);
+                CheckMandatoryFields(transactionID, mandateID, debtorAccount, amendmentInformation, firstDebit);
             }
             catch (Exception ex) when (ex is ArgumentException || ex is ArgumentNullException || ex is ArgumentOutOfRangeException)
             {
@@ -126,7 +126,12 @@ namespace DirectDebitElements
             numberOfBills = billsInTransaction.Count;
         }
 
-        private void CheckMandatoryFields(string transactionID, string mandateID, BankAccount debtorAccount)
+        private void CheckMandatoryFields(
+            string transactionID,
+            string mandateID,
+            BankAccount debtorAccount,
+            DirectDebitAmendmentInformation amendmentInformation,
+            bool firstDebit)
         {
             //if (transactionID == null) throw new TypeInitializationException("DirectDebitTransaction", new ArgumentNullException("transactionID", "TransactionID can't be null"));
             //if (transactionID.Trim().Length == 0) throw new TypeInitializationException("DirectDebitTransaction", new ArgumentException("TransactionID can't be empty", "transactionID"));
@@ -145,10 +150,8 @@ namespace DirectDebitElements
             if (mandateID.Trim().Length > 35) throw new ArgumentOutOfRangeException("MandateID", "MandateID can't be longer than 35 characters");
             if (debtorAccount == null) throw new ArgumentNullException("DebtorAccount", "DebtorAccount can't be null");
             if (!debtorAccount.HasValidIBAN) throw new ArgumentException("DebtorAccount must be a valid IBAN", "DebtorAccount");
-
-            //
-            //Chequear si el tipo 'firstDebit' es compatible con el amendmentInformation (no puede ser first=False si hay cambio de cuenta a otro banco)
-            //
+            if (!firstDebit && BankHasBeenChangedInAmendmentInformation(debtorAccount, amendmentInformation))
+                throw new ArgumentException("FirstDebit must be true when changing debtor bank", "firstDebit");
         }
 
         private void SignalANewBillHasBeenAdded(SimplifiedBill bill)
@@ -157,6 +160,12 @@ namespace DirectDebitElements
             {
                 ANewBillHasBeenAdded(this, bill.Amount);
             }
+        }
+
+        private bool BankHasBeenChangedInAmendmentInformation(BankAccount debtorAccount, DirectDebitAmendmentInformation amendmentInformation)
+        {
+            if (amendmentInformation == null || amendmentInformation.OldBankAccount == null) return false;
+            return (debtorAccount.BankAccountFieldCodes.BankCode != amendmentInformation.OldBankAccount.BankAccountFieldCodes.BankCode);
         }
     }
 }
