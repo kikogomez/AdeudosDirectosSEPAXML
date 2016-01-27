@@ -142,8 +142,9 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             string paymentInformationID = "PaymentGroup1";
             ScenarioContext.Current.Add("PaymentInformationID", paymentInformationID);
             string localInstrument = (string)ScenarioContext.Current["LocalInstrument"];
+            bool firstDebits = false;
             DirectDebitPaymentInstruction directDebitPaymentInstruction =
-                directDebitRemittancesManager.CreateAnEmptyDirectDebitPaymentInstruction(paymentInformationID, localInstrument);
+                directDebitRemittancesManager.CreateAnEmptyDirectDebitPaymentInstruction(paymentInformationID, localInstrument, firstDebits);
             ScenarioContext.Current.Add("EmptyDirectDebitPaymentInstruction", directDebitPaymentInstruction);
         }
 
@@ -253,7 +254,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
         public void GivenIHaveAnEmptyGroupOfPayments()
         {
             DirectDebitPaymentInstruction directDebitPaymentInstruction =
-                directDebitRemittancesManager.CreateAnEmptyDirectDebitPaymentInstruction("PaymentGroup1", "COR1");
+                directDebitRemittancesManager.CreateAnEmptyDirectDebitPaymentInstruction("PaymentGroup1", "COR1", false);
             ScenarioContext.Current.Add("DirectDebitPaymentInstruction", directDebitPaymentInstruction);
         }
 
@@ -293,7 +294,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
                 null,
                 false);
             DirectDebitPaymentInstruction directDebitPaymentInstruction =
-                directDebitRemittancesManager.CreateAnEmptyDirectDebitPaymentInstruction("PaymentGroup1", "COR1");
+                directDebitRemittancesManager.CreateAnEmptyDirectDebitPaymentInstruction("PaymentGroup1", "COR1", false);
             directDebitRemittancesManager.AddDirectDebitTransactionToDirectDebitPaymentInstruction(directDebitTransaction, directDebitPaymentInstruction);
             Assert.AreEqual(numberOfDirectDebitTransactions, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
             Assert.AreEqual(amount, directDebitPaymentInstruction.TotalAmount);
@@ -360,7 +361,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             DirectDebitInitiationContract directDebitInitiationContract = (DirectDebitInitiationContract)ScenarioContext.Current["DirectDebitInitiationContract"];
             DirectDebitRemittance directDebitRemittance = directDebitRemittancesManager.CreateAnEmptyDirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
             DirectDebitPaymentInstruction directDebitPaymentInstruction =
-                directDebitRemittancesManager.CreateAnEmptyDirectDebitPaymentInstruction("PaymentGroup1", "COR1");
+                directDebitRemittancesManager.CreateAnEmptyDirectDebitPaymentInstruction("PaymentGroup1", "COR1", false);
             DirectDebitPropietaryCodesGenerator directDebitPropietaryCodesGenerator = new DirectDebitPropietaryCodesGenerator(directDebitInitiationContract);
 
             List<Debtor> debtors = ((Dictionary<string, Debtor>)ScenarioContext.Current["Debtors"]).Values.ToList();

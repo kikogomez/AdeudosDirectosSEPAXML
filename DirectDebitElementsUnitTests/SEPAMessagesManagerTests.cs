@@ -84,7 +84,7 @@ namespace DirectDebitElementsUnitTests
             DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
             string prefix = directDebitRemittance.MessageID.Substring(directDebitRemittance.MessageID.Length - 25);
             string paymentInformationID = prefix + "001";
-            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, "CORE");
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, "CORE", false);
 
             List<SimplifiedBill> simplifiedBills;
             string transactionID;
@@ -142,7 +142,7 @@ namespace DirectDebitElementsUnitTests
             DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
             string prefix = directDebitRemittance.MessageID.Substring(directDebitRemittance.MessageID.Length - 25);
             string paymentInformationID = prefix + "001";
-            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, "CORE");
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, "CORE", false);
 
             List<SimplifiedBill> simplifiedBills;
             string transactionID;

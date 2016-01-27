@@ -668,7 +668,8 @@ namespace DirectDebitElementsUnitTests
         public void AnEmptyDirectDebitPaymentInstructionIsCorrectlyCreated()
         {
             string localInstrument = "COR1";
-            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID1, localInstrument);
+            bool firstDebits = false;
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID1, localInstrument, firstDebits);
             Assert.AreEqual("PRE201512010001", directDebitPaymentInstruction.PaymentInformationID);
             Assert.AreEqual("COR1", directDebitPaymentInstruction.LocalInstrument);
             Assert.AreEqual(0, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
@@ -682,7 +683,7 @@ namespace DirectDebitElementsUnitTests
             string paymentInformationID = "0123456789012345678901234567890123456789";
             try
             {
-                DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, "COR1");
+                DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, "COR1", false);
             }
 
             catch (System.ArgumentOutOfRangeException e)
@@ -699,7 +700,7 @@ namespace DirectDebitElementsUnitTests
         {
             try
             {
-                DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction("", "COR1");
+                DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction("", "COR1", false);
             }
 
             catch (System.ArgumentException e)
@@ -716,7 +717,7 @@ namespace DirectDebitElementsUnitTests
         {
             try
             {
-                DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(null, "COR1");
+                DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(null, "COR1", false);
             }
 
             catch (System.ArgumentNullException e)
@@ -731,10 +732,11 @@ namespace DirectDebitElementsUnitTests
         public void ADirectDebitPaymentInstructionIsCorrectlyCreatedWithoutProvidingNumberOfTransactionsNorControlSum()
         {
             string localInstrument = "COR1";
+            bool firstDebits = false;
             List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
 
             DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
-                paymentInformationID1, localInstrument, directDebitTransactions);
+                paymentInformationID1, localInstrument, firstDebits, directDebitTransactions);
 
             Assert.AreEqual("PRE201512010001", directDebitPaymentInstruction.PaymentInformationID);
             Assert.AreEqual("COR1", directDebitPaymentInstruction.LocalInstrument);
@@ -746,12 +748,13 @@ namespace DirectDebitElementsUnitTests
         public void IfGivenCorrectNumberOfTransactionsAndControlSumTheDirectDebitPaymentInstructionIsCorrectlyCreated()
         {
             string localInstrument = "COR1";
+            bool firstDebits = false;
             List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
             int numberOfTransactions = directDebitTransactions.Count;
             decimal controlSum = directDebitTransactions.Select(directDebitTransaction => directDebitTransaction.Amount).Sum();
 
             DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
-                paymentInformationID1, localInstrument,directDebitTransactions, numberOfTransactions, controlSum);
+                paymentInformationID1, localInstrument, firstDebits, directDebitTransactions, numberOfTransactions, controlSum);
 
             Assert.AreEqual("PRE201512010001", directDebitPaymentInstruction.PaymentInformationID);
             Assert.AreEqual("COR1", directDebitPaymentInstruction.LocalInstrument);
@@ -764,6 +767,7 @@ namespace DirectDebitElementsUnitTests
         public void IfGivenIncorrectNumberOfTransactionsTheDirectDebitPaymentInstructionThrowsATypeInitializationErrorException()
         {
             string localInstrument = "COR1";
+            bool firstDebits = false;
             List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
             int numberOfTransactions = 1;
             decimal controlSum = directDebitTransactions.Select(directDebitTransaction => directDebitTransaction.Amount).Sum();
@@ -771,7 +775,7 @@ namespace DirectDebitElementsUnitTests
             try
             {
                 DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
-                    paymentInformationID1, localInstrument, directDebitTransactions, numberOfTransactions, controlSum);
+                    paymentInformationID1, localInstrument, firstDebits, directDebitTransactions, numberOfTransactions, controlSum);
             }
             catch (TypeInitializationException typeInitializationException)
             {
@@ -792,6 +796,7 @@ namespace DirectDebitElementsUnitTests
         public void IfGivenIncorrectControlSumTheDirectDebitPaymentInstructionThrowsATypeInitializationErrorException()
         {
             string localInstrument = "COR1";
+            bool firstDebits = false;
             List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
             int numberOfTransactions = directDebitTransactions.Count;
             decimal controlSum = 0;
@@ -799,7 +804,7 @@ namespace DirectDebitElementsUnitTests
             try
             {
                 DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
-                    paymentInformationID1, localInstrument, directDebitTransactions, numberOfTransactions, controlSum);
+                    paymentInformationID1, localInstrument, firstDebits, directDebitTransactions, numberOfTransactions, controlSum);
             }
             catch (TypeInitializationException typeInitializationException)
             {
@@ -820,6 +825,7 @@ namespace DirectDebitElementsUnitTests
         public void IfTheTransactionsIDInsideAPaymentInstructionsAreNotUniqueTheDirectDebitPaymentInstructionThrowsATypeInitializationErrorException()
         {
             string localInstrument = "COR1";
+            bool firstDebits = false;
             List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction1 };
             int numberOfTransactions = directDebitTransactions.Count;
             decimal controlSum = directDebitTransactions.Select(directDebitTransaction => directDebitTransaction.Amount).Sum();
@@ -827,7 +833,7 @@ namespace DirectDebitElementsUnitTests
             try
             {
                 DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
-                    paymentInformationID1, localInstrument, directDebitTransactions, numberOfTransactions, controlSum);
+                    paymentInformationID1, localInstrument, firstDebits, directDebitTransactions, numberOfTransactions, controlSum);
             }
             catch (TypeInitializationException typeInitializationException)
             {
@@ -847,10 +853,11 @@ namespace DirectDebitElementsUnitTests
         public void ADirectDebitTransactionIsCorrectlyAddedToADirectDebitPaymentInstruction()
         {
             string localInstrument = "COR1";
+            bool firstDebits = false;
             List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1 };
 
             DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
-                paymentInformationID1, localInstrument, directDebitTransactions);
+                paymentInformationID1, localInstrument, firstDebits, directDebitTransactions);
 
             directDebitPaymentInstruction.AddDirectDebitTransaction(directDebitTransaction2);
 
@@ -863,11 +870,12 @@ namespace DirectDebitElementsUnitTests
         public void IfTheTransactionsIDOfAnAddedTransactionIsDuplicatedTheDirectDebitPaymentInstructionThrowsAnArgumentException()
         {
             string localInstrument = "COR1";
+            bool firstDebits = false;
             List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1 };
             int numberOfTransactions = directDebitTransactions.Count;
             decimal controlSum = directDebitTransactions.Select(directDebitTransaction => directDebitTransaction.Amount).Sum();
             DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
-                    paymentInformationID1, localInstrument, directDebitTransactions, numberOfTransactions, controlSum);
+                    paymentInformationID1, localInstrument, firstDebits, directDebitTransactions, numberOfTransactions, controlSum);
 
             try
             {
@@ -1006,9 +1014,10 @@ namespace DirectDebitElementsUnitTests
             string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
             DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
             string localInstrument = "COR1";
+            bool firstDebits = false;
             List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
             DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
-                paymentInformationID1, localInstrument, directDebitTransactions);
+                paymentInformationID1, localInstrument, firstDebits, directDebitTransactions);
             List<DirectDebitPaymentInstruction> directDebitPaymentInstructions = new List<DirectDebitPaymentInstruction>() { directDebitPaymentInstruction };
 
             DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(
@@ -1034,9 +1043,10 @@ namespace DirectDebitElementsUnitTests
             string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
             DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
             string localInstrument = "COR1";
+            bool firstDebits = false;
             List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
             DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
-                paymentInformationID1, localInstrument, directDebitTransactions);
+                paymentInformationID1, localInstrument, firstDebits, directDebitTransactions);
             List<DirectDebitPaymentInstruction> directDebitPaymentInstructions = new List<DirectDebitPaymentInstruction>() { directDebitPaymentInstruction };
             int numberOfTransactions = directDebitPaymentInstructions.Select(paymentInstruction => paymentInstruction.NumberOfDirectDebitTransactions).Sum();
             decimal controlSum = directDebitPaymentInstructions.Select(paymentInstruction => paymentInstruction.TotalAmount).Sum();
@@ -1064,9 +1074,10 @@ namespace DirectDebitElementsUnitTests
             string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
             DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
             string localInstrument = "COR1";
+            bool firstDebits = false;
             List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
             DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
-                paymentInformationID1, localInstrument, directDebitTransactions);
+                paymentInformationID1, localInstrument, firstDebits, directDebitTransactions);
             List<DirectDebitPaymentInstruction> directDebitPaymentInstructions = new List<DirectDebitPaymentInstruction>() { directDebitPaymentInstruction };
             int numberOfTransactions = 1;
             decimal controlSum = directDebitPaymentInstructions.Select(paymentInstruction => paymentInstruction.TotalAmount).Sum();
@@ -1104,9 +1115,10 @@ namespace DirectDebitElementsUnitTests
             string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
             DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
             string localInstrument = "COR1";
+            bool firstDebits = false;
             List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
             DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
-                paymentInformationID1, localInstrument, directDebitTransactions);
+                paymentInformationID1, localInstrument, firstDebits, directDebitTransactions);
             List<DirectDebitPaymentInstruction> directDebitPaymentInstructions = new List<DirectDebitPaymentInstruction>() { directDebitPaymentInstruction };
             int numberOfTransactions = directDebitPaymentInstructions.Select(paymentInstruction => paymentInstruction.NumberOfDirectDebitTransactions).Sum();
             decimal controlSum = 100;
@@ -1144,9 +1156,10 @@ namespace DirectDebitElementsUnitTests
             DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
             DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
             string localInstrument = "COR1";
+            bool firstDebits = false;
             List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
             DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
-                paymentInformationID1, localInstrument, directDebitTransactions);
+                paymentInformationID1, localInstrument, firstDebits, directDebitTransactions);
 
             directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction);
 
@@ -1163,15 +1176,16 @@ namespace DirectDebitElementsUnitTests
             DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
             DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
 
+            bool firstDebits = false;
             string localInstrument1 = "COR1";
             List<DirectDebitTransaction> directDebitTransactions1 = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
             DirectDebitPaymentInstruction directDebitPaymentInstruction1 = new DirectDebitPaymentInstruction(
-                paymentInformationID1, localInstrument1, directDebitTransactions1);
+                paymentInformationID1, localInstrument1, firstDebits,  directDebitTransactions1);
             directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction1);
             string localInstrument2 = "COR1";
             List<DirectDebitTransaction> directDebitTransactions2 = new List<DirectDebitTransaction>() { directDebitTransaction3 };
             DirectDebitPaymentInstruction directDebitPaymentInstruction2 = new DirectDebitPaymentInstruction(
-                paymentInformationID2, localInstrument2, directDebitTransactions2);
+                paymentInformationID2, localInstrument2, firstDebits, directDebitTransactions2);
 
             directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction2);
 
@@ -1191,8 +1205,9 @@ namespace DirectDebitElementsUnitTests
             string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
             DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
             string localInstrument = "COR1";
+            bool firstDebits = false;
             List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1 };
-            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID1, localInstrument, directDebitTransactions);
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID1, localInstrument, firstDebits, directDebitTransactions);
             List<DirectDebitPaymentInstruction> directDebitPaymentInstructions = new List<DirectDebitPaymentInstruction>() { directDebitPaymentInstruction };
             DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract, directDebitPaymentInstructions);
 
@@ -1215,8 +1230,9 @@ namespace DirectDebitElementsUnitTests
             DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
             DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
             string localInstrument = "COR1";
+            bool firstDebits = false;
             List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1 };
-            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID1, localInstrument, directDebitTransactions);
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID1, localInstrument, firstDebits, directDebitTransactions);
    
             directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction);
             directDebitPaymentInstruction.AddDirectDebitTransaction(directDebitTransaction2);
@@ -1237,8 +1253,9 @@ namespace DirectDebitElementsUnitTests
             string messageID = "ES26777G12345678" + creationDate.ToString("yyyyMMddHH:mm:ss");
             DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
             string localInstrument = "COR1";
+            bool firstDebits = false;
             List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1 };
-            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID1, localInstrument, directDebitTransactions);
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID1, localInstrument, firstDebits, directDebitTransactions);
             List<DirectDebitPaymentInstruction> directDebitPaymentInstructions = new List<DirectDebitPaymentInstruction>() { directDebitPaymentInstruction };
             DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract, directDebitPaymentInstructions);
 
@@ -1262,9 +1279,9 @@ namespace DirectDebitElementsUnitTests
             DateTime requestedCollectionDate = new DateTime(2013, 12, 1);
             DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
             string localInstrument = "COR1";
+            bool firstDebits = false;
             List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1 };
-            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID1, localInstrument, directDebitTransactions);
-            //List<DirectDebitPaymentInstruction> directDebitPaymentInstructions = new List<DirectDebitPaymentInstruction>() { directDebitPaymentInstruction };
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID1, localInstrument, firstDebits, directDebitTransactions);
 
             directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction);
             SimplifiedBill newBill = new SimplifiedBill("00002", "Concept1", 100, DateTime.Now, DateTime.Now.AddMonths(1));

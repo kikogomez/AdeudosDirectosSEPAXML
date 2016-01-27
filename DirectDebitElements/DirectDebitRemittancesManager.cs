@@ -63,22 +63,26 @@ namespace DirectDebitElements
 
         public DirectDebitPaymentInstruction CreateAnEmptyDirectDebitPaymentInstruction(
             string paymentInformationID,
-            string localInstrument)
+            string localInstrument,
+            bool firstDebits)
         {
             DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
                 paymentInformationID,
-                localInstrument);
+                localInstrument,
+                firstDebits);
             return directDebitPaymentInstruction;
         }
 
         public DirectDebitPaymentInstruction CreateADirectDebitPaymentInstruction(
             string paymentInformationID,
             string localInstrument,
+            bool firstDebits,
             List<DirectDebitTransaction> directDebitTransactions)
         {
             DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
                 paymentInformationID,
                 localInstrument,
+                firstDebits,
                 directDebitTransactions);
             return directDebitPaymentInstruction;
         }
@@ -86,6 +90,7 @@ namespace DirectDebitElements
         public DirectDebitPaymentInstruction CreateADirectDebitPaymentInstruction(
             string paymentInformationID,
             string localInstrument,
+            bool firstDebits,
             List<DirectDebitTransaction> directDebitTransactions,
             int numberOfTransactions,
             decimal controlSum)
@@ -93,6 +98,7 @@ namespace DirectDebitElements
             DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
                 paymentInformationID,
                 localInstrument,
+                firstDebits,
                 directDebitTransactions,
                 numberOfTransactions,
                 controlSum);

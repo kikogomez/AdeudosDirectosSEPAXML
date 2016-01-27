@@ -1,10 +1,12 @@
+Opcionales para tener en cuenta más tarde:
 - Unificar las excepciones. Todas las excepciones que se lanzan desde un constructor deberian ser TypeinitializationException (y dentro el subtipo - Argumento, ArgumentNull...-)
 - Faltan por chequear algunos campos obligatorios en los constructores de DirectDebitTransactions y otros DDElements
 
+
 - Añadir a la gestión de los adeudos el campo FRST
-	-> Añadir a DirectDebitTransaction el campo booleano 'First' (modificar los test unitarios de DirectDebitTransaction para que comprueben este valor)
-	-> Comprobar si existe AmendmentInformation al instanciar DirectDebitTransaction
-		-> Si hay cambio de BANCO es obligatorio que se considere 'FRST'
+	-> Añadir a DirectDebitTransaction el campo booleano 'First' (modificar los test unitarios de DirectDebitTransaction para que comprueben este valor) (Ok)
+	-> Comprobar si existe AmendmentInformation al instanciar DirectDebitTransaction (Ok)
+		-> Si hay cambio de BANCO es obligatorio que se considere 'FRST' (ok)
 	-> Añadir a DirectDebitPaymentInstruction el campo 'First'
 	-> Al añadir un DirectDebitTransaction a DirectDebitPaymentInstruction comprobar si se corresponden 'RCUR' o 'FRST'
 		* En el método .AddRejectedTransactionToTransactionsGroupPaymentReject

@@ -11,16 +11,18 @@ namespace DirectDebitElements
 
         string paymentInformationID;
         string localInstrument;
+        bool firstDebits;
         List<DirectDebitTransaction> directDebitTransactions;
 
         int numberOfTransactions;
         decimal controlSum;
 
-        public DirectDebitPaymentInstruction(string paymentInformationID, string localInstrument)
+        public DirectDebitPaymentInstruction(string paymentInformationID, string localInstrument, bool firstDebits)
         {
             CheckPaymentInformationID(paymentInformationID);
             this.paymentInformationID = paymentInformationID;
             this.localInstrument = localInstrument;
+            this.firstDebits = firstDebits;
             directDebitTransactions = new List<DirectDebitTransaction>();
             numberOfTransactions = 0;
             controlSum = 0;
@@ -29,8 +31,9 @@ namespace DirectDebitElements
         public DirectDebitPaymentInstruction(
             string paymentInformationID,
             string localInstrument,
+            bool firstDebits,
             List<DirectDebitTransaction> directDebitTransactions)
-            :this(paymentInformationID, localInstrument)
+            :this(paymentInformationID, localInstrument, firstDebits)
         {
             this.directDebitTransactions = directDebitTransactions;
             try
@@ -48,10 +51,11 @@ namespace DirectDebitElements
         public DirectDebitPaymentInstruction(
             string paymentInformationID,
             string localInstrument,
+            bool firstDebits,
             List<DirectDebitTransaction> directDebitTransactions,
             int numberOfTransactions,
             decimal controlSum)
-            :this(paymentInformationID, localInstrument, directDebitTransactions)
+            :this(paymentInformationID, localInstrument, firstDebits, directDebitTransactions)
         {
             try
             {
@@ -73,6 +77,11 @@ namespace DirectDebitElements
             get { return localInstrument; }
         }
 
+        public bool FirstDebits
+        {
+            get { return firstDebits; }
+        }
+
         public int NumberOfDirectDebitTransactions
         {
             get { return numberOfTransactions; }
@@ -87,6 +96,8 @@ namespace DirectDebitElements
         {
             get { return directDebitTransactions; }
         }
+
+
 
         public void AddDirectDebitTransaction(DirectDebitTransaction directDebitTransaction)
         {

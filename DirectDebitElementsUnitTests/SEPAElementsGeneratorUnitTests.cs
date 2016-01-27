@@ -270,7 +270,7 @@ namespace DirectDebitElementsUnitTests
                 debtorAccount,
                 accountHolderName,
                 directDebitAmendmentInformation,
-                false);
+                true);
             bool singleUnstructuredConcept = true;
 
             DirectDebitTransactionInformation9 directDebitTransactionInformation = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
