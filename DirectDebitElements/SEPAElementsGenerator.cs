@@ -8,8 +8,6 @@ using ISO20022PaymentInitiations.SchemaSerializableClasses.DDInitiation;
 using ISO20022PaymentInitiations.SchemaSerializableClasses.PaymentStatusReport;
 using ExtensionMethods;
 
-
-
 namespace DirectDebitElements
 {
     public static class SEPAElementsGenerator
@@ -205,6 +203,8 @@ namespace DirectDebitElements
 
             LocalInstrument2Choice localInstrument_LclInstrm = new LocalInstrument2Choice(directDebitPaymentInstruction.LocalInstrument, ItemChoiceType.Cd);
 
+            SequenceType1Code sequenceType_SeqTP = directDebitPaymentInstruction.FirstDebits ? SequenceType1Code.FRST : SequenceType1Code.RCUR;
+
             CategoryPurpose1Choice categoryOfPurpose_CtgyPurp = new CategoryPurpose1Choice("TRAD", ItemChoiceType.Cd);  //Allways use TRAD
 
             PaymentTypeInformation20 paymentTypeInformation_PmtTpInf = new PaymentTypeInformation20(
@@ -212,7 +212,7 @@ namespace DirectDebitElements
                 false,                              //<InstrPrty> will not be serialized
                 serviceLevel_SvcLvl,                //<SvcLvl>
                 localInstrument_LclInstrm,          //<LclInstrm>
-                SequenceType1Code.RCUR,             //<SeqTp>
+                sequenceType_SeqTP,                 //<SeqTp>
                 true,                               //<SeqTP> wll be serialized
                 categoryOfPurpose_CtgyPurp);        //<CtgyPurp>
 
@@ -252,7 +252,7 @@ namespace DirectDebitElements
             PaymentInstructionInformation4 paymentInformation_PmtInf = new PaymentInstructionInformation4(
                 paymentInformationIdentificaction_PmtInfId, //<PmtInfId>
                 PaymentMethod2Code.DD,                      //<PmtMtd>
-                false,                                      //<BtchBookg> Only one account entry for all payments
+                true,                                       //<BtchBookg> Only one account entry for all payments
                 false,                                      //<BtchBookg> Will be serialized
                 paymentInformationIdentificaction_NbOfTxs,  //<NbOfTxs>
                 paymentInformationIdentificaction_CtrlSum,  //<CtrlSum>
