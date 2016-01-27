@@ -2,17 +2,6 @@ Opcionales para tener en cuenta más tarde:
 - Unificar las excepciones. Todas las excepciones que se lanzan desde un constructor deberian ser TypeinitializationException (y dentro el subtipo - Argumento, ArgumentNull...-)
 - Faltan por chequear algunos campos obligatorios en los constructores de DirectDebitTransactions y otros DDElements
 
-
-- Añadir a la gestión de los adeudos el campo FRST
-	-> Añadir a DirectDebitTransaction el campo booleano 'First' (modificar los test unitarios de DirectDebitTransaction para que comprueben este valor) (Ok)
-	-> Comprobar si existe AmendmentInformation al instanciar DirectDebitTransaction (Ok)
-		-> Si hay cambio de BANCO es obligatorio que se considere 'FRST' (ok)
-	-> Añadir a DirectDebitPaymentInstruction el campo 'First'
-	-> Al añadir un DirectDebitTransaction a DirectDebitPaymentInstruction comprobar si se corresponden 'RCUR' o 'FRST'
-		* En el método .AddRejectedTransactionToTransactionsGroupPaymentReject
-		* Al crear una instancia de DirectDebitTransacionsGroupPayment con una lista de DirectDebitTransaction incluida
-	-> Comprobar que se crea correctamente un CustomerDirectDebitInitiation con los DirectDebitPaymentInstruction 'FRST' y 'RCUR'
-
 - Completar los tests de SEPAElementsGenerator (creacion de clases serializables para el ENVIO)
 	-> PartyIdentification32 GenerateInitiationParty_InitPty (Ok)
 	-> GroupHeader39 GenerateGroupHeader_GrpHdr (Ok)
@@ -24,13 +13,13 @@ Opcionales para tener en cuenta más tarde:
 			-> Cambio de banco (Ok)
 	-> PaymentInstructionInformation4 GeneratePaymentInformation_PmtInf 
 		* (¡Cuidado! GeneratePaymentInformation_PmtInf usa unos valores fijos en su inicializacion!) (Corregido)
-		* (Cuidado, se nicializa siempre SeqTp a RCUR) -> Implementar la lectura de DirectDebitPaymentInstruction.SequenceType cuando este completo
+		* (Cuidado, se inicializa siempre SeqTp a RCUR) -> Implementar la lectura de DirectDebitPaymentInstruction.SequenceType cuando este completo
 
 
 - Completar los tests de SEPAElementsReader (lectura de las clases deserializadas de una devolucíon)
 
-- En este punto debemos haber testeados los 3 veles:
-	-> Las clases serializables crean nodos XML conformes con es esquema  ---> Test de ISO20022PaymentInitiations
+- En este punto debemos asegurar haber testeado los 3 niveles, ya que, a veces, ponemos valores por defecto en las purebas, y no los tomamos de los campos que proveemos:
+	-> Las clases serializables crean nodos XML conformes con es esquema  ---> Test de ISO20022PaymentInitiations (ya estan comprobados desde hace tiempo)
 	-> Los objetos serializables se crean bien a partit de los DirectDebitElements (al crear una remesa) y el reves (al leer una devolucion)  ---> Tests de SEPAElementGenerator y SEPAElementsReader
 	-> Los DirectDebitElements funcionan bien  ---> Tests de DirectDebitElements
 

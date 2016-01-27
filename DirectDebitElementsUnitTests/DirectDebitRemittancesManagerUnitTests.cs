@@ -20,6 +20,7 @@ namespace DirectDebitElementsUnitTests
         DirectDebitTransaction directDebitTransaction1;
         DirectDebitTransaction directDebitTransaction2;
         DirectDebitTransaction directDebitTransaction3;
+        DirectDebitTransaction directDebitTransaction4;
         static DirectDebitAmendmentInformation amendmentInformation1;
         static string paymentInformationID1;
         static string paymentInformationID2;
@@ -123,6 +124,16 @@ namespace DirectDebitElementsUnitTests
                 debtors["00001"].FullName,
                 null,
                 false);
+
+            directDebitTransaction4 = new DirectDebitTransaction(
+                debtors["00001"].SimplifiedBills.Values.ToList(),
+                "PaymentInstruction3-00001",
+                directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(debtors["00001"].DirectDebitmandates[1234].InternalReferenceNumber),
+                debtors["00001"].DirectDebitmandates[1234].DirectDebitMandateCreationDate,
+                debtors["00001"].DirectDebitmandates[1234].BankAccount,
+                debtors["00001"].FullName,
+                null,
+                true);
         }
 
         [TestMethod]
@@ -720,6 +731,38 @@ namespace DirectDebitElementsUnitTests
 
         [TestMethod]
         [ExpectedException(typeof(System.TypeInitializationException))]
+        public void IfTheSequenceTypeOfAnAddedTransactionIsDifferentFromTheDirectDebitPaymentInstructionSequenceTypeAnArgumentExceptionisThrown()
+        {
+            string localInstrument = "COR1";
+            bool firstDebits = false;
+            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1 };
+
+            DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = directDebitRemittancesManager.CreateADirectDebitPaymentInstruction(
+                paymentInformationID1,
+                localInstrument,
+                firstDebits,
+                directDebitTransactions);
+            try
+            {
+                directDebitPaymentInstruction.AddDirectDebitTransaction(directDebitTransaction4);
+            }
+            catch (TypeInitializationException typeInitializationException)
+            {
+                Assert.AreEqual("DirectDebitPaymentInstruction", typeInitializationException.TypeName);
+                ArgumentException argumentException = (ArgumentException)typeInitializationException.InnerException;
+
+                string expectedErrorMessage = "The Transaction must have the same SequenceType than the Payment Instruction";
+                string paramName = argumentException.ParamName;
+                string exceptionMessage = argumentException.GetMessageWithoutParamName();
+                Assert.AreEqual("firstDebit", paramName);
+                Assert.AreEqual(expectedErrorMessage, exceptionMessage);
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.TypeInitializationException))]
         public void IfTheTransactionsIDOfAnAddedTransactionIsDuplicatedTheDirectDebitPaymentInstructionThrowsAnArgumentException()
         {
             string localInstrument = "COR1";
@@ -767,6 +810,37 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual("COR1", directDebitPaymentInstruction.LocalInstrument);
             Assert.AreEqual(2, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
             Assert.AreEqual(237, directDebitPaymentInstruction.TotalAmount);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.TypeInitializationException))]
+        public void AllTransactionsInsideAPaymentInstructionMustHaveTheSameSequenceTypeThanPaymentIntructionHas()
+        {
+            string localInstrument = "COR1";
+            bool firstDebits = false;
+            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction4 };
+
+            DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
+            try
+            {
+                DirectDebitPaymentInstruction directDebitPaymentInstruction = directDebitRemittancesManager.CreateADirectDebitPaymentInstruction(
+                paymentInformationID1,
+                localInstrument,
+                firstDebits,
+                directDebitTransactions);
+            }
+            catch (TypeInitializationException typeInitializationException)
+            {
+                Assert.AreEqual("DirectDebitPaymentInstruction", typeInitializationException.TypeName);
+                ArgumentException argumentException = (ArgumentException)typeInitializationException.InnerException;
+
+                string expectedErrorMessage = "All transactions must have the same SequenceType than payment instrucion";
+                string paramName = argumentException.ParamName;
+                string exceptionMessage = argumentException.GetMessageWithoutParamName();
+                Assert.AreEqual("firstDebits", paramName);
+                Assert.AreEqual(expectedErrorMessage, exceptionMessage);
+                throw;
+            }
         }
 
         [TestMethod]
