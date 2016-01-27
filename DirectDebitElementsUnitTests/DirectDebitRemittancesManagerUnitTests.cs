@@ -196,6 +196,38 @@ namespace DirectDebitElementsUnitTests
 
         [TestMethod]
         [ExpectedException(typeof(System.TypeInitializationException))]
+        public void TransactionWithAnAmendmentWithABankChangeMustBeFirstDebit_IfNotItThrowsAnException()
+        {
+            List<SimplifiedBill> emptyBillsList = new List<SimplifiedBill>();
+            string transactionID = "PaymentInstruction1-00001";
+            DirectDebitMandate directDebitMandate = debtors["00001"].DirectDebitmandates[1234];
+            string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
+            BankAccount oldBankAccount = new BankAccount(new BankAccountFields("1234", "5678", "06", "1234567890"));
+            DirectDebitAmendmentInformation directDebitAmendmentInformation = new DirectDebitAmendmentInformation(null, oldBankAccount);
+            bool firstDebit = false;
+
+            DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
+            try
+            {
+                DirectDebitTransaction emptyDirectDebitTransaction = directDebitRemittancesManager.CreateAnEmptyDirectDebitTransaction(
+                    transactionID,
+                    mandateID,
+                    directDebitMandate,
+                    directDebitAmendmentInformation,
+                    firstDebit);
+            }
+
+            catch (System.TypeInitializationException typeInitializationException)
+            {
+                ArgumentException argumentException = (ArgumentException)typeInitializationException.InnerException;
+                Assert.AreEqual("firstDebit", argumentException.ParamName);
+                Assert.AreEqual("FirstDebit must be true when changing debtor bank", argumentException.GetMessageWithoutParamName());
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.TypeInitializationException))]
         public void TransactionIDCantBeNullWhenCreatingAnEmptyDirectDebitTransaction()
         {
             List<SimplifiedBill> emptyBillsList = new List<SimplifiedBill>();
@@ -603,7 +635,7 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(System.ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(System.TypeInitializationException))]
         public void CantAssignAPaymentInformationIDLongerThan35Characters()
         {
             string paymentInformationID = "0123456789012345678901234567890123456789";
@@ -617,16 +649,17 @@ namespace DirectDebitElementsUnitTests
                     false);
             }
 
-            catch (System.ArgumentOutOfRangeException e)
+            catch (TypeInitializationException typeInitializationException)
             {
-                Assert.AreEqual("paymentInformationID", e.ParamName);
-                Assert.AreEqual("PaymentInformationID lenght can't exceed 35 characters", e.GetMessageWithoutParamName());
+                ArgumentOutOfRangeException argumentException = (ArgumentOutOfRangeException)typeInitializationException.InnerException;
+                Assert.AreEqual("paymentInformationID", argumentException.ParamName);
+                Assert.AreEqual("PaymentInformationID lenght can't exceed 35 characters", argumentException.GetMessageWithoutParamName());
                 throw;
             }
         }
 
         [TestMethod]
-        [ExpectedException(typeof(System.ArgumentException))]
+        [ExpectedException(typeof(TypeInitializationException))]
         public void CantAssignAnEmptyPaymentInformationID()
         {
             DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
@@ -636,16 +669,17 @@ namespace DirectDebitElementsUnitTests
                     "", "COR1", false);
             }
 
-            catch (System.ArgumentException e)
+            catch (TypeInitializationException typeInitializationException)
             {
-                Assert.AreEqual("paymentInformationID", e.ParamName);
-                Assert.AreEqual("PaymentInformationID can't be empty", e.GetMessageWithoutParamName());
+                ArgumentException argumentException = (ArgumentException)typeInitializationException.InnerException;
+                Assert.AreEqual("paymentInformationID", argumentException.ParamName);
+                Assert.AreEqual("PaymentInformationID can't be empty", argumentException.GetMessageWithoutParamName());
                 throw;
             }
         }
 
         [TestMethod]
-        [ExpectedException(typeof(System.ArgumentNullException))]
+        [ExpectedException(typeof(TypeInitializationException))]
         public void CantAssignANullPaymentInformationID()
         {
             DirectDebitRemittancesManager directDebitRemittancesManager = new DirectDebitRemittancesManager();
@@ -655,10 +689,11 @@ namespace DirectDebitElementsUnitTests
                     directDebitRemittancesManager.CreateAnEmptyDirectDebitPaymentInstruction(null, "COR1", false);
             }
 
-            catch (System.ArgumentNullException e)
+            catch (TypeInitializationException typeInitializationException)
             {
-                Assert.AreEqual("paymentInformationID", e.ParamName);
-                Assert.AreEqual("PaymentInformationID can't be null", e.GetMessageWithoutParamName());
+                ArgumentNullException argumentException = (ArgumentNullException)typeInitializationException.InnerException;
+                Assert.AreEqual("paymentInformationID", argumentException.ParamName);
+                Assert.AreEqual("PaymentInformationID can't be null", argumentException.GetMessageWithoutParamName());
                 throw;
             }
         }
@@ -684,7 +719,7 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(System.ArgumentException))]
+        [ExpectedException(typeof(System.TypeInitializationException))]
         public void IfTheTransactionsIDOfAnAddedTransactionIsDuplicatedTheDirectDebitPaymentInstructionThrowsAnArgumentException()
         {
             string localInstrument = "COR1";
@@ -700,14 +735,17 @@ namespace DirectDebitElementsUnitTests
             {
                 directDebitRemittancesManager.AddDirectDebitTransactionToDirectDebitPaymentInstruction(directDebitTransaction1, directDebitPaymentInstruction);
             }
-            catch (ArgumentException argumentException)
+            catch (TypeInitializationException typeInitializationException)
             {
+                Assert.AreEqual("DirectDebitPaymentInstruction", typeInitializationException.TypeName);
+
+                ArgumentException argumentException = (ArgumentException)typeInitializationException.InnerException;
                 string expectedErrorMessage = "The TransactionID already exists";
                 string paramName = argumentException.ParamName;
                 string exceptionMessage = argumentException.GetMessageWithoutParamName();
                 Assert.AreEqual("transactionID", paramName);
                 Assert.AreEqual(expectedErrorMessage, exceptionMessage);
-                throw argumentException;
+                throw;
             }
         }
 
@@ -750,14 +788,14 @@ namespace DirectDebitElementsUnitTests
             catch (TypeInitializationException typeInitializationException)
             {
                 Assert.AreEqual("DirectDebitPaymentInstruction", typeInitializationException.TypeName);
+                ArgumentException argumentException = (ArgumentException)typeInitializationException.InnerException;
 
                 string expectedErrorMessage = "The TransactionIDs are not unique";
-                ArgumentException argumentException = (ArgumentException)typeInitializationException.InnerException;
                 string paramName = argumentException.ParamName;
                 string exceptionMessage = argumentException.GetMessageWithoutParamName();
                 Assert.AreEqual("transactionID", paramName);
                 Assert.AreEqual(expectedErrorMessage, exceptionMessage);
-                throw typeInitializationException;
+                throw;
             }
         }
 
@@ -817,7 +855,7 @@ namespace DirectDebitElementsUnitTests
                 string exceptionMessage = argumentException.GetMessageWithoutParamName();
                 Assert.AreEqual("numberOfTransactions", paramName);
                 Assert.AreEqual(expectedErrorMessage, exceptionMessage);
-                throw typeInitializationException;
+                throw;
             }
         }
 
@@ -852,7 +890,7 @@ namespace DirectDebitElementsUnitTests
                 string exceptionMessage = argumentException.GetMessageWithoutParamName();
                 Assert.AreEqual("controlSum", paramName);
                 Assert.AreEqual(expectedErrorMessage, exceptionMessage);
-                throw typeInitializationException;
+                throw;
             }
         }
 
@@ -1079,7 +1117,7 @@ namespace DirectDebitElementsUnitTests
                 string exceptionMessage = argumentException.GetMessageWithoutParamName();
                 Assert.AreEqual("numberOfTransactions", paramName);
                 Assert.AreEqual(expectedErrorMessage, exceptionMessage);
-                throw typeInitializationException;
+                throw;
             }
         }
 
@@ -1121,7 +1159,7 @@ namespace DirectDebitElementsUnitTests
                 string exceptionMessage = argumentException.GetMessageWithoutParamName();
                 Assert.AreEqual("controlSum", paramName);
                 Assert.AreEqual(expectedErrorMessage, exceptionMessage);
-                throw typeInitializationException;
+                throw;
             }
         }
 

@@ -190,7 +190,6 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual(expectedXMLString, xMLCustomerDirectDeitInitiationMessage);
         }
 
-
         [TestMethod]
         public void APaymentStatusReportIsCorrectlyInitializedFromAXMLStringMessage()
         {

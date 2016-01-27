@@ -36,14 +36,8 @@ namespace DirectDebitElements
             :this(paymentInformationID, localInstrument, firstDebits)
         {
             this.directDebitTransactions = directDebitTransactions;
-            try
-            {
-                CheckDuplicateTransactionIDs();
-            }
-            catch (ArgumentException argumentException)
-            {
-                throw new TypeInitializationException("DirectDebitPaymentInstruction", argumentException);
-            }
+            CheckDuplicateTransactionIDs();
+            CheckAllTransactionsHaveTheSameSequenceTypeThanPaymentInstruction();
             UpdateNumberOfDirectDebitTransactionsAndAmount();
             SuscribeTo_ANewBillHasBeenAddedEvent_FromAllTransactions();
         }
@@ -57,14 +51,7 @@ namespace DirectDebitElements
             decimal controlSum)
             :this(paymentInformationID, localInstrument, firstDebits, directDebitTransactions)
         {
-            try
-            {
-                CheckNumberOfTransactionsAndAmount(numberOfTransactions, controlSum);
-            }
-            catch (ArgumentException argumentException)
-            {
-                throw new TypeInitializationException("DirectDebitPaymentInstruction", argumentException);
-            }
+            CheckNumberOfTransactionsAndAmount(numberOfTransactions, controlSum);
         }
 
         public string PaymentInformationID
@@ -97,11 +84,10 @@ namespace DirectDebitElements
             get { return directDebitTransactions; }
         }
 
-
-
         public void AddDirectDebitTransaction(DirectDebitTransaction directDebitTransaction)
         {
             CheckTransactionIDDoesntExists(directDebitTransaction.TransactionID);
+            CheckTransactionSequenceTypeIsTheSameThanPaymentInstruction(directDebitTransaction.FirstDebit);
             directDebitTransactions.Add(directDebitTransaction);
             UpdateNumberOfDirectDebitTransactionsAndAmount();
             SuscribeTo_ANewBillHasBeenAddedEvent(directDebitTransaction);
@@ -110,10 +96,12 @@ namespace DirectDebitElements
 
         private void CheckPaymentInformationID(string paymentInformationID)
         {
-            if (paymentInformationID == null) throw new System.ArgumentNullException("paymentInformationID", "PaymentInformationID can't be null");
-            if (paymentInformationID.Trim().Length > 35) throw new System.ArgumentOutOfRangeException("paymentInformationID", "PaymentInformationID lenght can't exceed 35 characters");
-            if (paymentInformationID.Trim().Length == 0) throw new System.ArgumentException("PaymentInformationID can't be empty", "paymentInformationID");
-
+            if (paymentInformationID == null)
+                throw new TypeInitializationException("DirectDebitPaymentInstruction", new ArgumentNullException("paymentInformationID", "PaymentInformationID can't be null"));
+            if (paymentInformationID.Trim().Length > 35)
+                throw new TypeInitializationException("DirectDebitPaymentInstruction", new ArgumentOutOfRangeException("paymentInformationID", "PaymentInformationID lenght can't exceed 35 characters"));
+            if (paymentInformationID.Trim().Length == 0)
+                throw new TypeInitializationException("DirectDebitPaymentInstruction", new ArgumentException("PaymentInformationID can't be empty", "paymentInformationID"));
         }
 
         private void CheckNumberOfTransactionsAndAmount(int numberOfTransactions, decimal controlSum)
@@ -121,12 +109,12 @@ namespace DirectDebitElements
             if (this.numberOfTransactions != numberOfTransactions)
             {
                 string errorMessage = string.Format("The {0} is wrong. It should be {1}, but {2} is provided", "Number of Transactions", this.numberOfTransactions, numberOfTransactions);
-                throw new ArgumentException(errorMessage, "numberOfTransactions");
+                throw new TypeInitializationException("DirectDebitPaymentInstruction", new ArgumentException(errorMessage, "numberOfTransactions"));
             }
             if (this.controlSum != controlSum)
             {
                 string errorMessage = string.Format("The {0} is wrong. It should be {1}, but {2} is provided", "Control Sum", this.controlSum, controlSum);
-                throw new ArgumentException(errorMessage, "controlSum");
+                throw new TypeInitializationException("DirectDebitPaymentInstruction", new ArgumentException(errorMessage, "controlSum"));
             }
         }
 
@@ -134,13 +122,28 @@ namespace DirectDebitElements
         {
             List<string> transactionIDs = this.directDebitTransactions.Select(directDebitTransaction => directDebitTransaction.TransactionID).ToList();
             int distinctIDsCount = transactionIDs.Distinct().Count();
-            if (distinctIDsCount!= transactionIDs.Count()) throw new ArgumentException("The TransactionIDs are not unique", "transactionID");
+            if (distinctIDsCount!= transactionIDs.Count())
+                throw new TypeInitializationException("DirectDebitPaymentInstruction", new ArgumentException("The TransactionIDs are not unique", "transactionID"));
         }
 
         private void CheckTransactionIDDoesntExists(string transactionID)
         {
             if (directDebitTransactions.Select(directDebitTransaction => directDebitTransaction.TransactionID).ToList().Contains(transactionID))
-                throw new ArgumentException("The TransactionID already exists", "transactionID");
+                throw new TypeInitializationException("DirectDebitPaymentInstruction", new ArgumentException("The TransactionID already exists", "transactionID"));
+        }
+
+        private void CheckTransactionSequenceTypeIsTheSameThanPaymentInstruction(bool transactionIsFirstDebit)
+        {
+            if (transactionIsFirstDebit != firstDebits)
+                throw new TypeInitializationException("DirectDebitPaymentInstruction", new ArgumentException("The Transaction must have the same SequenceType than the Payment Instruction", "firstDebit"));
+        }
+
+        private void CheckAllTransactionsHaveTheSameSequenceTypeThanPaymentInstruction()
+        {
+            var directDebitTransactionThatDiffers =
+                directDebitTransactions.FirstOrDefault(directDebitTransaction => directDebitTransaction.FirstDebit != this.firstDebits);
+            if (directDebitTransactionThatDiffers!=null)
+                throw new TypeInitializationException("DirectDebitPaymentInstruction", new ArgumentException("All transactions must have the same SequenceType than payment instrucion", "firstDebits"));
         }
 
         private void UpdateNumberOfDirectDebitTransactionsAndAmount()
