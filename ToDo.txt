@@ -1,17 +1,10 @@
 Opcionales para tener en cuenta más tarde:
 - Unificar las excepciones. Todas las excepciones que se lanzan desde un constructor deberian ser TypeinitializationException (y dentro el subtipo - Argumento, ArgumentNull...-)
 - Faltan por chequear algunos campos obligatorios en los constructores de DirectDebitTransactions y otros DDElements
+- Al deserializar un PaymentStatusReport, hay que revisar los contenidos (que campos existen y sus valores), para diferenciar entre Devolucion y Rechazo
 
-- Completar los tests de SEPAElementsReader (lectura de las clases deserializadas de una devolucíon)
 
-- En este punto debemos asegurar haber testeado los 3 niveles, ya que, a veces, ponemos valores por defecto en las purebas, y no los tomamos de los campos que proveemos:
-	-> Las clases serializables crean nodos XML conformes con es esquema  ---> Test de ISO20022PaymentInitiations (ya estan comprobados desde hace tiempo)
-	-> Los objetos serializables se crean bien a partit de los DirectDebitElements (al crear una remesa) y el reves (al leer una devolucion)  ---> Tests de SEPAElementGenerator y SEPAElementsReader
-	-> Los DirectDebitElements funcionan bien  ---> Tests de DirectDebitElements
 
-- Dejamos <CtgryPurp>? Lo pondríamos SIEMPRE a 'TRAD'.
-
-- Al deserializar un PaymentStatusReport, hay que revisar los contenidos de(que campos existen y sus valores), para diferenciar entre Devolucion y Rechazo
 
 - Realizar un test de CARGA: Generar unos ficheros de prueba de CustomerDirectDebitInitiation de 100, 500, 1000, 3000 y 6000 adeudos, a ver si 'peta' por falta de memoria o va muy lento.
 	-> ¡OJO! El PC de desarrollo tiene 16 gigas. Controlar el uso de memoria (preguntar en 'stackoverflow')
