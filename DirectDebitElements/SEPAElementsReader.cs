@@ -11,7 +11,6 @@ namespace DirectDebitElements
 {
     public static class SEPAElementsReader
     {
-
         public static DirectDebitPaymentInstructionReject CreateDirectDebitPaymentInstructionReject(OriginalPaymentInformation1 originalPaymentInformation1)
         {
             PaymentStatusReportManager paymentStatusReportManager = new PaymentStatusReportManager();

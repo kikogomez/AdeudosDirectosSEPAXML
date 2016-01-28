@@ -2,20 +2,6 @@ Opcionales para tener en cuenta más tarde:
 - Unificar las excepciones. Todas las excepciones que se lanzan desde un constructor deberian ser TypeinitializationException (y dentro el subtipo - Argumento, ArgumentNull...-)
 - Faltan por chequear algunos campos obligatorios en los constructores de DirectDebitTransactions y otros DDElements
 
-- Completar los tests de SEPAElementsGenerator (creacion de clases serializables para el ENVIO)
-	-> PartyIdentification32 GenerateInitiationParty_InitPty (Ok)
-	-> GroupHeader39 GenerateGroupHeader_GrpHdr (Ok)
-	-> DirectDebitTransactionInformation9 GenerateDirectDebitTransactionInfo_DrctDbtTxInf (Ok)
-		* Sin AmendmentInformation (Ok)
-		* Con AmendmentInformation (Ok)
-			-> Cambio de mandateID (Ok)
-			-> Cambio de cuenta (Ok)
-			-> Cambio de banco (Ok)
-	-> PaymentInstructionInformation4 GeneratePaymentInformation_PmtInf 
-		* (¡Cuidado! GeneratePaymentInformation_PmtInf usa unos valores fijos en su inicializacion!) (Corregido)
-		* (Cuidado, se inicializa siempre SeqTp a RCUR) -> Implementar la lectura de DirectDebitPaymentInstruction.SequenceType cuando este completo
-
-
 - Completar los tests de SEPAElementsReader (lectura de las clases deserializadas de una devolucíon)
 
 - En este punto debemos asegurar haber testeado los 3 niveles, ya que, a veces, ponemos valores por defecto en las purebas, y no los tomamos de los campos que proveemos:

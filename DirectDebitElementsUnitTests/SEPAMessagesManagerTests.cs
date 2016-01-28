@@ -210,7 +210,7 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual((decimal)220.30, paymentStatusReport.ControlSum);
             Assert.AreEqual(2, paymentStatusReport.DirectDebitPaymentInstructionRejects.Count);
 
-            //Info from first DirectDectDebitRemittance
+            //Info from first DirectDebitPaymentInstructionReject
             List<string> expectedOriginalEndtoEndTransactionIdentificationList1 = new List<string>()
             {"201207010001/01002", "201207010001/02452"};
             Assert.AreEqual("PRE201207010001", paymentStatusReport.DirectDebitPaymentInstructionRejects[0].OriginalPaymentInformationID);
@@ -218,7 +218,7 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual((decimal)130.30, paymentStatusReport.DirectDebitPaymentInstructionRejects[0].ControlSum);
             CollectionAssert.AreEqual(expectedOriginalEndtoEndTransactionIdentificationList1, paymentStatusReport.DirectDebitPaymentInstructionRejects[0].OriginalEndtoEndTransactiontransactionIDList);
 
-            //Info from second DirectDectDebitRemittance
+            //Info from second DirectDebitPaymentInstructionReject
             List<string> expectedOriginalEndtoEndTransactionIdentificationList2 = new List<string>()
             {"201205270001/01650"};
             Assert.AreEqual("PRE201205270001", paymentStatusReport.DirectDebitPaymentInstructionRejects[1].OriginalPaymentInformationID);

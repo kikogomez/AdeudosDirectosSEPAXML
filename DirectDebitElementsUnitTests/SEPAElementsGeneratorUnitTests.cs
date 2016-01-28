@@ -232,111 +232,7 @@ namespace DirectDebitElementsUnitTests
             AssertUnusedDirectDebitTransactionInformation9_DrctDbtTxInf_Fields(directDebitTransactionInformation_DrctDbtTxInf);
         }
 
-        [TestMethod]
-        public void ARCURPaymentInstructionInformation4IsCorrectlyGenerated()
-        {
-            string localInstrument = "COR1";
-            bool firstDebits = false;
-            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
-
-            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
-                paymentInformationID1, localInstrument, firstDebits, directDebitTransactions);
-
-            DateTime requestedCollectionDate = DateTime.Now.AddDays(3);
-            bool singleUnstructuredConcept = true;
-
-            PaymentInstructionInformation4 paymentInstructionInformation_PmtIf = SEPAElementsGenerator.GeneratePaymentInformation_PmtInf(
-                creditor,
-                creditorAgent,
-                directDebitInitiationContract,
-                directDebitPaymentInstruction,
-                requestedCollectionDate,
-                singleUnstructuredConcept);
-
-            Assert.IsTrue(paymentInstructionInformation_PmtIf.BtchBookg);
-            Assert.IsFalse(paymentInstructionInformation_PmtIf.BtchBookgSpecified);
-            Assert.AreEqual(creditor.Name, paymentInstructionInformation_PmtIf.Cdtr.Nm);
-            Assert.AreEqual(ChargeBearerType1Code.SLEV, paymentInstructionInformation_PmtIf.ChrgBr);
-            Assert.IsTrue(paymentInstructionInformation_PmtIf.ChrgBrSpecified);
-            Assert.AreEqual(directDebitInitiationContract.CreditorAcount.IBAN.IBAN, (string)paymentInstructionInformation_PmtIf.CdtrAcct.Id.Item);
-            Assert.AreEqual(directDebitInitiationContract.CreditorAgent.BankBIC, paymentInstructionInformation_PmtIf.CdtrAgt.FinInstnId.BIC);
-            Assert.AreEqual(directDebitInitiationContract.CreditorID, ((OrganisationIdentification4)paymentInstructionInformation_PmtIf.CdtrSchmeId.Id.Item).Othr[0].Id);
-            Assert.AreEqual("SEPA", ((OrganisationIdentification4)paymentInstructionInformation_PmtIf.CdtrSchmeId.Id.Item).Othr[0].SchmeNm.Item);
-            Assert.AreEqual(ItemChoiceType.Prtry, ((OrganisationIdentification4)paymentInstructionInformation_PmtIf.CdtrSchmeId.Id.Item).Othr[0].SchmeNm.ItemElementName);
-            Assert.AreEqual(directDebitPaymentInstruction.TotalAmount, paymentInstructionInformation_PmtIf.CtrlSum);
-            Assert.IsTrue(paymentInstructionInformation_PmtIf.CtrlSumSpecified);
-            Assert.AreEqual(directDebitPaymentInstruction.NumberOfDirectDebitTransactions, paymentInstructionInformation_PmtIf.DrctDbtTxInf.Count());
-            decimal paymentInstructionInformationDrctDbtTxInfInstructedAmountSum =
-                paymentInstructionInformation_PmtIf.DrctDbtTxInf.ToList().Select(drctDbtTxInf => drctDbtTxInf.InstdAmt.Value).Sum();
-            Assert.AreEqual(directDebitPaymentInstruction.TotalAmount, paymentInstructionInformationDrctDbtTxInfInstructedAmountSum);
-            Assert.AreEqual(directDebitPaymentInstruction.NumberOfDirectDebitTransactions.ToString(), paymentInstructionInformation_PmtIf.NbOfTxs);
-            Assert.AreEqual(directDebitPaymentInstruction.PaymentInformationID, paymentInstructionInformation_PmtIf.PmtInfId);
-            Assert.AreEqual(PaymentMethod2Code.DD, paymentInstructionInformation_PmtIf.PmtMtd);
-            Assert.AreEqual("TRAD", paymentInstructionInformation_PmtIf.PmtTpInf.CtgyPurp.Item);
-            Assert.AreEqual(ItemChoiceType.Cd, paymentInstructionInformation_PmtIf.PmtTpInf.CtgyPurp.ItemElementName);
-            Assert.AreEqual(directDebitPaymentInstruction.LocalInstrument, paymentInstructionInformation_PmtIf.PmtTpInf.LclInstrm.Item);
-            Assert.AreEqual(ItemChoiceType.Cd, paymentInstructionInformation_PmtIf.PmtTpInf.LclInstrm.ItemElementName);
-            Assert.AreEqual(SequenceType1Code.RCUR, paymentInstructionInformation_PmtIf.PmtTpInf.SeqTp);
-            Assert.IsTrue(paymentInstructionInformation_PmtIf.PmtTpInf.SeqTpSpecified);
-            Assert.AreEqual(ItemChoiceType.Cd, paymentInstructionInformation_PmtIf.PmtTpInf.SvcLvl.ItemElementName);
-            Assert.AreEqual("SEPA", paymentInstructionInformation_PmtIf.PmtTpInf.SvcLvl.Item);
-            Assert.AreEqual(requestedCollectionDate, paymentInstructionInformation_PmtIf.ReqdColltnDt);
-
-            AssertUnusedPaymentInstructionInformation4_PmtIf_Fields(paymentInstructionInformation_PmtIf);
-        }
-
-        [TestMethod]
-        public void AFRSTPaymentInstructionInformation4IsCorrectlyGenerated()
-        {
-            string localInstrument = "COR1";
-            bool firstDebits = true;
-            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction4 };
-
-            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
-                paymentInformationID1, localInstrument, firstDebits, directDebitTransactions);
-
-            DateTime requestedCollectionDate = DateTime.Now.AddDays(3);
-            bool singleUnstructuredConcept = true;
-
-            PaymentInstructionInformation4 paymentInstructionInformation_PmtIf = SEPAElementsGenerator.GeneratePaymentInformation_PmtInf(
-                creditor,
-                creditorAgent,
-                directDebitInitiationContract,
-                directDebitPaymentInstruction,
-                requestedCollectionDate,
-                singleUnstructuredConcept);
-
-            Assert.IsTrue(paymentInstructionInformation_PmtIf.BtchBookg);
-            Assert.IsFalse(paymentInstructionInformation_PmtIf.BtchBookgSpecified);
-            Assert.AreEqual(creditor.Name, paymentInstructionInformation_PmtIf.Cdtr.Nm);
-            Assert.AreEqual(ChargeBearerType1Code.SLEV, paymentInstructionInformation_PmtIf.ChrgBr);
-            Assert.IsTrue(paymentInstructionInformation_PmtIf.ChrgBrSpecified);
-            Assert.AreEqual(directDebitInitiationContract.CreditorAcount.IBAN.IBAN, (string)paymentInstructionInformation_PmtIf.CdtrAcct.Id.Item);
-            Assert.AreEqual(directDebitInitiationContract.CreditorAgent.BankBIC, paymentInstructionInformation_PmtIf.CdtrAgt.FinInstnId.BIC);
-            Assert.AreEqual(directDebitInitiationContract.CreditorID, ((OrganisationIdentification4)paymentInstructionInformation_PmtIf.CdtrSchmeId.Id.Item).Othr[0].Id);
-            Assert.AreEqual("SEPA", ((OrganisationIdentification4)paymentInstructionInformation_PmtIf.CdtrSchmeId.Id.Item).Othr[0].SchmeNm.Item);
-            Assert.AreEqual(ItemChoiceType.Prtry, ((OrganisationIdentification4)paymentInstructionInformation_PmtIf.CdtrSchmeId.Id.Item).Othr[0].SchmeNm.ItemElementName);
-            Assert.AreEqual(directDebitPaymentInstruction.TotalAmount, paymentInstructionInformation_PmtIf.CtrlSum);
-            Assert.IsTrue(paymentInstructionInformation_PmtIf.CtrlSumSpecified);
-            Assert.AreEqual(directDebitPaymentInstruction.NumberOfDirectDebitTransactions, paymentInstructionInformation_PmtIf.DrctDbtTxInf.Count());
-            decimal paymentInstructionInformationDrctDbtTxInfInstructedAmountSum =
-                paymentInstructionInformation_PmtIf.DrctDbtTxInf.ToList().Select(drctDbtTxInf => drctDbtTxInf.InstdAmt.Value).Sum();
-            Assert.AreEqual(directDebitPaymentInstruction.TotalAmount, paymentInstructionInformationDrctDbtTxInfInstructedAmountSum);
-            Assert.AreEqual(directDebitPaymentInstruction.NumberOfDirectDebitTransactions.ToString(), paymentInstructionInformation_PmtIf.NbOfTxs);
-            Assert.AreEqual(directDebitPaymentInstruction.PaymentInformationID, paymentInstructionInformation_PmtIf.PmtInfId);
-            Assert.AreEqual(PaymentMethod2Code.DD, paymentInstructionInformation_PmtIf.PmtMtd);
-            Assert.AreEqual("TRAD", paymentInstructionInformation_PmtIf.PmtTpInf.CtgyPurp.Item);
-            Assert.AreEqual(ItemChoiceType.Cd, paymentInstructionInformation_PmtIf.PmtTpInf.CtgyPurp.ItemElementName);
-            Assert.AreEqual(directDebitPaymentInstruction.LocalInstrument, paymentInstructionInformation_PmtIf.PmtTpInf.LclInstrm.Item);
-            Assert.AreEqual(ItemChoiceType.Cd, paymentInstructionInformation_PmtIf.PmtTpInf.LclInstrm.ItemElementName);
-            Assert.AreEqual(SequenceType1Code.FRST, paymentInstructionInformation_PmtIf.PmtTpInf.SeqTp);
-            Assert.IsTrue(paymentInstructionInformation_PmtIf.PmtTpInf.SeqTpSpecified);
-            Assert.AreEqual(ItemChoiceType.Cd, paymentInstructionInformation_PmtIf.PmtTpInf.SvcLvl.ItemElementName);
-            Assert.AreEqual("SEPA", paymentInstructionInformation_PmtIf.PmtTpInf.SvcLvl.Item);
-            Assert.AreEqual(requestedCollectionDate, paymentInstructionInformation_PmtIf.ReqdColltnDt);
-        }
-
-        [TestMethod]
+                [TestMethod]
         public void ADirectDebitTransactionInformation9WithAmmendmentInformation_ChangeMandateID_IsCorrectlyGenerated()
         {
             string transactionID = "00001";
@@ -480,6 +376,110 @@ namespace DirectDebitElementsUnitTests
 
             string[] expectedStringArrayWithOnlyOneString = new string[] { "Cuota Social Octubre 2013 --- 79,00; Cuota Social Noviembre 2013 --- 79,00" };
             CollectionAssert.AreEqual(expectedStringArrayWithOnlyOneString, directDebitTransactionInformation.RmtInf.Ustrd);
+        }
+
+        [TestMethod]
+        public void ARCURPaymentInstructionInformation4IsCorrectlyGenerated()
+        {
+            string localInstrument = "COR1";
+            bool firstDebits = false;
+            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 };
+
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
+                paymentInformationID1, localInstrument, firstDebits, directDebitTransactions);
+
+            DateTime requestedCollectionDate = DateTime.Now.AddDays(3);
+            bool singleUnstructuredConcept = true;
+
+            PaymentInstructionInformation4 paymentInstructionInformation_PmtIf = SEPAElementsGenerator.GeneratePaymentInformation_PmtInf(
+                creditor,
+                creditorAgent,
+                directDebitInitiationContract,
+                directDebitPaymentInstruction,
+                requestedCollectionDate,
+                singleUnstructuredConcept);
+
+            Assert.IsTrue(paymentInstructionInformation_PmtIf.BtchBookg);
+            Assert.IsFalse(paymentInstructionInformation_PmtIf.BtchBookgSpecified);
+            Assert.AreEqual(creditor.Name, paymentInstructionInformation_PmtIf.Cdtr.Nm);
+            Assert.AreEqual(ChargeBearerType1Code.SLEV, paymentInstructionInformation_PmtIf.ChrgBr);
+            Assert.IsTrue(paymentInstructionInformation_PmtIf.ChrgBrSpecified);
+            Assert.AreEqual(directDebitInitiationContract.CreditorAcount.IBAN.IBAN, (string)paymentInstructionInformation_PmtIf.CdtrAcct.Id.Item);
+            Assert.AreEqual(directDebitInitiationContract.CreditorAgent.BankBIC, paymentInstructionInformation_PmtIf.CdtrAgt.FinInstnId.BIC);
+            Assert.AreEqual(directDebitInitiationContract.CreditorID, ((OrganisationIdentification4)paymentInstructionInformation_PmtIf.CdtrSchmeId.Id.Item).Othr[0].Id);
+            Assert.AreEqual("SEPA", ((OrganisationIdentification4)paymentInstructionInformation_PmtIf.CdtrSchmeId.Id.Item).Othr[0].SchmeNm.Item);
+            Assert.AreEqual(ItemChoiceType.Prtry, ((OrganisationIdentification4)paymentInstructionInformation_PmtIf.CdtrSchmeId.Id.Item).Othr[0].SchmeNm.ItemElementName);
+            Assert.AreEqual(directDebitPaymentInstruction.TotalAmount, paymentInstructionInformation_PmtIf.CtrlSum);
+            Assert.IsTrue(paymentInstructionInformation_PmtIf.CtrlSumSpecified);
+            Assert.AreEqual(directDebitPaymentInstruction.NumberOfDirectDebitTransactions, paymentInstructionInformation_PmtIf.DrctDbtTxInf.Count());
+            decimal paymentInstructionInformationDrctDbtTxInfInstructedAmountSum =
+                paymentInstructionInformation_PmtIf.DrctDbtTxInf.ToList().Select(drctDbtTxInf => drctDbtTxInf.InstdAmt.Value).Sum();
+            Assert.AreEqual(directDebitPaymentInstruction.TotalAmount, paymentInstructionInformationDrctDbtTxInfInstructedAmountSum);
+            Assert.AreEqual(directDebitPaymentInstruction.NumberOfDirectDebitTransactions.ToString(), paymentInstructionInformation_PmtIf.NbOfTxs);
+            Assert.AreEqual(directDebitPaymentInstruction.PaymentInformationID, paymentInstructionInformation_PmtIf.PmtInfId);
+            Assert.AreEqual(PaymentMethod2Code.DD, paymentInstructionInformation_PmtIf.PmtMtd);
+            Assert.AreEqual("TRAD", paymentInstructionInformation_PmtIf.PmtTpInf.CtgyPurp.Item);
+            Assert.AreEqual(ItemChoiceType.Cd, paymentInstructionInformation_PmtIf.PmtTpInf.CtgyPurp.ItemElementName);
+            Assert.AreEqual(directDebitPaymentInstruction.LocalInstrument, paymentInstructionInformation_PmtIf.PmtTpInf.LclInstrm.Item);
+            Assert.AreEqual(ItemChoiceType.Cd, paymentInstructionInformation_PmtIf.PmtTpInf.LclInstrm.ItemElementName);
+            Assert.AreEqual(SequenceType1Code.RCUR, paymentInstructionInformation_PmtIf.PmtTpInf.SeqTp);
+            Assert.IsTrue(paymentInstructionInformation_PmtIf.PmtTpInf.SeqTpSpecified);
+            Assert.AreEqual(ItemChoiceType.Cd, paymentInstructionInformation_PmtIf.PmtTpInf.SvcLvl.ItemElementName);
+            Assert.AreEqual("SEPA", paymentInstructionInformation_PmtIf.PmtTpInf.SvcLvl.Item);
+            Assert.AreEqual(requestedCollectionDate, paymentInstructionInformation_PmtIf.ReqdColltnDt);
+
+            AssertUnusedPaymentInstructionInformation4_PmtIf_Fields(paymentInstructionInformation_PmtIf);
+        }
+
+        [TestMethod]
+        public void AFRSTPaymentInstructionInformation4IsCorrectlyGenerated()
+        {
+            string localInstrument = "COR1";
+            bool firstDebits = true;
+            List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>() { directDebitTransaction4 };
+
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
+                paymentInformationID1, localInstrument, firstDebits, directDebitTransactions);
+
+            DateTime requestedCollectionDate = DateTime.Now.AddDays(3);
+            bool singleUnstructuredConcept = true;
+
+            PaymentInstructionInformation4 paymentInstructionInformation_PmtIf = SEPAElementsGenerator.GeneratePaymentInformation_PmtInf(
+                creditor,
+                creditorAgent,
+                directDebitInitiationContract,
+                directDebitPaymentInstruction,
+                requestedCollectionDate,
+                singleUnstructuredConcept);
+
+            Assert.IsTrue(paymentInstructionInformation_PmtIf.BtchBookg);
+            Assert.IsFalse(paymentInstructionInformation_PmtIf.BtchBookgSpecified);
+            Assert.AreEqual(creditor.Name, paymentInstructionInformation_PmtIf.Cdtr.Nm);
+            Assert.AreEqual(ChargeBearerType1Code.SLEV, paymentInstructionInformation_PmtIf.ChrgBr);
+            Assert.IsTrue(paymentInstructionInformation_PmtIf.ChrgBrSpecified);
+            Assert.AreEqual(directDebitInitiationContract.CreditorAcount.IBAN.IBAN, (string)paymentInstructionInformation_PmtIf.CdtrAcct.Id.Item);
+            Assert.AreEqual(directDebitInitiationContract.CreditorAgent.BankBIC, paymentInstructionInformation_PmtIf.CdtrAgt.FinInstnId.BIC);
+            Assert.AreEqual(directDebitInitiationContract.CreditorID, ((OrganisationIdentification4)paymentInstructionInformation_PmtIf.CdtrSchmeId.Id.Item).Othr[0].Id);
+            Assert.AreEqual("SEPA", ((OrganisationIdentification4)paymentInstructionInformation_PmtIf.CdtrSchmeId.Id.Item).Othr[0].SchmeNm.Item);
+            Assert.AreEqual(ItemChoiceType.Prtry, ((OrganisationIdentification4)paymentInstructionInformation_PmtIf.CdtrSchmeId.Id.Item).Othr[0].SchmeNm.ItemElementName);
+            Assert.AreEqual(directDebitPaymentInstruction.TotalAmount, paymentInstructionInformation_PmtIf.CtrlSum);
+            Assert.IsTrue(paymentInstructionInformation_PmtIf.CtrlSumSpecified);
+            Assert.AreEqual(directDebitPaymentInstruction.NumberOfDirectDebitTransactions, paymentInstructionInformation_PmtIf.DrctDbtTxInf.Count());
+            decimal paymentInstructionInformationDrctDbtTxInfInstructedAmountSum =
+                paymentInstructionInformation_PmtIf.DrctDbtTxInf.ToList().Select(drctDbtTxInf => drctDbtTxInf.InstdAmt.Value).Sum();
+            Assert.AreEqual(directDebitPaymentInstruction.TotalAmount, paymentInstructionInformationDrctDbtTxInfInstructedAmountSum);
+            Assert.AreEqual(directDebitPaymentInstruction.NumberOfDirectDebitTransactions.ToString(), paymentInstructionInformation_PmtIf.NbOfTxs);
+            Assert.AreEqual(directDebitPaymentInstruction.PaymentInformationID, paymentInstructionInformation_PmtIf.PmtInfId);
+            Assert.AreEqual(PaymentMethod2Code.DD, paymentInstructionInformation_PmtIf.PmtMtd);
+            Assert.AreEqual("TRAD", paymentInstructionInformation_PmtIf.PmtTpInf.CtgyPurp.Item);
+            Assert.AreEqual(ItemChoiceType.Cd, paymentInstructionInformation_PmtIf.PmtTpInf.CtgyPurp.ItemElementName);
+            Assert.AreEqual(directDebitPaymentInstruction.LocalInstrument, paymentInstructionInformation_PmtIf.PmtTpInf.LclInstrm.Item);
+            Assert.AreEqual(ItemChoiceType.Cd, paymentInstructionInformation_PmtIf.PmtTpInf.LclInstrm.ItemElementName);
+            Assert.AreEqual(SequenceType1Code.FRST, paymentInstructionInformation_PmtIf.PmtTpInf.SeqTp);
+            Assert.IsTrue(paymentInstructionInformation_PmtIf.PmtTpInf.SeqTpSpecified);
+            Assert.AreEqual(ItemChoiceType.Cd, paymentInstructionInformation_PmtIf.PmtTpInf.SvcLvl.ItemElementName);
+            Assert.AreEqual("SEPA", paymentInstructionInformation_PmtIf.PmtTpInf.SvcLvl.Item);
+            Assert.AreEqual(requestedCollectionDate, paymentInstructionInformation_PmtIf.ReqdColltnDt);
         }
 
         private void AssertUnusedDirectDebitTransactionInformation9_DrctDbtTxInf_Fields(DirectDebitTransactionInformation9 directDebitTransactionInformation_DrctDbtTxInf)
