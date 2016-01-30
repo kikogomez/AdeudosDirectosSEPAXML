@@ -14,7 +14,7 @@
         public ActiveOrHistoricCurrencyAndAmount(string currencyCode, decimal amount)
         {
             this.ccyField = currencyCode;
-            this.valueField = amount;
+            this.valueField = amount + 0.00M;       //Force 2 decimals when has 1 or none by assigning a decimal LITERAL
         }
 
         /// CurrencyCode

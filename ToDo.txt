@@ -1,17 +1,14 @@
-Opcionales para tener en cuenta más tarde:
-- Unificar las excepciones. Todas las excepciones que se lanzan desde un constructor deberian ser TypeinitializationException (y dentro el subtipo - Argumento, ArgumentNull...-)
-- Faltan por chequear algunos campos obligatorios en los constructores de DirectDebitTransactions y otros DDElements
-- Al deserializar un PaymentStatusReport, hay que revisar los contenidos (que campos existen y sus valores), para diferenciar entre Devolucion y Rechazo
+PENDIENTE
+----------------------------------------
+- Generar un fichero de prueba que tenga:
+	-> Dos PaymentInstructions, uno FRST y otreo RCUR
+	-> Que tenga transacciones normales, con cambio de cuanta en mismo banco, y cambios de cuenta en diferentes bancos
+- Tomar el fichero .mdb del último envío y trabajarlo para que nos produzca una tabla o una consulta con los campos necesarios que requiera la aplicación que genere el SEPA XML
+- Crear un programa de consola que lea ese query, genere los DirectDebitElementes y llame a 'GenerateISO20022CustomerDirectDebitInitiationFileMessage'
 
-
-
-
-- Realizar un test de CARGA: Generar unos ficheros de prueba de CustomerDirectDebitInitiation de 100, 500, 1000, 3000 y 6000 adeudos, a ver si 'peta' por falta de memoria o va muy lento.
-	-> ¡OJO! El PC de desarrollo tiene 16 gigas. Controlar el uso de memoria (preguntar en 'stackoverflow')
-	-> ¡OJO! El PC de desarrollo es RAPIDO. Hay que estimar cuanto tardaría en un PC normal
-	-> Los test hay que marcarlos para que no se ejecuten mas que cuando se pidan lanzar individualmente. Podemos probar a DESACTIVARLOS, y activarlos solo para la ocasión.
-
-- Si en los test nos comemos la memoria, pensar una alternativa:
+A REVISAR EN EL FICHERO FINAL COMPILADO EN EL ORDENADOR DE ESTEBAN
+-------------------------------------------------------------------
+- En los tests, para 8000 registros, en el peor momento necesitabamos aprox. 60 Mb. El fichero de salida en UTF-8 es de 6 Mb. ¿Funciona con ordenadores con poca memoria? (Ord. Esteban)?
 	-> Probar a eliminar la clase 'BankAccount' y quedarnos con un simple 'string' que contenga el IBAN.
 	-> Simplificar la clase DirectdebitMandate para que solo contenga un MandateID, la fecha de creación del mismo, y un 'string' con el IBAN.
 	-> En el momento de inicializar la serializacion tenemos DOS copias completas de cada remesa en memoria:
@@ -26,6 +23,12 @@ Opcionales para tener en cuenta más tarde:
 			* Luego se van añadiendo uno a uno los DirectDebitTransactions, añadiendo los nodos al documento XML
 			* Las sumas de control se pueden poner desde el principio o dejar vacíos. ¡OJO! ¡Esto significa que no deben saltar las excepciones de las sumas de control!
 	-> ¿Leer directamente de un DataSet e ir creando directamente las instancias de las clases serializables, pasando por alto todo el trabajo que hemos hecho con DirectDebitElements? Sería una putada...
+
+OPCIONALES PARA TENER EN CUENTA:
+----------------------------------------------------------------------------
+- Unificar las excepciones. Todas las excepciones que se lanzan desde un constructor deberian ser TypeinitializationException (y dentro el subtipo - Argumento, ArgumentNull...-)
+- Faltan por chequear algunos campos obligatorios en los constructores de DirectDebitTransactions y otros DDElements
+- Al deserializar un PaymentStatusReport, hay que revisar los contenidos (que campos existen y sus valores), para diferenciar entre Devolucion y Rechazo
 
 - ¿Hacer que todas las instanciaciones de objetos DirectDebitElements pasen a través de una clase o clases controladoras?
 	-> Internamente:

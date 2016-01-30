@@ -31,7 +31,7 @@
             this.creDtTmField = creationDateTime;
             this.authstnField = (Authorisation1Choice[])authorisationChoice.Clone();
             this.nbOfTxsField = numberOfTransactions;
-            this.ctrlSumField = controlSum;
+            this.ctrlSumField = controlSum + 0.00M;             //Force 2 decimals when has 1 or none by assigning a decimal LITERAL               
             this.ctrlSumFieldSpecified = controlSumSpecified;
             this.initgPtyField = initiatingParty;
             this.fwdgAgtField = forwardingAgent;

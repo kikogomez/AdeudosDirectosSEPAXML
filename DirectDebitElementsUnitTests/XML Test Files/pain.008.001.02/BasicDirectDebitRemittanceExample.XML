@@ -2,10 +2,10 @@
 <Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:iso:std:iso:20022:tech:xsd:pain.008.001.02">
   <CstmrDrctDbtInitn>
     <GrpHdr>
-      <MsgId>ES26011G123456782015011007:15:00</MsgId>
+      <MsgId>PREG1234567815011007:15:00</MsgId>
       <CreDtTm>2015-01-10T07:15:00</CreDtTm>
       <NbOfTxs>2</NbOfTxs>
-      <CtrlSum>237</CtrlSum>
+      <CtrlSum>237.00</CtrlSum>
       <InitgPty>
         <Nm>NOMBRE ACREEDOR PRUEBAS</Nm>
         <Id>
@@ -21,10 +21,10 @@
       </InitgPty>
     </GrpHdr>
     <PmtInf>
-      <PmtInfId>G123456782015011007:15:00001</PmtInfId>
+      <PmtInfId>PREG1234567815011007:15:00-01</PmtInfId>
       <PmtMtd>DD</PmtMtd>
       <NbOfTxs>2</NbOfTxs>
-      <CtrlSum>237</CtrlSum>
+      <CtrlSum>237.00</CtrlSum>
       <PmtTpInf>
         <SvcLvl>
           <Cd>SEPA</Cd>
@@ -66,10 +66,10 @@
       </CdtrSchmeId>
       <DrctDbtTxInf>
         <PmtId>
-          <InstrId>000001</InstrId>
-          <EndToEndId>000001</EndToEndId>
+          <InstrId>PREG1234567815011007:15:00-0100001</InstrId>
+          <EndToEndId>PREG1234567815011007:15:00-0100001</EndToEndId>
         </PmtId>
-        <InstdAmt Ccy="EUR">79</InstdAmt>
+        <InstdAmt Ccy="EUR">79.00</InstdAmt>
         <DrctDbtTx>
           <MndtRltdInf>
             <MndtId>000001101234</MndtId>
@@ -90,15 +90,15 @@
           </Id>
         </DbtrAcct>
         <RmtInf>
-          <Ustrd>Cuota Social Octubre 2013 --- 79,00</Ustrd>
+          <Ustrd>Cuota Social Octubre 2014 --- 79,00</Ustrd>
         </RmtInf>
       </DrctDbtTxInf>
       <DrctDbtTxInf>
         <PmtId>
-          <InstrId>000002</InstrId>
-          <EndToEndId>000002</EndToEndId>
+          <InstrId>PREG1234567815011007:15:00-0100002</InstrId>
+          <EndToEndId>PREG1234567815011007:15:00-0100002</EndToEndId>
         </PmtId>
-        <InstdAmt Ccy="EUR">158</InstdAmt>
+        <InstdAmt Ccy="EUR">158.00</InstdAmt>
         <DrctDbtTx>
           <MndtRltdInf>
             <MndtId>000001101235</MndtId>
@@ -119,8 +119,8 @@
           </Id>
         </DbtrAcct>
         <RmtInf>
-          <Ustrd>Cuota Social Octubre 2013 --- 79,00</Ustrd>
-          <Ustrd>Cuota Social Noviembre 2013 --- 79,00</Ustrd>
+          <Ustrd>Cuota Social Octubre 2014 --- 79,00</Ustrd>
+          <Ustrd>Cuota Social Noviembre 2014 --- 79,00</Ustrd>
         </RmtInf>
       </DrctDbtTxInf>
     </PmtInf>

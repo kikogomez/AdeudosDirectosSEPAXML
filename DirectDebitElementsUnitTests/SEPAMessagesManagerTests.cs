@@ -19,13 +19,31 @@ namespace DirectDebitElementsUnitTests
         static DirectDebitInitiationContract directDebitInitiationContract;
         static DirectDebitPropietaryCodesGenerator directDebitPropietaryCodesGenerator;
 
+        static string messageID;
+        static string paymentInformationID1;
+        static string paymentInformationID2;
+        static DateTime creationDate;
+        static DateTime requestedCollectionDate;
+
+        static DirectDebitAmendmentInformation mandateIDAmendment;
+        static DirectDebitAmendmentInformation bankAccountAmendment_SameBank;
+        static DirectDebitAmendmentInformation bankAccountAmendment_DifferentBank;
+
+        DirectDebitTransaction directDebitTransaction1;
+        DirectDebitTransaction directDebitTransaction2;
+        DirectDebitTransaction directDebitTransactionWithMandateIDAmendment;
+        DirectDebitTransaction directDebitTransactionWithBankAcountAmendment_SameBank;
+        DirectDebitTransaction directDebitTransactionWithBankAcountAmendment_DifferentBank;
+
         [ClassInitialize]
         public static void ClassInit(TestContext context)
         {
             debtors = new Dictionary<string, Debtor>()
             {
                 {"00001", new Debtor("00001", "Francisco", "Gómez-Caldito", "Viseas")},
-                {"00002", new Debtor("00002", "Pedro", "Pérez", "Gómez")}
+                {"00002", new Debtor("00002", "Pedro", "Pérez", "Gómez")},
+                {"00003", new Debtor("00003", "Rodrigo", "Rodríguez", "Rodríguez")},
+                {"00004", new Debtor("00004", "Domingo", "Domínguez", "Domínguez")}
             };
 
             creditor = new Creditor("G12345678", "NOMBRE ACREEDOR PRUEBAS");
@@ -39,8 +57,10 @@ namespace DirectDebitElementsUnitTests
 
             var directDebitmandateslist = new[]
             {
-                new {debtorID = "00001", internalReference = 1234, ccc = "21002222002222222222" },
-                new {debtorID = "00002", internalReference = 1235, ccc = "21003333802222222222" }
+                new {debtorID = "00001", internalReference = 1234, ccc = BankAccountNumberChecker.CalculateCCC("2100", "2222", "2222222222")},
+                new {debtorID = "00002", internalReference = 1235, ccc = BankAccountNumberChecker.CalculateCCC("2100", "3333", "2222222222")},
+                new {debtorID = "00003", internalReference = 1236, ccc = BankAccountNumberChecker.CalculateCCC("2100", "4444", "2222222222")},
+                new {debtorID = "00004", internalReference = 1237, ccc = BankAccountNumberChecker.CalculateCCC("2100", "5555", "2222222222")}
             };
 
             foreach (var ddM in directDebitmandateslist)
@@ -55,9 +75,11 @@ namespace DirectDebitElementsUnitTests
 
             var billsList = new[]
             {
-                new {debtorID = "00001", billID= "00001/01", Amount = 79, transactionDescription = "Cuota Social Octubre 2013" },
-                new {debtorID = "00002", billID= "00002/01",Amount = 79, transactionDescription="Cuota Social Octubre 2013" },
-                new {debtorID = "00002", billID= "00002/02",Amount = 79, transactionDescription="Cuota Social Noviembre 2013"}
+                new {debtorID = "00001", billID= "00001/01", amount = 79.00, transactionDescription = "Cuota Social Octubre 2014" },
+                new {debtorID = "00002", billID= "00002/01",amount = 79.00, transactionDescription="Cuota Social Octubre 2014" },
+                new {debtorID = "00002", billID= "00002/02",amount = 79.00, transactionDescription="Cuota Social Noviembre 2014"},
+                new {debtorID = "00003", billID= "00003/01",amount = 79.00, transactionDescription="Cuota Social Noviembre 2014"},
+                new {debtorID = "00004", billID= "00004/01",amount = 79.50, transactionDescription="Cuota Social Noviembre 2014"}
             };
 
             foreach (var bill in billsList)
@@ -67,112 +89,129 @@ namespace DirectDebitElementsUnitTests
                 SimplifiedBill bills = new SimplifiedBill(
                     bill.billID,
                     bill.transactionDescription,
-                    bill.Amount,
+                    (decimal)bill.amount,
                     DateTime.Today,
                     DateTime.Today.AddMonths(1));
                 debtor.AddSimplifiedBill(bills);
             }
+
+            messageID = messageID = "PREG1234567815011007:15:00";
+            paymentInformationID1 = "PREG1234567815011007:15:00-01";
+            paymentInformationID2 = "PREG1234567815011007:15:00-02";
+            creationDate = new DateTime(2015, 01, 10, 7, 15, 0);          
+            requestedCollectionDate = new DateTime(2015, 01, 15);
+
+            mandateIDAmendment = new DirectDebitAmendmentInformation(
+                directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(1000),
+                null);
+
+            bankAccountAmendment_SameBank = new DirectDebitAmendmentInformation(
+                null,
+                new BankAccount(new ClientAccountCodeCCC(BankAccountNumberChecker.CalculateCCC("2100", "0000", "1234567890"))));
+
+            bankAccountAmendment_DifferentBank = new DirectDebitAmendmentInformation(
+                null,
+                new BankAccount(new ClientAccountCodeCCC(BankAccountNumberChecker.CalculateCCC("0182","0000", "1234567890"))));
+        }
+
+        [TestInitialize]
+        public void InitializeTransacions()
+        {
+            // La inicializacion de las transacciones no se hace con variables estáticas
+            // pues la suscripcion a eventos interacciona entre los tests
+
+            directDebitTransaction1 = new DirectDebitTransaction(
+                debtors["00001"].SimplifiedBills.Values.ToList(),
+                paymentInformationID1 + "00001",
+                directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(debtors["00001"].DirectDebitmandates[1234].InternalReferenceNumber),
+                debtors["00001"].DirectDebitmandates[1234].DirectDebitMandateCreationDate,
+                debtors["00001"].DirectDebitmandates[1234].BankAccount,
+                debtors["00001"].FullName,
+                null,
+                false);
+
+            directDebitTransaction2 = new DirectDebitTransaction(
+                debtors["00002"].SimplifiedBills.Values.ToList(),
+                paymentInformationID1 + "00002",
+                directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(debtors["00002"].DirectDebitmandates[1235].InternalReferenceNumber),
+                debtors["00002"].DirectDebitmandates[1235].DirectDebitMandateCreationDate,
+                debtors["00002"].DirectDebitmandates[1235].BankAccount,
+                debtors["00002"].FullName,
+                null,
+                false);
+
+            directDebitTransactionWithMandateIDAmendment = new DirectDebitTransaction(
+                debtors["00002"].SimplifiedBills.Values.ToList(),
+                paymentInformationID1 + "00002",
+                directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(debtors["00002"].DirectDebitmandates[1235].InternalReferenceNumber),
+                debtors["00002"].DirectDebitmandates[1235].DirectDebitMandateCreationDate,
+                debtors["00002"].DirectDebitmandates[1235].BankAccount,
+                debtors["00002"].FullName,
+                mandateIDAmendment,
+                false);
+
+            directDebitTransactionWithBankAcountAmendment_SameBank = new DirectDebitTransaction(
+                debtors["00003"].SimplifiedBills.Values.ToList(),
+                paymentInformationID1 + "00003",
+                directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(debtors["00003"].DirectDebitmandates[1236].InternalReferenceNumber),
+                debtors["00003"].DirectDebitmandates[1236].DirectDebitMandateCreationDate,
+                debtors["00003"].DirectDebitmandates[1236].BankAccount,
+                debtors["00003"].FullName,
+                bankAccountAmendment_SameBank,
+                false);
+
+            directDebitTransactionWithBankAcountAmendment_DifferentBank = new DirectDebitTransaction(
+                debtors["00004"].SimplifiedBills.Values.ToList(),
+                paymentInformationID2 + "00001",
+                directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(debtors["00004"].DirectDebitmandates[1237].InternalReferenceNumber),
+                debtors["00004"].DirectDebitmandates[1237].DirectDebitMandateCreationDate,
+                debtors["00004"].DirectDebitmandates[1237].BankAccount,
+                debtors["00004"].FullName,
+                bankAccountAmendment_DifferentBank,
+                true);
         }
 
         [TestMethod]
         public void ACustomerDirectDebitRemittanceXMLStringMessageIsCorrectlyGenerated()
         {
-            DateTime creationDate = new DateTime(2015, 01, 10, 7, 15, 0);
-            string messageID = "ES26011G123456782015011007:15:00";
-            DateTime requestedCollectionDate = new DateTime(2015, 01, 15);
-
             DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
-            string prefix = directDebitRemittance.MessageID.Substring(directDebitRemittance.MessageID.Length - 25);
-            string paymentInformationID = prefix + "001";
-            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, "CORE", false);
+            DirectDebitPaymentInstruction directDebitPaymentInstruction1 = new DirectDebitPaymentInstruction(
+                paymentInformationID1,
+                "CORE",
+                false,
+                new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 });
 
-            List<SimplifiedBill> simplifiedBills;
-            string transactionID;
-            string mandateID;
-            DateTime mandateSignatureDate;
-            BankAccount debtorAccount;
-            string debtorFullName;
-            int transactionsCounter = 0;
-            foreach (Debtor debtor in debtors.Values)
-            {
-                simplifiedBills = debtor.SimplifiedBills.Select(dictionaryElement => dictionaryElement.Value).ToList();
-                transactionID = (transactionsCounter + 1).ToString("000000");
-                mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(debtor.DirectDebitmandates.First().Value.InternalReferenceNumber);
-                mandateSignatureDate = debtor.DirectDebitmandates.First().Value.DirectDebitMandateCreationDate;
-                debtorAccount = debtor.DirectDebitmandates.First().Value.BankAccount;
-                debtorFullName = debtor.FullName;
-                DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
-                    simplifiedBills,
-                    transactionID,
-                    mandateID,
-                    mandateSignatureDate,
-                    debtorAccount,
-                    debtorFullName,
-                    null,
-                    false);
-                transactionsCounter++;
-                directDebitPaymentInstruction.AddDirectDebitTransaction(directDebitTransaction);
-            }
+            directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction1);
 
-            directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction);
             bool singleUnstructuredConcept = false;
 
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
-            string xMLCustomerDirectDeitInitiationMessage = sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationStringMessage(
+            string xMLCustomerDirectDebitInitiationMessage = sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationStringMessage(
                 creditor,
                 creditorAgent,
                 directDebitRemittance,
                 singleUnstructuredConcept);
 
             string xMLValidatingErrors = XMLValidator.ValidateXMLStringThroughXSDFile(
-                xMLCustomerDirectDeitInitiationMessage,
+                xMLCustomerDirectDebitInitiationMessage,
                 @"XSDFiles\pain.008.001.02.xsd");
             Assert.AreEqual("", xMLValidatingErrors);
             string expectedXMLString = File.ReadAllText(@"XML Test Files\pain.008.001.02\BasicDirectDebitRemittanceExample.xml");
-            Assert.AreEqual(expectedXMLString, xMLCustomerDirectDeitInitiationMessage);
+            Assert.AreEqual(expectedXMLString, xMLCustomerDirectDebitInitiationMessage);
         }
 
         [TestMethod]
         public void ACustomerDirectDebitRemittanceXMLStringMessageWithConceptsJoinedIsCorrectlyGenerated()
         {
-            DateTime creationDate = new DateTime(2015, 01, 10, 7, 15, 0);
-            string messageID = "ES26011G123456782015011007:15:00";
-            DateTime requestedCollectionDate = new DateTime(2015, 01, 15);
-
             DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
-            string prefix = directDebitRemittance.MessageID.Substring(directDebitRemittance.MessageID.Length - 25);
-            string paymentInformationID = prefix + "001";
-            DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(paymentInformationID, "CORE", false);
+            DirectDebitPaymentInstruction directDebitPaymentInstruction1 = new DirectDebitPaymentInstruction(
+                paymentInformationID1,
+                "CORE",
+                false,
+                new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 });
 
-            List<SimplifiedBill> simplifiedBills;
-            string transactionID;
-            string mandateID;
-            DateTime mandateSignatureDate;
-            BankAccount debtorAccount;
-            string debtorFullName;
-            int transactionsCounter = 0;
-            foreach (Debtor debtor in debtors.Values)
-            {
-                simplifiedBills = debtor.SimplifiedBills.Select(dictionaryElement => dictionaryElement.Value).ToList();
-                transactionID = (transactionsCounter + 1).ToString("000000");
-                mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(debtor.DirectDebitmandates.First().Value.InternalReferenceNumber);
-                mandateSignatureDate = debtor.DirectDebitmandates.First().Value.DirectDebitMandateCreationDate;
-                debtorAccount = debtor.DirectDebitmandates.First().Value.BankAccount;
-                debtorFullName = debtor.FullName;
-                DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
-                    simplifiedBills,
-                    transactionID,
-                    mandateID,
-                    mandateSignatureDate,
-                    debtorAccount,
-                    debtorFullName,
-                    null,
-                    false);
-                transactionsCounter++;
-                directDebitPaymentInstruction.AddDirectDebitTransaction(directDebitTransaction);
-            }
+            directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction1);
 
-            directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction);
             bool singleUnstructuredConcept = true;
 
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
@@ -187,6 +226,45 @@ namespace DirectDebitElementsUnitTests
                 @"XSDFiles\pain.008.001.02.xsd");
             Assert.AreEqual("", xMLValidatingErrors);
             string expectedXMLString = File.ReadAllText(@"XML Test Files\pain.008.001.02\BasicDirectDebitRemittanceExampleWithConceptsJoined.xml");           
+            Assert.AreEqual(expectedXMLString, xMLCustomerDirectDeitInitiationMessage);
+        }
+
+        [TestMethod]
+        public void ACustomerDirectDebitRemittanceXMLStringMessageWithTwoPaymentInstructionsAndBankAccountAmendmentsFromSameAndDifferentDebtorAgents()
+        {
+            DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
+            DirectDebitPaymentInstruction directDebitPaymentInstruction1 = new DirectDebitPaymentInstruction(
+                paymentInformationID1,
+                "CORE",
+                false,
+                new List<DirectDebitTransaction>() {
+                    directDebitTransaction1,
+                    directDebitTransactionWithMandateIDAmendment,
+                    directDebitTransactionWithBankAcountAmendment_SameBank});
+
+            DirectDebitPaymentInstruction directDebitPaymentInstruction2 = new DirectDebitPaymentInstruction(
+                paymentInformationID2,
+                "CORE",
+                true,
+                new List<DirectDebitTransaction>() { directDebitTransactionWithBankAcountAmendment_DifferentBank });
+
+            directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction1);
+            directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction2);
+
+            bool singleUnstructuredConcept = true;
+
+            SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
+            string xMLCustomerDirectDeitInitiationMessage = sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationStringMessage(
+                creditor,
+                creditorAgent,
+                directDebitRemittance,
+                singleUnstructuredConcept);
+
+            string xMLValidatingErrors = XMLValidator.ValidateXMLStringThroughXSDFile(
+                xMLCustomerDirectDeitInitiationMessage,
+                @"XSDFiles\pain.008.001.02.xsd");
+            Assert.AreEqual("", xMLValidatingErrors);
+            string expectedXMLString = File.ReadAllText(@"XML Test Files\pain.008.001.02\DirectDebitRemmitanceWithVariousPaimentInstructionsAndAmendments.xml");
             Assert.AreEqual(expectedXMLString, xMLCustomerDirectDeitInitiationMessage);
         }
 
