@@ -108,7 +108,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="XML Test Files\pain.008.001.02\tmp.XML" />
+    <Content Include="XML Test Files\pain.008.001.02\tmip.XML" />
   </ItemGroup>
   <ItemGroup>
     <None Include="XSDFiles\pain.002.001.03.xsd">

@@ -118,7 +118,7 @@ namespace DirectDebitElementsUnitTests
             bool singleUnstructuredConcept = false;
 
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
-            string xMLCustomerDirectDeitInitiationMessage = sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationMessage(
+            string xMLCustomerDirectDeitInitiationMessage = sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationStringMessage(
                 creditor,
                 creditorAgent,
                 directDebitRemittance,
@@ -176,7 +176,7 @@ namespace DirectDebitElementsUnitTests
             bool singleUnstructuredConcept = true;
 
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
-            string xMLCustomerDirectDeitInitiationMessage = sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationMessage(
+            string xMLCustomerDirectDeitInitiationMessage = sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationStringMessage(
                 creditor,
                 creditorAgent,
                 directDebitRemittance,

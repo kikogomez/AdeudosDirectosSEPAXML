@@ -8,7 +8,11 @@ namespace XMLSerializerValidator
     {
         public static string XMLSerializeToString<ObjectType>(ObjectType objetToSerialize, string rootElementName, string defaultNamespace)
         {
-            TextWriter stringWriter = new StringWriter();
+            //var memoryStream = new MemoryStream();
+            //TextWriter stringWriter = new StreamWriter(memoryStream, System.Text.Encoding.UTF8);
+
+            //TextWriter stringWriter = new StringWriter();
+            TextWriter stringWriter = new Utf8StringWriter();
             XMLSerialize<ObjectType>(objetToSerialize, rootElementName, defaultNamespace, stringWriter);
             return stringWriter.ToString();
         }

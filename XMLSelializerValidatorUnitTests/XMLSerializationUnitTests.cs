@@ -14,7 +14,7 @@ namespace RCNGCMembersManagementUnitTests
         [TestMethod]
         public void SerializationToStringWorksOK()
         {
-            string xMLExpectedString = "<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<OrderedItem xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <ItemName>Widget</ItemName>\r\n  <Description>Regular Widget</Description>\r\n  <UnitPrice>2.3</UnitPrice>\r\n  <Quantity>10</Quantity>\r\n  <LineTotal>23.0</LineTotal>\r\n</OrderedItem>";
+            string xMLExpectedString = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<OrderedItem xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <ItemName>Widget</ItemName>\r\n  <Description>Regular Widget</Description>\r\n  <UnitPrice>2.3</UnitPrice>\r\n  <Quantity>10</Quantity>\r\n  <LineTotal>23.0</LineTotal>\r\n</OrderedItem>";
 
             OrderedItem orderedItem = new OrderedItem();
             orderedItem.ItemName = "Widget";
@@ -29,7 +29,7 @@ namespace RCNGCMembersManagementUnitTests
         [TestMethod]
         public void DeserializationFromStringWorksOK()
         {
-            string xMLStringToDeserialize = "<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<OrderedItem xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <ItemName>Widget</ItemName>\r\n  <Description>Regular Widget</Description>\r\n  <UnitPrice>2.3</UnitPrice>\r\n  <Quantity>10</Quantity>\r\n  <LineTotal>23.0</LineTotal>\r\n</OrderedItem>";
+            string xMLStringToDeserialize = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<OrderedItem xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <ItemName>Widget</ItemName>\r\n  <Description>Regular Widget</Description>\r\n  <UnitPrice>2.3</UnitPrice>\r\n  <Quantity>10</Quantity>\r\n  <LineTotal>23.0</LineTotal>\r\n</OrderedItem>";
             OrderedItem orderedItem = XMLSerializer.XMLDeserializeFromString<OrderedItem>(xMLStringToDeserialize, null, null);
             Assert.AreEqual((decimal)23, orderedItem.LineTotal);
         }
