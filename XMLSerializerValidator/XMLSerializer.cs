@@ -11,9 +11,9 @@ namespace XMLSerializerValidator
             //var memoryStream = new MemoryStream();
             //TextWriter stringWriter = new StreamWriter(memoryStream, System.Text.Encoding.UTF8);
 
-            //TextWriter stringWriter = new StringWriter();
             TextWriter stringWriter = new Utf8StringWriter();
             XMLSerialize<ObjectType>(objetToSerialize, rootElementName, defaultNamespace, stringWriter);
+            //return System.Text.Encoding.UTF8.GetString(memoryStream.ToArray());
             return stringWriter.ToString();
         }
 

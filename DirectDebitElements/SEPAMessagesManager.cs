@@ -23,50 +23,6 @@ namespace DirectDebitElements
                 directDebitRemittance,
                 singleUnstructuredConcept);
 
-            //DirectDebitInitiationContract directDebitInitiationContract = directDebitRemittance.DirectDebitInitiationContract;
-            //DateTime generationDateTime = directDebitRemittance.CreationDate;
-            //DateTime requestedCollectionDate = directDebitRemittance.RequestedCollectionDate;
-
-            //PartyIdentification32 initiationParty_InitPty = SEPAElementsGenerator.GenerateInitiationParty_InitPty(creditor, directDebitInitiationContract);
-            //GroupHeader39 groupHeader_GrpHdr = SEPAElementsGenerator.GenerateGroupHeader_GrpHdr(
-            //    directDebitRemittance.MessageID,
-            //    generationDateTime,
-            //    directDebitRemittance.NumberOfTransactions,
-            //    directDebitRemittance.ControlSum,
-            //    initiationParty_InitPty);
-            //List<PaymentInstructionInformation4> paymentInformation_PmtInf_List = new List<PaymentInstructionInformation4>();
-
-            //List<DirectDebitTransactionInformation9> directDebitTransactionInfoList = new List<DirectDebitTransactionInformation9>();
-            //foreach (DirectDebitPaymentInstruction directDebitPaymentInstruction in directDebitRemittance.DirectDebitPaymentInstructions)
-            //{
-            //    foreach (DirectDebitTransaction directDebitTransaction in directDebitPaymentInstruction.DirectDebitTransactions)
-            //    {
-            //        DirectDebitTransactionInformation9 directDebitTransactionInfo_DrctDbtTxInf = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
-            //            creditorAgent,
-            //            directDebitTransaction,
-            //            singleUnstructuredConcept);
-            //        directDebitTransactionInfoList.Add(directDebitTransactionInfo_DrctDbtTxInf);
-            //    }
-
-            //    PaymentInstructionInformation4 paymentInformation_PmtInf = SEPAElementsGenerator.GeneratePaymentInformation_PmtInf(
-            //        creditor,
-            //        creditorAgent,
-            //        directDebitInitiationContract,
-            //        directDebitPaymentInstruction,
-            //        requestedCollectionDate,
-            //        singleUnstructuredConcept);
-
-            //    paymentInformation_PmtInf_List.Add(paymentInformation_PmtInf);
-            //}
-
-            //PaymentInstructionInformation4[] paymentInformation_PmtInf_Array = paymentInformation_PmtInf_List.ToArray();
-
-            //CustomerDirectDebitInitiationV02 customerDebitInitiationV02_Document = new CustomerDirectDebitInitiationV02(
-            //    groupHeader_GrpHdr,                     //<GrpHdr>
-            //    paymentInformation_PmtInf_Array);       //<PmtInf>
-
-            //CustomerDirectDebitInitiationDocument document_Document = new CustomerDirectDebitInitiationDocument(customerDebitInitiationV02_Document);
-
             string xMLNamespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02";
             string xmlString = XMLSerializer.XMLSerializeToString<CustomerDirectDebitInitiationDocument>(document_Document, "Document", xMLNamespace);
             return xmlString;
@@ -85,50 +41,6 @@ namespace DirectDebitElements
                 creditorAgent,
                 directDebitRemittance,
                 singleUnstructuredConcept);
-
-            //DirectDebitInitiationContract directDebitInitiationContract = directDebitRemittance.DirectDebitInitiationContract;
-            //DateTime generationDateTime = directDebitRemittance.CreationDate;
-            //DateTime requestedCollectionDate = directDebitRemittance.RequestedCollectionDate;
-
-            //PartyIdentification32 initiationParty_InitPty = SEPAElementsGenerator.GenerateInitiationParty_InitPty(creditor, directDebitInitiationContract);
-            //GroupHeader39 groupHeader_GrpHdr = SEPAElementsGenerator.GenerateGroupHeader_GrpHdr(
-            //    directDebitRemittance.MessageID,
-            //    generationDateTime,
-            //    directDebitRemittance.NumberOfTransactions,
-            //    directDebitRemittance.ControlSum,
-            //    initiationParty_InitPty);
-            //List<PaymentInstructionInformation4> paymentInformation_PmtInf_List = new List<PaymentInstructionInformation4>();
-
-            //List<DirectDebitTransactionInformation9> directDebitTransactionInfoList = new List<DirectDebitTransactionInformation9>();
-            //foreach (DirectDebitPaymentInstruction directDebitPaymentInstruction in directDebitRemittance.DirectDebitPaymentInstructions)
-            //{
-            //    foreach (DirectDebitTransaction directDebitTransaction in directDebitPaymentInstruction.DirectDebitTransactions)
-            //    {
-            //        DirectDebitTransactionInformation9 directDebitTransactionInfo_DrctDbtTxInf = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
-            //            creditorAgent,
-            //            directDebitTransaction,
-            //            singleUnstructuredConcept);
-            //        directDebitTransactionInfoList.Add(directDebitTransactionInfo_DrctDbtTxInf);
-            //    }
-
-            //    PaymentInstructionInformation4 paymentInformation_PmtInf = SEPAElementsGenerator.GeneratePaymentInformation_PmtInf(
-            //        creditor,
-            //        creditorAgent,
-            //        directDebitInitiationContract,
-            //        directDebitPaymentInstruction,
-            //        requestedCollectionDate,
-            //        singleUnstructuredConcept);
-
-            //    paymentInformation_PmtInf_List.Add(paymentInformation_PmtInf);
-            //}
-
-            //PaymentInstructionInformation4[] paymentInformation_PmtInf_Array = paymentInformation_PmtInf_List.ToArray();
-
-            //CustomerDirectDebitInitiationV02 customerDebitInitiationV02_Document = new CustomerDirectDebitInitiationV02(
-            //    groupHeader_GrpHdr,                     //<GrpHdr>
-            //    paymentInformation_PmtInf_Array);       //<PmtInf>
-
-            //CustomerDirectDebitInitiationDocument document_Document = new CustomerDirectDebitInitiationDocument(customerDebitInitiationV02_Document);
 
             string xMLNamespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02";
             XMLSerializer.XMLSerializeToFile<CustomerDirectDebitInitiationDocument>(document_Document, "Document", xMLNamespace, xMLFilePath);
@@ -162,11 +74,6 @@ namespace DirectDebitElements
                 directDebitPaymentInstructionRejects);
 
             return paymentStatusReport;
-        }
-
-        private DateTime ExtractRejectAccountChargeDateTimeFrom_OrgnlGrpInfAndSts_OrgnlMsgId(string orgnlGrpInfAndSts_OrgnlMsgId)
-        {
-            return DateTime.Parse(orgnlGrpInfAndSts_OrgnlMsgId.Substring(0,10));
         }
 
         private CustomerDirectDebitInitiationDocument CreateCustomerDirectDebitInitiationDocument(
@@ -219,6 +126,11 @@ namespace DirectDebitElements
 
             CustomerDirectDebitInitiationDocument document_Document = new CustomerDirectDebitInitiationDocument(customerDebitInitiationV02_Document);
             return document_Document;
+        }
+
+        private DateTime ExtractRejectAccountChargeDateTimeFrom_OrgnlGrpInfAndSts_OrgnlMsgId(string orgnlGrpInfAndSts_OrgnlMsgId)
+        {
+            return DateTime.Parse(orgnlGrpInfAndSts_OrgnlMsgId.Substring(0, 10));
         }
     }
 }
