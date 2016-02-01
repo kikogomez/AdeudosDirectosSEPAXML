@@ -264,7 +264,7 @@ namespace DirectDebitElementsUnitTests
                 xMLCustomerDirectDeitInitiationMessage,
                 @"XSDFiles\pain.008.001.02.xsd");
             Assert.AreEqual("", xMLValidatingErrors);
-            string expectedXMLString = File.ReadAllText(@"XML Test Files\pain.008.001.02\DirectDebitRemmitanceWithVariousPaimentInstructionsAndAmendments.xml");
+            string expectedXMLString = File.ReadAllText(@"XML Test Files\pain.008.001.02\DirectDebitRemmitanceWithVariousPaymentInstructionsAndAmendments.xml");
             Assert.AreEqual(expectedXMLString, xMLCustomerDirectDeitInitiationMessage);
         }
 

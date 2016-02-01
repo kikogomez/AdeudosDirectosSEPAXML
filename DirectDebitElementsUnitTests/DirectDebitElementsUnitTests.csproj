@@ -108,7 +108,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="XML Test Files\pain.008.001.02\DirectDebitRemmitanceWithVariousPaimentInstructionsAndAmendments.XML">
+    <Content Include="XML Test Files\pain.008.001.02\DirectDebitRemmitanceWithVariousPaymentInstructionsAndAmendments.XML">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
