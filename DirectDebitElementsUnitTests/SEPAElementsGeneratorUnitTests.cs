@@ -406,9 +406,9 @@ namespace DirectDebitElementsUnitTests
             Assert.IsTrue(paymentInstructionInformation_PmtIf.ChrgBrSpecified);
             Assert.AreEqual(directDebitInitiationContract.CreditorAcount.IBAN.IBAN, (string)paymentInstructionInformation_PmtIf.CdtrAcct.Id.Item);
             Assert.AreEqual(directDebitInitiationContract.CreditorAgent.BankBIC, paymentInstructionInformation_PmtIf.CdtrAgt.FinInstnId.BIC);
-            Assert.AreEqual(directDebitInitiationContract.CreditorID, ((OrganisationIdentification4)paymentInstructionInformation_PmtIf.CdtrSchmeId.Id.Item).Othr[0].Id);
-            Assert.AreEqual("SEPA", ((OrganisationIdentification4)paymentInstructionInformation_PmtIf.CdtrSchmeId.Id.Item).Othr[0].SchmeNm.Item);
-            Assert.AreEqual(ItemChoiceType.Prtry, ((OrganisationIdentification4)paymentInstructionInformation_PmtIf.CdtrSchmeId.Id.Item).Othr[0].SchmeNm.ItemElementName);
+            Assert.AreEqual(directDebitInitiationContract.CreditorID, ((PersonIdentification5)paymentInstructionInformation_PmtIf.CdtrSchmeId.Id.Item).Othr[0].Id);
+            Assert.AreEqual("SEPA", ((PersonIdentification5)paymentInstructionInformation_PmtIf.CdtrSchmeId.Id.Item).Othr[0].SchmeNm.Item);
+            Assert.AreEqual(ItemChoiceType.Prtry, ((PersonIdentification5)paymentInstructionInformation_PmtIf.CdtrSchmeId.Id.Item).Othr[0].SchmeNm.ItemElementName);
             Assert.AreEqual(directDebitPaymentInstruction.TotalAmount, paymentInstructionInformation_PmtIf.CtrlSum);
             Assert.IsTrue(paymentInstructionInformation_PmtIf.CtrlSumSpecified);
             Assert.AreEqual(directDebitPaymentInstruction.NumberOfDirectDebitTransactions, paymentInstructionInformation_PmtIf.DrctDbtTxInf.Count());
@@ -459,9 +459,9 @@ namespace DirectDebitElementsUnitTests
             Assert.IsTrue(paymentInstructionInformation_PmtIf.ChrgBrSpecified);
             Assert.AreEqual(directDebitInitiationContract.CreditorAcount.IBAN.IBAN, (string)paymentInstructionInformation_PmtIf.CdtrAcct.Id.Item);
             Assert.AreEqual(directDebitInitiationContract.CreditorAgent.BankBIC, paymentInstructionInformation_PmtIf.CdtrAgt.FinInstnId.BIC);
-            Assert.AreEqual(directDebitInitiationContract.CreditorID, ((OrganisationIdentification4)paymentInstructionInformation_PmtIf.CdtrSchmeId.Id.Item).Othr[0].Id);
-            Assert.AreEqual("SEPA", ((OrganisationIdentification4)paymentInstructionInformation_PmtIf.CdtrSchmeId.Id.Item).Othr[0].SchmeNm.Item);
-            Assert.AreEqual(ItemChoiceType.Prtry, ((OrganisationIdentification4)paymentInstructionInformation_PmtIf.CdtrSchmeId.Id.Item).Othr[0].SchmeNm.ItemElementName);
+            Assert.AreEqual(directDebitInitiationContract.CreditorID, ((PersonIdentification5)paymentInstructionInformation_PmtIf.CdtrSchmeId.Id.Item).Othr[0].Id);
+            Assert.AreEqual("SEPA", ((PersonIdentification5)paymentInstructionInformation_PmtIf.CdtrSchmeId.Id.Item).Othr[0].SchmeNm.Item);
+            Assert.AreEqual(ItemChoiceType.Prtry, ((PersonIdentification5)paymentInstructionInformation_PmtIf.CdtrSchmeId.Id.Item).Othr[0].SchmeNm.ItemElementName);
             Assert.AreEqual(directDebitPaymentInstruction.TotalAmount, paymentInstructionInformation_PmtIf.CtrlSum);
             Assert.IsTrue(paymentInstructionInformation_PmtIf.CtrlSumSpecified);
             Assert.AreEqual(directDebitPaymentInstruction.NumberOfDirectDebitTransactions, paymentInstructionInformation_PmtIf.DrctDbtTxInf.Count());

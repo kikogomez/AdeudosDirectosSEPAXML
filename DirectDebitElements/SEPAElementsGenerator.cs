@@ -17,12 +17,9 @@ namespace DirectDebitElements
             Creditor creditor,
             DirectDebitInitiationContract directDebitInitiationContract)
         {
-            OrganisationIdentificationSchemeName1Choice orgIDSchemeNameChoice_schmeNm = new OrganisationIdentificationSchemeName1Choice(
-                "SEPA", ItemChoiceType.Prtry);
-
             GenericOrganisationIdentification1 genericOrganisationIdentification_othr = new GenericOrganisationIdentification1(
                 directDebitInitiationContract.CreditorID,           //<Id>
-                orgIDSchemeNameChoice_schmeNm,                      //<SchemeNm>
+                null,                                               //<SchemeNm> - It's recommended NOT to use inside InitPty
                 null);                                              //<Issr> - No issuer
 
             OrganisationIdentification4 organisationIdentification_orgiD = new OrganisationIdentification4(
@@ -231,18 +228,31 @@ namespace DirectDebitElements
             BranchAndFinancialInstitutionIdentification4 creditorAgent_CdtrAgt = new BranchAndFinancialInstitutionIdentification4(
                 financialInstitutuinIdentification_FinInstnID, null);
 
+            //OrganisationIdentificationSchemeName1Choice orgIDSchemeNameChoice_schmeNm = new OrganisationIdentificationSchemeName1Choice(
+            //    "SEPA", ItemChoiceType.Prtry);
 
-            OrganisationIdentificationSchemeName1Choice orgIDSchemeNameChoice_schmeNm = new OrganisationIdentificationSchemeName1Choice(
+            //GenericOrganisationIdentification1 genericOrganisationIdentification_othr = new GenericOrganisationIdentification1(
+            //    directDebitInitiationContract.CreditorID, orgIDSchemeNameChoice_schmeNm, null);
+
+            //OrganisationIdentification4 organisationIdentification_orgID = new OrganisationIdentification4(
+            //    null,
+            //    new GenericOrganisationIdentification1[] { genericOrganisationIdentification_othr });
+
+            //Party6Choice organisationOrPrivateIdentification_id = new Party6Choice(organisationIdentification_orgID);
+
+            //Inside Creditor Shecme Identification <CrdtrSchemeId> ALLWAYS use Person Identification, not Organisation identification
+
+            PersonIdentificationSchemeName1Choice personIdSchemeNameChoice_schmeNm = new PersonIdentificationSchemeName1Choice(
                 "SEPA", ItemChoiceType.Prtry);
 
-            GenericOrganisationIdentification1 genericOrganisationIdentification_othr = new GenericOrganisationIdentification1(
-                directDebitInitiationContract.CreditorID, orgIDSchemeNameChoice_schmeNm, null);
+            GenericPersonIdentification1 genericPersonIdentification_othr = new GenericPersonIdentification1(
+                directDebitInitiationContract.CreditorID, personIdSchemeNameChoice_schmeNm, null);
 
-            OrganisationIdentification4 organisationIdentification_orgID = new OrganisationIdentification4(
+            PersonIdentification5 personIdentification_PrvtId = new PersonIdentification5(
                 null,
-                new GenericOrganisationIdentification1[] { genericOrganisationIdentification_othr });
+                new GenericPersonIdentification1[] { genericPersonIdentification_othr });
 
-            Party6Choice organisationOrPrivateIdentification_id = new Party6Choice(organisationIdentification_orgID);
+            Party6Choice organisationOrPrivateIdentification_id = new Party6Choice(personIdentification_PrvtId);
 
             PartyIdentification32 creditorSchemeIdentification_CdtrSchemeId = new PartyIdentification32(
                 null, null, organisationOrPrivateIdentification_id, null, null);

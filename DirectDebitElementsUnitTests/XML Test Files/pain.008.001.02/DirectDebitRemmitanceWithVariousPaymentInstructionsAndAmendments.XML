@@ -12,9 +12,6 @@
           <OrgId>
             <Othr>
               <Id>ES26011G12345678</Id>
-              <SchmeNm>
-                <Prtry>SEPA</Prtry>
-              </SchmeNm>
             </Othr>
           </OrgId>
         </Id>
@@ -54,14 +51,14 @@
       <ChrgBr>SLEV</ChrgBr>
       <CdtrSchmeId>
         <Id>
-          <OrgId>
+          <PrvtId>
             <Othr>
               <Id>ES26011G12345678</Id>
               <SchmeNm>
                 <Prtry>SEPA</Prtry>
               </SchmeNm>
             </Othr>
-          </OrgId>
+          </PrvtId>
         </Id>
       </CdtrSchmeId>
       <DrctDbtTxInf>
@@ -198,14 +195,14 @@
       <ChrgBr>SLEV</ChrgBr>
       <CdtrSchmeId>
         <Id>
-          <OrgId>
+          <PrvtId>
             <Othr>
               <Id>ES26011G12345678</Id>
               <SchmeNm>
                 <Prtry>SEPA</Prtry>
               </SchmeNm>
             </Othr>
-          </OrgId>
+          </PrvtId>
         </Id>
       </CdtrSchmeId>
       <DrctDbtTxInf>
