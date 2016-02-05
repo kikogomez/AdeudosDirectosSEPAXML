@@ -8,7 +8,7 @@ using System.Data.OleDb;
 
 namespace SEPAXMLCustomerDirectDebitInitiationGenerator
 {
-    class Program
+    class SEPAXMLCDDGenerator
     {
         static void Main(string[] args)
         {
