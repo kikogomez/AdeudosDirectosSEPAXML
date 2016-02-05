@@ -5,3 +5,7 @@
 - Configurar los 'Exit Codes'
 - Comprobar la conexion a la base de datos
 - Comprobar la lectura de las tablas
+- Asegurarnos de que no necesitamos tomar datos extras
+	-> En PaymentIntructionInformationID, ¿como lo generamos?
+		* En SEPAXMLRecibosTemporalSolorte no especificamos en que PaymentInstruction va cada uno. El TransactionID es secuencial sobre el MessageID
+		* Lo generamos a partir del MessageID y le añadimos "-01" para las RCUR y "-02" para las FIRST. (o RC y FI)
