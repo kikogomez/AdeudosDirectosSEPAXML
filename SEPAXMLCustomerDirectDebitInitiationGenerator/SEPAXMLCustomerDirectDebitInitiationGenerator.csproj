@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArgumentOptions.cs" />
+    <Compile Include="ExitCodes.cs" />
     <Compile Include="SEPAXMLCDDGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

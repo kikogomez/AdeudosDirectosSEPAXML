@@ -7,7 +7,7 @@ namespace SEPAXMLCustomerDirectDebitInitiationGeneratorTests
     public class ArgumentReadingTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void IncorrectArgumentsInCommandLineProduces_ArgumentErrors_ExitCode()
         {
         }
     }

@@ -10,10 +10,10 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
 {
     class ArgumentOptions
     {
-        [Option('i', "dbaseName", Required = true, HelpText = "Source Database full path.")]
+        [Option('i', "inputDataBaseFullPath", Required = true, HelpText = "Source Database full path.")]
         public string SourceDataBase { get; set; }
 
-        [Option('o', "XMLFileName", Required = true, HelpText = "Output XML file name.")]
+        [Option('o', "outputXMLFilename", Required = true, HelpText = "Output XML file name.")]
         public int OutputXMLFile { get; set; }
 
         [Option('v', null, HelpText = "Print details during execution.")]
@@ -24,8 +24,9 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
         {
             // this without using CommandLine.Text
             var usage = new StringBuilder();
-            usage.AppendLine("Quickstart Application 1.0");
-            usage.AppendLine("Read user manual for usage instructions...");
+            usage.AppendLine("SEPA XML Customer Direct Debit Initiation Message (pain.008.001.02) Generator");
+            usage.AppendLine("-i SourceDatabaseFullPath");
+            usage.AppendLine("-o OutputXMLFileName");
             return usage.ToString();
         }
     }

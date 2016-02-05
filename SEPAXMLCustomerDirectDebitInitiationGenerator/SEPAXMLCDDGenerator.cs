@@ -17,25 +17,17 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
         static void Main(string[] args)
         {
 
+            ArgumentOptions argumentOptions = new ArgumentOptions();
+            CommandLine.Parser parser = new CommandLine.Parser(with => with.HelpWriter = Console.Error);
 
-            ///Parse Command Line
-            //Pa
-            //ArgumentOptions argumentOptions = new ArgumentOptions();
-            //CommandLine.Parser parser = new CommandLine.Parser();
-            //if (parser.ParseArguments(args, argumentOptions))
-            //{
-            //    // consume Options type properties
-            //    if (argumentOptions.Verbose)
-            //    {
-            //        Console.WriteLine(argumentOptions.SourceDataBase);
-            //        Console.WriteLine(argumentOptions.OutputXMLFile);
-            //    }
-            //    else
-            //    {
-            //        Console.WriteLine("working ...");
-            //    }                  
-            //}
+            if (parser.ParseArgumentsStrict(args, argumentOptions, () => Environment.Exit(-2)))
+            {
+                Run(argumentOptions);
+            }
+        }
 
+        private static void Run(ArgumentOptions argumentOptions)
+        {
             var myDataTable = new DataTable();
             using (var conection = new OleDbConnection("Provider=Microsoft.JET.OLEDB.4.0;" + "data source=C:\\menus\\newmenus\\menu.mdb;Password=****"))
             {
@@ -53,27 +45,6 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
                 adapter.Fill(myDataTable);
                 string text = myDataTable.Rows[0][0].ToString();
             }
-
-        }
-
-        void ParseCommandLine(string[] args)
-        {
-            ArgumentOptions argumentOptions = new ArgumentOptions();
-            CommandLine.Parser parser = new CommandLine.Parser();
-            if (parser.ParseArguments(args, argumentOptions))
-            {
-                // consume Options type properties
-                if (argumentOptions.Verbose)
-                {
-                    Console.WriteLine(argumentOptions.SourceDataBase);
-                    Console.WriteLine(argumentOptions.OutputXMLFile);
-                }
-                else
-                {
-                    Console.WriteLine("working ...");
-                }
-            }
-
         }
     }
 }

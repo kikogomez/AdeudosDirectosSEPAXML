@@ -1,0 +1,7 @@
+- Probar la librería de 'parsing' de CommandLineParser
+- Configurarla para nuestras caracteristicas
+	-> -i RutaCompletaBaseDeDatos
+	-> -o NombreFicheroXMLdeSalida
+- Configurar los 'Exit Codes'
+- Comprobar la conexion a la base de datos
+- Comprobar la lectura de las tablas
