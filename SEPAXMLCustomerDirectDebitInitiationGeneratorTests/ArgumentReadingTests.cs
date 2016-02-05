@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace SEPAXMLCustomerDirectDebitInitiationGeneratorTests
 {
     [TestClass]
-    public class MDBConnectiontTests
+    public class ArgumentReadingTests
     {
         [TestMethod]
-        public void TheSourceTablesAreCorrectlyReaded()
+        public void TestMethod1()
         {
         }
     }
