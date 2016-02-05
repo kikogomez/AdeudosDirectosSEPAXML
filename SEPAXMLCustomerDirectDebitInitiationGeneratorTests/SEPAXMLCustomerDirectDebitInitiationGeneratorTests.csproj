@@ -59,8 +59,11 @@
       <Name>SEPAXMLCustomerDirectDebitInitiationGenerator</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="TestFiles\" />
+    <Content Include="TestFiles\TestMDB.mdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
