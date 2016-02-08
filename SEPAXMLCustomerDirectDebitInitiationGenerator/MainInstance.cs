@@ -156,7 +156,7 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
                 //var reader = command.ExecuteReader();
 
                 connection.Open();
-                string query = "Select * From SEPAXMLRecibosTemporalSoporte";
+                string query = "Select * From SEPAXMLRecibosTemporalSoporte Where ([FIRST] = false)";
                 OleDbCommand command = new OleDbCommand(query, connection);
                 OleDbDataReader reader = command.ExecuteReader();
 
