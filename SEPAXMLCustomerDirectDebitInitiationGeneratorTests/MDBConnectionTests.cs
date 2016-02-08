@@ -7,7 +7,7 @@ using SEPAXMLCustomerDirectDebitInitiationGenerator;
 namespace SEPAXMLCustomerDirectDebitInitiationGeneratorTests
 {
     [TestClass]
-    public class MDBConnectiontTests
+    public class MDBConnectionTests
     {
         [TestMethod]
         public void TestFileExistsWhileAccesingWithRelativePath()

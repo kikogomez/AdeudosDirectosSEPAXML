@@ -58,10 +58,19 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ArgumentReadingTests.cs" />
-    <Compile Include="MDBConnectiontTests.cs" />
+    <Compile Include="DDRemmitanceCreationTests.cs" />
+    <Compile Include="MDBConnectionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DirectDebitElements\DirectDebitElements.csproj">
+      <Project>{61ce6a05-fa54-4002-b4cf-515b34caaab2}</Project>
+      <Name>DirectDebitElements</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReferencesAndTools\ReferencesAndTools.csproj">
+      <Project>{5fed753a-7a36-4a4a-8b4d-c9ba3d577840}</Project>
+      <Name>ReferencesAndTools</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SEPAXMLCustomerDirectDebitInitiationGenerator\SEPAXMLCustomerDirectDebitInitiationGenerator.csproj">
       <Project>{a5f4eaf3-e4fc-492a-81d2-f7d0a4dd969c}</Project>
       <Name>SEPAXMLCustomerDirectDebitInitiationGenerator</Name>

@@ -62,6 +62,10 @@
       <Project>{61ce6a05-fa54-4002-b4cf-515b34caaab2}</Project>
       <Name>DirectDebitElements</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ReferencesAndTools\ReferencesAndTools.csproj">
+      <Project>{5fed753a-7a36-4a4a-8b4d-c9ba3d577840}</Project>
+      <Name>ReferencesAndTools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
