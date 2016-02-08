@@ -13,6 +13,7 @@
 	-> El BankCode no lo tenemos en la base de datos, pero lo podemos sacar del CreditorBankAccount
 - ¿QUE PASA CON EL DEBTOR AGENT BIC? ¿De donde se toma al crear el nodo <DrctDbtTxInf>? No se incuye en DirectDebitTransaction...
 	-> Posiblemnte se toma de los datos del DirectDebitRemmitance, por lo que no es necesario incluir el campo en la base de datos
+- Cambiar el tipo 'double' por decimal en la base de datos?
 - Comprobar la lectura de las tablas
 	-> Devolver error si la tabla no existe (crear base de datos in la tabla)
 	-> Devolver error si la tabla esta vacia (crear base de datos con tablas vacias)

@@ -44,11 +44,15 @@ namespace SEPAXMLCustomerDirectDebitInitiationGeneratorTests
             string oleDBConnectionString = "Provider=Microsoft.JET.OLEDB.4.0;" + "data source=" + relativePathToTestDatabase;
             OleDbConnection connection = new OleDbConnection(oleDBConnectionString);
 
-            DirectDebitRemittance directDebitRemittance;
-            string creditorName;
+            //DirectDebitRemittance directDebitRemittance;
+            //string creditorName;
 
             MainInstance mainInstance = new MainInstance();
             DirectDebitPaymentInstruction directDebitPaymentInstruction = mainInstance.CreatePaymentInformationWithRCURTransactions(connection, "PREG1234567815011007:15:00-01");
+
+            Assert.AreEqual(3, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
+            Assert.AreEqual(316M, directDebitPaymentInstruction.TotalAmount);
+
 
             //Assert.AreEqual("NOMBRE ACREEDOR PRUEBAS", creditorName);
             //Assert.AreEqual("PREG1234567815011007:15:00", directDebitRemittance.MessageID);

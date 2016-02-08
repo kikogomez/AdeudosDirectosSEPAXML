@@ -113,14 +113,14 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
                 //creditorAgent = reader.GetString(6);
                 //creditorBankAccount = reader.GetString(7);
 
-                messageID = (string)reader["MessageID"];
+                messageID = reader["MessageID"] as string;
                 generationDate = (DateTime)reader["GenerationDate"];
                 requestedCollectionDate = (DateTime)reader["RequestedCollectionDate"];
-                creditorName = (string)reader["CreditorName"];
-                creditorID = (string)reader["CreditorID"];
-                creditorBussinesCode = (string)reader["CreditorBusinessCode"];
-                creditorAgentBIC = (string)reader["CreditorAgent"];
-                creditorIBAN = (string)reader["CreditorBankAccount"];
+                creditorName = reader["CreditorName"] as string;
+                creditorID = reader["CreditorID"] as string;
+                creditorBussinesCode = reader["CreditorBusinessCode"] as string;
+                creditorAgentBIC = reader["CreditorAgent"] as string;
+                creditorIBAN = reader["CreditorBankAccount"] as string;
             }
             BankAccount creditorBankAccount = new BankAccount(new InternationalAccountBankNumberIBAN(creditorIBAN));
             CreditorAgent creditorAgent = new CreditorAgent(new BankCode(creditorBankAccount.BankAccountFieldCodes.BankCode, "CaixaBank", creditorAgentBIC));
@@ -132,7 +132,7 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             directDebitRemittance = new DirectDebitRemittance(messageID, generationDate, requestedCollectionDate, directDebitInitiationContract);
         }
 
-        public DirectDebitPaymentInstruction CreatePaymentInformationWithRCURTransactions(OleDbConnection conection, string paymentInstructionID)
+        public DirectDebitPaymentInstruction CreatePaymentInformationWithRCURTransactions(OleDbConnection connection, string paymentInstructionID)
         {
             string transactionID;
             string mandateID;
@@ -142,36 +142,43 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             string iBAN;
             string oldIBAN;
             //string debtorAgentBIC;
-            decimal amount;
+            double amount;
             string concept;
             bool fIRST;
 
-
             List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>();
-            using (conection)
+            using (connection)
             {
-                conection.Open();
-                string query = "SELECT * FROM SEPAXMLRecibosTemporalSoporte WHERE ([FIRST] = false)";
-                OleDbCommand command = new OleDbCommand(query, conection);
+                //connection.Open();
+                //string query = "Select * From SEPAXMLRecibosTemporalSoporte";
+                ////string query = "SELECT * FROM SEPAXMLRecibosTemporalSoporte WHERE ([FIRST] = false)";
+                //var command = new OleDbCommand(query, connection);
+                //var reader = command.ExecuteReader();
+
+                connection.Open();
+                string query = "Select * From SEPAXMLRecibosTemporalSoporte";
+                OleDbCommand command = new OleDbCommand(query, connection);
                 OleDbDataReader reader = command.ExecuteReader();
+
                 while (reader.Read())
                 {
-                    transactionID = (string)reader["TransactionID"];
-                    mandateID = (string)reader["MandateID"];
-                    oldMandateID = (string)reader["OldMandateID"];
-                    mandateCreationDate = (DateTime)reader["MandateCreationDate"];
-                    debtorFullName = (string)reader["DebtorFullName"];
-                    iBAN = (string)reader["IBAN"];
-                    oldIBAN = (string)reader["OldIBAN"];
+                    transactionID = reader["TransactionID"] as string;
+                    mandateID = reader["MandateID"] as string;
+                    oldMandateID = reader["OldMandateID"] as string;
+                    mandateCreationDate = reader["MandateCreationDate"] as DateTime? ?? new DateTime(2009, 10, 31);
+                    debtorFullName = reader["DebtorFullName"] as string;
+                    iBAN = reader["IBAN"] as string;
+                    oldIBAN = reader["OldIBAN"] as string;
                     //debtorAgentBIC = (string)reader["DebtorAgentBIC"];
-                    amount = (decimal)reader["Amount"];
-                    concept = (string)reader["Concept"];
+                    //amount = (decimal)reader["Amount"];
+                    amount = reader["Amount"] as double? ?? default(double);
+                    concept = reader["Concept"] as string;
                     fIRST = (bool)reader["FIRST"];
 
                     BankAccount oldAccount = null;
                     if (oldIBAN != null) oldAccount = new BankAccount(new InternationalAccountBankNumberIBAN(oldIBAN));
                     DirectDebitAmendmentInformation amendmentInformation = new DirectDebitAmendmentInformation(oldMandateID, oldAccount);
-                    SimplifiedBill bill = new SimplifiedBill("tansactionID", concept, amount, DateTime.MinValue, DateTime.MaxValue);
+                    SimplifiedBill bill = new SimplifiedBill("tansactionID", concept, (decimal)amount, DateTime.MinValue, DateTime.MaxValue);
                     DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                         new List<SimplifiedBill>() { bill },
                         transactionID,
