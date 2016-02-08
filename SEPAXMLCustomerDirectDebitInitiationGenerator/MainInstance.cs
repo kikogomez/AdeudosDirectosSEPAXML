@@ -12,6 +12,7 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
 {
     public class MainInstance
     {
+        string dataBaseConnectionString;
 
         public MainInstance()
         {
@@ -36,7 +37,11 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
                 Environment.Exit((int)ExitCodes.InvalidDataBasePath);
             }
 
-            DataSet sourceDataset = GetDataSetFromDB(sourceDatabaseFullPath);
+            dataBaseConnectionString = CreateDatabaseConnectionString(sourceDatabaseFullPath);
+
+            OleDbDataReader sourceData = GetReaderFormDatabase(sourceDatabaseFullPath);
+
+            GenerateXML(sourceData, xMLCDDFilename);
         }
 
         public bool ParseArguments(
@@ -62,16 +67,57 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             return argumentsParseOk;
         }
 
-        public DataSet GetDataSetFromDB (string sourceDatabaseFullPath)
+        public string CreateDatabaseConnectionString(string pathToDataBase)
         {
-            var conection = new OleDbConnection("Provider=Microsoft.JET.OLEDB.4.0;" + "data source=" + sourceDatabaseFullPath);
-            var myDataTable = new DataTable();
-            using (conection)
+            return "Provider=Microsoft.JET.OLEDB.4.0;" + "data source=" + pathToDataBase;
+        }
+
+        public OleDbDataReader GetReaderFormDatabase (string sourceDatabaseFullPath)
+        {
+            OleDbConnection conection = new OleDbConnection("Provider=Microsoft.JET.OLEDB.4.0;" + "data source=" + sourceDatabaseFullPath);
+
+            conection.Open();
+            var query = "Select * From SEPAXMLRecibosTemporalSoporte";
+            var command = new OleDbCommand(query, conection);
+            var reader = command.ExecuteReader();
+
+            if (reader.HasRows)
             {
-                conection.Open();
-                var query = "Select * From sepa";
-                var command = new OleDbCommand(query, conection);
-                var reader = command.ExecuteReader();
+                return reader;
+            }
+            else
+            {
+                return null;
+            }
+            conection.Close();
+
+            //using (conection)
+            //{
+            //    conection.Open();
+            //    var query = "Select * From SEPAXMLRecibosTemporalSoporte";
+            //    var command = new OleDbCommand(query, conection);
+            //    var reader = command.ExecuteReader();
+
+            //    if (reader.HasRows)
+            //    {
+            //        return reader;
+            //    }
+            //    else
+            //    {
+            //        return null;
+            //    }
+            //}
+        }
+
+        public void GenerateXML(OleDbDataReader reader, string outputFileName)
+        {
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    Console.WriteLine("{0}\t{1}", reader.GetInt32(0),
+                        reader.GetString(1));
+                }
             }
         }
 
