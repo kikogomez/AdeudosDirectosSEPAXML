@@ -68,10 +68,11 @@ namespace DirectDebitElements
             get { return bankBIC; }
         }
 
-        public void ChangeBankAccount(BankAccount bankAccount, DateTime changingDate)
+        public void ChangeBankAccount(BankAccount bankAccount, string bankBIC, DateTime changingDate)
         {
             AddCurrentAccountToHistorical(changingDate);
             this.bankAccount = bankAccount;
+            this.bankBIC = bankBIC;
             this.bankAccountActivationDate = changingDate;
         }
 

@@ -127,6 +127,7 @@ namespace DirectDebitElementsUnitTests
                 directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(debtors["00001"].DirectDebitmandates[1234].InternalReferenceNumber),
                 debtors["00001"].DirectDebitmandates[1234].DirectDebitMandateCreationDate,
                 debtors["00001"].DirectDebitmandates[1234].BankAccount,
+                debtors["00001"].DirectDebitmandates[1234].BankBIC,
                 debtors["00001"].FullName,
                 null,
                 false);
@@ -137,6 +138,7 @@ namespace DirectDebitElementsUnitTests
                 directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(debtors["00002"].DirectDebitmandates[1235].InternalReferenceNumber),
                 debtors["00002"].DirectDebitmandates[1235].DirectDebitMandateCreationDate,
                 debtors["00002"].DirectDebitmandates[1235].BankAccount,
+                debtors["00002"].DirectDebitmandates[1235].BankBIC,
                 debtors["00002"].FullName,
                 null,
                 false);
@@ -147,6 +149,7 @@ namespace DirectDebitElementsUnitTests
                 directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(debtors["00002"].DirectDebitmandates[1235].InternalReferenceNumber),
                 debtors["00002"].DirectDebitmandates[1235].DirectDebitMandateCreationDate,
                 debtors["00002"].DirectDebitmandates[1235].BankAccount,
+                debtors["00002"].DirectDebitmandates[1235].BankBIC,
                 debtors["00002"].FullName,
                 mandateIDAmendment,
                 false);
@@ -157,6 +160,7 @@ namespace DirectDebitElementsUnitTests
                 directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(debtors["00003"].DirectDebitmandates[1236].InternalReferenceNumber),
                 debtors["00003"].DirectDebitmandates[1236].DirectDebitMandateCreationDate,
                 debtors["00003"].DirectDebitmandates[1236].BankAccount,
+                debtors["00003"].DirectDebitmandates[1236].BankBIC,
                 debtors["00003"].FullName,
                 bankAccountAmendment_SameBank,
                 false);
@@ -167,6 +171,7 @@ namespace DirectDebitElementsUnitTests
                 directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(debtors["00004"].DirectDebitmandates[1237].InternalReferenceNumber),
                 debtors["00004"].DirectDebitmandates[1237].DirectDebitMandateCreationDate,
                 debtors["00004"].DirectDebitmandates[1237].BankAccount,
+                debtors["00004"].DirectDebitmandates[1237].BankBIC,
                 debtors["00004"].FullName,
                 bankAccountAmendment_DifferentBank,
                 true);

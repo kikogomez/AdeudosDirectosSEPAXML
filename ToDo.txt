@@ -1,7 +1,7 @@
 PENDIENTE
 ----------------------------------------
 - Hay que añador el debtorAgentBIC al DirectDebitTransaction
-	-> Modificar el constructor y todas las llamadas al mismo
+	-> Modificar el constructor y todas las llamadas al mismo (al final creamos un constructor APARTE)
 	-> Modificar los tests para que lo comprueben
 	-> Dejar preparado una llamada a una rutina que COMPRUEBE el BIC
 		* Ha de ser OBLIGATORIO
@@ -42,7 +42,9 @@ A REVISAR EN EL FICHERO FINAL COMPILADO EN EL ORDENADOR DE ESTEBAN
 
 OPCIONALES PARA TENER EN CUENTA:
 ----------------------------------------------------------------------------
-- MODIFICAR LA CREACION DE UN DIRECTDEBITTRANSACTION PARA QUE NO SE TENGA QUE LEER DE FICHERO CADA VEZ QUE SE CREE UNA NUEVA INSTANCIA (INICIALIZAR UN BankCodes)
+- MODIFICAR LA CREACION DE UN DIRECTDEBITTRANSACTION
+	-> Si no se introduce el BIC ha de calcularse, pero cuidado con tener que leer de disco la lista de BIC cada vez
+	-> Si se da el BIC, hay que comprobarlo
 	-> Por lo pronto quitaremos la rutina de lectura, y dejaremos la posibilidad de un 'setter' para cargarla manualmente
 - Deberíamos añadir el campo BIC al DirectDebitMandate
 - Unificar las excepciones. Todas las excepciones que se lanzan desde un constructor deberian ser TypeinitializationException (y dentro el subtipo - Argumento, ArgumentNull...-)

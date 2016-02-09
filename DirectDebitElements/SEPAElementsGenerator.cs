@@ -119,11 +119,11 @@ namespace DirectDebitElements
                 false);                                 //<PreNtfctnDt> will not be serialized 
 
             FinancialInstitutionIdentification7 financialInstitutuinIdentification_FinInstnID = new FinancialInstitutionIdentification7(
-                creditorAgent.BankBIC,  //<BIC>
-                null,                   //<ClrYsMmbId> - Not used by creditor in SEPA COR
-                null,                   //<Nm> Not used by creditor in SEPA COR
-                null,                   //<PstlAdr> - Not used by creditor in SEPA COR
-                null);                  //<Othr> - Not used by creditor in SEPA COR
+                directDebitTransaction.DebtorAgentBIC,  //<BIC>
+                null,                                   //<ClrYsMmbId> - Not used by creditor in SEPA COR
+                null,                                   //<Nm> Not used by creditor in SEPA COR
+                null,                                   //<PstlAdr> - Not used by creditor in SEPA COR
+                null);                                  //<Othr> - Not used by creditor in SEPA COR
 
             BranchAndFinancialInstitutionIdentification4 debtorAgent_DbtrAgt = new BranchAndFinancialInstitutionIdentification4(
                 financialInstitutuinIdentification_FinInstnID,  //<FinInstnId>

@@ -193,6 +193,7 @@ namespace DirectDebitElementsUnitTests
             DirectDebitMandate directDebitMandate = debtors["00002"].DirectDebitmandates.ElementAt(0).Value;
             string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
             BankAccount debtorAccount = directDebitMandate.BankAccount;
+            string bankBIC = directDebitMandate.BankBIC;
             string accountHolderName = directDebitMandate.AccountHolderName;
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
@@ -201,6 +202,7 @@ namespace DirectDebitElementsUnitTests
                 mandateID,
                 mandateSignatureDate,
                 debtorAccount,
+                bankBIC,
                 accountHolderName,
                 null,
                 false);

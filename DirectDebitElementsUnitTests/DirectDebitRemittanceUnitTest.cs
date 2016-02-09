@@ -184,6 +184,7 @@ namespace DirectDebitElementsUnitTests
             string mandateID = directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(directDebitMandate.InternalReferenceNumber);
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
             BankAccount debtorAccount = directDebitMandate.BankAccount;
+            string debtorAgentBIC = directDebitMandate.BankBIC;
             string accountHolderName = directDebitMandate.AccountHolderName;
             List<SimplifiedBill> bills = debtor.SimplifiedBills.Values.ToList();
             DirectDebitAmendmentInformation amendmentInformation = new DirectDebitAmendmentInformation(
@@ -196,6 +197,7 @@ namespace DirectDebitElementsUnitTests
                 mandateID,
                 mandateSignatureDate,
                 debtorAccount,
+                debtorAgentBIC,
                 accountHolderName,
                 amendmentInformation,
                 firstDebit);

@@ -123,7 +123,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             ScenarioContext.Current.Add("ChangingBankDate", changingDate);
             ScenarioContext.Current.Add("OriginalBankAccount", originalBankAccount);
             BankAccount bankAccount = directDebitContextData.bankAccounts["ES3011112222003333333333"];
-            debtor.DirectDebitmandates[2345].ChangeBankAccount(bankAccount, changingDate);
+            debtor.DirectDebitmandates[2345].ChangeBankAccount(bankAccount,null,  changingDate);
         }
 
         [Then(@"The account number is correctly changed")]

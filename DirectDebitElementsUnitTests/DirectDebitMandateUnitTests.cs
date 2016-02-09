@@ -79,7 +79,7 @@ namespace DirectDebitElementsUnitTests
             InternationalAccountBankNumberIBAN iBAN = new InternationalAccountBankNumberIBAN("ES3011112222003333333333");
             BankAccount newBankAccount = new BankAccount(iBAN);
             DateTime dateOfChange = new DateTime(2013, 11, 30);
-            directDebitMandate.ChangeBankAccount(newBankAccount, dateOfChange);
+            directDebitMandate.ChangeBankAccount(newBankAccount, null, dateOfChange);
             Assert.AreEqual(newBankAccount, directDebitMandate.BankAccount);
             Assert.AreEqual(dateOfChange, directDebitMandate.BankAccountActivationDate);
             Assert.AreEqual(ephemeralBankAcount, directDebitMandate.BankAccountHistory[dateOfChange].BankAccount);
