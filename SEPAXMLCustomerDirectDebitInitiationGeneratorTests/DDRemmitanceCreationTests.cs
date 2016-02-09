@@ -78,7 +78,7 @@ namespace SEPAXMLCustomerDirectDebitInitiationGeneratorTests
             DirectDebitPaymentInstruction directDebitPaymentInstruction = mainInstance.CreatePaymentInstructionWithFRSTTransactions(connection, "PREG1234567815011007:15:00-02", "CORE");
 
             Assert.AreEqual(1, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
-            Assert.AreEqual(79M, directDebitPaymentInstruction.TotalAmount);
+            Assert.AreEqual(79.50M, directDebitPaymentInstruction.TotalAmount);
         }
     }
 }

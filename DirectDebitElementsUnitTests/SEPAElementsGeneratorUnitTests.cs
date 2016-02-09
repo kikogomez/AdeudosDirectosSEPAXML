@@ -24,9 +24,9 @@ namespace DirectDebitElementsUnitTests
         DirectDebitTransaction directDebitTransaction2;
         DirectDebitTransaction directDebitTransaction3;
         DirectDebitTransaction directDebitTransaction4;
-        static DirectDebitAmendmentInformation amendmentInformation1;
+        //static DirectDebitAmendmentInformation amendmentInformation1;
         static string paymentInformationID1;
-        static string paymentInformationID2;
+        //static string paymentInformationID2;
 
         [ClassInitialize]
         public static void ClassInit(TestContext context)
@@ -83,11 +83,11 @@ namespace DirectDebitElementsUnitTests
             }
 
             paymentInformationID1 = "PRE201512010001";
-            paymentInformationID2 = "PRE201511150001";
+            //paymentInformationID2 = "PRE201511150001";
 
-            amendmentInformation1 = new DirectDebitAmendmentInformation(
-                directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(1000),
-                new BankAccount(new InternationalAccountBankNumberIBAN("ES7621000000650000000001")));
+            //amendmentInformation1 = new DirectDebitAmendmentInformation(
+            //    directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(1000),
+            //    new BankAccount(new InternationalAccountBankNumberIBAN("ES7621000000650000000001")));
         }
 
         [TestInitialize]
@@ -217,7 +217,9 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual(directDebitTransaction.MandateID, directDebitTransactionInformation_DrctDbtTxInf.DrctDbtTx.MndtRltdInf.MndtId);
             Assert.AreEqual(directDebitTransaction.MandateSigatureDate, directDebitTransactionInformation_DrctDbtTxInf.DrctDbtTx.MndtRltdInf.DtOfSgntr);
             Assert.IsTrue(directDebitTransactionInformation_DrctDbtTxInf.DrctDbtTx.MndtRltdInf.DtOfSgntrSpecified);
+
             Assert.AreEqual(creditorAgent.BankBIC, directDebitTransactionInformation_DrctDbtTxInf.DbtrAgt.FinInstnId.BIC);
+
             Assert.AreEqual(directDebitTransaction.AccountHolderName, directDebitTransactionInformation_DrctDbtTxInf.Dbtr.Nm);
             Assert.AreEqual(directDebitTransaction.DebtorAccount.IBAN.IBAN, (string)directDebitTransactionInformation_DrctDbtTxInf.DbtrAcct.Id.Item);
             string[] expectedConcepts = new string[] { "Cuota Social Octubre 2013 --- 79,00", "Cuota Social Noviembre 2013 --- 79,00" };
@@ -232,7 +234,7 @@ namespace DirectDebitElementsUnitTests
             AssertUnusedDirectDebitTransactionInformation9_DrctDbtTxInf_Fields(directDebitTransactionInformation_DrctDbtTxInf);
         }
 
-                [TestMethod]
+        [TestMethod]
         public void ADirectDebitTransactionInformation9WithAmmendmentInformation_ChangeMandateID_IsCorrectlyGenerated()
         {
             string transactionID = "00001";
@@ -301,8 +303,8 @@ namespace DirectDebitElementsUnitTests
                 directDebitTransaction,
                 singleUnstructuredConcept);
 
-            Assert.IsTrue(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInd);              //AmmendmentInformationInd es 'false'
-            Assert.IsTrue(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntIndSpecified);     //Si AmmendmentInformationInd es 'false', no hace falta ni siquiera incluirlo
+            Assert.IsTrue(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInd);              
+            Assert.IsTrue(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntIndSpecified);     
 
             Assert.AreEqual(oldBankAcount.IBAN.IBAN, (string)directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInfDtls.OrgnlDbtrAcct.Id.Item);
             Assert.IsNull(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInfDtls.OrgnlDbtrAgt);

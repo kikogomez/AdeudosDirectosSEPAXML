@@ -110,6 +110,7 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             string creditorBussinesCode;
             string creditorAgentBIC;
             string creditorIBAN;
+            string creditorAgentName;
 
             using (conection)
             {
@@ -137,10 +138,11 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
                 creditorBussinesCode = reader["CreditorBusinessCode"] as string;
                 creditorAgentBIC = reader["CreditorAgent"] as string;
                 creditorIBAN = reader["CreditorBankAccount"] as string;
+                creditorAgentName = reader["CreditorAgentName"] as string;
             }
             creditorNIF = creditorID.Substring(7, 9);
             BankAccount creditorBankAccount = new BankAccount(new InternationalAccountBankNumberIBAN(creditorIBAN));
-            CreditorAgent creditorAgent = new CreditorAgent(new BankCode(creditorBankAccount.BankAccountFieldCodes.BankCode, "CaixaBank", creditorAgentBIC));
+            CreditorAgent creditorAgent = new CreditorAgent(new BankCode(creditorBankAccount.BankAccountFieldCodes.BankCode, creditorAgentName, creditorAgentBIC));
             DirectDebitInitiationContract directDebitInitiationContract = new DirectDebitInitiationContract(
                 new BankAccount(new InternationalAccountBankNumberIBAN(creditorIBAN)),
                 creditorNIF,

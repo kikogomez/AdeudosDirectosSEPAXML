@@ -17,6 +17,7 @@ namespace DirectDebitElements
         string mandateID;
         DateTime mandateSignatureDate;
         BankAccount debtorAccount;
+        //string debtorAgentBIC,
         string accountHolderName;
         DirectDebitAmendmentInformation amendmentInformation;
         bool firstDebit;
@@ -27,6 +28,7 @@ namespace DirectDebitElements
             string mandateID,
             DateTime mandateSignatureDate,
             BankAccount debtorAccount,
+            //string debtorAgentBIC,
             string accountHolderName, 
             DirectDebitAmendmentInformation amendmentInformation,
             bool firstDebit)

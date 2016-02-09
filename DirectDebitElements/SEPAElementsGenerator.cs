@@ -228,6 +228,8 @@ namespace DirectDebitElements
             BranchAndFinancialInstitutionIdentification4 creditorAgent_CdtrAgt = new BranchAndFinancialInstitutionIdentification4(
                 financialInstitutuinIdentification_FinInstnID, null);
 
+            ////// ----> Inside Creditor Shecme Identification <CrdtrSchemeId> ALLWAYS use Person Identification, not Organisation identification
+
             //OrganisationIdentificationSchemeName1Choice orgIDSchemeNameChoice_schmeNm = new OrganisationIdentificationSchemeName1Choice(
             //    "SEPA", ItemChoiceType.Prtry);
 
@@ -239,8 +241,6 @@ namespace DirectDebitElements
             //    new GenericOrganisationIdentification1[] { genericOrganisationIdentification_othr });
 
             //Party6Choice organisationOrPrivateIdentification_id = new Party6Choice(organisationIdentification_orgID);
-
-            //Inside Creditor Shecme Identification <CrdtrSchemeId> ALLWAYS use Person Identification, not Organisation identification
 
             PersonIdentificationSchemeName1Choice personIdSchemeNameChoice_schmeNm = new PersonIdentificationSchemeName1Choice(
                 "SEPA", ItemChoiceType.Prtry);

@@ -1,10 +1,26 @@
 PENDIENTE
 ----------------------------------------
-- Generar un fichero de prueba que tenga:
-	-> Dos PaymentInstructions, uno FRST y otreo RCUR
-	-> Que tenga transacciones normales, con cambio de cuanta en mismo banco, y cambios de cuenta en diferentes bancos
-- Tomar el fichero .mdb del último envío y trabajarlo para que nos produzca una tabla o una consulta con los campos necesarios que requiera la aplicación que genere el SEPA XML
-- Crear un programa de consola que lea ese query, genere los DirectDebitElementes y llame a 'GenerateISO20022CustomerDirectDebitInitiationFileMessage'
+- Hay que añador el debtorAgentBIC al DirectDebitTransaction
+	-> Modificar el constructor y todas las llamadas al mismo
+	-> Modificar los tests para que lo comprueben
+	-> Dejar preparado una llamada a una rutina que COMPRUEBE el BIC
+		* Ha de ser OBLIGATORIO
+		* Comprobar si es valido (buscar el codigo del banco en BankCodes. Esta parte ha de estar inactiva por el momento, pero dejemosla ahi, comentada)
+- En SEPAElementsGenerator, hay que modificar la rutina GenerateDirectDebitTransactionInfo_DrctDbtTxInf para que genere correctamente el BIC (ahora toma erroneamente el CreditorAgentBIC)
+- Modificar los deudores de prueba para que usen algun otro banco, aparte de La Caixa, para ver que todo sale correcto.
+- Seguramente tendremos que modificar entonces tambien los XML de prueba 'DirectDebitRemmitanceWithVariousPaymentInstructionsAndAmendments.xml'
+
+
+
+
+
+
+
+
+
+
+
+
 
 A REVISAR EN EL FICHERO FINAL COMPILADO EN EL ORDENADOR DE ESTEBAN
 -------------------------------------------------------------------
