@@ -14,7 +14,7 @@ namespace DirectDebitElementsUnitTests
             int internalReferenceNumber = 2645;
             BankAccount bankAccount = new BankAccount(new ClientAccountCodeCCC("12345678061234567890"));
             DateTime directDebitMandateCreationDate = new DateTime(2013, 11, 11);
-            DirectDebitMandate directDebitMandate = new DirectDebitMandate(internalReferenceNumber, directDebitMandateCreationDate, bankAccount, "NoName");
+            DirectDebitMandate directDebitMandate = new DirectDebitMandate(internalReferenceNumber, directDebitMandateCreationDate, bankAccount, null, "NoName");
             Assert.AreEqual(DirectDebitMandate.DirectDebitmandateStatus.Active, directDebitMandate.Status);
             Assert.AreEqual(internalReferenceNumber, directDebitMandate.InternalReferenceNumber);
             Assert.AreEqual(directDebitMandateCreationDate, directDebitMandate.DirectDebitMandateCreationDate);
@@ -27,7 +27,7 @@ namespace DirectDebitElementsUnitTests
         {
             BankAccount bankAccount = new BankAccount(new ClientAccountCodeCCC("12345678061234567890"));
             DateTime directDebitMandateCreationDate = new DateTime(2013, 11, 11);
-            DirectDebitMandate directDebitMandate = new DirectDebitMandate(2345, directDebitMandateCreationDate, bankAccount, "NoName");
+            DirectDebitMandate directDebitMandate = new DirectDebitMandate(2345, directDebitMandateCreationDate, bankAccount, null, "NoName");
             Assert.AreEqual(2345, directDebitMandate.InternalReferenceNumber);
         }
 
@@ -36,7 +36,7 @@ namespace DirectDebitElementsUnitTests
         {
             ClientAccountCodeCCC ccc = new ClientAccountCodeCCC("12345678061234567890");
             BankAccount bankAccount = new BankAccount(ccc);
-            DirectDebitMandate directDebitMandate = new DirectDebitMandate(1, DateTime.Now.Date, bankAccount, "NoName");
+            DirectDebitMandate directDebitMandate = new DirectDebitMandate(1, DateTime.Now.Date, bankAccount, null, "NoName");
             Assert.AreEqual(DirectDebitMandate.DirectDebitmandateStatus.Active, directDebitMandate.Status);
             directDebitMandate.DeactivateMandate();
             Assert.AreEqual(DirectDebitMandate.DirectDebitmandateStatus.Inactive, directDebitMandate.Status);
@@ -47,7 +47,7 @@ namespace DirectDebitElementsUnitTests
         {
             ClientAccountCodeCCC ccc = new ClientAccountCodeCCC("12345678061234567890");
             BankAccount bankAccount = new BankAccount(ccc);
-            DirectDebitMandate directDebitMandate = new DirectDebitMandate(1, DateTime.Now.Date, bankAccount, "NoName");
+            DirectDebitMandate directDebitMandate = new DirectDebitMandate(1, DateTime.Now.Date, bankAccount, null, "NoName");
             Assert.AreEqual(DirectDebitMandate.DirectDebitmandateStatus.Active, directDebitMandate.Status);
             directDebitMandate.DeactivateMandate();
             Assert.AreEqual(DirectDebitMandate.DirectDebitmandateStatus.Inactive, directDebitMandate.Status);
@@ -74,7 +74,7 @@ namespace DirectDebitElementsUnitTests
             ClientAccountCodeCCC ccc = new ClientAccountCodeCCC("12345678061234567890");
             BankAccount ephemeralBankAcount = new BankAccount(ccc);
             DateTime ephemeralBankAcountActivationDate = new DateTime(2013, 11, 11);
-            DirectDebitMandate directDebitMandate = new DirectDebitMandate(1, ephemeralBankAcountActivationDate, ephemeralBankAcount, "NoName");
+            DirectDebitMandate directDebitMandate = new DirectDebitMandate(1, ephemeralBankAcountActivationDate, ephemeralBankAcount, null, "NoName");
             Assert.AreEqual(ephemeralBankAcount, directDebitMandate.BankAccount);
             InternationalAccountBankNumberIBAN iBAN = new InternationalAccountBankNumberIBAN("ES3011112222003333333333");
             BankAccount newBankAccount = new BankAccount(iBAN);

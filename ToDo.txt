@@ -42,6 +42,9 @@ A REVISAR EN EL FICHERO FINAL COMPILADO EN EL ORDENADOR DE ESTEBAN
 
 OPCIONALES PARA TENER EN CUENTA:
 ----------------------------------------------------------------------------
+- MODIFICAR LA CREACION DE UN DIRECTDEBITTRANSACTION PARA QUE NO SE TENGA QUE LEER DE FICHERO CADA VEZ QUE SE CREE UNA NUEVA INSTANCIA (INICIALIZAR UN BankCodes)
+	-> Por lo pronto quitaremos la rutina de lectura, y dejaremos la posibilidad de un 'setter' para cargarla manualmente
+- Deberíamos añadir el campo BIC al DirectDebitMandate
 - Unificar las excepciones. Todas las excepciones que se lanzan desde un constructor deberian ser TypeinitializationException (y dentro el subtipo - Argumento, ArgumentNull...-)
 - Faltan por chequear algunos campos obligatorios en los constructores de DirectDebitTransactions y otros DDElements
 - Al deserializar un PaymentStatusReport, hay que revisar los contenidos (que campos existen y sus valores), para diferenciar entre Devolucion y Rechazo

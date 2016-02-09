@@ -64,6 +64,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
                     directDebitReferenceNumber,
                     mandateCreationDate,
                     memberAccount,
+                    null,
                     debtor.FullName);
                 debtor.AddDirectDebitMandate(directDebitMandate);
                 debtorsCollection.Add(debtor.DebtorID, debtor);

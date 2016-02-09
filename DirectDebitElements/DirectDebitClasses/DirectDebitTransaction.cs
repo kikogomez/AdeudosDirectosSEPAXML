@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ISO20022PaymentInitiations;
 using Billing;
+using ReferencesAndTools;
 
 namespace DirectDebitElements
 {
@@ -17,7 +18,7 @@ namespace DirectDebitElements
         string mandateID;
         DateTime mandateSignatureDate;
         BankAccount debtorAccount;
-        //string debtorAgentBIC,
+        string debtorAgentBIC;
         string accountHolderName;
         DirectDebitAmendmentInformation amendmentInformation;
         bool firstDebit;
@@ -34,8 +35,30 @@ namespace DirectDebitElements
             bool firstDebit)
         {
             InitializeFields(transactionID, mandateID, mandateSignatureDate, debtorAccount, accountHolderName, amendmentInformation, firstDebit);
+            this.debtorAgentBIC = GetDBICFromDebtorAccount(debtorAccount);
             this.billsInTransaction = billsInTransaction;
             UpdateAmountAndNumberOfBills();
+        }
+
+        public DirectDebitTransaction(
+            List<SimplifiedBill> billsInTransaction,
+            string transactionID,
+            string mandateID,
+            DateTime mandateSignatureDate,
+            BankAccount debtorAccount,
+            string debtorAgentBIC,
+            string accountHolderName,
+            DirectDebitAmendmentInformation amendmentInformation,
+            bool firstDebit)
+        {
+            InitializeFields(transactionID, mandateID, mandateSignatureDate, debtorAccount, accountHolderName, amendmentInformation, firstDebit);
+            this.billsInTransaction = billsInTransaction;
+            UpdateAmountAndNumberOfBills();
+            
+            //
+            //This should be checked with an updated BIC list
+            //
+            this.debtorAgentBIC = debtorAgentBIC;
         }
 
         public List<SimplifiedBill> BillsInTransaction
@@ -88,6 +111,12 @@ namespace DirectDebitElements
             get { return firstDebit; }
         }
 
+        public string DebtorAgentBIC
+        {
+            get { return debtorAgentBIC; }
+            set { debtorAgentBIC = value; }
+        }
+
         public void AddBill(SimplifiedBill bill)
         {
             this.billsInTransaction.Add(bill);
@@ -138,6 +167,16 @@ namespace DirectDebitElements
             if (!debtorAccount.HasValidIBAN) throw new TypeInitializationException("DirectDebitTransaction", new ArgumentException("DebtorAccount must be a valid IBAN", "DebtorAccount"));
             if (!firstDebit && BankHasBeenChangedInAmendmentInformation(debtorAccount, amendmentInformation))
                 throw new TypeInitializationException("DirectDebitTransaction", new ArgumentException("FirstDebit must be true when changing debtor bank", "firstDebit"));
+        }
+
+        private string GetDBICFromDebtorAccount(BankAccount debtorAccount)
+        {
+            ////This is SLOW: Read from file each time a DirectDebitTtransactionIsCreated
+            //string bankCode = debtorAccount.BankAccountFieldCodes.BankCode;
+            //BankCodes bankCodes = new BankCodes(@"Data\SpanishBankCodes.xml", BankCodes.BankCodesFileFormat.XML);
+            //if (bankCodes.BankDictionaryByLocalBankCode.ContainsKey(bankCode))
+            //    return bankCodes.BankDictionaryByLocalBankCode[bankCode].BankBIC;
+            return null;
         }
 
         private void SignalANewBillHasBeenAdded(SimplifiedBill bill)

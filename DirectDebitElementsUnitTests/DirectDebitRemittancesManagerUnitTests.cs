@@ -46,8 +46,8 @@ namespace DirectDebitElementsUnitTests
 
             var directDebitmandateslist = new[]
             {
-                new {debtorID = "00001", internalReference = 1234, ccc = "21002222002222222222" },
-                new {debtorID = "00002", internalReference = 1235, ccc = "21003333802222222222" }
+                new {debtorID = "00001", internalReference = 1234, ccc = "21002222002222222222", bIC = "CAIXESBBXXX" },
+                new {debtorID = "00002", internalReference = 1235, ccc = "21003333802222222222", bIC="CAIXESBBXXX" }
             };
 
             foreach (var ddM in directDebitmandateslist)
@@ -56,6 +56,7 @@ namespace DirectDebitElementsUnitTests
                     ddM.internalReference,
                     new DateTime(2013, 11, 11),
                     new BankAccount(new ClientAccountCodeCCC(ddM.ccc)),
+                    ddM.bIC,
                     debtors[ddM.debtorID].FullName);
                 debtors[ddM.debtorID].AddDirectDebitMandate(directDebitMandate);
             }

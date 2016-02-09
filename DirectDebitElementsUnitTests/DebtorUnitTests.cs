@@ -167,7 +167,7 @@ namespace DirectDebitElementsUnitTests
             ClientAccountCodeCCC ccc = new ClientAccountCodeCCC("12345678061234567890");
             BankAccount bankAccount = new BankAccount(ccc);
             int internalReferenceNumber = 1111;
-            DirectDebitMandate directDebitMandate = new DirectDebitMandate(internalReferenceNumber, DateTime.Today.AddMonths(-1), bankAccount, debtor.FullName);
+            DirectDebitMandate directDebitMandate = new DirectDebitMandate(internalReferenceNumber, DateTime.Today.AddMonths(-1), bankAccount, null, debtor.FullName);
 
             debtor.AddDirectDebitMandate(directDebitMandate);
             Assert.IsNotNull(debtor.DirectDebitmandates[internalReferenceNumber]);
@@ -180,14 +180,14 @@ namespace DirectDebitElementsUnitTests
             ClientAccountCodeCCC ccc = new ClientAccountCodeCCC("12345678061234567890");
             BankAccount bankAccount = new BankAccount(ccc);
             int internalReferenceNumber = 1111;
-            DirectDebitMandate directDebitMandate = new DirectDebitMandate(internalReferenceNumber, DateTime.Today.AddMonths(-1), bankAccount, debtor.FullName);
+            DirectDebitMandate directDebitMandate = new DirectDebitMandate(internalReferenceNumber, DateTime.Today.AddMonths(-1), bankAccount, null, debtor.FullName);
             debtor.AddDirectDebitMandate(directDebitMandate);
             Assert.IsNotNull(debtor.DirectDebitmandates[internalReferenceNumber]);
 
             ClientAccountCodeCCC newCCC = new ClientAccountCodeCCC("11112222003333333333");
             BankAccount newBankAccount = new BankAccount(newCCC);
             int newInternalReferenceNumber = 1111;
-            DirectDebitMandate newDirectDebitMandate = new DirectDebitMandate(newInternalReferenceNumber, DateTime.Today.AddMonths(-1), bankAccount, debtor.FullName);
+            DirectDebitMandate newDirectDebitMandate = new DirectDebitMandate(newInternalReferenceNumber, DateTime.Today.AddMonths(-1), bankAccount, null, debtor.FullName);
             debtor.AddDirectDebitMandate(directDebitMandate);
             Assert.IsNotNull("11112222003333333333", debtor.DirectDebitmandates[1111].BankAccount.CCC.CCC);
         }
@@ -199,7 +199,7 @@ namespace DirectDebitElementsUnitTests
             ClientAccountCodeCCC ccc = new ClientAccountCodeCCC("12345678061234567890");
             BankAccount bankAccount = new BankAccount(ccc);
             int internalReferenceNumber = 1111;
-            DirectDebitMandate directDebitMandate = new DirectDebitMandate(internalReferenceNumber, DateTime.Today.AddMonths(-1), bankAccount, debtor.FullName);
+            DirectDebitMandate directDebitMandate = new DirectDebitMandate(internalReferenceNumber, DateTime.Today.AddMonths(-1), bankAccount, null, debtor.FullName);
             PaymentMethod defaultPaymentMethod = new DirectDebitPaymentMethod(directDebitMandate, "000001");
 
             debtor.SetDefaultPaymentMethod(defaultPaymentMethod);
@@ -214,7 +214,7 @@ namespace DirectDebitElementsUnitTests
             ClientAccountCodeCCC ccc = new ClientAccountCodeCCC("12345678061234567890");
             BankAccount bankAccount = new BankAccount(ccc);
             int internalReferenceNumber = 1111;
-            DirectDebitMandate directDebitMandate = new DirectDebitMandate(internalReferenceNumber, DateTime.Today.AddMonths(-1), bankAccount, debtor.FullName);
+            DirectDebitMandate directDebitMandate = new DirectDebitMandate(internalReferenceNumber, DateTime.Today.AddMonths(-1), bankAccount, null, debtor.FullName);
             PaymentMethod defaultPaymentMethod = new DirectDebitPaymentMethod(directDebitMandate, "000001");
 
             debtor.SetDefaultPaymentMethod(defaultPaymentMethod);

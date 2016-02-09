@@ -88,7 +88,7 @@ namespace DirectDebitElementsUnitTests
             int internalReferenceNumber = 2645;
             ClientAccountCodeCCC clientCodeCCC = new ClientAccountCodeCCC("21001668120200186862");
             BankAccount bankAccount = new BankAccount(clientCodeCCC);
-            DirectDebitMandate directDebitMandate = new DirectDebitMandate(internalReferenceNumber, DateTime.Today, bankAccount, "Miguel Fierro");
+            DirectDebitMandate directDebitMandate = new DirectDebitMandate(internalReferenceNumber, DateTime.Today, bankAccount, "CAIXESBBXXX", "Miguel Fierro");
             bill.AssignedPaymentMethod = new DirectDebitPaymentMethod(directDebitMandate,"000000000");
             Assert.AreEqual(typeof(DirectDebitPaymentMethod),bill.AssignedPaymentMethod.GetType());
         }
@@ -99,7 +99,7 @@ namespace DirectDebitElementsUnitTests
             int internalReferenceNumber = 2645;
             BankAccount bankAccount = new BankAccount(new ClientAccountCodeCCC("12345678061234567890"));
             DateTime directDebitMandateCreationDate = new DateTime(2013, 11, 11);
-            DirectDebitMandate directDebitMandate = new DirectDebitMandate(internalReferenceNumber, directDebitMandateCreationDate, bankAccount, "NoName");
+            DirectDebitMandate directDebitMandate = new DirectDebitMandate(internalReferenceNumber, directDebitMandateCreationDate, bankAccount, null, "NoName");
             string directDebitTransactionPaymentIdentification = "201311110000123456";
             DirectDebitPaymentMethod directDebitPaymentMethod = new DirectDebitPaymentMethod(directDebitMandate, directDebitTransactionPaymentIdentification);
             Assert.AreEqual(directDebitMandate, directDebitPaymentMethod.DirectDebitMandate);

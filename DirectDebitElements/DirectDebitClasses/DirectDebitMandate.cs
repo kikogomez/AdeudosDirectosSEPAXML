@@ -5,21 +5,21 @@ namespace DirectDebitElements
 {
     public class DirectDebitMandate
     {
-        //BillingDataManager billingDataManager;
-
         DirectDebitmandateStatus status;
         int internalReferenceNumber;
         DateTime directDebitMandateCreationDate;
         BankAccount bankAccount;
+        string bankBIC;
         string accountHolderName;
         DateTime bankAccountActivationDate;
         Dictionary<DateTime, BankAccountHistoricalData> bankAccountHistory;
 
-        public DirectDebitMandate(int internalReferenceNumber, DateTime directDebitMandateCreationDate, BankAccount bankAccount, string accountHolderName)
+        public DirectDebitMandate(int internalReferenceNumber, DateTime directDebitMandateCreationDate, BankAccount bankAccount, string bankBIC, string accountHolderName)
         {
             this.status = DirectDebitmandateStatus.Active;
             this.directDebitMandateCreationDate = directDebitMandateCreationDate;
             this.bankAccount = bankAccount;
+            this.bankBIC = bankBIC;
             this.accountHolderName = accountHolderName;
             this.bankAccountActivationDate = directDebitMandateCreationDate;
             bankAccountHistory = new Dictionary<DateTime, BankAccountHistoricalData>();
@@ -61,6 +61,11 @@ namespace DirectDebitElements
         public Dictionary<DateTime, BankAccountHistoricalData> BankAccountHistory
         {
             get { return bankAccountHistory; }
+        }
+
+        public string BankBIC
+        {
+            get { return bankBIC; }
         }
 
         public void ChangeBankAccount(BankAccount bankAccount, DateTime changingDate)

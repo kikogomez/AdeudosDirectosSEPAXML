@@ -38,7 +38,7 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
                 DateTime creationDate = DateTime.Parse((string)row["RegisterDate"]).Date;
                 BankAccount bankAccount = new BankAccount(new InternationalAccountBankNumberIBAN(iBAN));
                 string debtorName = membersManagementContextData.debtor.FullName;
-                DirectDebitMandate directDebitmandate = new DirectDebitMandate(internalReferenceNumber, creationDate, bankAccount, debtorName);
+                DirectDebitMandate directDebitmandate = new DirectDebitMandate(internalReferenceNumber, creationDate, bankAccount, null, debtorName);
                 directDebitContextData.directDebitMandates.Add(internalReferenceNumber, directDebitmandate);
             }
         }

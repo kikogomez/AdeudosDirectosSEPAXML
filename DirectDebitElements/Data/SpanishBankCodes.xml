@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfBankCode xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <BankCode>
+    <LocalBankCode>0156</LocalBankCode>
+    <BankName>THE ROYAL BANK OF SCOTLAND PLC, SUCURSAL EN ESPAÑA.</BankName>
+    <BIC>ABNAESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>3524</LocalBankCode>
+    <BankName>AHORRO CORPORACION FINANCIERA, S.A., SOCIEDAD DE VALORES</BankName>
+    <BIC>AHCFESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0099</LocalBankCode>
+    <BankName>BANKIA BANCA PRIVADA, S.A.U</BankName>
+    <BIC>AHCRESVVXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0188</LocalBankCode>
+    <BankName>BANCO ALCALA, S.A.</BankName>
+    <BIC>ALCLESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0136</LocalBankCode>
+    <BankName>ARESBANK, S.A.</BankName>
+    <BIC>AREBESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0078</LocalBankCode>
+    <BankName>BANCA PUEYO, S.A.</BankName>
+    <BIC>BAPUES22XXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0065</LocalBankCode>
+    <BankName>BARCLAYS BANK, S.A.</BankName>
+    <BIC>BARCESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>2095</LocalBankCode>
+    <BankName>KUTXABANK, S.A.</BankName>
+    <BIC>BASKES2BXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0190</LocalBankCode>
+    <BankName>BANCO BPI, S.A., SUCURSAL EN ESPAÑA.</BankName>
+    <BIC>BBPIESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0168</LocalBankCode>
+    <BankName>ING BELGIUM, S.A., SUCURSAL EN ESPAÑA.</BankName>
+    <BIC>BBRUESMXXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0182</LocalBankCode>
+    <BankName>BANCO BILBAO VIZCAYA ARGENTARIA, S.A.</BankName>
+    <BIC>BBVAESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>3081</LocalBankCode>
+    <BankName>CAJA R. DE CASTILLA-LA MANCHA, S.C.C.</BankName>
+    <BIC>BCOEESMM081</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0198</LocalBankCode>
+    <BankName>BANCO COOPERATIVO ESPAÑOL, S.A.</BankName>
+    <BIC>BCOEESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0131</LocalBankCode>
+    <BankName>BANCO ESPIRITO SANTO, S.A., SUCURSAL EN ESPAÑA.</BankName>
+    <BIC>BESMESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0488</LocalBankCode>
+    <BankName>BANCO FINANCIERO Y DE AHORRO, S.A.</BankName>
+    <BIC>BFASESMM</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0186</LocalBankCode>
+    <BankName>BANCO MEDIOLANUM, S.A.</BankName>
+    <BIC>BFIVESBBXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0128</LocalBankCode>
+    <BankName>BANKINTER, S.A.</BankName>
+    <BIC>BKBKESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0138</LocalBankCode>
+    <BankName>BANKOA, S.A.</BankName>
+    <BIC>BKOAES22XXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0061</LocalBankCode>
+    <BankName>BANCA MARCH, S.A.</BankName>
+    <BIC>BMARES2MXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0219</LocalBankCode>
+    <BankName>BANQUE MAROCAINE COMMERCE EXTERIEUR INTERNATIONAL, S.A.</BankName>
+    <BIC>BMCEESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0149</LocalBankCode>
+    <BankName>BNP PARIBAS, SUCURSAL EN ESPAÑA.</BankName>
+    <BIC>BNPAESMHXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0058</LocalBankCode>
+    <BankName>BNP PARIBAS ESPAÑA, S.A.</BankName>
+    <BIC>BNPAESMZXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0160</LocalBankCode>
+    <BankName>THE BANK OF TOKYO-MITSUBISHI UFJ, LTD, SUCURSAL EN ESPAÑA.</BankName>
+    <BIC>BOTKESMXXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0152</LocalBankCode>
+    <BankName>BARCLAYS BANK PLC, SUCURSAL EN ESPAÑA.</BankName>
+    <BIC>BPLCESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0155</LocalBankCode>
+    <BankName>BANCO DO BRASIL, S.A., SUCURSAL EN ESPAÑA.</BankName>
+    <BIC>BRASESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0081</LocalBankCode>
+    <BankName>BANCO DE SABADELL, S.A.</BankName>
+    <BIC>BSABESBBXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0049</LocalBankCode>
+    <BankName>BANCO SANTANDER, S.A.</BankName>
+    <BIC>BSCHESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0154</LocalBankCode>
+    <BankName>CREDIT AGRICOLE CORPORATE AND INVESTMENT BANK, SUCURSAL EN ESPAÑA.</BankName>
+    <BIC>BSUIESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0094</LocalBankCode>
+    <BankName>RBC INVESTOR SERVICES ESPAÑA, S.A.</BankName>
+    <BIC>BVALESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>2080</LocalBankCode>
+    <BankName>NCG BANCO, S.A.</BankName>
+    <BIC>CAGLESMMVIG</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>2038</LocalBankCode>
+    <BankName>BANKIA, S.A.</BankName>
+    <BIC>CAHMESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>2100</LocalBankCode>
+    <BankName>CAIXABANK, S.A.</BankName>
+    <BIC>CAIXESBBXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>3604</LocalBankCode>
+    <BankName>CM CAPITAL MARKETS BOLSA, SOCIEDAD DE VALORES, S.A.</BankName>
+    <BIC>CAPIESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>3183</LocalBankCode>
+    <BankName>CAJA DE ARQUITECTOS S.C.C.</BankName>
+    <BIC>CASDESBBXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>2085</LocalBankCode>
+    <BankName>IBERCAJA BANCO, S.A.</BankName>
+    <BIC>CAZRES2ZXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0234</LocalBankCode>
+    <BankName>BANCO CAMINOS, S.A.</BankName>
+    <BIC>CCOCESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>3058</LocalBankCode>
+    <BankName>CAJAS RURALES UNIDAS, S.C.C.</BankName>
+    <BIC>CCRIES2AXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>3025</LocalBankCode>
+    <BankName>CAIXA DE C. DELS ENGINYERS C.C. INGENIEROS, S.C.C.</BankName>
+    <BIC>CDENESBBXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>2045</LocalBankCode>
+    <BankName>CAJA DE AHORROS Y M.P. DE ONTINYENT.</BankName>
+    <BIC>CECAESMM045</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>2048</LocalBankCode>
+    <BankName>LIBERBANK, S.A.</BankName>
+    <BIC>CECAESMM048</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>2056</LocalBankCode>
+    <BankName>COLONYA - CAIXA D’ESTALVIS DE POLLENSA.</BankName>
+    <BIC>CECAESMM056</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>2086</LocalBankCode>
+    <BankName>BANCO GRUPO CAJATRES, S.A.</BankName>
+    <BIC>CECAESMM086</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>2000</LocalBankCode>
+    <BankName>CECABANK, S.A.</BankName>
+    <BIC>CECAESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>2013</LocalBankCode>
+    <BankName>CATALUNYA BANC, S.A.</BankName>
+    <BIC>CESCESBBXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0130</LocalBankCode>
+    <BankName>BANCO CAIXA GERAL, S.A.</BankName>
+    <BIC>CGDIESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0122</LocalBankCode>
+    <BankName>CITIBANK ESPAÑA, S.A.</BankName>
+    <BIC>CITIES2XXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>1474</LocalBankCode>
+    <BankName>CITIBANK INTERNATIONAL PLC, SUCURSAL EN ESPAÑA.</BankName>
+    <BIC>CITIESMXSEC</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>3035</LocalBankCode>
+    <BankName>CAJA LABORAL POPULAR, C.C.</BankName>
+    <BIC>CLPEES2MXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0159</LocalBankCode>
+    <BankName>COMMERZBANK AKTIENGESELLSCHAFT, SUCURSAL EN ESPAÑA.</BankName>
+    <BIC>COBAESMXTMA</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>1460</LocalBankCode>
+    <BankName>CREDIT SUISSE AG, SUCURSAL EN ESPAÑA.</BankName>
+    <BIC>CRESESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>2108</LocalBankCode>
+    <BankName>BANCO DE CAJA ESPAÑA DE INVERSIONES, SALAMANCA Y SORIA, S.A.</BankName>
+    <BIC>CSPAES2L108</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>3656</LocalBankCode>
+    <BankName>FINANDUERO, SOCIEDAD DE VALORES, S.A.</BankName>
+    <BIC>CSSOES2SFIN</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0237</LocalBankCode>
+    <BankName>CAJASUR BANCO, S.A</BankName>
+    <BIC>CSURES2CXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0019</LocalBankCode>
+    <BankName>DEUTSCHE BANK, S.A.E.</BankName>
+    <BIC>DEUTESBBASS</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0231</LocalBankCode>
+    <BankName>DEXIA SABADELL, S.A.</BankName>
+    <BIC>DSBLESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>1467</LocalBankCode>
+    <BankName>HYPOTHEKENBANK FRANKFURT AG. SUCURSAL EN ESPAÑA.</BankName>
+    <BIC>EHYPESMXXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>9000</LocalBankCode>
+    <BankName>BANCO DE ESPAÑA.</BankName>
+    <BIC>ESPBESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>1497</LocalBankCode>
+    <BankName>BANCO ESPIRITO SANTO DE INVESTIMENTO, S.A., SUCURSAL EN ESPAÑA.</BankName>
+    <BIC>ESSIESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0031</LocalBankCode>
+    <BankName>BANCO ETCHEVERRIA, S.A.</BankName>
+    <BIC>ETCHES2GXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0046</LocalBankCode>
+    <BankName>BANCO GALLEGO, S.A.</BankName>
+    <BIC>GALEES2GXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0487</LocalBankCode>
+    <BankName>BANCO MARE NOSTRUM, S.A.</BankName>
+    <BIC>GBMNESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0167</LocalBankCode>
+    <BankName>BNP PARIBAS FORTIS, S.A., N.V., SUCURSAL EN ESPAÑA.</BankName>
+    <BIC>GEBAESMMBIL</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>3682</LocalBankCode>
+    <BankName>GVC GAESCO VALORES, SOCIEDAD DE VALORES, S.A.</BankName>
+    <BIC>GVCBESBBETB</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>9096</LocalBankCode>
+    <BankName>SOC. GEST. SIST. REGIST. Y LIQUID. VALORES.</BankName>
+    <BIC>IBRCESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>1000</LocalBankCode>
+    <BankName>INSTITUTO DE CREDITO OFICIAL.</BankName>
+    <BIC>ICROESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>1465</LocalBankCode>
+    <BankName>ING DIRECT, N.V., SUCURSAL EN ESPAÑA.</BankName>
+    <BIC>INGDESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>3575</LocalBankCode>
+    <BankName>INVERSEGUROS, SOCIEDAD DE VALORES, S.A.</BankName>
+    <BIC>INSGESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0232</LocalBankCode>
+    <BankName>BANCO INVERSIS, S.A.</BankName>
+    <BIC>INVLESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>9020</LocalBankCode>
+    <BankName>SOCIEDAD ESPAÑOLA DE SISTEMAS DE PAGO, S.A.</BankName>
+    <BIC>IPAYESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>3669</LocalBankCode>
+    <BankName>INTERMONEY VALORES, SOCIEDAD DE VALORES, S.A.</BankName>
+    <BIC>IVALESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>3641</LocalBankCode>
+    <BankName>LINK SECURITIES, SOCIEDAD DE VALORES, S.A.</BankName>
+    <BIC>LISEESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0236</LocalBankCode>
+    <BankName>LLOYDS BANK INTERNATIONAL, S.A.U.</BankName>
+    <BIC>LOYIESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0059</LocalBankCode>
+    <BankName>BANCO DE MADRID, S.A.</BankName>
+    <BIC>MADRESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>9094</LocalBankCode>
+    <BankName>MEFF SOCIEDAD RECTORA DE PRODUCTOS DERIVADOS S.A.U.</BankName>
+    <BIC>MEFFESBBXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0162</LocalBankCode>
+    <BankName>HSBC BANK PLC, SUCURSAL EN ESPAÑA.</BankName>
+    <BIC>MIDLESMXXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>3563</LocalBankCode>
+    <BankName>MAPFRE INVERSION, SOCIEDAD DE VALORES, S.A.</BankName>
+    <BIC>MISVESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>3661</LocalBankCode>
+    <BankName>MERRILL LYNCH CAPITAL MARKETS ESPAÑA, S.A., SOCIEDAD DE VALORES.</BankName>
+    <BIC>MLCEESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0169</LocalBankCode>
+    <BankName>BANCO DE LA NACION ARGENTINA, SUCURSAL EN ESPAÑA.</BankName>
+    <BIC>NACNESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>1479</LocalBankCode>
+    <BankName>NATIXIS, S.A., SUCURSAL EN ESPAÑA.</BankName>
+    <BIC>NATXESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0144</LocalBankCode>
+    <BankName>BNP PARIBAS SECURITIES SERVICES, SUCURSAL EN ESPAÑA.</BankName>
+    <BIC>PARBESMHXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0216</LocalBankCode>
+    <BankName>TARGOBANK, S.A.</BankName>
+    <BIC>POHIESMM</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0233</LocalBankCode>
+    <BankName>POPULAR BANCA PRIVADA, S.A.</BankName>
+    <BIC>POPIESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0229</LocalBankCode>
+    <BankName>BANCO POPULAR-E, S.A.</BankName>
+    <BIC>POPLESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0075</LocalBankCode>
+    <BankName>BANCO POPULAR ESPAÑOL, S.A.</BankName>
+    <BIC>POPUESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>1459</LocalBankCode>
+    <BankName>COOP. CENTR. RAIFFEISEN-BOERENL. (RABOBANK NED.), SUCURSAL EN ESPAÑA.</BankName>
+    <BIC>PRABESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0211</LocalBankCode>
+    <BankName>EBN BANCO DE NEGOCIOS, S.A.</BankName>
+    <BIC>PROAESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0083</LocalBankCode>
+    <BankName>RENTA 4 BANCO, S.A.</BankName>
+    <BIC>RENBESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>3501</LocalBankCode>
+    <BankName>RENTA 4 SOCIEDAD DE VALORES, S.A.</BankName>
+    <BIC>RENTESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0108</LocalBankCode>
+    <BankName>SOCIETE GENERALE, SUCURSAL EN ESPAÑA.</BankName>
+    <BIC>SOGEESMMAGM</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>1524</LocalBankCode>
+    <BankName>UBI BANCA INTERNATIONAL, S.A., SUCURSAL EN ESPAÑA.</BankName>
+    <BIC>UBIBESMMXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0226</LocalBankCode>
+    <BankName>UBS BANK, S.A.</BankName>
+    <BIC>UBSWESMMNPB</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>2103</LocalBankCode>
+    <BankName>UNICAJA BANCO, S.A.</BankName>
+    <BIC>UCJAES2MXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0093</LocalBankCode>
+    <BankName>BANCO DE VALENCIA, S.A.</BankName>
+    <BIC>VALEESVVXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>0196</LocalBankCode>
+    <BankName>PORTIGON AG, SUCURSAL EN ESPAÑA</BankName>
+    <BIC>WELAESMMFUN</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>9091</LocalBankCode>
+    <BankName>SDAD. RECTORA BOLSA VALORES DE BARCELONA, S.A., SRBV.</BankName>
+    <BIC>XBCNESBBXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>9092</LocalBankCode>
+    <BankName>SDAD. RECTORA BOLSA DE VALORES DE BILBAO, S.A., SRBV.</BankName>
+    <BIC>XRBVES2BXXX</BIC>
+  </BankCode>
+  <BankCode>
+    <LocalBankCode>9093</LocalBankCode>
+    <BankName>SDAD. RECTORA BOLSA VALORES DE VALENCIA, S.A., SRBV.</BankName>
+    <BIC>XRVVESVVXXX</BIC>
+  </BankCode>
+</ArrayOfBankCode>
