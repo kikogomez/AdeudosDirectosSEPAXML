@@ -60,7 +60,7 @@ namespace DirectDebitElementsUnitTests
                 new {debtorID = "00001", internalReference = 1234, ccc = BankAccountNumberChecker.CalculateCCC("2100", "2222", "2222222222"), bIC="CAIXESBBXXX"},
                 new {debtorID = "00002", internalReference = 1235, ccc = BankAccountNumberChecker.CalculateCCC("2100", "3333", "2222222222"), bIC="CAIXESBBXXX"},
                 new {debtorID = "00003", internalReference = 1236, ccc = BankAccountNumberChecker.CalculateCCC("2100", "4444", "2222222222"), bIC="CAIXESBBXXX"},
-                new {debtorID = "00004", internalReference = 1237, ccc = BankAccountNumberChecker.CalculateCCC("2100", "5555", "2222222222"), bIC="CAIXESBBXXX"}
+                new {debtorID = "00004", internalReference = 1237, ccc = BankAccountNumberChecker.CalculateCCC("2038", "5555", "2222222222"), bIC="CAHMESBBXXX"}
             };
 
             foreach (var ddM in directDebitmandateslist)
