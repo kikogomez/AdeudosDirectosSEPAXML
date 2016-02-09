@@ -40,8 +40,7 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
 
             string dataBaseConnectionString = CreateDatabaseConnectionString(sourceDatabaseFullPath);
 
-            GenerateSEPAXMLCustomerDirectDebitInitiationFromDatabase(dataBaseConnectionString, xMLCDDFilename);
-            
+            GenerateSEPAXMLCustomerDirectDebitInitiationFromDatabase(dataBaseConnectionString, xMLCDDFilename);          
         }
 
         public bool ParseArguments(
