@@ -19,10 +19,12 @@ namespace SEPAXMLCustomerDirectDebitInitiationGeneratorTests
             OleDbConnection connection = new OleDbConnection(oleDBConnectionString);
 
             DirectDebitRemittance directDebitRemittance;
+            string creditorNIF;
             string creditorName;
             MainInstance mainInstance = new MainInstance();
-            mainInstance.GetRemmmitanceBaseInformation(connection, out creditorName, out directDebitRemittance);
+            mainInstance.GetRemmmitanceBaseInformation(connection, out creditorNIF, out creditorName, out directDebitRemittance);
 
+            Assert.AreEqual("G12345678", creditorNIF);
             Assert.AreEqual("NOMBRE ACREEDOR PRUEBAS", creditorName);
             Assert.AreEqual("PREG1234567815011007:15:00", directDebitRemittance.MessageID);
             Assert.AreEqual(new DateTime(2015, 01, 10, 7, 15, 00), directDebitRemittance.CreationDate);
@@ -38,17 +40,14 @@ namespace SEPAXMLCustomerDirectDebitInitiationGeneratorTests
         }
 
         [TestMethod]
-        public void TheRCURPaymentIsCorrectlyCreatedFromADataBase()
+        public void TheRCURPaymentInstructionIsCorrectlyCreatedFromADataBase()
         {
             string relativePathToTestDatabase = @"TestFiles\TestMDB.mdb";
             string oleDBConnectionString = "Provider=Microsoft.JET.OLEDB.4.0;" + "data source=" + relativePathToTestDatabase;
             OleDbConnection connection = new OleDbConnection(oleDBConnectionString);
 
-            //DirectDebitRemittance directDebitRemittance;
-            //string creditorName;
-
             MainInstance mainInstance = new MainInstance();
-            DirectDebitPaymentInstruction directDebitPaymentInstruction = mainInstance.CreatePaymentInformationWithRCURTransactions(connection, "PREG1234567815011007:15:00-01");
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = mainInstance.CreatePaymentInstructionWithRCURTransactions(connection, "PREG1234567815011007:15:00-01", "CORE");
 
             Assert.AreEqual(3, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
             Assert.AreEqual(316M, directDebitPaymentInstruction.TotalAmount);
@@ -66,6 +65,20 @@ namespace SEPAXMLCustomerDirectDebitInitiationGeneratorTests
             //Assert.AreEqual("011", directDebitRemittance.DirectDebitInitiationContract.CreditorBussinessCode);
             //Assert.AreEqual("ES26011G12345678", directDebitRemittance.DirectDebitInitiationContract.CreditorID);
             //CollectionAssert.AreEqual(new List<DirectDebitPaymentInstruction>() { }, directDebitRemittance.DirectDebitPaymentInstructions);
+        }
+
+        [TestMethod]
+        public void TheFRSTPaymentInstructionIsCorrectlyCreatedFromADataBase()
+        {
+            string relativePathToTestDatabase = @"TestFiles\TestMDB.mdb";
+            string oleDBConnectionString = "Provider=Microsoft.JET.OLEDB.4.0;" + "data source=" + relativePathToTestDatabase;
+            OleDbConnection connection = new OleDbConnection(oleDBConnectionString);
+
+            MainInstance mainInstance = new MainInstance();
+            DirectDebitPaymentInstruction directDebitPaymentInstruction = mainInstance.CreatePaymentInstructionWithFRSTTransactions(connection, "PREG1234567815011007:15:00-02", "CORE");
+
+            Assert.AreEqual(1, directDebitPaymentInstruction.NumberOfDirectDebitTransactions);
+            Assert.AreEqual(79M, directDebitPaymentInstruction.TotalAmount);
         }
     }
 }

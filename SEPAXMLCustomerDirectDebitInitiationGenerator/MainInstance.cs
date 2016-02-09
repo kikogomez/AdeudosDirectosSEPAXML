@@ -74,18 +74,35 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
 
         public void GenerateSEPAXMLCustomerDirectDebitInitiationFromDatabase(string oleDBConnectionString, string outputFileName)
         {
+            string creditorNIF;
             string creditorName;
             DirectDebitRemittance directDebitRemmitance;
 
             OleDbConnection conection = new OleDbConnection(oleDBConnectionString);
 
-            GetRemmmitanceBaseInformation(conection, out creditorName, out directDebitRemmitance);
+            RetrieveRemmitanceInformationFromDataBase(conection, out creditorNIF, out creditorName, out directDebitRemmitance);
 
-            string rCURTransactionsPaymentInstructionID = directDebitRemmitance.MessageID + "-01";
-            DirectDebitPaymentInstruction directDebitPaymentInstruction = CreatePaymentInformationWithRCURTransactions(conection, rCURTransactionsPaymentInstructionID);
+            bool singleUnstructuredConcepts = true;
+            GenerateXMLCustomerDirectDebitInitiationFileMessage(creditorNIF, creditorName, directDebitRemmitance, singleUnstructuredConcepts, outputFileName);
         }
 
-        public void GetRemmmitanceBaseInformation(OleDbConnection conection, out string creditorName, out DirectDebitRemittance directDebitRemittance)
+        public void RetrieveRemmitanceInformationFromDataBase(
+            OleDbConnection conection,
+            out string creditorNIF,
+            out string creditorName,
+            out DirectDebitRemittance directDebitRemittance)
+        {
+            GetRemmmitanceBaseInformation(conection, out creditorNIF, out creditorName, out directDebitRemittance);
+
+            string rCURTransactionsPaymentInstructionID = directDebitRemittance.MessageID + "-01";
+            DirectDebitPaymentInstruction rCURDirectDebitPaymentInstruction = CreatePaymentInstructionWithRCURTransactions(conection, rCURTransactionsPaymentInstructionID, "CORE");
+            directDebitRemittance.AddDirectDebitPaymentInstruction(rCURDirectDebitPaymentInstruction);
+            string fRSTTransactionsPaymentInstructionID = directDebitRemittance.MessageID + "-02";
+            DirectDebitPaymentInstruction fRSTDirectDebitPaymentInstruction = CreatePaymentInstructionWithFRSTTransactions(conection, fRSTTransactionsPaymentInstructionID, "CORE");
+            directDebitRemittance.AddDirectDebitPaymentInstruction(fRSTDirectDebitPaymentInstruction);
+        }
+
+        public void GetRemmmitanceBaseInformation(OleDbConnection conection, out string creditorNIF, out string creditorName, out DirectDebitRemittance directDebitRemittance)
         {
             string messageID;
             DateTime generationDate;
@@ -122,17 +139,47 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
                 creditorAgentBIC = reader["CreditorAgent"] as string;
                 creditorIBAN = reader["CreditorBankAccount"] as string;
             }
+            creditorNIF = creditorID.Substring(7, 9);
             BankAccount creditorBankAccount = new BankAccount(new InternationalAccountBankNumberIBAN(creditorIBAN));
             CreditorAgent creditorAgent = new CreditorAgent(new BankCode(creditorBankAccount.BankAccountFieldCodes.BankCode, "CaixaBank", creditorAgentBIC));
             DirectDebitInitiationContract directDebitInitiationContract = new DirectDebitInitiationContract(
                 new BankAccount(new InternationalAccountBankNumberIBAN(creditorIBAN)),
-                creditorID.Substring(7, 9),
+                creditorNIF,
                 creditorBussinesCode,
                 creditorAgent);
             directDebitRemittance = new DirectDebitRemittance(messageID, generationDate, requestedCollectionDate, directDebitInitiationContract);
         }
 
-        public DirectDebitPaymentInstruction CreatePaymentInformationWithRCURTransactions(OleDbConnection connection, string paymentInstructionID)
+        public DirectDebitPaymentInstruction CreatePaymentInstructionWithRCURTransactions(OleDbConnection connection, string paymentInstructionID, string localInstrument)
+        {
+            string query = "Select * From SEPAXMLRecibosTemporalSoporte Where ([FIRST] = false)";
+            DirectDebitPaymentInstruction DirectDebitPaymentInstruction = CreatePaymentInstruction(
+                connection,
+                query,
+                paymentInstructionID,
+                localInstrument,
+                false);
+            return DirectDebitPaymentInstruction;
+        }
+
+        public DirectDebitPaymentInstruction CreatePaymentInstructionWithFRSTTransactions(OleDbConnection connection, string paymentInstructionID, string localInstrument)
+        {
+            string query = "Select * From SEPAXMLRecibosTemporalSoporte Where ([FIRST] = true)";
+            DirectDebitPaymentInstruction DirectDebitPaymentInstruction = CreatePaymentInstruction(
+                connection,
+                query,
+                paymentInstructionID,
+                localInstrument,
+                true);
+            return DirectDebitPaymentInstruction;
+        }
+
+        private DirectDebitPaymentInstruction CreatePaymentInstruction(
+            OleDbConnection connection,
+            string query,
+            string paymentInstructionID,
+            string localInstrument,
+            bool firstDebits)
         {
             string transactionID;
             string mandateID;
@@ -149,14 +196,7 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>();
             using (connection)
             {
-                //connection.Open();
-                //string query = "Select * From SEPAXMLRecibosTemporalSoporte";
-                ////string query = "SELECT * FROM SEPAXMLRecibosTemporalSoporte WHERE ([FIRST] = false)";
-                //var command = new OleDbCommand(query, connection);
-                //var reader = command.ExecuteReader();
-
                 connection.Open();
-                string query = "Select * From SEPAXMLRecibosTemporalSoporte Where ([FIRST] = false)";
                 OleDbCommand command = new OleDbCommand(query, connection);
                 OleDbDataReader reader = command.ExecuteReader();
 
@@ -195,70 +235,28 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
 
             DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
                 paymentInstructionID,
-                "CORE",
-                false,
+                localInstrument,
+                firstDebits,
                 directDebitTransactions);
 
             return directDebitPaymentInstruction;
         }
 
-        //private static void Run(ArgumentOptions argumentOptions)
-        //{
-        //    var myDataTable = new DataTable();
-        //    using (var conection = new OleDbConnection("Provider=Microsoft.JET.OLEDB.4.0;" + "data source=C:\\menus\\newmenus\\menu.mdb;Password=****"))
-        //    {
-        //        conection.Open();
-        //        var query = "Select siteid From n_user";
-        //        var command = new OleDbCommand(query, conection);
-        //        var reader = command.ExecuteReader();
-        //    }
-
-        //    using (var conection = new OleDbConnection("Provider=Microsoft.JET.OLEDB.4.0;" + "data source=C:\\menus\\newmenus\\menu.mdb;Password=****"))
-        //    {
-        //        conection.Open();
-        //        var query = "Select siteid From n_user";
-        //        var adapter = new OleDbDataAdapter(query, conection);
-        //        adapter.Fill(myDataTable);
-        //        string text = myDataTable.Rows[0][0].ToString();
-        //    }
-        //}
-
-        //public OleDbDataReader GetReaderFormDatabase (string sourceDatabaseFullPath)
-        //{
-        //    OleDbConnection conection = new OleDbConnection("Provider=Microsoft.JET.OLEDB.4.0;" + "data source=" + sourceDatabaseFullPath);
-
-        //    conection.Open();
-        //    var query = "Select * From SEPAXMLRecibosTemporalSoporte";
-        //    var command = new OleDbCommand(query, conection);
-        //    var reader = command.ExecuteReader();
-
-        //    if (reader.HasRows)
-        //    {
-        //        return reader;
-        //    }
-        //    else
-        //    {
-        //        return null;
-        //    }
-        //    conection.Close();
-
-        //    //using (conection)
-        //    //{
-        //    //    conection.Open();
-        //    //    var query = "Select * From SEPAXMLRecibosTemporalSoporte";
-        //    //    var command = new OleDbCommand(query, conection);
-        //    //    var reader = command.ExecuteReader();
-
-        //    //    if (reader.HasRows)
-        //    //    {
-        //    //        return reader;
-        //    //    }
-        //    //    else
-        //    //    {
-        //    //        return null;
-        //    //    }
-        //    //}
-        //}
+        public void GenerateXMLCustomerDirectDebitInitiationFileMessage(
+            string creditorNIF,
+            string creditorName,
+            DirectDebitRemittance directDebitRemmitance,
+            bool singleUnstructuredConcepts,
+            string outputFileName)
+        {
+            SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
+            sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationFileMessage(
+                new Creditor(creditorNIF, creditorName),
+                directDebitRemmitance.DirectDebitInitiationContract.CreditorAgent,
+                directDebitRemmitance,
+                singleUnstructuredConcepts,
+                outputFileName);
+        }
     }
 }
 
