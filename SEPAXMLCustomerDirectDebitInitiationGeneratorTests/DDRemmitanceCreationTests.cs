@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -182,6 +183,18 @@ namespace SEPAXMLCustomerDirectDebitInitiationGeneratorTests
             Assert.AreEqual("PREG1234567815011007:15:00-RC", directDebitRemittance.DirectDebitPaymentInstructions[0].PaymentInformationID);
             Assert.IsTrue(directDebitRemittance.DirectDebitPaymentInstructions[1].FirstDebits);
             Assert.AreEqual("PREG1234567815011007:15:00-FR", directDebitRemittance.DirectDebitPaymentInstructions[1].PaymentInformationID);
+        }
+
+        [TestMethod]
+        public void TheXMLFileIsCorrectlyGeneratedFormTheTestDataBase()
+        {
+            string relativePathToTestDatabase = @"TestFiles\TestMDB.mdb";
+            string oleDBConnectionString = "Provider=Microsoft.JET.OLEDB.4.0;" + "data source=" + relativePathToTestDatabase;
+
+            MainInstance mainInstance = new MainInstance();
+            mainInstance.GenerateSEPAXMLCustomerDirectDebitInitiationFromDatabase(oleDBConnectionString, "Test.xml");
+
+            Assert.IsTrue(File.Exists(@"XMLOutputFiles\Test.xml"));
         }
     }
 }

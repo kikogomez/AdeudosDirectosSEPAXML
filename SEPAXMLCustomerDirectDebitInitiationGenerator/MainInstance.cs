@@ -204,22 +204,6 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             return directDebitPaymentInstruction;
         }
 
-        public void GenerateXMLCustomerDirectDebitInitiationFileMessage(
-            string creditorNIF,
-            string creditorName,
-            DirectDebitRemittance directDebitRemmitance,
-            bool singleUnstructuredConcepts,
-            string outputFileName)
-        {
-            SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
-            sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationFileMessage(
-                new Creditor(creditorNIF, creditorName),
-                directDebitRemmitance.DirectDebitInitiationContract.CreditorAgent,
-                directDebitRemmitance,
-                singleUnstructuredConcepts,
-                outputFileName);
-        }
-
         private DirectDebitTransaction ReadRecordIntoDirectDebitTransaction(IDataRecord record)
         {
             string transactionID = record["TransactionID"] as string;
@@ -249,6 +233,22 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
                 amendmentInformation,
                 fIRST);
             return directDebitTransaction;
+        }
+
+        private void GenerateXMLCustomerDirectDebitInitiationFileMessage(
+            string creditorNIF,
+            string creditorName,
+            DirectDebitRemittance directDebitRemmitance,
+            bool singleUnstructuredConcepts,
+            string outputFileName)
+        {
+            SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
+            sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationFileMessage(
+                new Creditor(creditorNIF, creditorName),
+                directDebitRemmitance.DirectDebitInitiationContract.CreditorAgent,
+                directDebitRemmitance,
+                singleUnstructuredConcepts,
+                @"XMLOutputFiles\" + outputFileName);
         }
     }
 }
