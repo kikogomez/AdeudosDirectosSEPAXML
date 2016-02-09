@@ -77,27 +77,27 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             string creditorName;
             DirectDebitRemittance directDebitRemmitance;
 
-            OleDbConnection conection = new OleDbConnection(oleDBConnectionString);
+            OleDbConnection connection = new OleDbConnection(oleDBConnectionString);
 
-            RetrieveRemmitanceInformationFromDataBase(conection, out creditorNIF, out creditorName, out directDebitRemmitance);
+            RetrieveRemmitanceInformationFromDataBase(connection, out creditorNIF, out creditorName, out directDebitRemmitance);
 
             bool singleUnstructuredConcepts = true;
             GenerateXMLCustomerDirectDebitInitiationFileMessage(creditorNIF, creditorName, directDebitRemmitance, singleUnstructuredConcepts, outputFileName);
         }
 
         public void RetrieveRemmitanceInformationFromDataBase(
-            OleDbConnection conection,
+            OleDbConnection connection,
             out string creditorNIF,
             out string creditorName,
             out DirectDebitRemittance directDebitRemittance)
         {
-            GetRemmmitanceBaseInformation(conection, out creditorNIF, out creditorName, out directDebitRemittance);
+            GetRemmmitanceBaseInformation(connection, out creditorNIF, out creditorName, out directDebitRemittance);
 
-            string rCURTransactionsPaymentInstructionID = directDebitRemittance.MessageID + "-01";
-            DirectDebitPaymentInstruction rCURDirectDebitPaymentInstruction = CreatePaymentInstructionWithRCURTransactions(conection, rCURTransactionsPaymentInstructionID, "CORE");
+            string rCURTransactionsPaymentInstructionID = directDebitRemittance.MessageID + "-RC";
+            DirectDebitPaymentInstruction rCURDirectDebitPaymentInstruction = CreatePaymentInstructionWithRCURTransactions(connection, rCURTransactionsPaymentInstructionID, "CORE");
             directDebitRemittance.AddDirectDebitPaymentInstruction(rCURDirectDebitPaymentInstruction);
-            string fRSTTransactionsPaymentInstructionID = directDebitRemittance.MessageID + "-02";
-            DirectDebitPaymentInstruction fRSTDirectDebitPaymentInstruction = CreatePaymentInstructionWithFRSTTransactions(conection, fRSTTransactionsPaymentInstructionID, "CORE");
+            string fRSTTransactionsPaymentInstructionID = directDebitRemittance.MessageID + "-FR";
+            DirectDebitPaymentInstruction fRSTDirectDebitPaymentInstruction = CreatePaymentInstructionWithFRSTTransactions(connection, fRSTTransactionsPaymentInstructionID, "CORE");
             directDebitRemittance.AddDirectDebitPaymentInstruction(fRSTDirectDebitPaymentInstruction);
         }
 
@@ -182,18 +182,6 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             string localInstrument,
             bool firstDebits)
         {
-            string transactionID;
-            string mandateID;
-            string oldMandateID;
-            DateTime mandateCreationDate;
-            string debtorFullName;
-            string iBAN;
-            string oldIBAN;
-            //string debtorAgentBIC;
-            double amount;
-            string concept;
-            bool fIRST;
-
             List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>();
             using (connection)
             {
@@ -203,33 +191,7 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
 
                 while (reader.Read())
                 {
-                    transactionID = reader["TransactionID"] as string;
-                    mandateID = reader["MandateID"] as string;
-                    oldMandateID = reader["OldMandateID"] as string;
-                    mandateCreationDate = reader["MandateCreationDate"] as DateTime? ?? new DateTime(2009, 10, 31);
-                    debtorFullName = reader["DebtorFullName"] as string;
-                    iBAN = reader["IBAN"] as string;
-                    oldIBAN = reader["OldIBAN"] as string;
-                    //debtorAgentBIC = (string)reader["DebtorAgentBIC"];
-                    //amount = (decimal)reader["Amount"];
-                    amount = reader["Amount"] as double? ?? default(double);
-                    concept = reader["Concept"] as string;
-                    fIRST = (bool)reader["FIRST"];
-
-                    BankAccount oldAccount = null;
-                    if (oldIBAN != null) oldAccount = new BankAccount(new InternationalAccountBankNumberIBAN(oldIBAN));
-                    DirectDebitAmendmentInformation amendmentInformation = new DirectDebitAmendmentInformation(oldMandateID, oldAccount);
-                    SimplifiedBill bill = new SimplifiedBill("tansactionID", concept, (decimal)amount, DateTime.MinValue, DateTime.MaxValue);
-                    DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
-                        new List<SimplifiedBill>() { bill },
-                        transactionID,
-                        mandateID,
-                        mandateCreationDate,
-                        new BankAccount(new InternationalAccountBankNumberIBAN(iBAN)),
-                        debtorFullName,
-                        amendmentInformation,
-                        fIRST);
-
+                    DirectDebitTransaction directDebitTransaction = ReadRecordIntoDirectDebitTransaction((IDataRecord)reader);
                     directDebitTransactions.Add(directDebitTransaction);
                 }
             }
@@ -257,6 +219,37 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
                 directDebitRemmitance,
                 singleUnstructuredConcepts,
                 outputFileName);
+        }
+
+        private DirectDebitTransaction ReadRecordIntoDirectDebitTransaction(IDataRecord record)
+        {
+            string transactionID = record["TransactionID"] as string;
+            string mandateID = record["MandateID"] as string;
+            string oldMandateID = record["OldMandateID"] as string;
+            DateTime mandateCreationDate = record["MandateCreationDate"] as DateTime? ?? new DateTime(2009, 10, 31);
+            string debtorFullName = record["DebtorFullName"] as string;
+            string iBAN = record["IBAN"] as string;
+            string oldIBAN = record["OldIBAN"] as string;
+            string debtorAgentBIC = (string)record["DebtorAgentBIC"];
+            double amount = record["Amount"] as double? ?? default(double);
+            string concept = record["Concept"] as string;
+            bool fIRST = (bool)record["FIRST"];
+
+            BankAccount oldAccount = null;
+            if (oldIBAN != null) oldAccount = new BankAccount(new InternationalAccountBankNumberIBAN(oldIBAN));
+            DirectDebitAmendmentInformation amendmentInformation = new DirectDebitAmendmentInformation(oldMandateID, oldAccount);
+            SimplifiedBill bill = new SimplifiedBill(transactionID, concept, (decimal)amount, DateTime.MinValue, DateTime.MaxValue);
+            DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
+                new List<SimplifiedBill>() { bill },
+                transactionID,
+                mandateID,
+                mandateCreationDate,
+                new BankAccount(new InternationalAccountBankNumberIBAN(iBAN)),
+                debtorAgentBIC,
+                debtorFullName,
+                amendmentInformation,
+                fIRST);
+            return directDebitTransaction;
         }
     }
 }

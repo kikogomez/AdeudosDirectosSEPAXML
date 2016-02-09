@@ -7,12 +7,11 @@
 	-> Ver que los path funcionan Ok
 	-> Ver que la cadena de conexion es valida Ok
 - ¡HAY QUE MODIFICAR LA TABLA SEPAXMLDATOSENVIO!
-	-> En CreditorID debería ir el NIF (por lo pronto lo extraemos del actual CreditorID, que es el AT02 completo) (no es necesario)
-	-> Añadir el CreditorAgentName, que no lo tenemos, y lo necesitamos para el DirectDebitRemmitance 
+	-> En CreditorID debería ir el NIF (por lo pronto lo extraemos del actual CreditorID, que es el AT02 completo) (no es necesario, ya lo extraemos) (Ok)
+	-> Añadir el CreditorAgentName, que no lo tenemos, y lo necesitamos para el DirectDebitRemmitance (Ok)
 	-> El BankCode no lo tenemos en la base de datos, pero lo podemos sacar del CreditorBankAccount (Ok)
-- Cambiar el importe del adeudo FRST por 79.50 en TestMDB
-- ¿QUE PASA CON EL DEBTOR AGENT BIC? ¿De donde se toma al crear el nodo <DrctDbtTxInf>? No se incuye en DirectDebitTransaction...
-	-> Posiblemnte se toma de los datos del DirectDebitRemmitance, por lo que no es necesario incluir el campo en la base de datos
+- Cambiar el importe del adeudo FRST por 79.50 en TestMDB (Ok)
+- ¿QUE PASA CON EL DEBTOR AGENT BIC? ¿De donde se toma al crear el nodo <DrctDbtTxInf>? No se incuye en DirectDebitTransaction... (Arreglado OK)
 - Añadir como parámetros:
 	-> -l (localInstrument) CORE 'o COR1
 	-> -s (singleUnstructuredConcept)
