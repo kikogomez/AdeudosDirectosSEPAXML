@@ -91,17 +91,22 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             out string creditorName,
             out DirectDebitRemittance directDebitRemittance)
         {
-            GetRemmmitanceBaseInformation(connection, out creditorNIF, out creditorName, out directDebitRemittance);
 
-            string rCURTransactionsPaymentInstructionID = directDebitRemittance.MessageID + "-RC";
-            DirectDebitPaymentInstruction rCURDirectDebitPaymentInstruction = CreatePaymentInstructionWithRCURTransactions(connection, rCURTransactionsPaymentInstructionID, "CORE");
-            directDebitRemittance.AddDirectDebitPaymentInstruction(rCURDirectDebitPaymentInstruction);
-            string fRSTTransactionsPaymentInstructionID = directDebitRemittance.MessageID + "-FR";
-            DirectDebitPaymentInstruction fRSTDirectDebitPaymentInstruction = CreatePaymentInstructionWithFRSTTransactions(connection, fRSTTransactionsPaymentInstructionID, "CORE");
-            directDebitRemittance.AddDirectDebitPaymentInstruction(fRSTDirectDebitPaymentInstruction);
+            using (connection)
+            {
+                connection.Open();
+                GetRemmmitanceBaseInformation(connection, out creditorNIF, out creditorName, out directDebitRemittance);
+
+                string rCURTransactionsPaymentInstructionID = directDebitRemittance.MessageID + "-RC";
+                DirectDebitPaymentInstruction rCURDirectDebitPaymentInstruction = CreatePaymentInstructionWithRCURTransactions(connection, rCURTransactionsPaymentInstructionID, "CORE");
+                directDebitRemittance.AddDirectDebitPaymentInstruction(rCURDirectDebitPaymentInstruction);
+                string fRSTTransactionsPaymentInstructionID = directDebitRemittance.MessageID + "-FR";
+                DirectDebitPaymentInstruction fRSTDirectDebitPaymentInstruction = CreatePaymentInstructionWithFRSTTransactions(connection, fRSTTransactionsPaymentInstructionID, "CORE");
+                directDebitRemittance.AddDirectDebitPaymentInstruction(fRSTDirectDebitPaymentInstruction);
+            }
         }
 
-        public void GetRemmmitanceBaseInformation(OleDbConnection conection, out string creditorNIF, out string creditorName, out DirectDebitRemittance directDebitRemittance)
+        public void GetRemmmitanceBaseInformation(OleDbConnection connection, out string creditorNIF, out string creditorName, out DirectDebitRemittance directDebitRemittance)
         {
             string messageID;
             DateTime generationDate;
@@ -112,34 +117,31 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             string creditorIBAN;
             string creditorAgentName;
 
-            using (conection)
-            {
-                conection.Open();
-                string query = "Select * From SEPAXMLDatosEnvio";
-                OleDbCommand command = new OleDbCommand(query, conection);
-                OleDbDataReader reader = command.ExecuteReader();
+            //connection.Open();
+            string query = "Select * From SEPAXMLDatosEnvio";
+            OleDbCommand command = new OleDbCommand(query, connection);
+            OleDbDataReader reader = command.ExecuteReader();
 
-                reader.Read();
+            reader.Read();
 
-                //messageID = reader.GetString(0);
-                //generationDate = reader.GetDateTime(1);
-                //requestedCollectionDate = reader.GetDateTime(2);
-                //creditorName = reader.GetString(3);
-                //creditorID = reader.GetString(4);
-                //creditorBussinesCode = reader.GetString(5);
-                //creditorAgent = reader.GetString(6);
-                //creditorBankAccount = reader.GetString(7);
+            //messageID = reader.GetString(0);
+            //generationDate = reader.GetDateTime(1);
+            //requestedCollectionDate = reader.GetDateTime(2);
+            //creditorName = reader.GetString(3);
+            //creditorID = reader.GetString(4);
+            //creditorBussinesCode = reader.GetString(5);
+            //creditorAgent = reader.GetString(6);
+            //creditorBankAccount = reader.GetString(7);
 
-                messageID = reader["MessageID"] as string;
-                generationDate = (DateTime)reader["GenerationDate"];
-                requestedCollectionDate = (DateTime)reader["RequestedCollectionDate"];
-                creditorName = reader["CreditorName"] as string;
-                creditorID = reader["CreditorID"] as string;
-                creditorBussinesCode = reader["CreditorBusinessCode"] as string;
-                creditorAgentBIC = reader["CreditorAgent"] as string;
-                creditorIBAN = reader["CreditorBankAccount"] as string;
-                creditorAgentName = reader["CreditorAgentName"] as string;
-            }
+            messageID = reader["MessageID"] as string;
+            generationDate = (DateTime)reader["GenerationDate"];
+            requestedCollectionDate = (DateTime)reader["RequestedCollectionDate"];
+            creditorName = reader["CreditorName"] as string;
+            creditorID = reader["CreditorID"] as string;
+            creditorBussinesCode = reader["CreditorBusinessCode"] as string;
+            creditorAgentBIC = reader["CreditorAgent"] as string;
+            creditorIBAN = reader["CreditorBankAccount"] as string;
+            creditorAgentName = reader["CreditorAgentName"] as string;
             creditorNIF = creditorID.Substring(7, 9);
             BankAccount creditorBankAccount = new BankAccount(new InternationalAccountBankNumberIBAN(creditorIBAN));
             CreditorAgent creditorAgent = new CreditorAgent(new BankCode(creditorBankAccount.BankAccountFieldCodes.BankCode, creditorAgentName, creditorAgentBIC));
@@ -183,17 +185,14 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             bool firstDebits)
         {
             List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>();
-            using (connection)
-            {
-                connection.Open();
-                OleDbCommand command = new OleDbCommand(query, connection);
-                OleDbDataReader reader = command.ExecuteReader();
+            //connection.Open();
+            OleDbCommand command = new OleDbCommand(query, connection);
+            OleDbDataReader reader = command.ExecuteReader();
 
-                while (reader.Read())
-                {
-                    DirectDebitTransaction directDebitTransaction = ReadRecordIntoDirectDebitTransaction((IDataRecord)reader);
-                    directDebitTransactions.Add(directDebitTransaction);
-                }
+            while (reader.Read())
+            {
+                DirectDebitTransaction directDebitTransaction = ReadRecordIntoDirectDebitTransaction((IDataRecord)reader);
+                directDebitTransactions.Add(directDebitTransaction);
             }
 
             DirectDebitPaymentInstruction directDebitPaymentInstruction = new DirectDebitPaymentInstruction(
