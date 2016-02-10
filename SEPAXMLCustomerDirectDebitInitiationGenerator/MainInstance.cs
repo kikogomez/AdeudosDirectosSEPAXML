@@ -264,6 +264,8 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
                 firstDebits,
                 directDebitTransactions);
 
+            if (verboseExecution) Console.WriteLine("\rPayment Complete!                      ");
+
             return directDebitPaymentInstruction;
         }
 
@@ -280,6 +282,8 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             double amount = record["Amount"] as double? ?? default(double);
             string concept = record["Concept"] as string;
             bool fIRST = (bool)record["FIRST"];
+
+            if (verboseExecution) Console.Write("\rProcessing MandateID: {0}  ", mandateID);
 
             BankAccount oldAccount = null;
             if (oldIBAN != null) oldAccount = new BankAccount(new InternationalAccountBankNumberIBAN(oldIBAN));
