@@ -100,18 +100,18 @@ namespace DirectDebitElements
                 initiationParty_InitPty);
             List<PaymentInstructionInformation4> paymentInformation_PmtInf_List = new List<PaymentInstructionInformation4>();
 
-            List<DirectDebitTransactionInformation9> directDebitTransactionInfoList = new List<DirectDebitTransactionInformation9>();
+            //List<DirectDebitTransactionInformation9> directDebitTransactionInfoList = new List<DirectDebitTransactionInformation9>();
             foreach (DirectDebitPaymentInstruction directDebitPaymentInstruction in directDebitRemittance.DirectDebitPaymentInstructions)
             {
-                foreach (DirectDebitTransaction directDebitTransaction in directDebitPaymentInstruction.DirectDebitTransactions)
-                {
-                    DirectDebitTransactionInformation9 directDebitTransactionInfo_DrctDbtTxInf = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
-                        creditorAgent,
-                        directDebitTransaction,
-                        singleUnstructuredConcept,
-                        conceptsIncludeAmounts);
-                    directDebitTransactionInfoList.Add(directDebitTransactionInfo_DrctDbtTxInf);
-                }
+                //foreach (DirectDebitTransaction directDebitTransaction in directDebitPaymentInstruction.DirectDebitTransactions)
+                //{
+                //    DirectDebitTransactionInformation9 directDebitTransactionInfo_DrctDbtTxInf = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
+                //        creditorAgent,
+                //        directDebitTransaction,
+                //        singleUnstructuredConcept,
+                //        conceptsIncludeAmounts);
+                //    directDebitTransactionInfoList.Add(directDebitTransactionInfo_DrctDbtTxInf);
+                //}
 
                 PaymentInstructionInformation4 paymentInformation_PmtInf = SEPAElementsGenerator.GeneratePaymentInformation_PmtInf(
                     creditor,
