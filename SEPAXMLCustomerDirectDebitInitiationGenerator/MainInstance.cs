@@ -45,7 +45,12 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
 
             GenerateSEPAXMLCustomerDirectDebitInitiationFromDatabase(dataBaseConnectionString, xMLCDDFilename);
 
-            if (verboseExecution) Console.WriteLine("Completed!");
+            if (verboseExecution)
+            {
+                Console.WriteLine("Completed!");
+                Console.WriteLine("Press any key to close program...");
+                Console.ReadKey();
+            }
             Environment.Exit((int)ExitCodes.Success);
         }
 
