@@ -190,13 +190,15 @@ namespace DirectDebitElementsUnitTests
             directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction1);
 
             bool singleUnstructuredConcept = false;
+            bool conceptsIncludeAmounts = false;
 
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
             string xMLCustomerDirectDebitInitiationMessage = sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationStringMessage(
                 creditor,
                 creditorAgent,
                 directDebitRemittance,
-                singleUnstructuredConcept);
+                singleUnstructuredConcept,
+                conceptsIncludeAmounts);
 
             string xMLValidatingErrors = XMLValidator.ValidateXMLStringThroughXSDFile(
                 xMLCustomerDirectDebitInitiationMessage,
@@ -219,13 +221,15 @@ namespace DirectDebitElementsUnitTests
             directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction1);
 
             bool singleUnstructuredConcept = true;
+            bool conceptsIncludeAmounts = false;
 
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
             string xMLCustomerDirectDeitInitiationMessage = sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationStringMessage(
                 creditor,
                 creditorAgent,
                 directDebitRemittance,
-                singleUnstructuredConcept);
+                singleUnstructuredConcept,
+                conceptsIncludeAmounts);
 
             string xMLValidatingErrors = XMLValidator.ValidateXMLStringThroughXSDFile(
                 xMLCustomerDirectDeitInitiationMessage,
@@ -258,13 +262,15 @@ namespace DirectDebitElementsUnitTests
             directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction2);
 
             bool singleUnstructuredConcept = true;
+            bool conceptsIncludeAmounts = false;
 
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
             string xMLCustomerDirectDeitInitiationMessage = sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationStringMessage(
                 creditor,
                 creditorAgent,
                 directDebitRemittance,
-                singleUnstructuredConcept);
+                singleUnstructuredConcept,
+                conceptsIncludeAmounts);
 
             string xMLValidatingErrors = XMLValidator.ValidateXMLStringThroughXSDFile(
                 xMLCustomerDirectDeitInitiationMessage,

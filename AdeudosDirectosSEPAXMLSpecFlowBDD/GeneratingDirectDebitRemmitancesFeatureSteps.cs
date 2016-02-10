@@ -399,11 +399,13 @@ namespace AdeudosDirectosSEPAXMLSpecFlowBDD
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
             DateTime generationTime = directDebitRemittance.CreationDate;
             bool singleUnstructuredConcept = false;
+            bool conceptIncludesAmount = false;
             string xMLString = sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationStringMessage(
                 creditor,
                 creditorAgent,
                 directDebitRemittance,
-                singleUnstructuredConcept);
+                singleUnstructuredConcept,
+                conceptIncludesAmount);
             ScenarioContext.Current.Add("xMLString", xMLString);
 
         }

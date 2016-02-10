@@ -15,13 +15,15 @@ namespace DirectDebitElements
             Creditor creditor,
             CreditorAgent creditorAgent,
             DirectDebitRemittance directDebitRemittance,
-            bool singleUnstructuredConcept)
+            bool singleUnstructuredConcept,
+            bool conceptsIncludeAmounts)
         {
             CustomerDirectDebitInitiationDocument document_Document = CreateCustomerDirectDebitInitiationDocument(
                 creditor,
                 creditorAgent,
                 directDebitRemittance,
-                singleUnstructuredConcept);
+                singleUnstructuredConcept,
+                conceptsIncludeAmounts);
 
             string xMLNamespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02";
             string xmlString = XMLSerializer.XMLSerializeToString<CustomerDirectDebitInitiationDocument>(document_Document, "Document", xMLNamespace);
@@ -33,6 +35,7 @@ namespace DirectDebitElements
             CreditorAgent creditorAgent,
             DirectDebitRemittance directDebitRemittance,
             bool singleUnstructuredConcept,
+            bool conceptsIncludeAmounts,
             string xMLFilePath)
         {
 
@@ -40,7 +43,8 @@ namespace DirectDebitElements
                 creditor,
                 creditorAgent,
                 directDebitRemittance,
-                singleUnstructuredConcept);
+                singleUnstructuredConcept,
+                conceptsIncludeAmounts);
 
             string xMLNamespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02";
             XMLSerializer.XMLSerializeToFile<CustomerDirectDebitInitiationDocument>(document_Document, "Document", xMLNamespace, xMLFilePath);
@@ -80,7 +84,8 @@ namespace DirectDebitElements
             Creditor creditor,
             CreditorAgent creditorAgent,
             DirectDebitRemittance directDebitRemittance,
-            bool singleUnstructuredConcept)
+            bool singleUnstructuredConcept,
+            bool conceptsIncludeAmounts)
         {
             DirectDebitInitiationContract directDebitInitiationContract = directDebitRemittance.DirectDebitInitiationContract;
             DateTime generationDateTime = directDebitRemittance.CreationDate;
@@ -103,7 +108,8 @@ namespace DirectDebitElements
                     DirectDebitTransactionInformation9 directDebitTransactionInfo_DrctDbtTxInf = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
                         creditorAgent,
                         directDebitTransaction,
-                        singleUnstructuredConcept);
+                        singleUnstructuredConcept,
+                        conceptsIncludeAmounts);
                     directDebitTransactionInfoList.Add(directDebitTransactionInfo_DrctDbtTxInf);
                 }
 
@@ -113,7 +119,8 @@ namespace DirectDebitElements
                     directDebitInitiationContract,
                     directDebitPaymentInstruction,
                     requestedCollectionDate,
-                    singleUnstructuredConcept);
+                    singleUnstructuredConcept,
+                    conceptsIncludeAmounts);
 
                 paymentInformation_PmtInf_List.Add(paymentInformation_PmtInf);
             }

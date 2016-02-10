@@ -67,7 +67,8 @@ namespace DirectDebitElements
         public static DirectDebitTransactionInformation9 GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
             CreditorAgent creditorAgent,
             DirectDebitTransaction directDebitTransaction,
-            bool singleUnstructuredConcept)
+            bool singleUnstructuredConcept,
+            bool conceptsIncludeAmounts)
         {
             PaymentIdentification1 paymentIdentification_PmtID = new PaymentIdentification1(
                 directDebitTransaction.TransactionID,    //<InstrID>
@@ -145,7 +146,7 @@ namespace DirectDebitElements
                 null,           //<Ccy> - Not used by creditor in SEPA COR
                 null);          //<Nm> - Not used by creditor in SEPA COR
 
-            string[] remittanceConcepts = BuildUnstructuredRemittanceInformation(directDebitTransaction, singleUnstructuredConcept, true);
+            string[] remittanceConcepts = BuildUnstructuredRemittanceInformation(directDebitTransaction, singleUnstructuredConcept, conceptsIncludeAmounts);
 
             RemittanceInformation5 RemittanceInformation_RmtInf = new RemittanceInformation5(
                 remittanceConcepts,                                     //<Ustrd>
@@ -180,7 +181,8 @@ namespace DirectDebitElements
             DirectDebitInitiationContract directDebitInitiationContract,
             DirectDebitPaymentInstruction directDebitPaymentInstruction,
             DateTime requestedCollectionDate, 
-            bool singleUnstructuredConcept)
+            bool singleUnstructuredConcept,
+            bool conceptsIncludeAmounts)
         {
             string paymentInformationIdentificaction_PmtInfId = directDebitPaymentInstruction.PaymentInformationID;  //Private unique ID for payment group
             string paymentInformationIdentificaction_NbOfTxs = directDebitPaymentInstruction.NumberOfDirectDebitTransactions.ToString();
@@ -192,7 +194,8 @@ namespace DirectDebitElements
                 DirectDebitTransactionInformation9 directDebitTransactionInfo_DrctDbtTxInf = GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
                     creditorAgent,
                     directDebitTransaction,
-                    singleUnstructuredConcept);
+                    singleUnstructuredConcept,
+                    conceptsIncludeAmounts);
                 directDebitTransactionInfo_DrctDbtTxInfList.Add(directDebitTransactionInfo_DrctDbtTxInf);
             }
 
@@ -284,10 +287,10 @@ namespace DirectDebitElements
             return paymentInformation_PmtInf;
         }
 
-        private static string[] BuildUnstructuredRemittanceInformation(DirectDebitTransaction directDebitTransaction, bool singleUnstructuredConcept, bool conceptIncludesAmount)
+        private static string[] BuildUnstructuredRemittanceInformation(DirectDebitTransaction directDebitTransaction, bool singleUnstructuredConcept, bool conceptsIncludeAmounts)
         {
             string[] remittanceConcepts = directDebitTransaction.BillsInTransaction.Select
-                (bill => bill.Description + (conceptIncludesAmount ? "": " --- " + bill.Amount.ToString("0.00"))).ToArray();
+                (bill => bill.Description + (conceptsIncludeAmounts ? "": " --- " + bill.Amount.ToString("0.00"))).ToArray();
             if (singleUnstructuredConcept) remittanceConcepts = new string[] { String.Join("; ", remittanceConcepts).Left(140) };
             return remittanceConcepts;
         }

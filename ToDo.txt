@@ -1,10 +1,6 @@
 PENDIENTE
 ----------------------------------------
-
-
-- En SEPAElementsGenerator, hay que modificar la rutina GenerateDirectDebitTransactionInfo_DrctDbtTxInf para que genere correctamente el BIC (ahora toma erroneamente el CreditorAgentBIC) Ok
-- Modificar los deudores de prueba para que usen algun otro banco, aparte de La Caixa, para ver que todo sale correcto. Ok
-- Seguramente tendremos que modificar entonces tambien los XML de prueba 'DirectDebitRemmitanceWithVariousPaymentInstructionsAndAmendments.xml' ok
+- En SEPAMessagesManager, el procedimiento CreateCustomerDirectDebitInitiationDocument 
 
 
 

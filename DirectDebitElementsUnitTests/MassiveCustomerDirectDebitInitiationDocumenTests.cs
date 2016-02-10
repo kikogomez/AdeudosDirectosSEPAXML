@@ -20,7 +20,7 @@ namespace DirectDebitElementsUnitTests
         static CreditorAgent creditorAgent;
         static DirectDebitInitiationContract directDebitInitiationContract;
         static DirectDebitPropietaryCodesGenerator directDebitPropietaryCodesGenerator;
-        static bool singleUnstructuredConcept;
+        //static bool singleUnstructuredConcept;
 
         
 
@@ -38,7 +38,7 @@ namespace DirectDebitElementsUnitTests
                 "011",
                 creditorAgent);
             directDebitPropietaryCodesGenerator = new DirectDebitPropietaryCodesGenerator(directDebitInitiationContract);
-            singleUnstructuredConcept = false;
+            //singleUnstructuredConcept = false;
         }
 
         [TestMethod]
@@ -59,12 +59,15 @@ namespace DirectDebitElementsUnitTests
                 directDebitInitiationContract,
                 directDebitPaymentInstructions);
 
+            bool singleUnstructuredConcept = false;
+            bool conceptIncludesAmount = false;
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
             string xMLCustomerDirectDeitInitiationMessage = sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationStringMessage(
                 creditor,
                 creditorAgent,
                 directDebitRemittance,
-                singleUnstructuredConcept);
+                singleUnstructuredConcept,
+                conceptIncludesAmount);
 
             testStopWatch.Stop();
 
@@ -86,12 +89,15 @@ namespace DirectDebitElementsUnitTests
                 directDebitInitiationContract,
                 directDebitPaymentInstructions);
 
+            bool singleUnstructuredConcept = false;
+            bool conceptsIncludeAmounts = false;
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
             sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationFileMessage(
                 creditor,
                 creditorAgent,
                 directDebitRemittance,
                 singleUnstructuredConcept,
+                conceptsIncludeAmounts,
                 @"XML Test Files\pain.008.001.02\HugeDirectDebitInitiation.xml");
 
             Assert.IsTrue(true);  //If test reaches here, it's ok

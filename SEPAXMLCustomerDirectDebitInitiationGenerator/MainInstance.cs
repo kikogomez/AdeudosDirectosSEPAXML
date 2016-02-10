@@ -94,7 +94,14 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             RetrieveRemmitanceInformationFromDataBase(connection, out creditorNIF, out creditorName, out directDebitRemmitance);
 
             bool singleUnstructuredConcepts = true;
-            GenerateXMLCustomerDirectDebitInitiationFileMessage(creditorNIF, creditorName, directDebitRemmitance, singleUnstructuredConcepts, outputFileName);
+            bool conceptsIncludeAmounts = true;
+            GenerateXMLCustomerDirectDebitInitiationFileMessage(
+                creditorNIF,
+                creditorName,
+                directDebitRemmitance,
+                singleUnstructuredConcepts,
+                conceptsIncludeAmounts,
+                outputFileName);
         }
 
         public void RetrieveRemmitanceInformationFromDataBase(
@@ -144,7 +151,7 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             string messageID;
             DateTime generationDate;
             DateTime requestedCollectionDate;
-            string creditorID;
+            //string creditorID;
             string creditorBussinesCode;
             string creditorAgentBIC;
             string creditorIBAN;
@@ -296,6 +303,7 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             string creditorName,
             DirectDebitRemittance directDebitRemmitance,
             bool singleUnstructuredConcepts,
+            bool conceptsIncludeAmounts,
             string outputFileName)
         {
             if (verboseExecution) Console.WriteLine("Generating XML File...");
@@ -307,6 +315,7 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
                 directDebitRemmitance.DirectDebitInitiationContract.CreditorAgent,
                 directDebitRemmitance,
                 singleUnstructuredConcepts,
+                conceptsIncludeAmounts,
                 relativeOutputPath);
             if(!File.Exists(relativeOutputPath))
             {

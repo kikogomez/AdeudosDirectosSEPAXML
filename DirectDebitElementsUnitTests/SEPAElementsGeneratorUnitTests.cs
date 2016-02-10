@@ -82,7 +82,6 @@ namespace DirectDebitElementsUnitTests
             }
 
             paymentInformationID1 = "PRE201512010001";
-
         }
 
         [TestInitialize]
@@ -201,11 +200,13 @@ namespace DirectDebitElementsUnitTests
                 null,
                 false);
             bool singleUnstructuredConcept = false;
+            bool conceptsIncludeAmounts = false;
 
             DirectDebitTransactionInformation9 directDebitTransactionInformation_DrctDbtTxInf = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
                 creditorAgent,
                 directDebitTransaction,
-                singleUnstructuredConcept);
+                singleUnstructuredConcept,
+                conceptsIncludeAmounts);
 
             Assert.AreEqual(directDebitTransaction.TransactionID, directDebitTransactionInformation_DrctDbtTxInf.PmtId.InstrId);
             Assert.AreEqual(directDebitTransaction.TransactionID, directDebitTransactionInformation_DrctDbtTxInf.PmtId.EndToEndId);
@@ -252,11 +253,13 @@ namespace DirectDebitElementsUnitTests
                 directDebitAmendmentInformation,
                 false);
             bool singleUnstructuredConcept = true;
+            bool conceptsIncludeAmounts = false;
 
             DirectDebitTransactionInformation9 directDebitTransactionInformation = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
                 creditorAgent,
                 directDebitTransaction,
-                singleUnstructuredConcept);
+                singleUnstructuredConcept,
+                conceptsIncludeAmounts);
 
             Assert.IsTrue(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInd);              //AmmendmentInformationInd es 'false'
             Assert.IsTrue(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntIndSpecified);     //Si AmmendmentInformationInd es 'false', no hace falta ni siquiera incluirlo
@@ -292,11 +295,13 @@ namespace DirectDebitElementsUnitTests
                 directDebitAmendmentInformation,
                 false);
             bool singleUnstructuredConcept = true;
+            bool conceptsIncludeAmounts = false;
 
             DirectDebitTransactionInformation9 directDebitTransactionInformation = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
                 creditorAgent,
                 directDebitTransaction,
-                singleUnstructuredConcept);
+                singleUnstructuredConcept,
+                conceptsIncludeAmounts);
 
             Assert.IsTrue(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInd);              
             Assert.IsTrue(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntIndSpecified);     
@@ -330,11 +335,13 @@ namespace DirectDebitElementsUnitTests
                 directDebitAmendmentInformation,
                 true);
             bool singleUnstructuredConcept = true;
+            bool conceptsIncludeAmounts = false;
 
             DirectDebitTransactionInformation9 directDebitTransactionInformation = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
                 creditorAgent,
                 directDebitTransaction,
-                singleUnstructuredConcept);
+                singleUnstructuredConcept,
+                conceptsIncludeAmounts);
 
             Assert.IsTrue(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntInd);
             Assert.IsTrue(directDebitTransactionInformation.DrctDbtTx.MndtRltdInf.AmdmntIndSpecified);
@@ -355,8 +362,7 @@ namespace DirectDebitElementsUnitTests
             BankAccount debtorAccount = directDebitMandate.BankAccount;
             string accountHolderName = directDebitMandate.AccountHolderName;
             DateTime mandateSignatureDate = directDebitMandate.DirectDebitMandateCreationDate;
-            bool singleUnstructuredConcept = true;
-            DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
+             DirectDebitTransaction directDebitTransaction = new DirectDebitTransaction(
                 bills,
                 transactionID,
                 mandateID,
@@ -365,11 +371,14 @@ namespace DirectDebitElementsUnitTests
                 accountHolderName,
                 null,
                 false);
+            bool singleUnstructuredConcept = true;
+            bool conceptsIncludeAmounts = false;
 
             DirectDebitTransactionInformation9 directDebitTransactionInformation = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
                 creditorAgent,
                 directDebitTransaction,
-                singleUnstructuredConcept);
+                singleUnstructuredConcept,
+                conceptsIncludeAmounts);
 
             string[] expectedStringArrayWithOnlyOneString = new string[] { "Cuota Social Octubre 2013 --- 79,00; Cuota Social Noviembre 2013 --- 79,00" };
             CollectionAssert.AreEqual(expectedStringArrayWithOnlyOneString, directDebitTransactionInformation.RmtInf.Ustrd);
@@ -387,6 +396,7 @@ namespace DirectDebitElementsUnitTests
 
             DateTime requestedCollectionDate = DateTime.Now.AddDays(3);
             bool singleUnstructuredConcept = true;
+            bool conceptsIncludeAmounts = false;
 
             PaymentInstructionInformation4 paymentInstructionInformation_PmtIf = SEPAElementsGenerator.GeneratePaymentInformation_PmtInf(
                 creditor,
@@ -394,7 +404,8 @@ namespace DirectDebitElementsUnitTests
                 directDebitInitiationContract,
                 directDebitPaymentInstruction,
                 requestedCollectionDate,
-                singleUnstructuredConcept);
+                singleUnstructuredConcept,
+                conceptsIncludeAmounts);
 
             Assert.IsTrue(paymentInstructionInformation_PmtIf.BtchBookg);
             Assert.IsFalse(paymentInstructionInformation_PmtIf.BtchBookgSpecified);
@@ -440,6 +451,7 @@ namespace DirectDebitElementsUnitTests
 
             DateTime requestedCollectionDate = DateTime.Now.AddDays(3);
             bool singleUnstructuredConcept = true;
+            bool conceptsIncludeAmounts = false;
 
             PaymentInstructionInformation4 paymentInstructionInformation_PmtIf = SEPAElementsGenerator.GeneratePaymentInformation_PmtInf(
                 creditor,
@@ -447,7 +459,8 @@ namespace DirectDebitElementsUnitTests
                 directDebitInitiationContract,
                 directDebitPaymentInstruction,
                 requestedCollectionDate,
-                singleUnstructuredConcept);
+                singleUnstructuredConcept,
+                conceptsIncludeAmounts);
 
             Assert.IsTrue(paymentInstructionInformation_PmtIf.BtchBookg);
             Assert.IsFalse(paymentInstructionInformation_PmtIf.BtchBookgSpecified);
