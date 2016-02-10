@@ -311,8 +311,10 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             string outputFileName)
         {
             if (verboseExecution) Console.WriteLine("Generating XML File...");
+            string applicationBaseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string relativeOutputPath = @"XMLOutputFiles\" + outputFileName;
-            File.Delete(relativeOutputPath);
+            string absoluteOutputPath = applicationBaseDirectory + "\\" + relativeOutputPath;
+            File.Delete(absoluteOutputPath);
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
             sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationFileMessage(
                 new Creditor(creditorNIF, creditorName),
@@ -320,8 +322,8 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
                 directDebitRemmitance,
                 singleUnstructuredConcepts,
                 conceptsIncludeAmounts,
-                relativeOutputPath);
-            if(!File.Exists(relativeOutputPath))
+                absoluteOutputPath);
+            if(!File.Exists(absoluteOutputPath))
             {
                 Console.WriteLine("Error while creating XML File");
                 Environment.Exit((int)ExitCodes.FileCreatingError);
