@@ -31,6 +31,8 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             if (!ParseArguments(args, out parseErrorString, out sourceDatabaseFullPath, out xMLCDDFilename, out verboseExecution))
             {
                 Console.WriteLine(parseErrorString);
+                Console.WriteLine("Press any key to close program...");
+                Console.ReadKey();
                 Environment.Exit((int)ExitCodes.InvalidArguments);
             }
 
@@ -38,6 +40,8 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             if (!File.Exists(sourceDatabaseFullPath))
             {
                 Console.WriteLine("{0} not found!", sourceDatabaseFullPath);
+                Console.WriteLine("Press any key to close program...");
+                Console.ReadKey();
                 Environment.Exit((int)ExitCodes.InvalidDataBasePath);
             }
 
@@ -124,6 +128,8 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
                         Console.WriteLine("Connection error!");
                         Console.WriteLine(error.Message);
                     }
+                    Console.WriteLine("Press any key to close program...");
+                    Console.ReadKey();
                     Environment.Exit((int)ExitCodes.DataBaseConnectionError);
                 }
                 catch (InvalidOperationException conectionException)
@@ -171,6 +177,8 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
                 string errorMessage = ComposeErrorMessageForException(exception);
                 Console.WriteLine("Error while reading remmitance base information.");
                 Console.WriteLine(errorMessage);
+                Console.WriteLine("Press any key to close program...");
+                Console.ReadKey();
                 Environment.Exit((int)ExitCodes.DataBaseReadingError);
             }
 
@@ -250,6 +258,8 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
                 string errorMessage = ComposeErrorMessageForException(exception);
                 Console.WriteLine("Error while reading direct debits data.");
                 Console.WriteLine(errorMessage);
+                Console.WriteLine("Press any key to close program...");
+                Console.ReadKey();
                 Environment.Exit((int)ExitCodes.DataBaseReadingError);
             }
             while (reader.Read())
@@ -326,6 +336,8 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             if(!File.Exists(absoluteOutputPath))
             {
                 Console.WriteLine("Error while creating XML File");
+                Console.WriteLine("Press any key to close program...");
+                Console.ReadKey();
                 Environment.Exit((int)ExitCodes.FileCreatingError);
             }
         }
