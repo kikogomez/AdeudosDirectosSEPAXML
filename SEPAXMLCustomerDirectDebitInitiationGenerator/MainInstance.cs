@@ -48,6 +48,7 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             if (verboseExecution)
             {
                 Console.WriteLine("Completed!");
+                Console.WriteLine("Generated File: XMLOutputFiles\\{0}", xMLCDDFilename);
                 Console.WriteLine("Press any key to close program...");
                 Console.ReadKey();
             }
