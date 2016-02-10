@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using CommandLine;
 using System.IO;
 using Billing;
@@ -15,6 +16,8 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
 {
     public class MainInstance
     {
+        bool verboseExecution;
+
         public MainInstance()
         {
         }
@@ -24,7 +27,6 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             string parseErrorString;
             string sourceDatabaseFullPath;
             string xMLCDDFilename;
-            bool verboseExecution;
 
             if (!ParseArguments(args, out parseErrorString, out sourceDatabaseFullPath, out xMLCDDFilename, out verboseExecution))
             {
@@ -32,6 +34,7 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
                 Environment.Exit((int)ExitCodes.InvalidArguments);
             }
 
+            if (verboseExecution) Console.WriteLine("Locating source database...");
             if (!File.Exists(sourceDatabaseFullPath))
             {
                 Console.WriteLine("{0} not found!", sourceDatabaseFullPath);
@@ -40,7 +43,10 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
 
             string dataBaseConnectionString = CreateDatabaseConnectionString(sourceDatabaseFullPath);
 
-            GenerateSEPAXMLCustomerDirectDebitInitiationFromDatabase(dataBaseConnectionString, xMLCDDFilename);          
+            GenerateSEPAXMLCustomerDirectDebitInitiationFromDatabase(dataBaseConnectionString, xMLCDDFilename);
+
+            if (verboseExecution) Console.WriteLine("Completed!");
+            Environment.Exit((int)ExitCodes.Success);
         }
 
         public bool ParseArguments(
@@ -91,15 +97,36 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             out string creditorName,
             out DirectDebitRemittance directDebitRemittance)
         {
-
+            if (verboseExecution) Console.WriteLine("Connecting to database...");
             using (connection)
             {
-                connection.Open();
+                try
+                {
+                    connection.Open();
+                }
+                catch (OleDbException connectionException)
+                {
+                    foreach (OleDbError error in connectionException.Errors)
+                    {
+                        Console.WriteLine("Connection error!");
+                        Console.WriteLine(error.Message);
+                    }
+                    Environment.Exit((int)ExitCodes.DataBaseConnectionError);
+                }
+                catch (InvalidOperationException conectionException)
+                {
+                    Console.WriteLine("The database connection is already open. Trying to continue.");
+                    Console.WriteLine(conectionException.Message);
+                }
+                //connection.Open(); 
+                if (verboseExecution) Console.WriteLine("Reading remittance base information...");
                 GetRemmmitanceBaseInformation(connection, out creditorNIF, out creditorName, out directDebitRemittance);
 
+                if (verboseExecution) Console.WriteLine("Reading recurrent direct debits...");
                 string rCURTransactionsPaymentInstructionID = directDebitRemittance.MessageID + "-RC";
                 DirectDebitPaymentInstruction rCURDirectDebitPaymentInstruction = CreatePaymentInstructionWithRCURTransactions(connection, rCURTransactionsPaymentInstructionID, "CORE");
                 directDebitRemittance.AddDirectDebitPaymentInstruction(rCURDirectDebitPaymentInstruction);
+                if (verboseExecution) Console.WriteLine("Reading first time direct debits...");
                 string fRSTTransactionsPaymentInstructionID = directDebitRemittance.MessageID + "-FR";
                 DirectDebitPaymentInstruction fRSTDirectDebitPaymentInstruction = CreatePaymentInstructionWithFRSTTransactions(connection, fRSTTransactionsPaymentInstructionID, "CORE");
                 directDebitRemittance.AddDirectDebitPaymentInstruction(fRSTDirectDebitPaymentInstruction);
@@ -120,7 +147,19 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             //connection.Open();
             string query = "Select * From SEPAXMLDatosEnvio";
             OleDbCommand command = new OleDbCommand(query, connection);
-            OleDbDataReader reader = command.ExecuteReader();
+            OleDbDataReader reader = null;
+            try
+            {
+                reader = command.ExecuteReader();
+            }
+            catch (System.Exception exception ) 
+            when(exception is SqlException || exception is InvalidOperationException || exception is IOException || exception is ObjectDisposedException)
+            {
+                string errorMessage = ComposeErrorMessageForException(exception);
+                Console.WriteLine("Error while reading remmitance base information.");
+                Console.WriteLine(errorMessage);
+                Environment.Exit((int)ExitCodes.DataBaseReadingError);
+            }
 
             reader.Read();
 
@@ -187,8 +226,20 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             List<DirectDebitTransaction> directDebitTransactions = new List<DirectDebitTransaction>();
             //connection.Open();
             OleDbCommand command = new OleDbCommand(query, connection);
-            OleDbDataReader reader = command.ExecuteReader();
-
+            //OleDbDataReader reader = command.ExecuteReader();
+            OleDbDataReader reader = null;
+            try
+            {
+                reader = command.ExecuteReader();
+            }
+            catch (System.Exception exception)
+            when (exception is SqlException || exception is InvalidOperationException || exception is IOException || exception is ObjectDisposedException)
+            {
+                string errorMessage = ComposeErrorMessageForException(exception);
+                Console.WriteLine("Error while reading direct debits data.");
+                Console.WriteLine(errorMessage);
+                Environment.Exit((int)ExitCodes.DataBaseReadingError);
+            }
             while (reader.Read())
             {
                 DirectDebitTransaction directDebitTransaction = ReadRecordIntoDirectDebitTransaction((IDataRecord)reader);
@@ -242,6 +293,7 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             bool singleUnstructuredConcepts,
             string outputFileName)
         {
+            if (verboseExecution) Console.WriteLine("Generating XML File...");
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
             sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationFileMessage(
                 new Creditor(creditorNIF, creditorName),
@@ -249,6 +301,36 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
                 directDebitRemmitance,
                 singleUnstructuredConcepts,
                 @"XMLOutputFiles\" + outputFileName);
+        }
+
+        private string ComposeErrorMessageForException(Exception exception)
+        {
+            string errorMessage = "";
+            if (exception is SqlException)
+            {
+                errorMessage = "Locked row or Timeout." + Environment.NewLine;
+                errorMessage += ((SqlException)exception).Message + Environment.NewLine;
+                foreach (SqlError error in ((SqlException)exception).Errors)
+                {
+                    errorMessage += error.Message + Environment.NewLine;
+                }
+            }
+            if (exception is InvalidOperationException)
+            {
+                errorMessage = "Connection is closed or was closed while reading data." + Environment.NewLine;
+                errorMessage += ((InvalidOperationException)exception).Message + Environment.NewLine;
+            }
+            if (exception is IOException)
+            {
+                errorMessage = "Error while reading data." + Environment.NewLine;
+                errorMessage += ((IOException)exception).Message + Environment.NewLine;
+            }
+            if (exception is ObjectDisposedException)
+            {
+                errorMessage = "Error while reading data." + Environment.NewLine + " DataReader was closed while reading." + Environment.NewLine;
+                errorMessage += ((ObjectDisposedException)exception).Message + Environment.NewLine;
+            }
+            return errorMessage;
         }
     }
 }

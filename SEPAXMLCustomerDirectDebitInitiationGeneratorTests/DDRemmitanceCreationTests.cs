@@ -195,6 +195,7 @@ namespace SEPAXMLCustomerDirectDebitInitiationGeneratorTests
             mainInstance.GenerateSEPAXMLCustomerDirectDebitInitiationFromDatabase(oleDBConnectionString, "Test.xml");
 
             Assert.IsTrue(File.Exists(@"XMLOutputFiles\Test.xml"));
+            File.Delete(@"XMLOutputFiles\Test.xml");
         }
     }
 }

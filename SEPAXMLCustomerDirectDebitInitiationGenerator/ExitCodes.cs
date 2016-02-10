@@ -15,7 +15,13 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
         /// Invalid command line options
         InvalidArguments = -1,
 
-        /// DataBaseNotFound
-        InvalidDataBasePath = -2
+        /// DataBase Not Found
+        InvalidDataBasePath = -2,
+
+        ///DataBase connection error
+        DataBaseConnectionError = -3,
+
+        ///Data Reading error
+        DataBaseReadingError = -4
     }
 }
