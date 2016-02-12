@@ -288,7 +288,7 @@ namespace DirectDebitElementsUnitTests
             string paymentStatusReportXMLStringMessage = fileReader.ReadToEnd();
 
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
-            PaymentStatusReport paymentStatusReport = sEPAMessagesManager.ReadISO20022PaymentStatusReportMessage(paymentStatusReportXMLStringMessage);
+            PaymentStatusReport paymentStatusReport = sEPAMessagesManager.ReadISO20022PaymentStatusReportStringMessage(paymentStatusReportXMLStringMessage);
 
             //General info from file
             DateTime expectedMessageCreationDate = DateTime.Parse("2012-07-18T06:00:01");
@@ -325,7 +325,7 @@ namespace DirectDebitElementsUnitTests
             string paymentStatusReportXMLStringMessage = fileReader.ReadToEnd();
 
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
-            PaymentStatusReport paymentStatusReport = sEPAMessagesManager.ReadISO20022PaymentStatusReportMessage(paymentStatusReportXMLStringMessage);
+            PaymentStatusReport paymentStatusReport = sEPAMessagesManager.ReadISO20022PaymentStatusReportStringMessage(paymentStatusReportXMLStringMessage);
 
             //General info from file
             DateTime expectedMessageCreationDate = DateTime.Parse("2015-12-08T06:00:01");
