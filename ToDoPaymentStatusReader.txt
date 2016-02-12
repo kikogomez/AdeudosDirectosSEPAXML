@@ -1,0 +1,46 @@
+PENDIENTE
+---------
+
+
+
+---------------------------------------
+---------------------------------------
+Este codigo es la base de la inserción
+
+
+CODIGO
+------
+
+// define the INSERT statement using **PARAMETERS**
+string insertStmt = "INSERT INTO dbo.REPORT_MARJORIE_ROLE(REPORT_ID, ROLE_ID, CREATED_BY, CREATED) " + 
+                    "VALUES(@ReportID, @RoleID, 'SYSTEM', CURRENT_TIMESTAMP)";
+
+// set up connection and command objects in ADO.NET
+using(SqlConnection conn = new SqlConnection(-your-connection-string-here))
+using(SqlCommand cmd = new SqlCommand(insertStmt, conn)
+{
+    // define parameters - ReportID is the same for each execution, so set value here
+    cmd.Parameters.Add("@ReportID", SqlDbType.Int).Value = YourReportID;
+    cmd.Parameters.Add("@RoleID", SqlDbType.Int);
+
+    conn.Open();
+
+    // iterate over all RoleID's and execute the INSERT statement for each of them
+    foreach(int roleID in ListOfRoleIDs)
+    {
+      cmd.Parameters["@RoleID"].Value = roleID;
+      cmd.ExecuteNonQuery();
+    }
+
+    conn.Close();
+}   
+
+TODO DENTRO DE UNA TRANSACCION
+------------------------------
+
+ using (TransactionScope scope = new TransactionScope())
+ {
+     // bla bla bla EF or ADO.NET
+     scope.complete();
+ }
+
