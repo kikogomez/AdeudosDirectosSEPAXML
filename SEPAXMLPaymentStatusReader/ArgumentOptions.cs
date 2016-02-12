@@ -11,10 +11,10 @@ namespace SEPAXMLPaymentStatusReader
    public class ArgumentOptions
     {
         [Option('i', "inputPaymentStatusReportFullPath", Required = true, HelpText = "Payment Status Report full path.")]
-        public string SourceDataBase { get; set; }
+        public string PaymentStatusReportFilePath { get; set; }
 
         [Option('o', "outputDataBaseFullPath", Required = true, HelpText = "Output Data Base Full Path.")]
-        public string OutputXMLFile { get; set; }
+        public string DataBaseFullPath { get; set; }
 
         [Option('v', null, HelpText = "Print details during execution.")]
         public bool Verbose { get; set; }

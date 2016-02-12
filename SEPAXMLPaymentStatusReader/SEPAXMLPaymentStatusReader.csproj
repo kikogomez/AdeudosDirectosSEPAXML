@@ -49,7 +49,8 @@
   <ItemGroup>
     <Compile Include="ArgumentOptions.cs" />
     <Compile Include="ExitCodes.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="MainInstance.cs" />
+    <Compile Include="SEPAXMLPSRReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

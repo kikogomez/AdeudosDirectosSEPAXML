@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace SEPAXMLPaymentStatusReader
 {
-    class Program
+    class SEPAXMLPSRReader
     {
         static void Main(string[] args)
         {
+            MainInstance mainInstance = new MainInstance();
+            mainInstance.Run(args);
         }
     }
 }
