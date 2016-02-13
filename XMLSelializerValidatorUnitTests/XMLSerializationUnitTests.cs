@@ -63,6 +63,22 @@ namespace RCNGCMembersManagementUnitTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(System.InvalidOperationException))]
+        public void AnErroneousDeserializationThrowsInvalidOperationException()
+        {
+            string XMLFilePath = @"XML Test Files\OrderedItem(wrong).xml";
+            try
+            {
+                OrderedItem orderedItem = XMLSerializer.XMLDeserializeFromFile<OrderedItem>(XMLFilePath, null, null);
+            }
+            catch(InvalidOperationException)
+            {
+                Assert.IsTrue(true);    //Just asserting code reaches here
+                throw;
+            }          
+        }
+
+        [TestMethod]
         public void UnespecifiedDateTimeKindDateTimeSerializesToCorrectFormat()
         {
             DateTime localDateTime =

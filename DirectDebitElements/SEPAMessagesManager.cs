@@ -54,32 +54,17 @@ namespace DirectDebitElements
         {
             string xMLNamespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03";
             string rootElementName = "Document";
-            CustomerPaymentStatusReportDocument customerPaymentStatusReportDocument = XMLSerializer.XMLDeserializeFromString<CustomerPaymentStatusReportDocument>(paymentStatusReportXMLMessage,rootElementName, xMLNamespace);
-
+            CustomerPaymentStatusReportDocument customerPaymentStatusReportDocument = null;
+            try
+            {
+                customerPaymentStatusReportDocument = XMLSerializer.XMLDeserializeFromString<CustomerPaymentStatusReportDocument>(paymentStatusReportXMLMessage, rootElementName, xMLNamespace);
+            }
+            catch (InvalidOperationException invalidFormatException)
+            {
+                throw;
+            }
+           
             return ProcessCustomerPaymentStatusReportDocument(customerPaymentStatusReportDocument);
-
-            //string paymentStatusReport_MessageID = customerPaymentStatusReportDocument.CstmrPmtStsRpt.GrpHdr.MsgId;
-            //DateTime paymentStatusReport_MessageCreationDateTime = customerPaymentStatusReportDocument.CstmrPmtStsRpt.GrpHdr.CreDtTm;
-            //DateTime paymentStatusReport_RejectAccountChargeDateTime = ExtractRejectAccountChargeDateTimeFrom_OrgnlGrpInfAndSts_OrgnlMsgId(customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlMsgId);
-            //int paymentStatusReport_NumberOfTransactions = Int32.Parse(customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlNbOfTxs);
-            //decimal paymentStatusReport_ControlSum = customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlCtrlSum;
-            //List<DirectDebitPaymentInstructionReject> directDebitPaymentInstructionRejects = new List<DirectDebitPaymentInstructionReject>();
-
-            //foreach (OriginalPaymentInformation1 originalPaymentInformation1 in customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlPmtInfAndSts)
-            //{
-            //    directDebitPaymentInstructionRejects.Add(SEPAElementsReader.CreateDirectDebitPaymentInstructionReject(originalPaymentInformation1));
-            //}
-
-            //PaymentStatusReportManager paymentStatusReportmanager = new PaymentStatusReportManager();
-            //PaymentStatusReport paymentStatusReport = paymentStatusReportmanager.CreateAPaymentStatusReport(
-            //    paymentStatusReport_MessageID,
-            //    paymentStatusReport_MessageCreationDateTime,
-            //    paymentStatusReport_RejectAccountChargeDateTime,
-            //    paymentStatusReport_NumberOfTransactions,
-            //    paymentStatusReport_ControlSum,
-            //    directDebitPaymentInstructionRejects);
-
-            //return paymentStatusReport;
         }
 
         public PaymentStatusReport ReadISO20022PaymentStatusReportFile(string paymentStatusReportXMLFilePath)
@@ -89,29 +74,6 @@ namespace DirectDebitElements
             CustomerPaymentStatusReportDocument customerPaymentStatusReportDocument = XMLSerializer.XMLDeserializeFromFile<CustomerPaymentStatusReportDocument>(paymentStatusReportXMLFilePath, rootElementName, xMLNamespace);
 
             return ProcessCustomerPaymentStatusReportDocument(customerPaymentStatusReportDocument);
-
-            //string paymentStatusReport_MessageID = customerPaymentStatusReportDocument.CstmrPmtStsRpt.GrpHdr.MsgId;
-            //DateTime paymentStatusReport_MessageCreationDateTime = customerPaymentStatusReportDocument.CstmrPmtStsRpt.GrpHdr.CreDtTm;
-            //DateTime paymentStatusReport_RejectAccountChargeDateTime = ExtractRejectAccountChargeDateTimeFrom_OrgnlGrpInfAndSts_OrgnlMsgId(customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlMsgId);
-            //int paymentStatusReport_NumberOfTransactions = Int32.Parse(customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlNbOfTxs);
-            //decimal paymentStatusReport_ControlSum = customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlCtrlSum;
-            //List<DirectDebitPaymentInstructionReject> directDebitPaymentInstructionRejects = new List<DirectDebitPaymentInstructionReject>();
-
-            //foreach (OriginalPaymentInformation1 originalPaymentInformation1 in customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlPmtInfAndSts)
-            //{
-            //    directDebitPaymentInstructionRejects.Add(SEPAElementsReader.CreateDirectDebitPaymentInstructionReject(originalPaymentInformation1));
-            //}
-
-            //PaymentStatusReportManager paymentStatusReportmanager = new PaymentStatusReportManager();
-            //PaymentStatusReport paymentStatusReport = paymentStatusReportmanager.CreateAPaymentStatusReport(
-            //    paymentStatusReport_MessageID,
-            //    paymentStatusReport_MessageCreationDateTime,
-            //    paymentStatusReport_RejectAccountChargeDateTime,
-            //    paymentStatusReport_NumberOfTransactions,
-            //    paymentStatusReport_ControlSum,
-            //    directDebitPaymentInstructionRejects);
-
-            //return paymentStatusReport;
         }
 
         private PaymentStatusReport ProcessCustomerPaymentStatusReportDocument(CustomerPaymentStatusReportDocument customerPaymentStatusReportDocument)

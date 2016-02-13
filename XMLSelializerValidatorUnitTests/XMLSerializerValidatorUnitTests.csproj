@@ -70,6 +70,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="XML Test Files\OrderedItem%28wrong%29.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="XML Test Files\OrderedItem.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

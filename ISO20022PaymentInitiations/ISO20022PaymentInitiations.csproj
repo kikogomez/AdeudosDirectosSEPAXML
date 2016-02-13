@@ -125,6 +125,7 @@
     <Compile Include="SchemaSerializableClasses\DDInitiation\TaxPeriod1.cs" />
     <Compile Include="SchemaSerializableClasses\DDInitiation\TaxRecord1.cs" />
     <Compile Include="SchemaSerializableClasses\DDInitiation\TaxRecordDetails1.cs" />
+    <Compile Include="SchemaValidators.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ReferencesAndTools\ReferencesAndTools.csproj">

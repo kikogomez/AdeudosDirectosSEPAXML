@@ -92,12 +92,29 @@ namespace SEPAXMLPaymentStatusReader
 
         public void ReadPaymentStatusReportIntoDataBase(string oleDBConnectionString, string sourcePaymentStatusReportPath)
         {
-            SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
-            PaymentStatusReport paymentStatusReport = sEPAMessagesManager.ReadISO20022PaymentStatusReportFile(sourcePaymentStatusReportPath);
-
+            PaymentStatusReport paymentStatusReport = ReadPaymentStatusReportXMLFile(sourcePaymentStatusReportPath);
 
             //Next, connect to database and write data into it
 
         }
+
+        private PaymentStatusReport ReadPaymentStatusReportXMLFile(string sourcePaymentStatusReportPath)
+        {
+            string fileName = Path.GetFileName(sourcePaymentStatusReportPath);
+            if (verboseExecution) Console.WriteLine("Reading file {0}", fileName);
+            SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
+            PaymentStatusReport paymentStatusReport=null;
+            try
+            {
+                paymentStatusReport = sEPAMessagesManager.ReadISO20022PaymentStatusReportFile(sourcePaymentStatusReportPath);
+            }
+            catch (Exception exception)
+            {
+
+            }
+
+            return paymentStatusReport;
+        }
+
     }
 }

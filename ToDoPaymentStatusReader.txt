@@ -1,6 +1,15 @@
 PENDIENTE
 ---------
-
+- Antes de leer el fichero de devoluciones hemos de VALIDARLO
+- El procedimiento de validación no se hace desde este programa, ni desde DirectDebits, sino que la funcion de validación con el esquema lo debe hacer ISO20022PaymentInitiations
+	-> Implementar la validación en ISOPaymentInitiations
+	-> Crear los tests los tests
+	-> El método de validación se invoca desde DirectDebitElements -> SEPAMessagesManager ->ReadISO20022PaymentStatusReportStringMessage
+		* Si no se ha validado corerctamente (no se devuelve "" en ValidationErrors) LANZAR UNA EXCEPCION
+	-> Crear los tests
+	-> En el programa, lanzar el proceso con try y capturar la excepcion
+		* Se lanza mensaje de error
+		* Se sale con un ExitCode que indique el error
 
 
 ---------------------------------------

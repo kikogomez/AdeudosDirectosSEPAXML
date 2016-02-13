@@ -21,29 +21,6 @@ namespace ISO20022PaymentInitiationsUnitTests
         }
 
         [TestMethod]
-        public void ISO20020XMLExample1FileIsWellValidatedThroughXSD()
-        {
-            //Original valid pain.008.001.02 XML file from ISO20022
-            string xMLFilePath = @"XML Test Files\pain.002.001.03\pain.002.001.03_1.xml";
-
-            string validatingErrors = XMLValidator.ValidateXMLFileThroughXSDFile(xMLFilePath, xSDFilePath);
-            Assert.AreEqual(String.Empty, validatingErrors);
-        }
-
-        [TestMethod]
-        public void ISO20020XMLExample2FileIsWellValidatedThroughXSD()
-        {
-            //Original valid pain.008.001.02 XML file from ISO20022
-            string xMLFilePath = @"XML Test Files\pain.002.001.03\pain.002.001.03_2.xml";
-
-            //Original valid pain.008.002.01 XSD File from ISO20022
-            string xSDFilePath = @"XSDFiles\pain.002.001.03.xsd";
-
-            string validatingErrors = XMLValidator.ValidateXMLFileThroughXSDFile(xMLFilePath, xSDFilePath);
-            Assert.AreEqual(String.Empty, validatingErrors);
-        }
-
-        [TestMethod]
         public void LaCaixaXMLExampleFileIsWellValidatedThroughXSD()
         {
             //PaymentStatusReportexample file provided by creditor agent
