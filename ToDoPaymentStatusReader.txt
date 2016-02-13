@@ -5,9 +5,10 @@ PENDIENTE
 	-> Implementar la validación en ISOPaymentInitiations (Ok)
 	-> Crear los tests los tests (Ok)
 	-> El método de validación se invoca desde DirectDebitElements -> SEPAMessagesManager ->ReadISO20022PaymentStatusReportStringMessage
-		* Si no se ha validado corerctamente LANZAR UNA EXCEPCION. Puede ser por dos razones: (Ok)
+		* Si no se ha validado corerctamente LANZAR UNA EXCEPCION. Puede ser por tres razones: (Ok)
 			-> El fichero no es un XML valido -> se recibe una excepcion XMLException (Ok)
 			-> Errores en el esquema (se recibe una cadena distinta de "") (Ok)
+			-> Errores de lectura general -> lo mejor es leer a un string (File.ReadAllText()) y ahí capturar la excepcion. Las dos primeras se capturan al intentar interpretar el string.
 	-> Crear los tests
 	-> En el programa, lanzar el proceso con try y capturar la excepcion
 		* Se lanza mensaje de error
