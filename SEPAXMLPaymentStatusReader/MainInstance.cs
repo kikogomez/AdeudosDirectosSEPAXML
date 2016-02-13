@@ -97,6 +97,7 @@ namespace SEPAXMLPaymentStatusReader
 
 
             //Next, connect to database and write data into it
+
         }
     }
 }
