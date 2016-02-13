@@ -20,18 +20,7 @@ namespace ISO20022PaymentInitiationsUnitTests
             xSDFilePath = @"XSDFiles\pain.002.001.03.xsd";
         }
 
-        [TestMethod]
-        public void LaCaixaXMLExampleFileIsWellValidatedThroughXSD()
-        {
-            //PaymentStatusReportexample file provided by creditor agent
-            string xMLFilePath = @"XML Test Files\pain.002.001.03\LaCaixa_pain00200103_Example1.xml";
 
-            //Original valid pain.008.002.01 XSD File from ISO20022
-            string xSDFilePath = @"XSDFiles\pain.002.001.03.xsd";
-
-            string validatingErrors = XMLValidator.ValidateXMLFileThroughXSDFile(xMLFilePath, xSDFilePath);
-            Assert.AreEqual(String.Empty, validatingErrors);
-        }
 
         [TestMethod]
         public void OriginalTransactionReference_OrgnlTxRef_IsCorrectlyDeserialized()

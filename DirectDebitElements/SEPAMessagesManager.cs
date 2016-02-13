@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using ISO20022PaymentInitiations;
 using ISO20022PaymentInitiations.SchemaSerializableClasses;
 using ISO20022PaymentInitiations.SchemaSerializableClasses.DDInitiation;
 using ISO20022PaymentInitiations.SchemaSerializableClasses.PaymentStatusReport;
@@ -54,16 +56,21 @@ namespace DirectDebitElements
         {
             string xMLNamespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03";
             string rootElementName = "Document";
-            CustomerPaymentStatusReportDocument customerPaymentStatusReportDocument = null;
-            try
-            {
-                customerPaymentStatusReportDocument = XMLSerializer.XMLDeserializeFromString<CustomerPaymentStatusReportDocument>(paymentStatusReportXMLMessage, rootElementName, xMLNamespace);
-            }
-            catch (InvalidOperationException invalidFormatException)
-            {
-                throw;
-            }
-           
+
+            ValidatePaymentStatusReportString(paymentStatusReportXMLMessage);
+
+            //string xMLValidationErrors = "";
+            //try
+            //{
+            //    xMLValidationErrors = SchemaValidators.ValidatePaymentStatusReportString(paymentStatusReportXMLMessage);
+            //}
+            //catch (System.Xml.XmlException)
+            //{
+            //    throw;
+            //}
+            //if (xMLValidationErrors != "") return null;
+
+            CustomerPaymentStatusReportDocument customerPaymentStatusReportDocument = customerPaymentStatusReportDocument = XMLSerializer.XMLDeserializeFromString<CustomerPaymentStatusReportDocument>(paymentStatusReportXMLMessage, rootElementName, xMLNamespace);
             return ProcessCustomerPaymentStatusReportDocument(customerPaymentStatusReportDocument);
         }
 
@@ -71,9 +78,37 @@ namespace DirectDebitElements
         {
             string xMLNamespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03";
             string rootElementName = "Document";
-            CustomerPaymentStatusReportDocument customerPaymentStatusReportDocument = XMLSerializer.XMLDeserializeFromFile<CustomerPaymentStatusReportDocument>(paymentStatusReportXMLFilePath, rootElementName, xMLNamespace);
 
+            string paymentStatusReportXMLMessage = File.ReadAllText(paymentStatusReportXMLFilePath);
+            ValidatePaymentStatusReportString(paymentStatusReportXMLMessage);
+
+            //string xMLValidationErrors = "";
+            //try
+            //{
+            //    xMLValidationErrors = SchemaValidators.ValidatePaymentStatusReportFile(paymentStatusReportXMLFilePath);
+            //}
+            //catch (System.Xml.XmlException)
+            //{
+            //    throw;
+            //}
+            //if (xMLValidationErrors != "") return null;
+
+            CustomerPaymentStatusReportDocument customerPaymentStatusReportDocument = XMLSerializer.XMLDeserializeFromFile<CustomerPaymentStatusReportDocument>(paymentStatusReportXMLFilePath, rootElementName, xMLNamespace);
             return ProcessCustomerPaymentStatusReportDocument(customerPaymentStatusReportDocument);
+        }
+
+        private void ValidatePaymentStatusReportString(string paymentStatusReportXMLMessage)
+        {
+            string xMLValidationErrors = "";
+            try
+            {
+                xMLValidationErrors = SchemaValidators.ValidatePaymentStatusReportString(paymentStatusReportXMLMessage);
+            }
+            catch (System.Xml.XmlException notValidXMLFileException)
+            {
+                throw new ArgumentException("Not a valid XML File", notValidXMLFileException);
+            }
+            if (xMLValidationErrors != "") throw new ArgumentException(xMLValidationErrors);
         }
 
         private PaymentStatusReport ProcessCustomerPaymentStatusReportDocument(CustomerPaymentStatusReportDocument customerPaymentStatusReportDocument)
@@ -122,19 +157,8 @@ namespace DirectDebitElements
                 initiationParty_InitPty);
             List<PaymentInstructionInformation4> paymentInformation_PmtInf_List = new List<PaymentInstructionInformation4>();
 
-            //List<DirectDebitTransactionInformation9> directDebitTransactionInfoList = new List<DirectDebitTransactionInformation9>();
             foreach (DirectDebitPaymentInstruction directDebitPaymentInstruction in directDebitRemittance.DirectDebitPaymentInstructions)
             {
-                //foreach (DirectDebitTransaction directDebitTransaction in directDebitPaymentInstruction.DirectDebitTransactions)
-                //{
-                //    DirectDebitTransactionInformation9 directDebitTransactionInfo_DrctDbtTxInf = SEPAElementsGenerator.GenerateDirectDebitTransactionInfo_DrctDbtTxInf(
-                //        creditorAgent,
-                //        directDebitTransaction,
-                //        singleUnstructuredConcept,
-                //        conceptsIncludeAmounts);
-                //    directDebitTransactionInfoList.Add(directDebitTransactionInfo_DrctDbtTxInf);
-                //}
-
                 PaymentInstructionInformation4 paymentInformation_PmtInf = SEPAElementsGenerator.GeneratePaymentInformation_PmtInf(
                     creditor,
                     creditorAgent,
