@@ -101,6 +101,12 @@
     <Content Include="XML Test Files\pain.002.001.03\LaCaixa_pain00200103_Example1.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="XML Test Files\pain.002.001.03\pain.002.001.03_2%28ErroneousFormat%29.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="XML Test Files\pain.002.001.03\pain.002.001.03_2%28NotCompilant%29.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="XML Test Files\pain.008.001.02\BasicDirectDebitRemittanceExampleWithConceptsJoined.XML">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

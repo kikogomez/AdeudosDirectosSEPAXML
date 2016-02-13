@@ -107,10 +107,26 @@ namespace SEPAXMLPaymentStatusReader
             try
             {
                 paymentStatusReport = sEPAMessagesManager.ReadISO20022PaymentStatusReportFile(sourcePaymentStatusReportPath);
-            }
-            catch (Exception exception)
-            {
 
+                ///Nota: Posibles errores
+                /// -> Error general de lectura (problemas de acceso a disco)
+                /// -> El fichero no es un XML valido (errores con la construccion de los nodos, etiqueta incompletas....)
+                /// -> El fichero no valida frente al esquema XSD
+                ///Hay que conseguir que a traves de la excepcion podamos distinguir todas las posibilidades
+                ///Por lo pronto falta discernir los errores de lectura generales
+
+            }
+            catch (ArgumentException xMLFileErrorException)
+            {
+                if (xMLFileErrorException.InnerException!=null)
+                {
+                    Console.WriteLine("The source file is not a valid XML file");
+                    
+                }
+                else
+                {
+
+                }
             }
 
             return paymentStatusReport;

@@ -58,18 +58,6 @@ namespace DirectDebitElements
             string rootElementName = "Document";
 
             ValidatePaymentStatusReportString(paymentStatusReportXMLMessage);
-
-            //string xMLValidationErrors = "";
-            //try
-            //{
-            //    xMLValidationErrors = SchemaValidators.ValidatePaymentStatusReportString(paymentStatusReportXMLMessage);
-            //}
-            //catch (System.Xml.XmlException)
-            //{
-            //    throw;
-            //}
-            //if (xMLValidationErrors != "") return null;
-
             CustomerPaymentStatusReportDocument customerPaymentStatusReportDocument = customerPaymentStatusReportDocument = XMLSerializer.XMLDeserializeFromString<CustomerPaymentStatusReportDocument>(paymentStatusReportXMLMessage, rootElementName, xMLNamespace);
             return ProcessCustomerPaymentStatusReportDocument(customerPaymentStatusReportDocument);
         }
@@ -79,22 +67,24 @@ namespace DirectDebitElements
             string xMLNamespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03";
             string rootElementName = "Document";
 
-            string paymentStatusReportXMLMessage = File.ReadAllText(paymentStatusReportXMLFilePath);
-            ValidatePaymentStatusReportString(paymentStatusReportXMLMessage);
-
-            //string xMLValidationErrors = "";
-            //try
-            //{
-            //    xMLValidationErrors = SchemaValidators.ValidatePaymentStatusReportFile(paymentStatusReportXMLFilePath);
-            //}
-            //catch (System.Xml.XmlException)
-            //{
-            //    throw;
-            //}
-            //if (xMLValidationErrors != "") return null;
-
+            ValidatePaymentStatusReportFile(paymentStatusReportXMLFilePath);
             CustomerPaymentStatusReportDocument customerPaymentStatusReportDocument = XMLSerializer.XMLDeserializeFromFile<CustomerPaymentStatusReportDocument>(paymentStatusReportXMLFilePath, rootElementName, xMLNamespace);
             return ProcessCustomerPaymentStatusReportDocument(customerPaymentStatusReportDocument);
+        }
+
+        private void ValidatePaymentStatusReportFile(string paymentStatusReportXMLFilePath)
+        {
+            string xMLValidationErrors = "";
+            try
+            {
+                xMLValidationErrors = SchemaValidators.ValidatePaymentStatusReportFile(paymentStatusReportXMLFilePath);
+            }
+            catch (System.Xml.XmlException notValidXMLFileException)
+            {
+                throw new ArgumentException("Not a valid XML File", notValidXMLFileException);
+            }
+            if (xMLValidationErrors != "") throw new ArgumentException(xMLValidationErrors);
+
         }
 
         private void ValidatePaymentStatusReportString(string paymentStatusReportXMLMessage)

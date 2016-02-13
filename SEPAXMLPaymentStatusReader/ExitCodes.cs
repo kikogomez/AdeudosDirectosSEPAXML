@@ -27,7 +27,13 @@ namespace SEPAXMLPaymentStatusReader
         /// File Reading Error
         FileReadingError = -5,
 
+        /// Not Valid XML File Error
+        NotValidXMLFile = -6,
+
+        /// File is Compilant to pain.002.001.03 Error
+        NotCompilantToSchemaFile = -7,
+
         /// Data Reading error
-        DataBaseWritingError = -6,
+        DataBaseWritingError = -8,
     }
 }

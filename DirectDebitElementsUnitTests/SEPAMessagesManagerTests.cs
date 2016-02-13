@@ -7,6 +7,7 @@ using DirectDebitElements;
 using ReferencesAndTools;
 using XMLSerializerValidator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ExtensionMethods;
 
 namespace DirectDebitElementsUnitTests
 {
@@ -281,6 +282,42 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void AnInvalidXMLFileThrowsAnArgumentExceptionWhenIsReaded_NotValidXMLFile()
+        {
+            string xMLFilePath = @"XML Test Files\pain.002.001.03\pain.002.001.03_2(ErroneousFormat).xml";
+            SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
+            try
+            {
+                PaymentStatusReport paymentStatusReport = sEPAMessagesManager.ReadISO20022PaymentStatusReportFile(xMLFilePath);
+            }
+            catch(ArgumentException invalidXMLFormatException)
+            {
+                Assert.AreEqual("Not a valid XML File", invalidXMLFormatException.GetMessageWithoutParamName());
+                Assert.AreEqual(typeof(System.Xml.XmlException), invalidXMLFormatException.InnerException.GetType());
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void AnNonCompilantToPain00200103XMLFileThrowsAnArgumentExceptionWithNoInnerExceptionWhenIsReaded_XMLValidationErrors()
+        {
+            string xMLFilePath = @"XML Test Files\pain.002.001.03\pain.002.001.03_2(NotCompilant).xml";
+            SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
+            try
+            {
+                PaymentStatusReport paymentStatusReport = sEPAMessagesManager.ReadISO20022PaymentStatusReportFile(xMLFilePath);
+            }
+            catch (ArgumentException invalidXMLFormatException)
+            {
+                Assert.AreEqual("ERROR:", invalidXMLFormatException.Message.Left(6));
+                Assert.AreEqual(null, invalidXMLFormatException.InnerException);
+                throw;
+            }
+        }
+
+        [TestMethod]
         public void APaymentStatusReportIsCorrectlyInitializedFromAXMLStringMessage()
         {
             string xMLFilePath = @"XML Test Files\pain.002.001.03\LaCaixa_pain00200103_Example1.xml";
@@ -359,6 +396,41 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual("2015-12-0115153115Rem.152 Ord.1", paymentStatusReport.DirectDebitPaymentInstructionRejects[2].OriginalPaymentInformationID);
             Assert.AreEqual(1, paymentStatusReport.DirectDebitPaymentInstructionRejects[1].NumberOfTransactions);
             Assert.AreEqual((decimal)71.47, paymentStatusReport.DirectDebitPaymentInstructionRejects[2].ControlSum);
+            CollectionAssert.AreEqual(expectedOriginalEndtoEndTransactionIdentificationList2, paymentStatusReport.DirectDebitPaymentInstructionRejects[1].OriginalEndtoEndTransactiontransactionIDList);
+        }
+
+        [TestMethod]
+        public void APaymentStatusReportIsCorrectlyInitializedFromAXMLFile()
+        {
+            string xMLFilePath = @"XML Test Files\pain.002.001.03\LaCaixa_pain00200103_Example1.xml";
+
+            SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
+            PaymentStatusReport paymentStatusReport = sEPAMessagesManager.ReadISO20022PaymentStatusReportFile(xMLFilePath);
+
+            //General info from file
+            DateTime expectedMessageCreationDate = DateTime.Parse("2012-07-18T06:00:01");
+            DateTime expectedRejectAccountChargeDateTime = DateTime.Parse("2012-07-18");
+            Assert.AreEqual("DATIR00112G12345678100", paymentStatusReport.MessageID);
+            Assert.AreEqual(expectedMessageCreationDate, paymentStatusReport.MessageCreationDateTime);
+            Assert.AreEqual(expectedRejectAccountChargeDateTime, paymentStatusReport.RejectAccountChargeDateTime);
+            Assert.AreEqual(3, paymentStatusReport.NumberOfTransactions);
+            Assert.AreEqual((decimal)220.30, paymentStatusReport.ControlSum);
+            Assert.AreEqual(2, paymentStatusReport.DirectDebitPaymentInstructionRejects.Count);
+
+            //Info from first DirectDebitPaymentInstructionReject
+            List<string> expectedOriginalEndtoEndTransactionIdentificationList1 = new List<string>()
+            {"201207010001/01002", "201207010001/02452"};
+            Assert.AreEqual("PRE201207010001", paymentStatusReport.DirectDebitPaymentInstructionRejects[0].OriginalPaymentInformationID);
+            Assert.AreEqual(2, paymentStatusReport.DirectDebitPaymentInstructionRejects[0].NumberOfTransactions);
+            Assert.AreEqual((decimal)130.30, paymentStatusReport.DirectDebitPaymentInstructionRejects[0].ControlSum);
+            CollectionAssert.AreEqual(expectedOriginalEndtoEndTransactionIdentificationList1, paymentStatusReport.DirectDebitPaymentInstructionRejects[0].OriginalEndtoEndTransactiontransactionIDList);
+
+            //Info from second DirectDebitPaymentInstructionReject
+            List<string> expectedOriginalEndtoEndTransactionIdentificationList2 = new List<string>()
+            {"201205270001/01650"};
+            Assert.AreEqual("PRE201205270001", paymentStatusReport.DirectDebitPaymentInstructionRejects[1].OriginalPaymentInformationID);
+            Assert.AreEqual(1, paymentStatusReport.DirectDebitPaymentInstructionRejects[1].NumberOfTransactions);
+            Assert.AreEqual((decimal)90, paymentStatusReport.DirectDebitPaymentInstructionRejects[1].ControlSum);
             CollectionAssert.AreEqual(expectedOriginalEndtoEndTransactionIdentificationList2, paymentStatusReport.DirectDebitPaymentInstructionRejects[1].OriginalEndtoEndTransactiontransactionIDList);
         }
     }
