@@ -31,22 +31,36 @@ namespace SEPAXMLPaymentStatusReader
             }
 
             if (verboseExecution) Console.WriteLine("Locating sorce XML Payment Status Report...");
-            if (!File.Exists(sourcePaymentStatusReportPath))
+            if (!PathIsValid(sourcePaymentStatusReportPath))
             {
-                Console.WriteLine("{0} not found!", sourcePaymentStatusReportPath);
                 Console.WriteLine("Press any key to close program...");
                 Console.ReadKey();
                 Environment.Exit((int)ExitCodes.InvalidPaymentStatusFilePath);
             }
 
+            //if (!File.Exists(sourcePaymentStatusReportPath))
+            //{
+            //    Console.WriteLine("{0} not found!", Path.GetFileName(sourcePaymentStatusReportPath));
+            //    Console.WriteLine("Press any key to close program...");
+            //    Console.ReadKey();
+            //    Environment.Exit((int)ExitCodes.InvalidPaymentStatusFilePath);
+            //}
+
             if (verboseExecution) Console.WriteLine("Locating database to write to...");
-            if (!File.Exists(dataBasePath))
+            if (!PathIsValid(dataBasePath))
             {
-                Console.WriteLine("{0} not found!", dataBasePath);
                 Console.WriteLine("Press any key to close program...");
                 Console.ReadKey();
                 Environment.Exit((int)ExitCodes.InvalidDataBasePath);
             }
+
+            //if (!File.Exists(dataBasePath))
+            //{
+            //    Console.WriteLine("{0} not found!", dataBasePath);
+            //    Console.WriteLine("Press any key to close program...");
+            //    Console.ReadKey();
+            //    Environment.Exit((int)ExitCodes.InvalidDataBasePath);
+            //}
 
             string oleDBConnectionString = CreateDatabaseConnectionString(dataBasePath);
 
@@ -100,10 +114,6 @@ namespace SEPAXMLPaymentStatusReader
 
         private PaymentStatusReport ReadPaymentStatusReportXMLFile(string sourcePaymentStatusReportPath)
         {
-            //To better control errors, first read files, then serialize from string
-            if (verboseExecution) Console.WriteLine("Checking source file path is valid...");
-            CheckPathIsValid(sourcePaymentStatusReportPath);
-
             if (verboseExecution) Console.WriteLine("Reading file {0}", Path.GetFileName(sourcePaymentStatusReportPath));
             string xmlStringMessage = ReadXMLSourceFileToString(sourcePaymentStatusReportPath);
 
@@ -165,7 +175,7 @@ namespace SEPAXMLPaymentStatusReader
             return xmlMessage;
         }
 
-        private void CheckPathIsValid(string fullPathToCheck)
+        private bool PathIsValid(string fullPathToCheck)
         {
             string fileName = "";
             try
@@ -174,15 +184,22 @@ namespace SEPAXMLPaymentStatusReader
             }
             catch (ArgumentException filePathErrorException)
             {
-                Console.WriteLine("Path to fille contains invalid characters");
+                Console.WriteLine("Path to file contains invalid characters");
                 Console.WriteLine(filePathErrorException.Message);
-                Environment.Exit((int)ExitCodes.InvalidPaymentStatusFilePath);
+                return false;
+
             }
             if (fileName == "")
             {
-                Console.WriteLine("No File specified in path");
-                Environment.Exit((int)ExitCodes.InvalidPaymentStatusFilePath);
+                Console.WriteLine("No file specified in path");
+                return false;
             }
+            if (!File.Exists(fullPathToCheck))
+            {
+                Console.WriteLine("File not found!");
+                return false;
+            }
+            return true;
         }
 
     }
