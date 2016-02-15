@@ -96,6 +96,12 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             OleDbConnection connection = new OleDbConnection(oleDBConnectionString);
 
             RetrieveRemmitanceInformationFromDataBase(connection, out creditorNIF, out creditorName, out directDebitRemmitance);
+            if (directDebitRemmitance.NumberOfTransactions==0)
+            {
+                Console.WriteLine("There are no bill to send");
+                Console.WriteLine("No file created");
+                Environment.Exit((int)ExitCodes.NoDataReadedInDatabase);
+            }
 
             bool singleUnstructuredConcepts = true;
             bool conceptsIncludeAmounts = true;
@@ -144,11 +150,13 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
                 if (verboseExecution) Console.WriteLine("Reading recurrent direct debits...");
                 string rCURTransactionsPaymentInstructionID = directDebitRemittance.MessageID + "-RC";
                 DirectDebitPaymentInstruction rCURDirectDebitPaymentInstruction = CreatePaymentInstructionWithRCURTransactions(connection, rCURTransactionsPaymentInstructionID, "CORE");
-                directDebitRemittance.AddDirectDebitPaymentInstruction(rCURDirectDebitPaymentInstruction);
+                if (rCURDirectDebitPaymentInstruction.NumberOfDirectDebitTransactions!=0) 
+                    directDebitRemittance.AddDirectDebitPaymentInstruction(rCURDirectDebitPaymentInstruction);
                 if (verboseExecution) Console.WriteLine("Reading first time direct debits...");
                 string fRSTTransactionsPaymentInstructionID = directDebitRemittance.MessageID + "-FR";
                 DirectDebitPaymentInstruction fRSTDirectDebitPaymentInstruction = CreatePaymentInstructionWithFRSTTransactions(connection, fRSTTransactionsPaymentInstructionID, "CORE");
-                directDebitRemittance.AddDirectDebitPaymentInstruction(fRSTDirectDebitPaymentInstruction);
+                if (fRSTDirectDebitPaymentInstruction.NumberOfDirectDebitTransactions != 0)
+                    directDebitRemittance.AddDirectDebitPaymentInstruction(fRSTDirectDebitPaymentInstruction);
             }
         }
 

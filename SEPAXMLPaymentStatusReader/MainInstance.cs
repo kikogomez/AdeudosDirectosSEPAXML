@@ -100,36 +100,89 @@ namespace SEPAXMLPaymentStatusReader
 
         private PaymentStatusReport ReadPaymentStatusReportXMLFile(string sourcePaymentStatusReportPath)
         {
-            string fileName = Path.GetFileName(sourcePaymentStatusReportPath);
-            if (verboseExecution) Console.WriteLine("Reading file {0}", fileName);
+            //To better control errors, first read files, then serialize from string
+            if (verboseExecution) Console.WriteLine("Checking source file path is valid...");
+            CheckPathIsValid(sourcePaymentStatusReportPath);
+
+            if (verboseExecution) Console.WriteLine("Reading file {0}", Path.GetFileName(sourcePaymentStatusReportPath));
+            string xmlStringMessage = ReadXMLSourceFileToString(sourcePaymentStatusReportPath);
+
+            if (verboseExecution) Console.WriteLine("Parsing xML Message...", Path.GetFileName(sourcePaymentStatusReportPath));
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
-            PaymentStatusReport paymentStatusReport=null;
+            PaymentStatusReport paymentStatusReport = null;
             try
             {
-                paymentStatusReport = sEPAMessagesManager.ReadISO20022PaymentStatusReportFile(sourcePaymentStatusReportPath);
+                paymentStatusReport = sEPAMessagesManager.ReadISO20022PaymentStatusReportStringMessage(xmlStringMessage);
+            }
 
+            catch (Exception ex) when (ex is InvalidOperationException || ex is System.Xml.XmlException)
+            {
                 ///Nota: Posibles errores
-                /// -> Error general de lectura (problemas de acceso a disco)
                 /// -> El fichero no es un XML valido (errores con la construccion de los nodos, etiqueta incompletas....)
                 /// -> El fichero no valida frente al esquema XSD
                 ///Hay que conseguir que a traves de la excepcion podamos distinguir todas las posibilidades
                 ///Por lo pronto falta discernir los errores de lectura generales
+                //if (xMLFileErrorException.InnerException != null)
+                //{
+                //    Console.WriteLine("The source file is not a valid XML file");
 
-            }
-            catch (ArgumentException xMLFileErrorException)
-            {
-                if (xMLFileErrorException.InnerException!=null)
-                {
-                    Console.WriteLine("The source file is not a valid XML file");
-                    
-                }
-                else
-                {
+                //}
+                //else
+                //{
 
-                }
+                //}
             }
 
             return paymentStatusReport;
+        }
+
+        private string ReadXMLSourceFileToString(string sourcePaymentStatusReportPath)
+        {
+            string xmlMessage = null;
+            try
+            {
+                xmlMessage = File.ReadAllText(sourcePaymentStatusReportPath);
+            }
+            catch (Exception fileReadException) when (fileReadException is IOException || fileReadException is UnauthorizedAccessException || fileReadException is System.Security.SecurityException)
+            {
+                string errorMessage = "";
+                int exitCode = 0;
+                switch (fileReadException.GetType().ToString())
+                {
+                    case "System.IO.IOException":
+                        errorMessage = "File read error!" + Environment.NewLine + ((IOException)fileReadException).Message;
+                        exitCode = (int)ExitCodes.FileReadingError;
+                        break;
+                    case "System.UnauthorizedAccessException":
+                    case "System.Security.SecurityException":
+                        errorMessage = "You don't have permision to read file or directory" + Environment.NewLine + fileReadException.Message;
+                        exitCode = (int)ExitCodes.FileReadingError;
+                        break;
+                }
+                Console.WriteLine(errorMessage);
+                Environment.Exit(exitCode);
+            }
+            return xmlMessage;
+        }
+
+        private void CheckPathIsValid(string fullPathToCheck)
+        {
+            string fileName = "";
+            try
+            {
+                fileName = Path.GetFileName(fullPathToCheck);
+            }
+            catch (ArgumentException filePathErrorException)
+            {
+                Console.WriteLine("Path to fille contains invalid characters");
+                Console.WriteLine(filePathErrorException.Message);
+                Environment.Exit((int)ExitCodes.InvalidPaymentStatusFilePath);
+            }
+            if (fileName == "")
+            {
+                Console.WriteLine("No File specified in path");
+                Environment.Exit((int)ExitCodes.InvalidPaymentStatusFilePath);
+            }
         }
 
     }

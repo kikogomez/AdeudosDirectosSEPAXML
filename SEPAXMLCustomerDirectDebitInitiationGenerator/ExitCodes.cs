@@ -24,7 +24,10 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
         ///Data Reading error
         DataBaseReadingError = -4,
 
+        ///No data readed in database
+        NoDataReadedInDatabase = -5,
+
         ///File Creation Error
-        FileCreatingError = -5
+        FileCreatingError = -6
     }
 }
