@@ -121,7 +121,15 @@ namespace SEPAXMLPaymentStatusReportReader
         public PaymentStatusReport ReadPaymentStatusReportXMLFile(string sourcePaymentStatusReportPath)
         {
             if (verboseExecution) Console.WriteLine("Reading file {0}", Path.GetFileName(sourcePaymentStatusReportPath));
-            string xmlStringMessage = ReadXMLSourceFileToString(sourcePaymentStatusReportPath);
+            string xmlStringMessage = null;
+            try
+            {
+                xmlStringMessage = ReadXMLSourceFileToString(sourcePaymentStatusReportPath);
+            }
+            catch (Exception fileReadException) when (fileReadException is IOException || fileReadException is UnauthorizedAccessException || fileReadException is System.Security.SecurityException)
+            {
+                ProcessFileReadToStringException(fileReadException);
+            }
 
             if (verboseExecution) Console.WriteLine("Parsing xML Message...", Path.GetFileName(sourcePaymentStatusReportPath));
             PaymentStatusReport paymentStatusReport = null;
