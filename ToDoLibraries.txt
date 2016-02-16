@@ -1,5 +1,23 @@
 PENDIENTE
 ----------------------------------------
+- Añadir la validación de un PaymentStatusReport
+	-> Implementar la validación en ISOPaymentInitiations (Ok)
+	-> Crear los tests los tests (Ok)
+	-> El método de validación se invoca desde DirectDebitElements -> SEPAMessagesManager ->ReadISO20022PaymentStatusReportStringMessage
+		* Se valida siempre una CADENA. En el procedimiento ReadISO20022PaymentStatusReportFile:
+			-> Primero leemos el fichero
+				* Comprobamos errores en el path
+				* Intentamos leer el fichero con File.ReadAllText() y controlamos las posibles excepciones, que se pasan arriba (se vuelven a lanzar)
+			-> Luego se asa la cadena leida a ReadISO20022PaymentStatusReportStringMessage
+		* Si no se ha validado corerctamente LANZAR UNA EXCEPCION. Puede ser por dos razones: (Ok)
+			-> El fichero no es un XML valido -> se recibe una excepcion XMLException (Ok)
+			-> Errores en el esquema (se recibe una cadena distinta de "") (Ok)
+			
+	-> Crear los tests
+	-> En el programa, lanzar el proceso con try y capturar la excepcion
+		* Se lanza mensaje de error
+		* Se sale con un ExitCode que indique el error
+
 - Revisar los transactions / Payment Instuctions con importes 0
 	-> Si el importe de la transaccion / payment, está a 0, no añadirlo al Payment Instruction / Direct Debit Remitance
 	-> Además, por si existe un caso en que llegue un DirecDebitRemmitance mal formado (con transacciones o paymentinstructions a 0), no llamar al procedimiento que crea la clase serializable para estos elementos vacíos, con lo que se sigue avanzando en la creacion del documento sin añadir esa etiqueta
@@ -29,6 +47,12 @@ A REVISAR EN EL FICHERO FINAL COMPILADO EN EL ORDENADOR DE ESTEBAN
 
 OPCIONALES PARA TENER EN CUENTA:
 ----------------------------------------------------------------------------
+- Revisar los métodos de validación de FICHEROS
+	-> Opcion 1: LEER los ficheros primero y luego validar el string
+	-> Que la función valide directamente el fichero. En ese caso pueden haber ERRORES de validacion debido a errores de lectura ¿Se enmascaran? ¡Comprobar!
+	        XmlSchema xmlSchema = XmlSchema.Read(new StreamReader(xsdFilePath), XMLValidationEventHandler);
+            XDocument fileToTest = XDocument.Load(new StreamReader(xmlFilePath));
+
 - Manejo del BIC en el DirectDebit Transaction
 	-> Por lo pronto tenemos un apaño con un constructor que lo acepta y un 'setter' para modificarlo despues si es necesario.
 	-> Cuando no se especifique: Buscar el BIC usando BankCodes y ponerlo
@@ -41,8 +65,8 @@ OPCIONALES PARA TENER EN CUENTA:
 			-> Como instancia, y se la pasamos mediante inyector en el constructor. 
 - Unificar las excepciones. Todas las excepciones que se lanzan desde un constructor deberian ser TypeinitializationException (y dentro el subtipo - Argumento, ArgumentNull...-)
 - Faltan por chequear algunos campos obligatorios en los constructores de DirectDebitTransactions y otros DDElements
-- Al deserializar un PaymentStatusReport, hay que revisar los contenidos (que campos existen y sus valores), para diferenciar entre Devolucion y Rechazo
-
+- Al deserializar un PaymentStatusReport, ¿son diferentes el objeto de rechazos que el objeto de devoluciones?. En un principio creo que no, pero:
+	-> Ver si dentro del objeto 'PaymentStatusReport' deberíamos añadir un 'boolean' que indicara si es rechazo o devolución
 - ¿Hacer que todas las instanciaciones de objetos DirectDebitElements pasen a través de una clase o clases controladoras?
 	-> Internamente:
 		- SEPAMessagesManager usa:

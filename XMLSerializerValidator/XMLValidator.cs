@@ -12,7 +12,6 @@ namespace XMLSerializerValidator
 
         public static string ValidateXMLFileThroughXSDFile(string xmlFilePath, string xsdFilePath)
         {
-
             XmlSchema xmlSchema = XmlSchema.Read(new StreamReader(xsdFilePath), XMLValidationEventHandler);
             XDocument fileToTest = XDocument.Load(new StreamReader(xmlFilePath));
             return ValidateXMLThroughSchema(fileToTest, xmlSchema);
