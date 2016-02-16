@@ -1,16 +1,18 @@
 PENDIENTE
 ---------
-- Antes de leer el fichero de devoluciones hemos de VALIDARLO
-- El procedimiento de validación no se hace desde este programa, ni desde DirectDebits, sino que la funcion de validación con el esquema lo debe hacer ISO20022PaymentInitiations
-	-> Implementar la validación en ISOPaymentInitiations (Ok)
-	-> Crear los tests los tests (Ok)
-	-> El método de validación se invoca desde DirectDebitElements -> SEPAMessagesManager ->ReadISO20022PaymentStatusReportStringMessage
-		* Si no se ha validado corerctamente LANZAR UNA EXCEPCION. Puede ser por tres razones: (Ok)
-			-> El fichero no es un XML valido -> se recibe una excepcion XMLException (Ok)
-			-> Errores en el esquema (se recibe una cadena distinta de "") (Ok)
-			-> Errores de lectura general -> lo mejor es leer a un string (File.ReadAllText()) y ahí capturar la excepcion. Las dos primeras se capturan al intentar interpretar el string.
-	-> Crear los tests
-	-> En el programa, lanzar el proceso con try y capturar la excepcion
+- Comprobar que el fichero de Base de datos es legible (Ok)
+- Comprobar que el fichero de devoluciones es legible (Ok)
+- Leer el fichero a un string (controlar las excepciones)
+- Antes de leer el fichero de devoluciones:
+	-> Comprobar que existe y es legible (comprobar path y File.Exists)(Ok)
+	-> VALIDARLO en dos pasos:
+		* Leer el fichero en un string.
+			-> Pueden haber errores de lectura. Captura las excepciones y SALIR con exitCodes. (Ok)
+		* Validar el string. Dos tipos de errroes posibles. Capturarlos y salir con ExitCodes
+			-> El fichero XML es erroneo (etiquetas incompletas, por ejemplo). 
+			-> No es comatible con el esquema pain.002.001.03 
+- El procedimiento de validación no se hace desde este programa, sino que lo lanza la librería.
+	-> En el programa, lanzar el proceso con try y capturar las excepciones
 		* Se lanza mensaje de error
 		* Se sale con un ExitCode que indique el error
 

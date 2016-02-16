@@ -12,6 +12,7 @@ PENDIENTE
 		* Si no se ha validado corerctamente LANZAR UNA EXCEPCION. Puede ser por dos razones: (Ok)
 			-> El fichero no es un XML valido -> se recibe una excepcion XMLException (Ok)
 			-> Errores en el esquema (se recibe una cadena distinta de "") (Ok)
+		* Como trabajo OPCIONAL, ya tenemos en lista el revisar el procedimiento de validación de fichero para separar errores de lectura de errores de validación.
 			
 	-> Crear los tests
 	-> En el programa, lanzar el proceso con try y capturar la excepcion

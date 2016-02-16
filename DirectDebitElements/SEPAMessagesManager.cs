@@ -74,31 +74,31 @@ namespace DirectDebitElements
 
         private void ValidatePaymentStatusReportFile(string paymentStatusReportXMLFilePath)
         {
-            string xMLValidationErrors = "";
-            try
-            {
-                xMLValidationErrors = SchemaValidators.ValidatePaymentStatusReportFile(paymentStatusReportXMLFilePath);
-            }
-            catch (System.Xml.XmlException notValidXMLFileException)
-            {
-                throw new ArgumentException("Not a valid XML File", notValidXMLFileException);
-            }
-            if (xMLValidationErrors != "") throw new ArgumentException(xMLValidationErrors);
+            string xMLValidationErrors = SchemaValidators.ValidatePaymentStatusReportFile(paymentStatusReportXMLFilePath);
+            //try
+            //{
+            //    xMLValidationErrors = SchemaValidators.ValidatePaymentStatusReportFile(paymentStatusReportXMLFilePath);
+            //}
+            //catch (System.Xml.XmlException notValidXMLFileException)
+            //{
+            //    throw new ArgumentException("Not a valid XML File", notValidXMLFileException);
+            //}
+            if (xMLValidationErrors != "") throw new System.Xml.Schema.XmlSchemaValidationException(xMLValidationErrors);
 
         }
 
         private void ValidatePaymentStatusReportString(string paymentStatusReportXMLMessage)
         {
-            string xMLValidationErrors = "";
-            try
-            {
-                xMLValidationErrors = SchemaValidators.ValidatePaymentStatusReportString(paymentStatusReportXMLMessage);
-            }
-            catch (System.Xml.XmlException notValidXMLFileException)
-            {
-                throw new ArgumentException("Not a valid XML File", notValidXMLFileException);
-            }
-            if (xMLValidationErrors != "") throw new ArgumentException(xMLValidationErrors);
+            string xMLValidationErrors = SchemaValidators.ValidatePaymentStatusReportString(paymentStatusReportXMLMessage);
+            //try
+            //{
+            //    xMLValidationErrors = SchemaValidators.ValidatePaymentStatusReportString(paymentStatusReportXMLMessage);
+            //}
+            //catch (System.Xml.XmlException notValidXMLFileException)
+            //{
+            //    throw new ArgumentException("Not a valid XML File", notValidXMLFileException);
+            //}
+            if (xMLValidationErrors != "") throw new System.Xml.Schema.XmlSchemaValidationException(xMLValidationErrors);
         }
 
         private PaymentStatusReport ProcessCustomerPaymentStatusReportDocument(CustomerPaymentStatusReportDocument customerPaymentStatusReportDocument)

@@ -282,8 +282,8 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void AnInvalidXMLFileThrowsAnArgumentExceptionWhenIsReaded_NotValidXMLFile()
+        [ExpectedException(typeof(System.Xml.XmlException))]
+        public void AnInvalidXMLFileThrowsAnXmlExceptionWhenIsReaded()
         {
             string xMLFilePath = @"XML Test Files\pain.002.001.03\pain.002.001.03_2(ErroneousFormat).xml";
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
@@ -291,17 +291,16 @@ namespace DirectDebitElementsUnitTests
             {
                 PaymentStatusReport paymentStatusReport = sEPAMessagesManager.ReadISO20022PaymentStatusReportFile(xMLFilePath);
             }
-            catch(ArgumentException invalidXMLFormatException)
+            catch(System.Xml.XmlException)
             {
-                Assert.AreEqual("Not a valid XML File", invalidXMLFormatException.GetMessageWithoutParamName());
-                Assert.AreEqual(typeof(System.Xml.XmlException), invalidXMLFormatException.InnerException.GetType());
+                Assert.IsTrue(true);    //Jus assert an exception is trown
                 throw;
             }
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void AnNonCompilantToPain00200103XMLFileThrowsAnArgumentExceptionWithNoInnerExceptionWhenIsReaded_XMLValidationErrors()
+        [ExpectedException(typeof(System.Xml.Schema.XmlSchemaValidationException))]
+        public void AnNonCompilantToPain00200103XMLFileThrowsAXmlSchemaValidationException()
         {
             string xMLFilePath = @"XML Test Files\pain.002.001.03\pain.002.001.03_2(NotCompilant).xml";
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
@@ -309,10 +308,9 @@ namespace DirectDebitElementsUnitTests
             {
                 PaymentStatusReport paymentStatusReport = sEPAMessagesManager.ReadISO20022PaymentStatusReportFile(xMLFilePath);
             }
-            catch (ArgumentException invalidXMLFormatException)
+            catch (System.Xml.Schema.XmlSchemaValidationException invalidXMLFormatException)
             {
                 Assert.AreEqual("ERROR:", invalidXMLFormatException.Message.Left(6));
-                Assert.AreEqual(null, invalidXMLFormatException.InnerException);
                 throw;
             }
         }

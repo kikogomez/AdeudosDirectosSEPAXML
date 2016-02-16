@@ -168,6 +168,28 @@ namespace RCNGCMembersManagementUnitTests
             Assert.AreEqual(String.Empty, validatingErrors);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(System.Xml.XmlException))]
+        public void AnInvalidXMLStringThrowsAnXMLException()
+        {
+            //Not valid XML file
+            string xMLString = @"<?xml ";
+
+            //Original valid pain.008.002.01 XSD File from ISO20022
+            string xSDFilePath = @"XSD Test Files\pain.008.001.02.xsd";
+
+            string validatingErrors = "";
+            try
+            {
+                validatingErrors = XMLValidator.ValidateXMLStringThroughXSDFile(xMLString, xSDFilePath);
+            }
+            catch (System.Xml.XmlException xmlException)
+            {
+                Assert.AreEqual(String.Empty, validatingErrors);
+                Assert.AreNotEqual(String.Empty, xmlException.Message);
+                throw;
+            }                     
+        }
 
         [TestMethod]
         public void AnXMLFileIsWellValidatedThroughXSD()

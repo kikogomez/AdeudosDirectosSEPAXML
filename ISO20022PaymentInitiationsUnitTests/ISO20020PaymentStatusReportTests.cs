@@ -11,16 +11,14 @@ namespace ISO20022PaymentInitiationsUnitTests
     public class ISO20020PaymentStatusReportTests
     {
         static string xMLNamespace;
-        static string xSDFilePath;
+        //static string xSDFilePath;
 
         [ClassInitialize()]
         public static void ClassInit(TestContext context)
         {
             xMLNamespace = "urn:iso:std:iso:20022:tech:xsd:pain.002.001.03";
-            xSDFilePath = @"XSDFiles\pain.002.001.03.xsd";
+            //xSDFilePath = @"XSDFiles\pain.002.001.03.xsd";
         }
-
-
 
         [TestMethod]
         public void OriginalTransactionReference_OrgnlTxRef_IsCorrectlyDeserialized()

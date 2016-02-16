@@ -19,6 +19,7 @@ namespace SEPAXMLPaymentStatusReader
         public void Run(string[] args)
         {
             string parseErrorString;
+            string errorsInPathString;
             string sourcePaymentStatusReportPath;
             string dataBasePath;
 
@@ -31,36 +32,24 @@ namespace SEPAXMLPaymentStatusReader
             }
 
             if (verboseExecution) Console.WriteLine("Locating sorce XML Payment Status Report...");
-            if (!PathIsValid(sourcePaymentStatusReportPath))
+            errorsInPathString = ErrorsInPath(sourcePaymentStatusReportPath);
+            if (errorsInPathString != "")
             {
+                Console.WriteLine(errorsInPathString);
                 Console.WriteLine("Press any key to close program...");
                 Console.ReadKey();
                 Environment.Exit((int)ExitCodes.InvalidPaymentStatusFilePath);
             }
 
-            //if (!File.Exists(sourcePaymentStatusReportPath))
-            //{
-            //    Console.WriteLine("{0} not found!", Path.GetFileName(sourcePaymentStatusReportPath));
-            //    Console.WriteLine("Press any key to close program...");
-            //    Console.ReadKey();
-            //    Environment.Exit((int)ExitCodes.InvalidPaymentStatusFilePath);
-            //}
-
             if (verboseExecution) Console.WriteLine("Locating database to write to...");
-            if (!PathIsValid(dataBasePath))
+            errorsInPathString = ErrorsInPath(dataBasePath);
+            if (errorsInPathString != "")
             {
+                Console.WriteLine(errorsInPathString);
                 Console.WriteLine("Press any key to close program...");
                 Console.ReadKey();
                 Environment.Exit((int)ExitCodes.InvalidDataBasePath);
             }
-
-            //if (!File.Exists(dataBasePath))
-            //{
-            //    Console.WriteLine("{0} not found!", dataBasePath);
-            //    Console.WriteLine("Press any key to close program...");
-            //    Console.ReadKey();
-            //    Environment.Exit((int)ExitCodes.InvalidDataBasePath);
-            //}
 
             string oleDBConnectionString = CreateDatabaseConnectionString(dataBasePath);
 
@@ -69,7 +58,7 @@ namespace SEPAXMLPaymentStatusReader
             if (verboseExecution)
             {
                 Console.WriteLine("Completed!");
-                Console.WriteLine("Payment Status report readd: {0}", sourcePaymentStatusReportPath);
+                Console.WriteLine("Payment Status report read: {0}", sourcePaymentStatusReportPath);
                 Console.WriteLine("Press any key to close program...");
                 Console.ReadKey();
             }
@@ -120,28 +109,43 @@ namespace SEPAXMLPaymentStatusReader
             if (verboseExecution) Console.WriteLine("Parsing xML Message...", Path.GetFileName(sourcePaymentStatusReportPath));
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
             PaymentStatusReport paymentStatusReport = null;
-            try
-            {
-                paymentStatusReport = sEPAMessagesManager.ReadISO20022PaymentStatusReportStringMessage(xmlStringMessage);
-            }
+            //try
+            //{
+            //    paymentStatusReport = sEPAMessagesManager.ReadISO20022PaymentStatusReportStringMessage(xmlStringMessage);
+            //}
 
-            catch (Exception ex) when (ex is InvalidOperationException || ex is System.Xml.XmlException)
-            {
-                ///Nota: Posibles errores
-                /// -> El fichero no es un XML valido (errores con la construccion de los nodos, etiqueta incompletas....)
-                /// -> El fichero no valida frente al esquema XSD
-                ///Hay que conseguir que a traves de la excepcion podamos distinguir todas las posibilidades
-                ///Por lo pronto falta discernir los errores de lectura generales
-                //if (xMLFileErrorException.InnerException != null)
-                //{
-                //    Console.WriteLine("The source file is not a valid XML file");
+            //catch (ArgumentException validationException) when (validationException is InvalidOperationException || validationException is System.Xml.XmlException)
+            //{
+            //    string errorMessage = "";
+            //    int exitCode = 0;
 
-                //}
-                //else
-                //{
+            //    //switch (validationException.GetType().ToString())
+            //    //{
+            //    //    case "System.InvalidOperationException":
+            //    //        errorMessage = "The source file is not a valid XML" + Environment.NewLine + ((InvalidOperationException)validationException).Message;
+            //    //        exitCode = (int)ExitCodes.NotValidXMLFile;
+            //    //        break;
+            //    //    case "System.Xml.XmlException":
+            //    //        errorMessage = "The source file is not compilant to pain.002.001.03" + Environment.NewLine + ((System.Xml.XmlException)validationException).Message;
+            //    //        exitCode = (int)ExitCodes.NotValidXMLFile;
+            //    //        break;
+            //    //}
 
-                //}
-            }
+            //    ///Nota: Posibles errores
+            //    /// -> El fichero no es un XML valido (errores con la construccion de los nodos, etiqueta incompletas....)
+            //    /// -> El fichero no valida frente al esquema XSD
+            //    ///Hay que conseguir que a traves de la excepcion podamos distinguir todas las posibilidades
+            //    ///Por lo pronto falta discernir los errores de lectura generales
+            //    //if (xMLFileErrorException.InnerException != null)
+            //    //{
+            //    //    Console.WriteLine("The source file is not a valid XML file");
+
+            //    //}
+            //    //else
+            //    //{
+
+            //    //}
+            //}
 
             return paymentStatusReport;
         }
@@ -175,7 +179,7 @@ namespace SEPAXMLPaymentStatusReader
             return xmlMessage;
         }
 
-        private bool PathIsValid(string fullPathToCheck)
+        private string ErrorsInPath(string fullPathToCheck)
         {
             string fileName = "";
             try
@@ -184,22 +188,17 @@ namespace SEPAXMLPaymentStatusReader
             }
             catch (ArgumentException filePathErrorException)
             {
-                Console.WriteLine("Path to file contains invalid characters");
-                Console.WriteLine(filePathErrorException.Message);
-                return false;
-
+                return "Path to file contains invalid characters" + Environment.NewLine + filePathErrorException.Message;
             }
             if (fileName == "")
             {
-                Console.WriteLine("No file specified in path");
-                return false;
+                return "No file specified in path";
             }
             if (!File.Exists(fullPathToCheck))
             {
-                Console.WriteLine("File not found!");
-                return false;
+                return "File not found!";
             }
-            return true;
+            return "";
         }
 
     }
