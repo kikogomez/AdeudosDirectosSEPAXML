@@ -7,8 +7,8 @@
     <ProjectGuid>{908C9773-CAC2-45A2-871A-FBB195DF7925}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SEPAXMLPaymentStatusReader</RootNamespace>
-    <AssemblyName>SEPAXMLPaymentStatusReader</AssemblyName>
+    <RootNamespace>SEPAXMLPaymentStatusReportReader</RootNamespace>
+    <AssemblyName>SEPAXMLPaymentStatusReportReader</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

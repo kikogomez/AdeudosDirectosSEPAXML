@@ -65,9 +65,9 @@
       <Project>{61ce6a05-fa54-4002-b4cf-515b34caaab2}</Project>
       <Name>DirectDebitElements</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SEPAXMLPaymentStatusReader\SEPAXMLPaymentStatusReader.csproj">
+    <ProjectReference Include="..\SEPAXMLPaymentStatusReader\SEPAXMLPaymentStatusReportReader.csproj">
       <Project>{908c9773-cac2-45a2-871a-fbb195df7925}</Project>
-      <Name>SEPAXMLPaymentStatusReader</Name>
+      <Name>SEPAXMLPaymentStatusReportReader</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

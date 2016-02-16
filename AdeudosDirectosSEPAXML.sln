@@ -36,9 +36,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SEPAXMLCustomerDirectDebitI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SEPAXMLCustomerDirectDebitInitiationGeneratorTests", "SEPAXMLCustomerDirectDebitInitiationGeneratorTests\SEPAXMLCustomerDirectDebitInitiationGeneratorTests.csproj", "{9378C9B0-2F1F-48EC-85F2-1A5E485377D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SEPAXMLPaymentStatusReader", "SEPAXMLPaymentStatusReader\SEPAXMLPaymentStatusReader.csproj", "{908C9773-CAC2-45A2-871A-FBB195DF7925}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SEPAXMLPaymentStatusReportReader", "SEPAXMLPaymentStatusReader\SEPAXMLPaymentStatusReportReader.csproj", "{908C9773-CAC2-45A2-871A-FBB195DF7925}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SEPAXMLPaymentStatusReaderTests", "SEPAXMLPaymentStatusReaderTests\SEPAXMLPaymentStatusReaderTests.csproj", "{241468C4-0071-4831-A614-923E985CF6E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SEPAXMLPaymentStatusReportReaderTests", "SEPAXMLPaymentStatusReaderTests\SEPAXMLPaymentStatusReportReaderTests.csproj", "{241468C4-0071-4831-A614-923E985CF6E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

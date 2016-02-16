@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CommandLine;
-using SEPAXMLPaymentStatusReader;
+using SEPAXMLPaymentStatusReportReader;
 
 namespace SEPAXMLPaymentStatusReaderTests
 {

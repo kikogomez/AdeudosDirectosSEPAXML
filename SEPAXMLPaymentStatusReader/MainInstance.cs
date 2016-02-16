@@ -7,7 +7,7 @@ using CommandLine;
 using System.IO;
 using DirectDebitElements;
 
-namespace SEPAXMLPaymentStatusReader
+namespace SEPAXMLPaymentStatusReportReader
 {
     public class MainInstance
     {

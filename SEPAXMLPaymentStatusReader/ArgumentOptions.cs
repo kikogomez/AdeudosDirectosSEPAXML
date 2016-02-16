@@ -6,7 +6,7 @@ using CommandLine;
 using CommandLine.Text;
 using System.Threading.Tasks;
 
-namespace SEPAXMLPaymentStatusReader
+namespace SEPAXMLPaymentStatusReportReader
 {
    public class ArgumentOptions
     {
