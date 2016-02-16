@@ -1,14 +1,9 @@
 PENDIENTE
 ----------------------------------------
-- En SEPAMessagesManager, el procedimiento CreateCustomerDirectDebitInitiationDocument 
-
-
-
-
-
-
-
-
+- Revisar los transactions / Payment Instuctions con importes 0
+	-> Si el importe de la transaccion / payment, está a 0, no añadirlo al Payment Instruction / Direct Debit Remitance
+	-> Además, por si existe un caso en que llegue un DirecDebitRemmitance mal formado (con transacciones o paymentinstructions a 0), no llamar al procedimiento que crea la clase serializable para estos elementos vacíos, con lo que se sigue avanzando en la creacion del documento sin añadir esa etiqueta
+- Si el DirectDebitRemmitance esta a 0 al iniciar el procedimiento de crear la instanca serializable de CustomerDirectDebitInitiation, devolver NULO o lanzar excepción
 
 
 
