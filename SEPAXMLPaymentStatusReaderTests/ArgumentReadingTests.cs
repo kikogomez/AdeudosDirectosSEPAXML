@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CommandLine;
 using SEPAXMLPaymentStatusReportReader;
 
-namespace SEPAXMLPaymentStatusReaderTests
+namespace SEPAXMLPaymentStatusReportReaderTests
 {
     [TestClass]
     public class ArgumentReadingTests

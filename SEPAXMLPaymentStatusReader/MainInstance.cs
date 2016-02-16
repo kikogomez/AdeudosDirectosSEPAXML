@@ -19,9 +19,10 @@ namespace SEPAXMLPaymentStatusReportReader
         public void Run(string[] args)
         {
             string parseErrorString;
-            string errorsInPathString;
+            string errorsInPath;
             string sourcePaymentStatusReportPath;
             string dataBasePath;
+            int exitCode;
 
             if (!ParseArguments(args, out parseErrorString, out sourcePaymentStatusReportPath, out dataBasePath, out verboseExecution))
             {
@@ -31,24 +32,12 @@ namespace SEPAXMLPaymentStatusReportReader
                 Environment.Exit((int)ExitCodes.InvalidArguments);
             }
 
-            if (verboseExecution) Console.WriteLine("Locating sorce XML Payment Status Report...");
-            errorsInPathString = ErrorsInPath(sourcePaymentStatusReportPath);
-            if (errorsInPathString != "")
+            if (!PathsToFilesAreCorrect(sourcePaymentStatusReportPath, dataBasePath, out errorsInPath, out exitCode))
             {
-                Console.WriteLine(errorsInPathString);
+                Console.WriteLine(errorsInPath);
                 Console.WriteLine("Press any key to close program...");
                 Console.ReadKey();
-                Environment.Exit((int)ExitCodes.InvalidPaymentStatusFilePath);
-            }
-
-            if (verboseExecution) Console.WriteLine("Locating database to write to...");
-            errorsInPathString = ErrorsInPath(dataBasePath);
-            if (errorsInPathString != "")
-            {
-                Console.WriteLine(errorsInPathString);
-                Console.WriteLine("Press any key to close program...");
-                Console.ReadKey();
-                Environment.Exit((int)ExitCodes.InvalidDataBasePath);
+                Environment.Exit(exitCode);
             }
 
             string oleDBConnectionString = CreateDatabaseConnectionString(dataBasePath);
@@ -88,6 +77,34 @@ namespace SEPAXMLPaymentStatusReportReader
             return argumentsParseOk;
         }
 
+        public bool PathsToFilesAreCorrect(
+            string sourcePaymentStatusReportPath,
+            string dataBasePath,
+            out string errorsInPathString,
+            out int exitCode)
+        {
+
+            if (verboseExecution) Console.WriteLine("Locating sorce XML Payment Status Report...");
+            errorsInPathString = ErrorsInPath(sourcePaymentStatusReportPath);
+            if (errorsInPathString != "")
+            {
+                errorsInPathString = sourcePaymentStatusReportPath + Environment.NewLine + errorsInPathString;
+                exitCode = ((int)ExitCodes.InvalidPaymentStatusFilePath);
+                return false;
+            }
+
+            if (verboseExecution) Console.WriteLine("Locating database to write to...");
+            errorsInPathString = ErrorsInPath(dataBasePath);
+            if (errorsInPathString != "")
+            {
+                errorsInPathString = dataBasePath + Environment.NewLine + errorsInPathString;
+                exitCode = ((int)ExitCodes.InvalidDataBasePath);
+                return false;
+            }
+            exitCode = 0;
+            return true;
+        }
+
         public string CreateDatabaseConnectionString(string pathToDataBase)
         {
             return "Provider=Microsoft.JET.OLEDB.4.0;" + "data source=" + pathToDataBase;
@@ -109,6 +126,13 @@ namespace SEPAXMLPaymentStatusReportReader
             if (verboseExecution) Console.WriteLine("Parsing xML Message...", Path.GetFileName(sourcePaymentStatusReportPath));
             SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
             PaymentStatusReport paymentStatusReport = null;
+
+            //Las excepciones devueltas:
+            // para XML incorrecto: System.Xml.XmlException
+            // Para error de validación: System.Xml.Schema.XmlSchemaValidationException
+
+
+
             //try
             //{
             //    paymentStatusReport = sEPAMessagesManager.ReadISO20022PaymentStatusReportStringMessage(xmlStringMessage);
