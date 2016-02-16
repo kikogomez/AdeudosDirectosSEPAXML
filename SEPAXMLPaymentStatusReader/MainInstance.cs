@@ -118,63 +118,26 @@ namespace SEPAXMLPaymentStatusReportReader
 
         }
 
-        private PaymentStatusReport ReadPaymentStatusReportXMLFile(string sourcePaymentStatusReportPath)
+        public PaymentStatusReport ReadPaymentStatusReportXMLFile(string sourcePaymentStatusReportPath)
         {
             if (verboseExecution) Console.WriteLine("Reading file {0}", Path.GetFileName(sourcePaymentStatusReportPath));
             string xmlStringMessage = ReadXMLSourceFileToString(sourcePaymentStatusReportPath);
 
             if (verboseExecution) Console.WriteLine("Parsing xML Message...", Path.GetFileName(sourcePaymentStatusReportPath));
-            SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
             PaymentStatusReport paymentStatusReport = null;
-
-            //Las excepciones devueltas:
-            // para XML incorrecto: System.Xml.XmlException
-            // Para error de validación: System.Xml.Schema.XmlSchemaValidationException
-
-
-
-            //try
-            //{
-            //    paymentStatusReport = sEPAMessagesManager.ReadISO20022PaymentStatusReportStringMessage(xmlStringMessage);
-            //}
-
-            //catch (ArgumentException validationException) when (validationException is InvalidOperationException || validationException is System.Xml.XmlException)
-            //{
-            //    string errorMessage = "";
-            //    int exitCode = 0;
-
-            //    //switch (validationException.GetType().ToString())
-            //    //{
-            //    //    case "System.InvalidOperationException":
-            //    //        errorMessage = "The source file is not a valid XML" + Environment.NewLine + ((InvalidOperationException)validationException).Message;
-            //    //        exitCode = (int)ExitCodes.NotValidXMLFile;
-            //    //        break;
-            //    //    case "System.Xml.XmlException":
-            //    //        errorMessage = "The source file is not compilant to pain.002.001.03" + Environment.NewLine + ((System.Xml.XmlException)validationException).Message;
-            //    //        exitCode = (int)ExitCodes.NotValidXMLFile;
-            //    //        break;
-            //    //}
-
-            //    ///Nota: Posibles errores
-            //    /// -> El fichero no es un XML valido (errores con la construccion de los nodos, etiqueta incompletas....)
-            //    /// -> El fichero no valida frente al esquema XSD
-            //    ///Hay que conseguir que a traves de la excepcion podamos distinguir todas las posibilidades
-            //    ///Por lo pronto falta discernir los errores de lectura generales
-            //    //if (xMLFileErrorException.InnerException != null)
-            //    //{
-            //    //    Console.WriteLine("The source file is not a valid XML file");
-
-            //    //}
-            //    //else
-            //    //{
-
-            //    //}
-            //}
-
+            try
+            {
+                paymentStatusReport = ParsePaymentStatusReportString(xmlStringMessage);
+            }
+            catch (Exception paymentStatusReadException)
+            when (paymentStatusReadException is System.Xml.XmlException || paymentStatusReadException is System.Xml.Schema.XmlSchemaValidationException)
+            {
+                ProcessPaymentStatusReportParsingException(paymentStatusReadException);
+            }
             return paymentStatusReport;
         }
 
-        private string ReadXMLSourceFileToString(string sourcePaymentStatusReportPath)
+        public string ReadXMLSourceFileToString(string sourcePaymentStatusReportPath)
         {
             string xmlMessage = null;
             try
@@ -183,24 +146,15 @@ namespace SEPAXMLPaymentStatusReportReader
             }
             catch (Exception fileReadException) when (fileReadException is IOException || fileReadException is UnauthorizedAccessException || fileReadException is System.Security.SecurityException)
             {
-                string errorMessage = "";
-                int exitCode = 0;
-                switch (fileReadException.GetType().ToString())
-                {
-                    case "System.IO.IOException":
-                        errorMessage = "File read error!" + Environment.NewLine + ((IOException)fileReadException).Message;
-                        exitCode = (int)ExitCodes.FileReadingError;
-                        break;
-                    case "System.UnauthorizedAccessException":
-                    case "System.Security.SecurityException":
-                        errorMessage = "You don't have permision to read file or directory" + Environment.NewLine + fileReadException.Message;
-                        exitCode = (int)ExitCodes.FileReadingError;
-                        break;
-                }
-                Console.WriteLine(errorMessage);
-                Environment.Exit(exitCode);
+                ProcessFileReadToStringException(fileReadException);
             }
             return xmlMessage;
+        }
+
+        public PaymentStatusReport ParsePaymentStatusReportString(string xmlStringMessage)
+        {
+            SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
+            return sEPAMessagesManager.ReadISO20022PaymentStatusReportStringMessage(xmlStringMessage);
         }
 
         private string ErrorsInPath(string fullPathToCheck)
@@ -212,7 +166,7 @@ namespace SEPAXMLPaymentStatusReportReader
             }
             catch (ArgumentException filePathErrorException)
             {
-                return "Path to file contains invalid characters" + Environment.NewLine + filePathErrorException.Message;
+                return "Path to file contains invalid characters";
             }
             if (fileName == "")
             {
@@ -225,5 +179,47 @@ namespace SEPAXMLPaymentStatusReportReader
             return "";
         }
 
+        private void ProcessFileReadToStringException(Exception fileReadException)
+        {
+            string errorMessage = "";
+            int exitCode = 0;
+            switch (fileReadException.GetType().ToString())
+            {
+                case "System.IO.IOException":
+                    errorMessage = "File read error!" + Environment.NewLine + ((IOException)fileReadException).Message;
+                    exitCode = (int)ExitCodes.FileReadingError;
+                    break;
+                case "System.UnauthorizedAccessException":
+                case "System.Security.SecurityException":
+                    errorMessage = "You don't have permision to read file or directory" + Environment.NewLine + fileReadException.Message;
+                    exitCode = (int)ExitCodes.FileReadingError;
+                    break;
+            }
+            Console.WriteLine(errorMessage);
+            Environment.Exit(exitCode);
+        }
+
+        private void ProcessPaymentStatusReportParsingException(Exception paymentStatusReadException)
+        {
+            string errorMessage;
+            switch (paymentStatusReadException.GetType().ToString())
+            {
+                case "System.Xml.XmlException":
+                    errorMessage = "The source file is not a valid XML"
+                        + Environment.NewLine + ((System.Xml.XmlException)paymentStatusReadException).Message;
+                    Console.WriteLine(errorMessage);
+                    Console.WriteLine("Press any key to close program...");
+                    Console.ReadKey();
+                    Environment.Exit((int)ExitCodes.NotValidXMLFile);
+                    break;
+                case "System.Xml.Schema.XmlSchemaValidationException":
+                    errorMessage = "The source file is not compilant to pain.002.001.03"
+                        + Environment.NewLine + ((System.Xml.Schema.XmlSchemaValidationException)paymentStatusReadException).Message;
+                    Console.WriteLine("Press any key to close program...");
+                    Console.ReadKey();
+                    Environment.Exit((int)ExitCodes.NotCompilantToSchemaFile);
+                    break;
+            }
+        }
     }
 }

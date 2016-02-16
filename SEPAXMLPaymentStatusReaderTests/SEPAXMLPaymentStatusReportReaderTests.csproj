@@ -40,6 +40,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -62,11 +63,27 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="XSDFiles\pain.002.001.03.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="XSDFiles\pain.007.001.02.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="XSDFiles\pain.008.001.02.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DirectDebitElements\DirectDebitElements.csproj">
       <Project>{61ce6a05-fa54-4002-b4cf-515b34caaab2}</Project>
       <Name>DirectDebitElements</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ExtensionMethods\ExtensionMethods.csproj">
+      <Project>{2914edfc-362e-46d8-a354-cb4deaeba6bc}</Project>
+      <Name>ExtensionMethods</Name>
     </ProjectReference>
     <ProjectReference Include="..\SEPAXMLPaymentStatusReader\SEPAXMLPaymentStatusReportReader.csproj">
       <Project>{908c9773-cac2-45a2-871a-fbb195df7925}</Project>
@@ -74,11 +91,20 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TestFiles\pain.002.001.03_2.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="TestFiles\TestMDB.mdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\XML Test Files\LaCaixa_pain00200103_Example2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\XML Test Files\pain.002.001.03_2%28ErroneousFormat%29.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\XML Test Files\pain.002.001.03_2%28NotCompilant%29.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\XML Test Files\pain.002.001.03_2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Choose>
