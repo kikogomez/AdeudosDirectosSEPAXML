@@ -173,158 +173,68 @@ namespace SEPAXMLPaymentStatusReportReader
 
             using (OleDbConnection connection = new OleDbConnection(connectionString))
             {
-                try
-                {
-                    connection.Open();
-                }
-                catch (OleDbException connectionException)
-                {
-                    foreach (OleDbError error in connectionException.Errors)
-                    {
-                        Console.WriteLine("Connection error!");
-                        Console.WriteLine(error.Message);
-                    }
-                    Console.WriteLine("Press any key to close program...");
-                    Console.ReadKey();
-                    Environment.Exit((int)ExitCodes.DataBaseConnectionError);
-                }
-                catch (InvalidOperationException conectionException)
-                {
-                    Console.WriteLine("The database connection is already open. Trying to continue.");
-                    Console.WriteLine(conectionException.Message);
-                }
-
-                InsertTransactionRejectsIntoDatabase(connection, paymentStatusReport);
-
-                //OleDbCommand command = connection.CreateCommand();
-                //command.CommandText = "INSERT INTO SEPAXMLRecibosTemporalDevolucion ([MandateId], [OrgnlEndtoEndID], [Reason], [CCC])" + " VALUES (@MandateID, @OrgnlEndToEndID, @Reason, @CCC)";
-                //command.Parameters.Add("@MandateID", OleDbType.VarChar);
-                //command.Parameters.Add("@OrgnlEndToEndID", OleDbType.VarChar);
-                //command.Parameters.Add("@Reason", OleDbType.VarChar);
-                //command.Parameters.Add("@CCC", OleDbType.VarChar);
-                //foreach (DirectDebitPaymentInstructionReject paymentInstructionReject in paymentStatusReport.DirectDebitPaymentInstructionRejects)
+                TryToConnect(connection);
+                //try
                 //{
-                //    foreach (DirectDebitTransactionReject directDebitTransacionReject in paymentInstructionReject.DirectDebitTransactionsRejects)
-                //    {
-                //        command.Parameters["@MandateID"].Value = directDebitTransacionReject.MandateID;
-                //        command.Parameters["@OrgnlEndToEndID"].Value = directDebitTransacionReject.OriginalEndtoEndTransactionIdentification;
-                //        command.Parameters["@Reason"].Value = directDebitTransacionReject.RejectReason;
-                //        command.Parameters["@CCC"].Value = directDebitTransacionReject.DebtorAccount.CCC.CCC;
-                //        command.ExecuteNonQuery();
-                //    }
+                //    connection.Open();
                 //}
-                //command.Parameters.Clear();
+                //catch (OleDbException connectionException)
+                //{
+                //    foreach (OleDbError error in connectionException.Errors)
+                //    {
+                //        Console.WriteLine("Connection error!");
+                //        Console.WriteLine(error.Message);
+                //    }
+                //    Console.WriteLine("Press any key to close program...");
+                //    Console.ReadKey();
+                //    Environment.Exit((int)ExitCodes.DataBaseConnectionError);
+                //}
+                //catch (InvalidOperationException conectionException)
+                //{
+                //    Console.WriteLine("The database connection is already open. Trying to continue.");
+                //    Console.WriteLine(conectionException.Message);
+                //}
+                InsertTransactionRejectsIntoDatabase(connection, paymentStatusReport);
+            }
+        }
+
+        private void TryToConnect(OleDbConnection connection)
+        {
+            try
+            {
+                connection.Open();
+            }
+            catch (Exception connectionException) when (connectionException is OleDbException || connectionException is InvalidOperationException)
+            {
+                ProcessConnectionException(connectionException);
             }
 
-
-            //SOLUCION 1 CON OLEDB
-            //using (OleDbConnection conn = new OleDbConnection(connString))
-            //{
-            //    conn.Open();
-            //    OleDbCommand cmd = conn.CreateCommand();
-
-            //    for (int i = 0; i < Customers.Count; i++)
-            //    {
-            //        cmd.Parameters.Add(new OleDbParameter("@var1", Customer[i].Name))
-            //         cmd.Parameters.Add(new OleDbParameter("@var2", Customer[i].PhoneNum))
-            //         cmd.Parameters.Add(new OleDbParameter("@var3", Customer[i].ID))
-            //         cmd.Parameters.Add(new OleDbParameter("@var4", Customer[i].Name))
-            //         cmd.Parameters.Add(new OleDbParameter("@var5", Customer[i].PhoneNum))
-
-            //cmd.CommandText = "UPDATE Customers SET Name=@var1, Phone=@var2" +
-            //                  "WHERE ID=@var3 AND (Name<>@var4 OR Phone<>@var5)";
-            //        cmd.ExecuteNonQuery();
-            //        cmd.Parameters.Clear();
-            //    }
-            //}
-
-            //SOLUCION 2 CON OLEDB
-            //OleDbConnection dbConnection = new OleDbConnection(CONNECTION_STRING);
-
-            //string commandString =
-            //"INSERT INTO MeetingEntries (Subject, Location, [Start Date], [End Date], [Enable Alarm], [Repeat Alarm], Reminder, [Repetition Type])" + " VALUES (@Subject, @Location, @StartDate, @EndDate, @EnableAlarm, @RepeatAlarm, @Reminder, @RepetitionType)";
-            ////"INSERT INTO MEETINGENTRIES (SUBJECT, LOCATION, START DATE, END DATE, ENABLE ALARM, REPEAT ALARM, REMINDER, REPETITION TYPE)" + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
-            //OleDbCommand commandStatement = new OleDbCommand(commandString, dbConnection);
-
-            //commandStatement.Parameters.Add("Subject", OleDbType.VarWChar, 30).Value = currentEntry.Subject;
-            //commandStatement.Parameters.Add("Location", OleDbType.VarWChar, 50).Value = currentEntry.Location;
-            //commandStatement.Parameters.Add("StartDate", OleDbType.Date, 40).Value = currentEntry.StartDateTime.Date;
-            //commandStatement.Parameters.Add("EndDate", OleDbType.Date, 40).Value = currentEntry.EndDateTime.Date;
-            //commandStatement.Parameters.Add("EnableAlarm", OleDbType.Boolean, 1).Value = currentEntry.IsAlarmEnabled;
-            //commandStatement.Parameters.Add("RepeatAlarm", OleDbType.Boolean, 1).Value = currentEntry.IsAlarmRepeated;
-            //commandStatement.Parameters.Add("Reminder", OleDbType.Integer, 2).Value = currentEntry.Reminder;
-            //commandStatement.Parameters.Add("RepetitionType", OleDbType.VarWChar, 10).Value = currentEntry.Repetition.ToString();
-
-
-            //dbConnection.Open();
-            //commandStatement.CommandText = commandString;
-            //commandStatement.ExecuteNonQuery();
-
-
-
-
-            //SOLUCION CON sql
-            //string insertStatement = "INSERT INTO dbo.REPORT_MARJORIE_ROLE(REPORT_ID, ROLE_ID, CREATED_BY, CREATED) " +
-            //                    "VALUES(@ReportID, @RoleID, 'SYSTEM', CURRENT_TIMESTAMP)";
-
-            //// set up connection and command objects in ADO.NET
-            //SqlConnection connection = new SqlConnection(connectionString);
-            //SqlCommand command = new SqlCommand(insertStatement, connection);
-            //using (command)
-            //{
-            //    command.Parameters.Add("@ReportID", SqlDbType.Int);
-
-            //    using (connection)
-            //    {
-            //        try
-            //        {
-            //            connection.Open();
-            //        }
-            //        catch (SqlException connectionException)
-            //        {
-            //            foreach (SqlError error in connectionException.Errors)
-            //            {
-            //                Console.WriteLine("Connection error!");
-            //                Console.WriteLine(error.Message);
-            //            }
-            //            Console.WriteLine("Press any key to close program...");
-            //            Console.ReadKey();
-            //            Environment.Exit((int)ExitCodes.DataBaseConnectionError);
-            //        }
-            //        catch (InvalidOperationException conectionException)
-            //        {
-            //            Console.WriteLine("The database connection is already open. Trying to continue.");
-            //            Console.WriteLine(conectionException.Message);
-            //        }
-
-            //        foreach (DirectDebitPaymentInstructionReject paymentInstructionReject in paymentStatusReport.DirectDebitPaymentInstructionRejects)
-            //        {
-            //            foreach (DirectDebitTransactionReject directDebitTransacionReject in paymentInstructionReject.DirectDebitTransactionsRejects)
-            //            {
-            //                command.Parameters["@RoleID"].Value = directDebitTransacionReject.MandateID;
-            //            }
-            //        }
-            //        int rowsUpdated = command.ExecuteNonQuery();
-            //        if (rowsUpdated != paymentStatusReport.NumberOfTransactions)
-            //        {
-            //            //error
-            //            // - Si es rowsUpdated es -1 ha habido un error de escritura y se ha hecho un 'rollback'
-            //            // - Si es otro valor... algo ha pasado, poruqe no se han insertado todas las transacciones esperadas
-            //            //    * Puede ser que el 'PaymentReportStatus' no se ha creado bien y el numero de TransactionRejects es erroneo
-            //        }
-            //    }
-            //}
+            catch (OleDbException connectionException)
+            {
+                foreach (OleDbError error in connectionException.Errors)
+                {
+                    Console.WriteLine("Connection error!");
+                    Console.WriteLine(error.Message);
+                }
+                Console.WriteLine("Press any key to close program...");
+                Console.ReadKey();
+                Environment.Exit((int)ExitCodes.DataBaseConnectionError);
+            }
+            catch (InvalidOperationException conectionException)
+            {
+                Console.WriteLine("The database connection is already open. Trying to continue.");
+                Console.WriteLine(conectionException.Message);
+            }
         }
 
         public int InsertTransactionRejectsIntoDatabase(OleDbConnection connection, PaymentStatusReport paymentStatusReport)
         {
             OleDbCommand command = connection.CreateCommand();
             command.CommandText = "INSERT INTO SEPAXMLRecibosTemporalDevolucion ([MandateId], [OrgnlEndtoEndID], [Reason], [CCC])" + " VALUES (@MandateID, @OrgnlEndToEndID, @Reason, @CCC)";
-            command.Parameters.Add("@MandateID", OleDbType.VarChar);
-            command.Parameters.Add("@OrgnlEndToEndID", OleDbType.VarChar);
-            command.Parameters.Add("@Reason", OleDbType.VarChar);
-            command.Parameters.Add("@CCC", OleDbType.VarChar);
+            command.Parameters.Add("@MandateID", OleDbType.VarChar, 50);
+            command.Parameters.Add("@OrgnlEndToEndID", OleDbType.VarChar, 35);
+            command.Parameters.Add("@Reason", OleDbType.VarChar, 50);
+            command.Parameters.Add("@CCC", OleDbType.VarChar, 50);
             int insertedRowsCount = 0;
             foreach (DirectDebitPaymentInstructionReject paymentInstructionReject in paymentStatusReport.DirectDebitPaymentInstructionRejects)
             {
@@ -386,25 +296,57 @@ namespace SEPAXMLPaymentStatusReportReader
 
         private void ProcessPaymentStatusReportParsingException(Exception paymentStatusReadException)
         {
-            string errorMessage;
+            string errorMessage = "Undefined Error";
+            int exitCode = (int)ExitCodes.UndefinedError;
             switch (paymentStatusReadException.GetType().ToString())
             {
                 case "System.Xml.XmlException":
                     errorMessage = "The source file is not a valid XML"
                         + Environment.NewLine + ((System.Xml.XmlException)paymentStatusReadException).Message;
-                    Console.WriteLine(errorMessage);
-                    Console.WriteLine("Press any key to close program...");
-                    Console.ReadKey();
-                    Environment.Exit((int)ExitCodes.NotValidXMLFile);
+                    exitCode = (int)ExitCodes.NotValidXMLFile;
                     break;
                 case "System.Xml.Schema.XmlSchemaValidationException":
                     errorMessage = "The source file is not compilant to pain.002.001.03"
                         + Environment.NewLine + ((System.Xml.Schema.XmlSchemaValidationException)paymentStatusReadException).Message;
-                    Console.WriteLine("Press any key to close program...");
-                    Console.ReadKey();
-                    Environment.Exit((int)ExitCodes.NotCompilantToSchemaFile);
+                    exitCode = (int)ExitCodes.NotCompilantToSchemaFile;
                     break;
             }
+            Console.WriteLine(errorMessage);
+            Console.WriteLine("Press any key to close program...");
+            Console.ReadKey();
+            Environment.Exit(exitCode);
+        }
+
+        private void ProcessConnectionException(Exception connectionException)
+        {
+            string errorMessage = "Undefined Error";
+            int exitCode = (int)ExitCodes.UndefinedError;
+            switch (connectionException.GetType().ToString())
+            {
+                case "System.Data.OleDb.OleDbException":
+                    errorMessage = "Connection error!";
+                    foreach (OleDbError error in ((OleDbException)connectionException).Errors)
+                    {
+                        errorMessage+= Environment.NewLine + error.Message;
+                    }
+                    Console.WriteLine("Press any key to close program...");
+                    Console.ReadKey();
+                    Environment.Exit((int)ExitCodes.DataBaseConnectionError);
+                    break;
+                case "System.InvalidOperationException":
+                    Console.WriteLine("The database connection is already open. Trying to continue.");
+                    Console.WriteLine(((InvalidOperationException)connectionException).Message);
+                    break;
+            }
+            Console.WriteLine(errorMessage);
+            Console.WriteLine("Press any key to close program...");
+            Console.ReadKey();
+            Environment.Exit(exitCode);
+        }
+
+        private void ProcessQueryExecutionExceptions(Exception queryExecutionException)
+        {
+
         }
     }
 }

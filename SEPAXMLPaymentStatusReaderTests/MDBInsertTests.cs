@@ -140,10 +140,7 @@ namespace SEPAXMLPaymentStatusReportReaderTests
             //To ensure no interference in DataBase, we can
             // - Make a TRANSACTION and rollback at the end
             // - Make a copy of the database for each test and connect to it
-            //    string testDir = TestContext.TestDir;
-            //    string thisTestDataBasename = "TestMDB" + testContextInstance.TestName + ".MDB";
-            //    File.Copy(@"TestFiles\TestMDB.mdb", @"TestFiles\" + thisTestDataBasename);
-            //    string dir1 = TestContext.DeploymentDirectory;
+            //string dir1 = TestContext.DeploymentDirectory;
             //string dir2 = TestContext.ResultsDirectory;
             //string dir3 = TestContext.TestDeploymentDir;
             //string dir4 = TestContext.TestDir;
@@ -153,7 +150,6 @@ namespace SEPAXMLPaymentStatusReportReaderTests
             //string dir8 = TestContext.TestRunResultsDirectory;
             //string dir8 = TestContext.EndTimer()
             //File.Copy(@"TestFiles\TestMDB.mdb", dir4 + "TestMDB.mdb");
-
 
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string relativePathToTestDatabase = @"TestFiles\TestMDB.mdb";

@@ -12,28 +12,31 @@ namespace SEPAXMLPaymentStatusReportReader
         /// Normal Exit
         Success = 0,
 
+        /// Undefined error
+        UndefinedError = -1,
+
         /// Invalid command line options
-        InvalidArguments = -1,
+        InvalidArguments = -2,
 
         /// DataBase Not Found
-        InvalidDataBasePath = -2,
+        InvalidDataBasePath = -3,
 
         /// Source data file not found
-        InvalidPaymentStatusFilePath = -3,
+        InvalidPaymentStatusFilePath = -4,
 
         /// DataBase connection error
-        DataBaseConnectionError = -4,
+        DataBaseConnectionError = -5,
 
         /// File Reading Error
-        FileReadingError = -5,
+        FileReadingError = -6,
 
         /// Not Valid XML File Error
-        NotValidXMLFile = -6,
+        NotValidXMLFile = -7,
 
         /// File is Compilant to pain.002.001.03 Error
-        NotCompilantToSchemaFile = -7,
+        NotCompilantToSchemaFile = -8,
 
         /// Data Reading error
-        DataBaseWritingError = -8,
+        DataBaseWritingError = -9
     }
 }
