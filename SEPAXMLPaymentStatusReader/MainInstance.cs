@@ -194,6 +194,7 @@ namespace SEPAXMLPaymentStatusReportReader
                 //    Console.WriteLine("The database connection is already open. Trying to continue.");
                 //    Console.WriteLine(conectionException.Message);
                 //}
+                InsertPaymentStatusRejectInfoIntoDataBase(connection, paymentStatusReport);
                 InsertTransactionRejectsIntoDatabase(connection, paymentStatusReport);
             }
         }
@@ -208,23 +209,24 @@ namespace SEPAXMLPaymentStatusReportReader
             {
                 ProcessConnectionException(connectionException);
             }
+        }
 
-            catch (OleDbException connectionException)
-            {
-                foreach (OleDbError error in connectionException.Errors)
-                {
-                    Console.WriteLine("Connection error!");
-                    Console.WriteLine(error.Message);
-                }
-                Console.WriteLine("Press any key to close program...");
-                Console.ReadKey();
-                Environment.Exit((int)ExitCodes.DataBaseConnectionError);
-            }
-            catch (InvalidOperationException conectionException)
-            {
-                Console.WriteLine("The database connection is already open. Trying to continue.");
-                Console.WriteLine(conectionException.Message);
-            }
+        public int InsertPaymentStatusRejectInfoIntoDataBase(OleDbConnection connection, PaymentStatusReport paymentStatusReport)
+        {
+            OleDbCommand command = connection.CreateCommand();
+            command.CommandText = "INSERT INTO SEPAXMLDatosDevolucion ([MessageId], [CreationDate], [NumberOfTransactions], [TotalAmount])" + " VALUES (@MessageID, @CreationDate, @NumberOfTransactions, @TotalAmount)";
+            command.Parameters.Add("@MessageID", OleDbType.WChar, 35);
+            command.Parameters.Add("@CreationDate", OleDbType.Date);
+            command.Parameters.Add("@NumberOfTransactions", OleDbType.SmallInt);
+            command.Parameters.Add("@TotalAmount", OleDbType.Numeric);
+            //int insertedRowsCount = 0;
+            command.Parameters["@MessageID"].Value = paymentStatusReport.MessageID;
+            command.Parameters["@CreationDate"].Value = paymentStatusReport.MessageCreationDateTime;
+            command.Parameters["@NumberOfTransactions"].Value = paymentStatusReport.NumberOfTransactions;
+            command.Parameters["@TotalAmount"].Value = paymentStatusReport.ControlSum;
+            int insertedRowsCount = command.ExecuteNonQuery();
+            command.Parameters.Clear();
+            return insertedRowsCount;
         }
 
         public int InsertTransactionRejectsIntoDatabase(OleDbConnection connection, PaymentStatusReport paymentStatusReport)
@@ -236,16 +238,28 @@ namespace SEPAXMLPaymentStatusReportReader
             command.Parameters.Add("@Reason", OleDbType.VarChar, 50);
             command.Parameters.Add("@CCC", OleDbType.VarChar, 50);
             int insertedRowsCount = 0;
-            foreach (DirectDebitPaymentInstructionReject paymentInstructionReject in paymentStatusReport.DirectDebitPaymentInstructionRejects)
+            using (OleDbTransaction transaction = connection.BeginTransaction())
             {
-                foreach (DirectDebitTransactionReject directDebitTransacionReject in paymentInstructionReject.DirectDebitTransactionsRejects)
+                command.Transaction = transaction;
+                foreach (DirectDebitPaymentInstructionReject paymentInstructionReject in paymentStatusReport.DirectDebitPaymentInstructionRejects)
                 {
-                    command.Parameters["@MandateID"].Value = directDebitTransacionReject.MandateID;
-                    command.Parameters["@OrgnlEndToEndID"].Value = directDebitTransacionReject.OriginalEndtoEndTransactionIdentification;
-                    command.Parameters["@Reason"].Value = directDebitTransacionReject.RejectReason;
-                    command.Parameters["@CCC"].Value = directDebitTransacionReject.DebtorAccount.CCC.CCC;
-                    command.ExecuteNonQuery();
-                    insertedRowsCount++;
+                    foreach (DirectDebitTransactionReject directDebitTransacionReject in paymentInstructionReject.DirectDebitTransactionsRejects)
+                    {
+                        command.Parameters["@MandateID"].Value = directDebitTransacionReject.MandateID;
+                        command.Parameters["@OrgnlEndToEndID"].Value = directDebitTransacionReject.OriginalEndtoEndTransactionIdentification;
+                        command.Parameters["@Reason"].Value = directDebitTransacionReject.RejectReason;
+                        command.Parameters["@CCC"].Value = directDebitTransacionReject.DebtorAccount.CCC.CCC;
+                        command.ExecuteNonQuery();
+                        insertedRowsCount++;
+                    }
+                }
+                if (insertedRowsCount == paymentStatusReport.NumberOfTransactions)
+                {
+                    transaction.Commit();
+                }
+                else
+                {
+                    transaction.Rollback();
                 }
             }
             command.Parameters.Clear();
