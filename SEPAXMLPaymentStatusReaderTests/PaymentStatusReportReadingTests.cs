@@ -157,7 +157,7 @@ namespace SEPAXMLPaymentStatusReportReaderTests
             }
             catch (System.Xml.XmlException)
             {
-                Assert.IsTrue(true);    //Jus assert an exception is trown
+                Assert.IsTrue(true);    //Just assert an exception is trown
                 throw;
             }
         }

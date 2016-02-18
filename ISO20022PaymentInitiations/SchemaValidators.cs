@@ -11,12 +11,16 @@ namespace ISO20022PaymentInitiations
     {
         public static string ValidatePaymentStatusReportFile(string xMLFilePath)
         {
-            return XMLValidator.ValidateXMLFileThroughXSDFile(xMLFilePath, @"XSDFiles\pain.002.001.03.xsd");
+            string applicationDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string validationSchemaFileFullPath = applicationDirectory + @"\XSDFiles\pain.002.001.03.xsd";
+            return XMLValidator.ValidateXMLFileThroughXSDFile(xMLFilePath, validationSchemaFileFullPath);
         }
 
         public static string ValidatePaymentStatusReportString(string xMLString)
         {
-            return XMLValidator.ValidateXMLStringThroughXSDFile(xMLString, @"XSDFiles\pain.002.001.03.xsd");
+            string applicationDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string validationSchemaFileFullPath = applicationDirectory + @"\XSDFiles\pain.002.001.03.xsd";
+            return XMLValidator.ValidateXMLStringThroughXSDFile(xMLString, validationSchemaFileFullPath);
         }
     }
 }

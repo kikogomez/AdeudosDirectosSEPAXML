@@ -195,6 +195,5 @@ namespace SEPAXMLPaymentStatusReportReaderTests
             connection.Close();
             Assert.AreEqual(paymentStatusReport.NumberOfTransactions, numberOfInsertedTransactionRejects);
         }
-
     }
 }

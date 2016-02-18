@@ -75,14 +75,6 @@ namespace DirectDebitElements
         private void ValidatePaymentStatusReportFile(string paymentStatusReportXMLFilePath)
         {
             string xMLValidationErrors = SchemaValidators.ValidatePaymentStatusReportFile(paymentStatusReportXMLFilePath);
-            //try
-            //{
-            //    xMLValidationErrors = SchemaValidators.ValidatePaymentStatusReportFile(paymentStatusReportXMLFilePath);
-            //}
-            //catch (System.Xml.XmlException notValidXMLFileException)
-            //{
-            //    throw new ArgumentException("Not a valid XML File", notValidXMLFileException);
-            //}
             if (xMLValidationErrors != "") throw new System.Xml.Schema.XmlSchemaValidationException(xMLValidationErrors);
 
         }
@@ -90,14 +82,6 @@ namespace DirectDebitElements
         private void ValidatePaymentStatusReportString(string paymentStatusReportXMLMessage)
         {
             string xMLValidationErrors = SchemaValidators.ValidatePaymentStatusReportString(paymentStatusReportXMLMessage);
-            //try
-            //{
-            //    xMLValidationErrors = SchemaValidators.ValidatePaymentStatusReportString(paymentStatusReportXMLMessage);
-            //}
-            //catch (System.Xml.XmlException notValidXMLFileException)
-            //{
-            //    throw new ArgumentException("Not a valid XML File", notValidXMLFileException);
-            //}
             if (xMLValidationErrors != "") throw new System.Xml.Schema.XmlSchemaValidationException(xMLValidationErrors);
         }
 
@@ -105,7 +89,9 @@ namespace DirectDebitElements
         {
             string paymentStatusReport_MessageID = customerPaymentStatusReportDocument.CstmrPmtStsRpt.GrpHdr.MsgId;
             DateTime paymentStatusReport_MessageCreationDateTime = customerPaymentStatusReportDocument.CstmrPmtStsRpt.GrpHdr.CreDtTm;
-            DateTime paymentStatusReport_RejectAccountChargeDateTime = ExtractRejectAccountChargeDateTimeFrom_OrgnlGrpInfAndSts_OrgnlMsgId(customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlMsgId);
+            //This is only valid for La Caixa CreditorAgent
+            //DateTime paymentStatusReport_RejectAccountChargeDateTime = ExtractRejectAccountChargeDateTimeFrom_OrgnlGrpInfAndSts_OrgnlMsgId(customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlMsgId);
+            DateTime paymentStatusReport_RejectAccountChargeDateTime = paymentStatusReport_MessageCreationDateTime.Date; //Unaccurate
             int paymentStatusReport_NumberOfTransactions = Int32.Parse(customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlNbOfTxs);
             decimal paymentStatusReport_ControlSum = customerPaymentStatusReportDocument.CstmrPmtStsRpt.OrgnlGrpInfAndSts.OrgnlCtrlSum;
             List<DirectDebitPaymentInstructionReject> directDebitPaymentInstructionRejects = new List<DirectDebitPaymentInstructionReject>();
@@ -171,6 +157,7 @@ namespace DirectDebitElements
             return document_Document;
         }
 
+        //This method is only useful for La Caixa CreditorAgent
         private DateTime ExtractRejectAccountChargeDateTimeFrom_OrgnlGrpInfAndSts_OrgnlMsgId(string orgnlGrpInfAndSts_OrgnlMsgId)
         {
             return DateTime.Parse(orgnlGrpInfAndSts_OrgnlMsgId.Substring(0, 10));
