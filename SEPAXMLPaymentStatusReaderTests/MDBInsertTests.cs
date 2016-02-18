@@ -47,7 +47,7 @@ namespace SEPAXMLPaymentStatusReportReaderTests
                 "0123456789",
                 "2015120100312",
                 DateTime.Parse("2015-12-01"),
-                70,
+                70.50M,
                 "00000110421",
                 new BankAccount(new InternationalAccountBankNumberIBAN("ES3011112222003333333333")),
                 "MS01");

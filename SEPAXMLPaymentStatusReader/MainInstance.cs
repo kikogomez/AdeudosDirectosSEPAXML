@@ -209,7 +209,9 @@ namespace SEPAXMLPaymentStatusReportReader
             command.Parameters.Add("@MessageID", OleDbType.WChar, 35);
             command.Parameters.Add("@CreationDate", OleDbType.Date);
             command.Parameters.Add("@NumberOfTransactions", OleDbType.SmallInt);
-            command.Parameters.Add("@TotalAmount", OleDbType.Numeric);
+            command.Parameters.Add("@TotalAmount", OleDbType.Double);
+            //command.Parameters.Add("@TotalAmount", OleDbType.Decimal);
+            //command.Parameters["@TotalAmount"].Precision = 2;
             command.Parameters["@MessageID"].Value = paymentStatusReport.MessageID;
             command.Parameters["@CreationDate"].Value = paymentStatusReport.MessageCreationDateTime;
             command.Parameters["@NumberOfTransactions"].Value = paymentStatusReport.NumberOfTransactions;
