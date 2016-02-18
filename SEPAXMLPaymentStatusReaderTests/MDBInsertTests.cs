@@ -135,6 +135,37 @@ namespace SEPAXMLPaymentStatusReportReaderTests
         }
 
         [TestMethod]
+        public void ThePaymeentStatusReportInfoIsCorrectlyInserted()
+        {
+            //To ensure no interference in DataBase, we can do either
+            // - Make a TRANSACTION and rollback at the end
+            // - Make a copy of the database for each test and connect to it
+            //string dir1 = TestContext.DeploymentDirectory;
+            //string dir2 = TestContext.ResultsDirectory;
+            //string dir3 = TestContext.TestDeploymentDir;
+            //string dir4 = TestContext.TestDir;
+            //string dir5 = TestContext.TestLogsDir;
+            //string dir6 = TestContext.TestResultsDirectory;
+            //string dir7 = TestContext.TestRunDirectory;
+            //string dir8 = TestContext.TestRunResultsDirectory;
+            //string dir8 = TestContext.EndTimer()
+            //File.Copy(@"TestFiles\TestMDB.mdb", dir4 + "TestMDB.mdb");
+
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string relativePathToTestDatabase = @"TestFiles\TestMDB.mdb";
+            string testDatabaseFullPath = baseDirectory + @"\" + relativePathToTestDatabase;
+            MainInstance mainInstance = new MainInstance();
+            string connectionString = mainInstance.CreateDatabaseConnectionString(testDatabaseFullPath);
+            OleDbConnection connection = new OleDbConnection(connectionString);
+            connection.Open();
+ 
+            int numberOfInsertedTransactionRejects = mainInstance.InsertPaymentStatusRejectInfoIntoDataBase(connection, paymentStatusReport);
+
+            connection.Close();
+            Assert.AreEqual(1, numberOfInsertedTransactionRejects);
+        }
+
+        [TestMethod]
         public void TheTransactionsRejectsAreCorrectlyInserted()
         {
             //To ensure no interference in DataBase, we can
@@ -161,6 +192,7 @@ namespace SEPAXMLPaymentStatusReportReaderTests
             
             int numberOfInsertedTransactionRejects = mainInstance.InsertTransactionRejectsIntoDatabase(connection, paymentStatusReport);
 
+            connection.Close();
             Assert.AreEqual(paymentStatusReport.NumberOfTransactions, numberOfInsertedTransactionRejects);
         }
 

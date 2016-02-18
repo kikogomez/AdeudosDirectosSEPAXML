@@ -50,7 +50,7 @@ namespace SEPAXMLPaymentStatusReportReader
             if (verboseExecution)
             {
                 Console.WriteLine("Completed!");
-                Console.WriteLine("Payment Status report read: {0}", sourcePaymentStatusReportPath);
+                Console.WriteLine("Payment Status report file: {0}", sourcePaymentStatusReportPath);
                 Console.WriteLine("Press any key to close program...");
                 Console.ReadKey();
             }
@@ -173,33 +173,24 @@ namespace SEPAXMLPaymentStatusReportReader
 
             using (OleDbConnection connection = new OleDbConnection(connectionString))
             {
-                TryToConnect(connection);
-                //try
-                //{
-                //    connection.Open();
-                //}
-                //catch (OleDbException connectionException)
-                //{
-                //    foreach (OleDbError error in connectionException.Errors)
-                //    {
-                //        Console.WriteLine("Connection error!");
-                //        Console.WriteLine(error.Message);
-                //    }
-                //    Console.WriteLine("Press any key to close program...");
-                //    Console.ReadKey();
-                //    Environment.Exit((int)ExitCodes.DataBaseConnectionError);
-                //}
-                //catch (InvalidOperationException conectionException)
-                //{
-                //    Console.WriteLine("The database connection is already open. Trying to continue.");
-                //    Console.WriteLine(conectionException.Message);
-                //}
-                InsertPaymentStatusRejectInfoIntoDataBase(connection, paymentStatusReport);
-                InsertTransactionRejectsIntoDatabase(connection, paymentStatusReport);
+                int paymentStatusReportInfoRegisters = 0;
+                int rejectedTransactionsRegisters = 0;
+
+                ConnectToDataBase(connection);
+                paymentStatusReportInfoRegisters = InsertPaymentStatusRejectInfoIntoDataBase(connection, paymentStatusReport);
+                rejectedTransactionsRegisters = InsertTransactionRejectsIntoDatabase(connection, paymentStatusReport);
+                if (paymentStatusReportInfoRegisters != 1 || rejectedTransactionsRegisters != paymentStatusReport.NumberOfTransactions)
+                {
+                    Console.WriteLine("A problem occurred when trying to write into database");
+                    Console.WriteLine("Some info couldn't be written");
+                    Console.WriteLine("Press any key to close program...");
+                    Console.ReadKey();
+                    Environment.Exit((int)ExitCodes.DataBaseWritingError);
+                }
             }
         }
 
-        private void TryToConnect(OleDbConnection connection)
+        private void ConnectToDataBase(OleDbConnection connection)
         {
             try
             {
@@ -219,12 +210,19 @@ namespace SEPAXMLPaymentStatusReportReader
             command.Parameters.Add("@CreationDate", OleDbType.Date);
             command.Parameters.Add("@NumberOfTransactions", OleDbType.SmallInt);
             command.Parameters.Add("@TotalAmount", OleDbType.Numeric);
-            //int insertedRowsCount = 0;
             command.Parameters["@MessageID"].Value = paymentStatusReport.MessageID;
             command.Parameters["@CreationDate"].Value = paymentStatusReport.MessageCreationDateTime;
             command.Parameters["@NumberOfTransactions"].Value = paymentStatusReport.NumberOfTransactions;
             command.Parameters["@TotalAmount"].Value = paymentStatusReport.ControlSum;
-            int insertedRowsCount = command.ExecuteNonQuery();
+            int insertedRowsCount = 0;
+            try
+            {
+                insertedRowsCount = command.ExecuteNonQuery();
+            }
+            catch (InvalidOperationException queryExecutionException)
+            {
+                ProcessQueryExecutionExceptions(queryExecutionException);
+            }
             command.Parameters.Clear();
             return insertedRowsCount;
         }
@@ -249,7 +247,15 @@ namespace SEPAXMLPaymentStatusReportReader
                         command.Parameters["@OrgnlEndToEndID"].Value = directDebitTransacionReject.OriginalEndtoEndTransactionIdentification;
                         command.Parameters["@Reason"].Value = directDebitTransacionReject.RejectReason;
                         command.Parameters["@CCC"].Value = directDebitTransacionReject.DebtorAccount.CCC.CCC;
-                        command.ExecuteNonQuery();
+                        try
+                        {
+                            command.ExecuteNonQuery();
+                        }
+                        catch (InvalidOperationException queryExecutionException)
+                        {
+                            ProcessQueryExecutionExceptions(queryExecutionException);
+                        }
+                        
                         insertedRowsCount++;
                     }
                 }
@@ -260,10 +266,10 @@ namespace SEPAXMLPaymentStatusReportReader
                 else
                 {
                     transaction.Rollback();
-                }
+                 }
+                command.Parameters.Clear();
+                return insertedRowsCount;
             }
-            command.Parameters.Clear();
-            return insertedRowsCount;
         }
 
         private string ErrorsInPath(string fullPathToCheck)
@@ -358,9 +364,13 @@ namespace SEPAXMLPaymentStatusReportReader
             Environment.Exit(exitCode);
         }
 
-        private void ProcessQueryExecutionExceptions(Exception queryExecutionException)
+        private void ProcessQueryExecutionExceptions(InvalidOperationException queryExecutionException)
         {
-
+            Console.WriteLine("A problem occurred when trying to write into database");
+            Console.WriteLine(queryExecutionException.Message);
+            Console.WriteLine("Press any key to close program...");
+            Console.ReadKey();
+            Environment.Exit((int)ExitCodes.DataBaseWritingError);
         }
     }
 }
