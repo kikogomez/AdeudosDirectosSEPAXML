@@ -30,6 +30,16 @@ namespace ISO20022PaymentInitiationsUnitTests
         }
 
         [TestMethod]
+        public void XmlFileWithNonUnicodeCharactersIsWellValidated()
+        {
+            //Original valid pain.008.001.02 XML file from ISO20022
+            string xMLFilePath = @"F:\Gestion\devoluciones\2016\Febrero\Bankia\descarga_fichero_2016_02_18_1010.xml";
+
+            string validatingErrors = SchemaValidators.ValidatePaymentStatusReportFile(xMLFilePath);
+            Assert.AreEqual(String.Empty, validatingErrors);
+        }
+
+        [TestMethod]
         public void NonCompilantISO20020XMLExample2FileHasValidationErrors()
         {
             //Original valid pain.008.001.02 XML file from ISO20022

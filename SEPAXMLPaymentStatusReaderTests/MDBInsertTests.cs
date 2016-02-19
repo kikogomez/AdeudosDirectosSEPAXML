@@ -195,5 +195,32 @@ namespace SEPAXMLPaymentStatusReportReaderTests
             connection.Close();
             Assert.AreEqual(paymentStatusReport.NumberOfTransactions, numberOfInsertedTransactionRejects);
         }
+
+        [TestMethod]
+        public void IntegrationTest_ReadFileAndInsertIntoDatabase()
+        {
+            //readFileInto String
+            string xMLFilePath = @"F:\Gestion\devoluciones\2016\Febrero\Bankia\descarga_fichero_2016_02_18_1010.xml";
+            string xmlString = File.ReadAllText(xMLFilePath);
+
+            //Parse string
+            MainInstance mainInstance = new MainInstance();
+            PaymentStatusReport paymentStatusReport = mainInstance.ParsePaymentStatusReportString(xmlString);
+
+            //Write To DataBase
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string relativePathToTestDatabase = @"TestFiles\TestMDB.mdb";
+            string testDatabaseFullPath = baseDirectory + @"\" + relativePathToTestDatabase;
+            string connectionString = mainInstance.CreateDatabaseConnectionString(testDatabaseFullPath);
+            OleDbConnection connection = new OleDbConnection(connectionString);
+            connection.Open();
+
+            int numberOfInsertedPSRInfoRegisters = mainInstance.InsertPaymentStatusRejectInfoIntoDataBase(connection, paymentStatusReport);
+            int numberOfInsertedTransactionRejects = mainInstance.InsertTransactionRejectsIntoDatabase(connection, paymentStatusReport);
+
+            connection.Close();
+            Assert.AreEqual(1, numberOfInsertedPSRInfoRegisters);
+            Assert.AreEqual(paymentStatusReport.NumberOfTransactions, numberOfInsertedTransactionRejects);
+        }
     }
 }

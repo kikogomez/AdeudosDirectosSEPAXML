@@ -1,6 +1,8 @@
 PENDIENTE
 ---------
  - ¡ATENCION! No parece que los ficheros XSD se esten añadiendo al resutado de DEBUG. ¡Revisar!
+ - Hay pruebas que se estan realizando con datos reales EXTERNOS AL PROYECTO (ISO20022PaymentInitiationsUnitTests.SchemaValidatorTests y SEPAXMLPaymentStatusReportReaderTests.MDBInsertTests)
+	-> Extraer la informacion confidencial SIN CAMBIAR EL FORMATO (es un fichero con caracteres NO UNICODE) y añadirlos al proyecto
 
 
 
