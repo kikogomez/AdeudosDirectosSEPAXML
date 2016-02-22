@@ -15,21 +15,23 @@ namespace SEPAXMLPaymentStatusReportReader
     public class MainInstance
     {
         bool verboseExecution;
+        bool pauseBeforeExit;
 
         public MainInstance()
         { }
 
         public void Run(string[] args)
         {
-            string parseErrorString;
+            string usageHelpString;
             string errorsInPath;
             string sourcePaymentStatusReportPath;
             string dataBasePath;
             int exitCode;
 
-            if (!ParseArguments(args, out parseErrorString, out sourcePaymentStatusReportPath, out dataBasePath, out verboseExecution))
+            if (!ParseArguments(args, out usageHelpString, out sourcePaymentStatusReportPath, out dataBasePath, out verboseExecution, out pauseBeforeExit))
             {
-                Console.WriteLine(parseErrorString);
+                Console.WriteLine("Arguments error!");
+                Console.WriteLine(usageHelpString);
                 Console.WriteLine("Press any key to close program...");
                 Console.ReadKey();
                 Environment.Exit((int)ExitCodes.InvalidArguments);
@@ -51,18 +53,22 @@ namespace SEPAXMLPaymentStatusReportReader
             {
                 Console.WriteLine("Completed!");
                 Console.WriteLine("Payment Status report file: {0}", sourcePaymentStatusReportPath);
-                Console.WriteLine("Press any key to close program...");
-                Console.ReadKey();
+                if (pauseBeforeExit)
+                {
+                    Console.WriteLine("Press any key to close program...");
+                    Console.ReadKey();
+                }
             }
             Environment.Exit((int)ExitCodes.Success);
         }
 
         public bool ParseArguments(
             string[] arguments,
-            out string parseErrorString,
+            out string usageHelpString,
             out string sourcePaymentStatusReportPath,
             out string dataBasePath,
-            out bool verboseExecution)
+            out bool verboseExecution,
+            out bool pauseBeforeExit)
         {
             bool argumentsParseOk;
             ArgumentOptions argumentOptions = new ArgumentOptions();
@@ -73,10 +79,11 @@ namespace SEPAXMLPaymentStatusReportReader
             });
 
             argumentsParseOk = (parser.ParseArguments(arguments, argumentOptions) ? true : false);
-            parseErrorString = parser.Settings.HelpWriter.ToString();
+            usageHelpString = parser.Settings.HelpWriter.ToString();
             sourcePaymentStatusReportPath = argumentOptions.PaymentStatusReportFilePath;
             dataBasePath = argumentOptions.DataBaseFullPath;
             verboseExecution = argumentOptions.Verbose;
+            pauseBeforeExit = argumentOptions.Pause;
             return argumentsParseOk;
         }
 
@@ -177,7 +184,9 @@ namespace SEPAXMLPaymentStatusReportReader
                 int rejectedTransactionsRegisters = 0;
 
                 ConnectToDataBase(connection);
+                if (verboseExecution) Console.WriteLine("Writing payment reject basic info to database...");
                 paymentStatusReportInfoRegisters = InsertPaymentStatusRejectInfoIntoDataBase(connection, paymentStatusReport);
+                if (verboseExecution) Console.WriteLine("Writing writing transaction rejects to database...");
                 rejectedTransactionsRegisters = InsertTransactionRejectsIntoDatabase(connection, paymentStatusReport);
                 if (paymentStatusReportInfoRegisters != 1 || rejectedTransactionsRegisters != paymentStatusReport.NumberOfTransactions)
                 {
@@ -201,6 +210,14 @@ namespace SEPAXMLPaymentStatusReportReader
             catch (Exception connectionException) when (connectionException is OleDbException || connectionException is InvalidOperationException)
             {
                 ProcessConnectionException(connectionException);
+            }
+            catch (Exception unexpectedException)
+            {
+                Console.WriteLine("Uncontrolled exception while opening connection");
+                Console.WriteLine(unexpectedException.Message);
+                Console.WriteLine("Press any key to close program...");
+                Console.ReadKey();
+                Environment.Exit((int)ExitCodes.UndefinedError);
             }
         }
 

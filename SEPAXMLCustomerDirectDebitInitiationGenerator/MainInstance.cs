@@ -143,7 +143,6 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
                     Console.WriteLine("The database connection is already open. Trying to continue.");
                     Console.WriteLine(conectionException.Message);
                 }
-                //connection.Open(); 
                 if (verboseExecution) Console.WriteLine("Reading remittance base information...");
                 GetRemmmitanceBaseInformation(connection, out creditorNIF, out creditorName, out directDebitRemittance);
 
