@@ -157,6 +157,8 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
                 DirectDebitPaymentInstruction fRSTDirectDebitPaymentInstruction = CreatePaymentInstructionWithFRSTTransactions(connection, fRSTTransactionsPaymentInstructionID, "CORE");
                 if (fRSTDirectDebitPaymentInstruction.NumberOfDirectDebitTransactions != 0)
                     directDebitRemittance.AddDirectDebitPaymentInstruction(fRSTDirectDebitPaymentInstruction);
+
+                connection.Close();
             }
         }
 

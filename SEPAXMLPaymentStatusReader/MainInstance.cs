@@ -181,12 +181,14 @@ namespace SEPAXMLPaymentStatusReportReader
                 rejectedTransactionsRegisters = InsertTransactionRejectsIntoDatabase(connection, paymentStatusReport);
                 if (paymentStatusReportInfoRegisters != 1 || rejectedTransactionsRegisters != paymentStatusReport.NumberOfTransactions)
                 {
+                    connection.Close();
                     Console.WriteLine("A problem occurred when trying to write into database");
                     Console.WriteLine("Some info couldn't be written");
                     Console.WriteLine("Press any key to close program...");
                     Console.ReadKey();
                     Environment.Exit((int)ExitCodes.DataBaseWritingError);
                 }
+                connection.Close();
             }
         }
 
