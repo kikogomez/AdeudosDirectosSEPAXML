@@ -30,6 +30,7 @@ namespace ISO20022PaymentInitiationsUnitTests
         }
 
         [TestMethod]
+        [Ignore]
         public void XmlFileWithNonUnicodeCharactersIsWellValidated()
         {
             //Original valid pain.008.001.02 XML file from ISO20022

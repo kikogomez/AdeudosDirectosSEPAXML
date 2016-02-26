@@ -6,20 +6,60 @@ namespace XMLSerializerValidator
 {
     public static class XMLSerializer
     {
+        public static Encoding defaultEncoding = System.Text.Encoding.GetEncoding("ISO-8859-1");
+
         public static string XMLSerializeToString<ObjectType>(ObjectType objetToSerialize, string rootElementName, string defaultNamespace)
         {
-            //var memoryStream = new MemoryStream();
-            //TextWriter stringWriter = new StreamWriter(memoryStream, System.Text.Encoding.UTF8);
+            //// Serialize to UTF-8 using UTF8StringWriter()
+            //TextWriter stringWriter = new Utf8StringWriter();
+            //XMLSerialize<ObjectType>(objetToSerialize, rootElementName, defaultNamespace, stringWriter);
+            //return stringWriter.ToString();
 
-            TextWriter stringWriter = new Utf8StringWriter();
+            ////Serialize to UTF8 using a MemoryStream
+            //var memoryStream = new MemoryStream();
+            //var encoding = Encoding.UTF8;
+            //TextWriter stringWriter = new StreamWriter(memoryStream, encoding);
+            //XMLSerialize<ObjectType>(objetToSerialize, rootElementName, defaultNamespace, stringWriter);
+            //return encoding.GetString(memoryStream.ToArray());
+
+            /////Serialize to ISO-8859-1 using a MemoryStream
+            //var memoryStream = new MemoryStream();
+            //var encoding = Encoding.GetEncoding("ISO-8859-1");
+            //TextWriter stringWriter = new StreamWriter(memoryStream, encoding);
+            //XMLSerialize<ObjectType>(objetToSerialize, rootElementName, defaultNamespace, stringWriter);
+            //return encoding.GetString(memoryStream.ToArray());
+
+            ///Serialize to using a MemoryStream and encoding as parameter
+            var memoryStream = new MemoryStream();
+            var stringWriter = new StreamWriter(memoryStream, defaultEncoding);
             XMLSerialize<ObjectType>(objetToSerialize, rootElementName, defaultNamespace, stringWriter);
-            //return System.Text.Encoding.UTF8.GetString(memoryStream.ToArray());
-            return stringWriter.ToString();
+            return defaultEncoding.GetString(memoryStream.ToArray());
+        }
+        public static string XMLSerializeToString<ObjectType>(ObjectType objetToSerialize, string rootElementName, string defaultNamespace, Encoding encoding)
+        {
+            var memoryStream = new MemoryStream();
+            TextWriter stringWriter = new StreamWriter(memoryStream, encoding);
+            XMLSerialize<ObjectType>(objetToSerialize, rootElementName, defaultNamespace, stringWriter);
+            return encoding.GetString(memoryStream.ToArray());
+
+            ////Serialize to UTF8 using a MemoryStream
+            //var memoryStream = new MemoryStream();
+            //var encoding = Encoding.UTF8;
+            //TextWriter stringWriter = new StreamWriter(memoryStream, Encoding.UTF8);
+            //XMLSerialize<ObjectType>(objetToSerialize, rootElementName, defaultNamespace, stringWriter);
+            //return Encoding.UTF8.GetString(memoryStream.ToArray());
         }
 
         public static void XMLSerializeToFile<ObjectType>(ObjectType objetToSerialize, string rootElementName, string defaultNamespace, string targetXMLFileName)
         {
-            TextWriter fileWriter = new StreamWriter(targetXMLFileName, true, Encoding.UTF8);
+            TextWriter fileWriter = new StreamWriter(targetXMLFileName, true, defaultEncoding);
+            XMLSerialize<ObjectType>(objetToSerialize, rootElementName, defaultNamespace, fileWriter);
+            fileWriter.Close();
+        }
+
+        public static void XMLSerializeToFile<ObjectType>(ObjectType objetToSerialize, string rootElementName, string defaultNamespace, string targetXMLFileName, Encoding encoding)
+        {
+            TextWriter fileWriter = new StreamWriter(targetXMLFileName, true, encoding);
             XMLSerialize<ObjectType>(objetToSerialize, rootElementName, defaultNamespace, fileWriter);
             fileWriter.Close();
         }

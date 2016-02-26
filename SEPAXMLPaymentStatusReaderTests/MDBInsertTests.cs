@@ -197,6 +197,7 @@ namespace SEPAXMLPaymentStatusReportReaderTests
         }
 
         [TestMethod]
+        [Ignore]
         public void IntegrationTest_ReadFileAndInsertIntoDatabase()
         {
             //readFileInto String

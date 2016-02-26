@@ -12,9 +12,59 @@ namespace RCNGCMembersManagementUnitTests
     public class XMLSerializationUnitTests
     {
         [TestMethod]
-        public void SerializationToStringWorksOK()
+        public void SerializationWithMemoryStreamRequiresRemoveBOMIfUTF()
+        {
+            OrderedItem orderedItem = new OrderedItem();
+            orderedItem.ItemName = "Widget";
+            orderedItem.Description = "Regular Widget";
+            orderedItem.Quantity = 10;
+            orderedItem.UnitPrice = (decimal)2.30;
+            orderedItem.Calculate();
+
+            var memoryStream = new MemoryStream();
+            //var encoding = System.Text.Encoding.GetEncoding("iso-8859-1");
+            System.Text.Encoding encoding = new System.Text.UTF8Encoding(false);
+            TextWriter stringWriter = new StreamWriter(memoryStream, encoding);
+            System.Xml.Serialization.XmlSerializer serializer = new System.Xml.Serialization.XmlSerializer(typeof(OrderedItem));
+            serializer.Serialize(stringWriter, orderedItem);
+            string xMLString = encoding.GetString(memoryStream.ToArray());
+            Assert.AreEqual("<", xMLString.Substring(0,1));
+        }
+
+        [TestMethod]
+        public void SerializationToStringUTF8WorksOK()
         {
             string xMLExpectedString = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<OrderedItem xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <ItemName>Widget</ItemName>\r\n  <Description>Regular Widget</Description>\r\n  <UnitPrice>2.3</UnitPrice>\r\n  <Quantity>10</Quantity>\r\n  <LineTotal>23.0</LineTotal>\r\n</OrderedItem>";
+
+            OrderedItem orderedItem = new OrderedItem();
+            orderedItem.ItemName = "Widget";
+            orderedItem.Description = "Regular Widget";
+            orderedItem.Quantity = 10;
+            orderedItem.UnitPrice = (decimal)2.30;
+            orderedItem.Calculate();
+            string xMLString = XMLSerializer.XMLSerializeToString<OrderedItem>(orderedItem, null, null, System.Text.Encoding.GetEncoding("utf-16"));
+            Assert.AreEqual(xMLExpectedString, xMLString);
+        }
+
+        [TestMethod]
+        public void SerializationToStringISO88591WorksOK()
+        {
+            string xMLExpectedString = "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?>\r\n<OrderedItem xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <ItemName>Widget</ItemName>\r\n  <Description>Regular Widget</Description>\r\n  <UnitPrice>2.3</UnitPrice>\r\n  <Quantity>10</Quantity>\r\n  <LineTotal>23.0</LineTotal>\r\n</OrderedItem>";
+
+            OrderedItem orderedItem = new OrderedItem();
+            orderedItem.ItemName = "Widget";
+            orderedItem.Description = "Regular Widget";
+            orderedItem.Quantity = 10;
+            orderedItem.UnitPrice = (decimal)2.30;
+            orderedItem.Calculate();
+            string xMLString = XMLSerializer.XMLSerializeToString<OrderedItem>(orderedItem, null, null, System.Text.Encoding.GetEncoding("ISO-8859-1"));
+            Assert.AreEqual(xMLExpectedString, xMLString);
+        }
+
+        [TestMethod]
+        public void DefaultEncodingIsISO85591()
+        {
+            string xMLExpectedString = "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?>\r\n<OrderedItem xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <ItemName>Widget</ItemName>\r\n  <Description>Regular Widget</Description>\r\n  <UnitPrice>2.3</UnitPrice>\r\n  <Quantity>10</Quantity>\r\n  <LineTotal>23.0</LineTotal>\r\n</OrderedItem>";
 
             OrderedItem orderedItem = new OrderedItem();
             orderedItem.ItemName = "Widget";
