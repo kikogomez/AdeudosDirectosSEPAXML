@@ -42,7 +42,7 @@ namespace RCNGCMembersManagementUnitTests
             orderedItem.Quantity = 10;
             orderedItem.UnitPrice = (decimal)2.30;
             orderedItem.Calculate();
-            string xMLString = XMLSerializer.XMLSerializeToString<OrderedItem>(orderedItem, null, null, System.Text.Encoding.GetEncoding("utf-16"));
+            string xMLString = XMLSerializer.XMLSerializeToString<OrderedItem>(orderedItem, null, null, System.Text.Encoding.GetEncoding("utf-8"));
             Assert.AreEqual(xMLExpectedString, xMLString);
         }
 

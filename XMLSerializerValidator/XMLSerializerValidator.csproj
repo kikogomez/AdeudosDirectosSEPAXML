@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="EncodingDefinedStringWriter.cs" />
     <Compile Include="Utf8StringWriter.cs" />
     <Compile Include="XMLSerializer.cs" />
     <Compile Include="XMLValidator.cs" />

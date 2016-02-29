@@ -179,7 +179,7 @@ namespace DirectDebitElementsUnitTests
         }
 
         [TestMethod]
-        public void ACustomerDirectDebitRemittanceXMLStringMessageIsCorrectlyGenerated()
+        public void ACustomerDirectDebitRemittanceXMLStringMessageIsCorrectlyGenerated_ISO88591Encoded()
         {
             DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
             DirectDebitPaymentInstruction directDebitPaymentInstruction1 = new DirectDebitPaymentInstruction(
@@ -205,7 +205,10 @@ namespace DirectDebitElementsUnitTests
                 xMLCustomerDirectDebitInitiationMessage,
                 @"XSDFiles\pain.008.001.02.xsd");
             Assert.AreEqual("", xMLValidatingErrors);
-            string expectedXMLString = File.ReadAllText(@"XML Test Files\pain.008.001.02\BasicDirectDebitRemittanceExample.xml");
+            string expectedXMLString = File.ReadAllText(@"XML Test Files\pain.008.001.02\BasicDirectDebitRemittanceExample.xml", System.Text.Encoding.GetEncoding("ISO-8859-1"));
+
+            int index = expectedXMLString.Zip(xMLCustomerDirectDebitInitiationMessage, (c1, c2) => c1 == c2).TakeWhile(b => b).Count() + 1;
+
             Assert.AreEqual(expectedXMLString, xMLCustomerDirectDebitInitiationMessage);
         }
 
@@ -236,7 +239,7 @@ namespace DirectDebitElementsUnitTests
                 xMLCustomerDirectDeitInitiationMessage,
                 @"XSDFiles\pain.008.001.02.xsd");
             Assert.AreEqual("", xMLValidatingErrors);
-            string expectedXMLString = File.ReadAllText(@"XML Test Files\pain.008.001.02\BasicDirectDebitRemittanceExampleWithConceptsJoined.xml");           
+            string expectedXMLString = File.ReadAllText(@"XML Test Files\pain.008.001.02\BasicDirectDebitRemittanceExampleWithConceptsJoined.xml", System.Text.Encoding.GetEncoding("ISO-8859-1"));           
             Assert.AreEqual(expectedXMLString, xMLCustomerDirectDeitInitiationMessage);
         }
 
@@ -277,7 +280,7 @@ namespace DirectDebitElementsUnitTests
                 xMLCustomerDirectDeitInitiationMessage,
                 @"XSDFiles\pain.008.001.02.xsd");
             Assert.AreEqual("", xMLValidatingErrors);
-            string expectedXMLString = File.ReadAllText(@"XML Test Files\pain.008.001.02\DirectDebitRemmitanceWithVariousPaymentInstructionsAndAmendments.xml");
+            string expectedXMLString = File.ReadAllText(@"XML Test Files\pain.008.001.02\DirectDebitRemmitanceWithVariousPaymentInstructionsAndAmendments.xml", System.Text.Encoding.GetEncoding("ISO-8859-1"));
             Assert.AreEqual(expectedXMLString, xMLCustomerDirectDeitInitiationMessage);
         }
 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="iso-8859-1"?>
 <Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:iso:std:iso:20022:tech:xsd:pain.008.001.02">
   <CstmrDrctDbtInitn>
     <GrpHdr>
@@ -79,7 +79,7 @@
           </FinInstnId>
         </DbtrAgt>
         <Dbtr>
-          <Nm>Francisco GÃ³mez-Caldito Viseas</Nm>
+          <Nm>Francisco Gómez-Caldito Viseas</Nm>
         </Dbtr>
         <DbtrAcct>
           <Id>
@@ -108,7 +108,7 @@
           </FinInstnId>
         </DbtrAgt>
         <Dbtr>
-          <Nm>Pedro PÃ©rez GÃ³mez</Nm>
+          <Nm>Pedro Pérez Gómez</Nm>
         </Dbtr>
         <DbtrAcct>
           <Id>
