@@ -236,13 +236,25 @@ namespace SEPAXMLPaymentStatusReportReader
             command.Parameters["@NumberOfTransactions"].Value = paymentStatusReport.NumberOfTransactions;
             command.Parameters["@TotalAmount"].Value = paymentStatusReport.ControlSum;
             int insertedRowsCount = 0;
-            try
+            using (OleDbTransaction transaction = connection.BeginTransaction())
             {
-                insertedRowsCount = command.ExecuteNonQuery();
-            }
-            catch (InvalidOperationException queryExecutionException)
-            {
-                ProcessQueryExecutionExceptions(queryExecutionException);
+                try
+                {
+                    insertedRowsCount = command.ExecuteNonQuery();
+                }
+                catch (InvalidOperationException queryExecutionException)
+                {
+                    transaction.Rollback();
+                    ProcessQueryExecutionExceptions(queryExecutionException);
+                }
+                if (insertedRowsCount == 1)
+                {
+                    transaction.Commit();
+                }
+                else
+                {
+                    transaction.Rollback();
+                }
             }
             command.Parameters.Clear();
             return insertedRowsCount;
@@ -274,6 +286,7 @@ namespace SEPAXMLPaymentStatusReportReader
                         }
                         catch (InvalidOperationException queryExecutionException)
                         {
+                            transaction.Rollback();
                             ProcessQueryExecutionExceptions(queryExecutionException);
                         }
                         
@@ -287,7 +300,7 @@ namespace SEPAXMLPaymentStatusReportReader
                 else
                 {
                     transaction.Rollback();
-                 }
+                }
                 command.Parameters.Clear();
                 return insertedRowsCount;
             }
