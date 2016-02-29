@@ -207,8 +207,6 @@ namespace DirectDebitElementsUnitTests
             Assert.AreEqual("", xMLValidatingErrors);
             string expectedXMLString = File.ReadAllText(@"XML Test Files\pain.008.001.02\BasicDirectDebitRemittanceExample.xml", System.Text.Encoding.GetEncoding("ISO-8859-1"));
 
-            int index = expectedXMLString.Zip(xMLCustomerDirectDebitInitiationMessage, (c1, c2) => c1 == c2).TakeWhile(b => b).Count() + 1;
-
             Assert.AreEqual(expectedXMLString, xMLCustomerDirectDebitInitiationMessage);
         }
 

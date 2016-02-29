@@ -15,21 +15,9 @@ namespace XMLSerializerValidator
             //XMLSerialize<ObjectType>(objetToSerialize, rootElementName, defaultNamespace, stringWriter);
             //return stringWriter.ToString();
 
-            //// Serialize to UTF-8 using UTF16StringWriter() (no BOM in resulting string)
-            //TextWriter stringWriter = new Utf8StringWriter();
-            //XMLSerialize<ObjectType>(objetToSerialize, rootElementName, defaultNamespace, stringWriter);
-            //return stringWriter.ToString();
-
             ////Serialize to UTF8 using a MemoryStream (the BOM is included in resulting string!)
             //var memoryStream = new MemoryStream();
             //var encoding = Encoding.UTF8;
-            //TextWriter streamWriter = new StreamWriter(memoryStream, encoding);
-            //XMLSerialize<ObjectType>(objetToSerialize, rootElementName, defaultNamespace, streamWriter);
-            //return encoding.GetString(memoryStream.ToArray());
-
-            ////Serialize to UTF16 using a MemoryStream (the BOM is included in resulting string!)
-            //var memoryStream = new MemoryStream();
-            //var encoding = System.Text.Encoding.GetEncoding("utf-16");
             //TextWriter streamWriter = new StreamWriter(memoryStream, encoding);
             //XMLSerialize<ObjectType>(objetToSerialize, rootElementName, defaultNamespace, streamWriter);
             //return encoding.GetString(memoryStream.ToArray());
@@ -41,25 +29,13 @@ namespace XMLSerializerValidator
             //XMLSerialize<ObjectType>(objetToSerialize, rootElementName, defaultNamespace, streamWriter);
             //return encoding.GetString(memoryStream.ToArray());
 
-            /////Serialize to string using a MemoryStream and encoding with 'defaultEncoding'
-            //var memoryStream = new MemoryStream();
-            //var streamWriter = new StreamWriter(memoryStream, defaultEncoding);
-            //XMLSerialize<ObjectType>(objetToSerialize, rootElementName, defaultNamespace, streamWriter);
-            //return defaultEncoding.GetString(memoryStream.ToArray());
-
-            // Serialize to string using a derived stringbuilder that allows define encoding (with 'defaultEncoding')
+            // Serialize to string using a derived stringbuilder that allows define encoding
             TextWriter stringWriter = new EncodingDefinedStringWriter(defaultEncoding);
             XMLSerialize<ObjectType>(objetToSerialize, rootElementName, defaultNamespace, stringWriter);
             return stringWriter.ToString();
         }
         public static string XMLSerializeToString<ObjectType>(ObjectType objetToSerialize, string rootElementName, string defaultNamespace, Encoding encoding)
         {
-
-            //// Serialize to UTF-8 using UTF8StringWriter() (no BOM in resulting string)
-            //TextWriter stringWriter = new StringWriter();
-            //XMLSerialize<ObjectType>(objetToSerialize, rootElementName, defaultNamespace, stringWriter);
-            //return stringWriter.ToString();
-
             // Serialize using a derived class that allows to define encoding
             TextWriter stringWriter = new EncodingDefinedStringWriter(encoding);
             XMLSerialize<ObjectType>(objetToSerialize, rootElementName, defaultNamespace, stringWriter);
