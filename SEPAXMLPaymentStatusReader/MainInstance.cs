@@ -238,6 +238,7 @@ namespace SEPAXMLPaymentStatusReportReader
             int insertedRowsCount = 0;
             using (OleDbTransaction transaction = connection.BeginTransaction())
             {
+                command.Transaction = transaction;
                 try
                 {
                     insertedRowsCount = command.ExecuteNonQuery();

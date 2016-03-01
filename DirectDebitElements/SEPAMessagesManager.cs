@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -32,6 +33,26 @@ namespace DirectDebitElements
             return xmlString;
         }
 
+        public string GenerateISO20022CustomerDirectDebitInitiationStringMessage(
+            Creditor creditor,
+            CreditorAgent creditorAgent,
+            DirectDebitRemittance directDebitRemittance,
+            bool singleUnstructuredConcept,
+            bool conceptsIncludeAmounts,
+            Encoding encoding)
+        {
+            CustomerDirectDebitInitiationDocument document_Document = CreateCustomerDirectDebitInitiationDocument(
+                creditor,
+                creditorAgent,
+                directDebitRemittance,
+                singleUnstructuredConcept,
+                conceptsIncludeAmounts);
+
+            string xMLNamespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02";
+            string xmlString = XMLSerializer.XMLSerializeToString<CustomerDirectDebitInitiationDocument>(document_Document, "Document", xMLNamespace, encoding);
+            return xmlString;
+        }
+
         public void GenerateISO20022CustomerDirectDebitInitiationFileMessage(
             Creditor creditor,
             CreditorAgent creditorAgent,
@@ -50,6 +71,27 @@ namespace DirectDebitElements
 
             string xMLNamespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02";
             XMLSerializer.XMLSerializeToFile<CustomerDirectDebitInitiationDocument>(document_Document, "Document", xMLNamespace, xMLFilePath);
+        }
+
+        public void GenerateISO20022CustomerDirectDebitInitiationFileMessage(
+            Creditor creditor,
+            CreditorAgent creditorAgent,
+            DirectDebitRemittance directDebitRemittance,
+            bool singleUnstructuredConcept,
+            bool conceptsIncludeAmounts,
+            string xMLFilePath,
+            Encoding encoding)
+        {
+
+            CustomerDirectDebitInitiationDocument document_Document = CreateCustomerDirectDebitInitiationDocument(
+                creditor,
+                creditorAgent,
+                directDebitRemittance,
+                singleUnstructuredConcept,
+                conceptsIncludeAmounts);
+
+            string xMLNamespace = "urn:iso:std:iso:20022:tech:xsd:pain.008.001.02";
+            XMLSerializer.XMLSerializeToFile<CustomerDirectDebitInitiationDocument>(document_Document, "Document", xMLNamespace, xMLFilePath, encoding);
         }
 
         public PaymentStatusReport ReadISO20022PaymentStatusReportStringMessage(string paymentStatusReportXMLMessage)

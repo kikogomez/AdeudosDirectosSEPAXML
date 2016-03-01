@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +43,7 @@ namespace DirectDebitElementsUnitTests
             debtors = new Dictionary<string, Debtor>()
             {
                 {"00001", new Debtor("00001", "Francisco", "Gómez-Caldito", "Viseas")},
-                {"00002", new Debtor("00002", "Pedro", "Pérez", "Gómez")},
+                {"00002", new Debtor("00002", "Pedro Mª", "Pérez", "Camañes")},
                 {"00003", new Debtor("00003", "Rodrigo", "Rodríguez", "Rodríguez")},
                 {"00004", new Debtor("00004", "Domingo", "Domínguez", "Domínguez")}
             };
@@ -205,7 +206,75 @@ namespace DirectDebitElementsUnitTests
                 xMLCustomerDirectDebitInitiationMessage,
                 @"XSDFiles\pain.008.001.02.xsd");
             Assert.AreEqual("", xMLValidatingErrors);
-            string expectedXMLString = File.ReadAllText(@"XML Test Files\pain.008.001.02\BasicDirectDebitRemittanceExample.xml", System.Text.Encoding.GetEncoding("ISO-8859-1"));
+            string expectedXMLString = File.ReadAllText(@"XML Test Files\pain.008.001.02\BasicDirectDebitRemittanceExample_ISO88591.xml", System.Text.Encoding.GetEncoding("ISO-8859-1"));
+
+            Assert.AreEqual(expectedXMLString, xMLCustomerDirectDebitInitiationMessage);
+        }
+
+        [TestMethod]
+        public void ACustomerDirectDebitRemittanceXMLStringMessageIsCorrectlyGenerated_UTF8Encoded_NOBOM()
+        {
+            DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
+            DirectDebitPaymentInstruction directDebitPaymentInstruction1 = new DirectDebitPaymentInstruction(
+                paymentInformationID1,
+                "CORE",
+                false,
+                new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 });
+
+            directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction1);
+
+            bool singleUnstructuredConcept = false;
+            bool conceptsIncludeAmounts = false;
+            Encoding uTF8NoBOMEncoding = new UTF8Encoding(false);
+
+            SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
+            string xMLCustomerDirectDebitInitiationMessage = sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationStringMessage(
+                creditor,
+                creditorAgent,
+                directDebitRemittance,
+                singleUnstructuredConcept,
+                conceptsIncludeAmounts,
+                uTF8NoBOMEncoding);
+
+            string xMLValidatingErrors = XMLValidator.ValidateXMLStringThroughXSDFile(
+                xMLCustomerDirectDebitInitiationMessage,
+                @"XSDFiles\pain.008.001.02.xsd");
+            Assert.AreEqual("", xMLValidatingErrors);
+            string expectedXMLString = File.ReadAllText(@"XML Test Files\pain.008.001.02\BasicDirectDebitRemittanceExample_UTF8NOBOM.xml", uTF8NoBOMEncoding);
+
+            Assert.AreEqual(expectedXMLString, xMLCustomerDirectDebitInitiationMessage);
+        }
+
+        [TestMethod]
+        public void ACustomerDirectDebitRemittanceXMLStringMessageIsCorrectlyGenerated_UTF8Encoded()
+        {
+            DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
+            DirectDebitPaymentInstruction directDebitPaymentInstruction1 = new DirectDebitPaymentInstruction(
+                paymentInformationID1,
+                "CORE",
+                false,
+                new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 });
+
+            directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction1);
+
+            bool singleUnstructuredConcept = false;
+            bool conceptsIncludeAmounts = false;
+            Encoding uTF8Encoding = Encoding.UTF8;
+
+            SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
+            string xMLCustomerDirectDebitInitiationMessage = sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationStringMessage(
+                creditor,
+                creditorAgent,
+                directDebitRemittance,
+                singleUnstructuredConcept,
+                conceptsIncludeAmounts,
+                uTF8Encoding);
+
+            string xMLValidatingErrors = XMLValidator.ValidateXMLStringThroughXSDFile(
+                xMLCustomerDirectDebitInitiationMessage,
+                @"XSDFiles\pain.008.001.02.xsd");
+            Assert.AreEqual("", xMLValidatingErrors);
+            string expectedXMLString = File.ReadAllText(@"XML Test Files\pain.008.001.02\BasicDirectDebitRemittanceExample_UTF8.xml", uTF8Encoding);
 
             Assert.AreEqual(expectedXMLString, xMLCustomerDirectDebitInitiationMessage);
         }

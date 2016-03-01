@@ -107,10 +107,16 @@
     <Content Include="XML Test Files\pain.002.001.03\pain.002.001.03_2%28NotCompilant%29.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="XML Test Files\pain.008.001.02\BasicDirectDebitRemittanceExample.XML">
+    <Content Include="XML Test Files\pain.008.001.02\BasicDirectDebitRemittanceExampleWithConceptsJoined.XML">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="XML Test Files\pain.008.001.02\BasicDirectDebitRemittanceExampleWithConceptsJoined.XML">
+    <Content Include="XML Test Files\pain.008.001.02\BasicDirectDebitRemittanceExample_ISO88591.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="XML Test Files\pain.008.001.02\BasicDirectDebitRemittanceExample_UTF8NOBOM.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="XML Test Files\pain.008.001.02\BasicDirectDebitRemittanceExample_UTF8.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="XML Test Files\pain.008.001.02\DirectDebitRemmitanceWithVariousPaymentInstructionsAndAmendments.XML">
