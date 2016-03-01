@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="ArgumentReadingTests.cs" />
     <Compile Include="DDRemmitanceCreationTests.cs" />
+    <Compile Include="EncodingTests.cs" />
     <Compile Include="MDBConnectionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

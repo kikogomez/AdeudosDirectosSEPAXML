@@ -300,6 +300,7 @@ namespace SEPAXMLCustomerDirectDebitInitiationGenerator
             string debtorAgentBIC = (string)record["DebtorAgentBIC"];
             double amount = record["Amount"] as double? ?? default(double);
             string concept = record["Concept"] as string;
+            //string concept = Encoding.UTF8.GetString(Encoding.GetEncoding("iso-8859-1").GetBytes(record["Concept"] as string));
             bool fIRST = (bool)record["FIRST"];
 
             if (verboseExecution) Console.Write("\rProcessing MandateID: {0}  ", mandateID);
