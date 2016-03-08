@@ -384,6 +384,7 @@ namespace SEPAXMLPaymentStatusReportReader
                     {
                         errorMessage+= Environment.NewLine + error.Message;
                     }
+                    Console.WriteLine(errorMessage);
                     Console.WriteLine("Press any key to close program...");
                     Console.ReadKey();
                     Environment.Exit((int)ExitCodes.DataBaseConnectionError);

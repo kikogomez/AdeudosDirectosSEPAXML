@@ -43,6 +43,7 @@
     <Compile Include="BankAccountNumberChecker.cs" />
     <Compile Include="BankCode.cs" />
     <Compile Include="BankCodes.cs" />
+    <Compile Include="EncodingConverter.cs" />
     <Compile Include="ISO7064CheckDigits.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="BankAccountNumberCheckerUnitTests.cs" />
     <Compile Include="BankCodesUnitTests.cs" />
+    <Compile Include="EncodingTests.cs" />
     <Compile Include="ISO7064UnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

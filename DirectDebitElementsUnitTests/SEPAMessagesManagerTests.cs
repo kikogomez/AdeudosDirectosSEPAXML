@@ -36,6 +36,8 @@ namespace DirectDebitElementsUnitTests
         DirectDebitTransaction directDebitTransactionWithMandateIDAmendment;
         DirectDebitTransaction directDebitTransactionWithBankAcountAmendment_SameBank;
         DirectDebitTransaction directDebitTransactionWithBankAcountAmendment_DifferentBank;
+        DirectDebitTransaction directDebitTransaction1_UTF8StringSConverted;
+        DirectDebitTransaction directDebitTransaction2_UTF8StringSConverted;
 
         [ClassInitialize]
         public static void ClassInit(TestContext context)
@@ -134,6 +136,17 @@ namespace DirectDebitElementsUnitTests
                 null,
                 false);
 
+            directDebitTransaction1_UTF8StringSConverted = new DirectDebitTransaction(
+                debtors["00001"].SimplifiedBills.Values.ToList(),
+                paymentInformationID1 + "00001",
+                directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(debtors["00001"].DirectDebitmandates[1234].InternalReferenceNumber),
+                debtors["00001"].DirectDebitmandates[1234].DirectDebitMandateCreationDate,
+                debtors["00001"].DirectDebitmandates[1234].BankAccount,
+                debtors["00001"].DirectDebitmandates[1234].BankBIC,
+                EncodingConverter.ConvertStringEncoding(Encoding.GetEncoding("ISO-8859-1"), Encoding.UTF8, debtors["00001"].FullName),
+                null,
+                false);
+
             directDebitTransaction2 = new DirectDebitTransaction(
                 debtors["00002"].SimplifiedBills.Values.ToList(),
                 paymentInformationID1 + "00002",
@@ -142,6 +155,17 @@ namespace DirectDebitElementsUnitTests
                 debtors["00002"].DirectDebitmandates[1235].BankAccount,
                 debtors["00002"].DirectDebitmandates[1235].BankBIC,
                 debtors["00002"].FullName,
+                null,
+                false);
+
+            directDebitTransaction2_UTF8StringSConverted = new DirectDebitTransaction(
+                debtors["00002"].SimplifiedBills.Values.ToList(),
+                paymentInformationID1 + "00002",
+                directDebitPropietaryCodesGenerator.CalculateMyOldCSB19MandateID(debtors["00002"].DirectDebitmandates[1235].InternalReferenceNumber),
+                debtors["00002"].DirectDebitmandates[1235].DirectDebitMandateCreationDate,
+                debtors["00002"].DirectDebitmandates[1235].BankAccount,
+                debtors["00002"].DirectDebitmandates[1235].BankBIC,
+                EncodingConverter.ConvertStringEncoding(Encoding.GetEncoding("ISO-8859-1"), Encoding.UTF8, debtors["00002"].FullName),
                 null,
                 false);
 
@@ -254,6 +278,40 @@ namespace DirectDebitElementsUnitTests
                 "CORE",
                 false,
                 new List<DirectDebitTransaction>() { directDebitTransaction1, directDebitTransaction2 });
+
+            directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction1);
+
+            bool singleUnstructuredConcept = false;
+            bool conceptsIncludeAmounts = false;
+            Encoding uTF8Encoding = Encoding.UTF8;
+
+            SEPAMessagesManager sEPAMessagesManager = new SEPAMessagesManager();
+            string xMLCustomerDirectDebitInitiationMessage = sEPAMessagesManager.GenerateISO20022CustomerDirectDebitInitiationStringMessage(
+                creditor,
+                creditorAgent,
+                directDebitRemittance,
+                singleUnstructuredConcept,
+                conceptsIncludeAmounts,
+                uTF8Encoding);
+
+            string xMLValidatingErrors = XMLValidator.ValidateXMLStringThroughXSDFile(
+                xMLCustomerDirectDebitInitiationMessage,
+                @"XSDFiles\pain.008.001.02.xsd");
+            Assert.AreEqual("", xMLValidatingErrors);
+            string expectedXMLString = File.ReadAllText(@"XML Test Files\pain.008.001.02\BasicDirectDebitRemittanceExample_UTF8.xml", uTF8Encoding);
+
+            Assert.AreEqual(expectedXMLString, xMLCustomerDirectDebitInitiationMessage);
+        }
+
+        [TestMethod]
+        public void ACustomerDirectDebitRemittanceXMLStringMessageIsCorrectlyGenerated_UTF8Encoded_PreviouslyConvertingStringToUTF8()
+        {
+            DirectDebitRemittance directDebitRemittance = new DirectDebitRemittance(messageID, creationDate, requestedCollectionDate, directDebitInitiationContract);
+            DirectDebitPaymentInstruction directDebitPaymentInstruction1 = new DirectDebitPaymentInstruction(
+                paymentInformationID1,
+                "CORE",
+                false,
+                new List<DirectDebitTransaction>() { directDebitTransaction1_UTF8StringSConverted, directDebitTransaction2_UTF8StringSConverted });
 
             directDebitRemittance.AddDirectDebitPaymentInstruction(directDebitPaymentInstruction1);
 

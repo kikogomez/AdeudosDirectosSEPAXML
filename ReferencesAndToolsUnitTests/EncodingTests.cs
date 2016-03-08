@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ReferencesAndTools;
 
-namespace SEPAXMLCustomerDirectDebitInitiationGeneratorTests
+namespace ReferencesAndToolsUnitTests
 {
     [TestClass]
     public class EncodingTests
@@ -31,6 +32,19 @@ namespace SEPAXMLCustomerDirectDebitInitiationGeneratorTests
             Encoding utf8 = Encoding.UTF8;
 
             string specialCharactersEncodedUTF8 = utf8.GetString(Encoding.Convert(iso, utf8, iso.GetBytes(specialCaracters)));
+
+            Assert.AreEqual(specialCaracters, specialCharactersEncodedUTF8);
+        }
+
+        [TestMethod]
+        public void SpecialCharactersEncodedAsISOLatingAreWellConvertedIntoUTF8_DirectConversionUsingEncodingConverter()
+        {
+            string specialCaracters = "áéíóúñª";
+
+            Encoding iso = Encoding.GetEncoding("ISO-8859-1");
+            Encoding utf8 = Encoding.UTF8;
+
+            string specialCharactersEncodedUTF8 = EncodingConverter.ConvertStringEncoding(iso, utf8, specialCaracters); 
 
             Assert.AreEqual(specialCaracters, specialCharactersEncodedUTF8);
         }
