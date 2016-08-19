@@ -10,25 +10,6 @@ namespace XMLSerializerValidator
 
         public static string XMLSerializeToString<ObjectType>(ObjectType objetToSerialize, string rootElementName, string defaultNamespace)
         {
-            //// Serialize to UTF-8 using UTF8StringWriter() (no BOM in resulting string)
-            //TextWriter stringWriter = new Utf8StringWriter();
-            //XMLSerialize<ObjectType>(objetToSerialize, rootElementName, defaultNamespace, stringWriter);
-            //return stringWriter.ToString();
-
-            ////Serialize to UTF8 using a MemoryStream (the BOM is included in resulting string!)
-            //var memoryStream = new MemoryStream();
-            //var encoding = Encoding.UTF8;
-            //TextWriter streamWriter = new StreamWriter(memoryStream, encoding);
-            //XMLSerialize<ObjectType>(objetToSerialize, rootElementName, defaultNamespace, streamWriter);
-            //return encoding.GetString(memoryStream.ToArray());
-
-            /////Serialize to ISO-8859-1 using a MemoryStream (no BOM in ISO-8859-1)
-            //var memoryStream = new MemoryStream();
-            //var encoding = Encoding.GetEncoding("ISO-8859-1");
-            //TextWriter streamWriter = new StreamWriter(memoryStream, encoding);
-            //XMLSerialize<ObjectType>(objetToSerialize, rootElementName, defaultNamespace, streamWriter);
-            //return encoding.GetString(memoryStream.ToArray());
-
             // Serialize to string using a derived stringbuilder that allows define encoding
             TextWriter stringWriter = new EncodingDefinedStringWriter(defaultEncoding);
             XMLSerialize<ObjectType>(objetToSerialize, rootElementName, defaultNamespace, stringWriter);
