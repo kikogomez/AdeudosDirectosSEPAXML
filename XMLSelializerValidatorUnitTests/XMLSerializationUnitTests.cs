@@ -14,6 +14,7 @@ namespace RCNGCMembersManagementUnitTests
         [TestMethod]
         public void SerializationWithMemoryStreamRequiresRemoveBOMIfUTF()
         {
+
             OrderedItem orderedItem = new OrderedItem();
             orderedItem.ItemName = "Widget";
             orderedItem.Description = "Regular Widget";
