@@ -579,15 +579,16 @@ namespace RCNGCMembersManagementUnitTests
         public void TheXMLValidationEventHandlerWorksOK()
         {
             string xSDFilePath = @"XSD Test Files\wrongXSDFile.xsd";
-            try
-            {
-                XmlSchema xmlSchema = XmlSchema.Read(new StreamReader(xSDFilePath), XMLValidationEventHandler);
-            }
-            catch (System.Xml.XmlException e)
-            {
-                Assert.IsNotNull(e);
-                throw;
-            }
+            XmlSchema xmlSchema = XmlSchema.Read(new StreamReader(xSDFilePath), XMLValidationEventHandler);
+            //try
+            //{
+            //    XmlSchema xmlSchema = XmlSchema.Read(new StreamReader(xSDFilePath), XMLValidationEventHandler);
+            //}
+            //catch (System.Xml.XmlException e)
+            //{
+            //    Assert.IsNotNull(e);
+            //    throw;
+            //}
         }
 
         private void XMLValidationEventHandler(object sender, ValidationEventArgs e)
